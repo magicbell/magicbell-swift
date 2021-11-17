@@ -1,0 +1,33 @@
+PODS:
+  - Harmony/Common (1.1.3):
+    - Harmony/Future
+  - Harmony/Future (1.1.3)
+  - Harmony/Repository (1.1.3):
+    - Harmony/Common
+    - Harmony/Future
+  - MagicBell (0.1.0):
+    - Harmony/Repository
+  - SwiftLint (0.45.0)
+
+DEPENDENCIES:
+  - Harmony/Repository
+  - MagicBell (from `./`)
+  - SwiftLint
+
+SPEC REPOS:
+  trunk:
+    - Harmony
+    - SwiftLint
+
+EXTERNAL SOURCES:
+  MagicBell:
+    :path: "./"
+
+SPEC CHECKSUMS:
+  Harmony: f784af447c5c006a22b74fbde1092283b3a591fa
+  MagicBell: 523a2145c4ae309a825aa47e5f3f63ab932f84cf
+  SwiftLint: e5c7f1fba68eccfc51509d5b2ce1699f5502e0c7
+
+PODFILE CHECKSUM: 9f7a9dd057126b2e13c8d39a26dea944e6515dcc
+
+COCOAPODS: 1.11.2

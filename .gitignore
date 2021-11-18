@@ -57,3 +57,4 @@ playground.xcworkspace
 # `pod install` in .travis.yml
 Pods/
 
+.idea

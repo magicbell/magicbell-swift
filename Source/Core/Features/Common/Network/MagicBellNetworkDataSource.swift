@@ -8,15 +8,12 @@
 import Foundation
 import Harmony
 
-open class MagicBellNetworkDataSource<T> {
+public class HttpClient {
 
     private let urlSession: URLSession
-    private let mapper: Mapper<Data, T>
 
-    init(urlSession: URLSession,
-         mapper: Mapper<Data, T>) {
+    init(urlSession: URLSession) {
         self.urlSession = urlSession
-        self.mapper = mapper
     }
 
     func prepareURLRequest(baseURL: URL,
@@ -38,7 +35,7 @@ open class MagicBellNetworkDataSource<T> {
         return urlRequest
     }
 
-    func performRequest(_ urlRequest: URLRequest) -> Future<T> {
+    func performRequest(_ urlRequest: URLRequest) -> Future<Data> {
         Future { resolver in
             urlSession.dataTask(with: urlRequest) { data, response, error in
                 if let error = error {
@@ -48,43 +45,15 @@ open class MagicBellNetworkDataSource<T> {
 
                 if let response = response as? HTTPURLResponse {
                     guard let data = data else {
-                        preconditionFailure("No error was received but we also don't have data...")
+                        resolver.set(Data())
+                        return
                     }
 
                     if response.statusCode >= 400 {
                         // Create enum for possible errors
                         resolver.set(NetworkError(statusCode: response.statusCode, data: data))
                     } else {
-                        do {
-                            let decodedObject = try self.mapper.map(data)
-                            resolver.set(decodedObject)
-                        } catch {
-                            resolver.set(error)
-                        }
-                    }
-                }
-            }.resume()
-        }
-    }
-
-    func performDeleteRequest(_ urlRequest: URLRequest) -> Future<Void> {
-        Future { resolver in
-            urlSession.dataTask(with: urlRequest) { data, response, error in
-                if let error = error {
-                    resolver.set(error)
-                    return
-                }
-
-                if let response = response as? HTTPURLResponse {
-                    guard let data = data else {
-                        preconditionFailure("No error was received but we also don't have data...")
-                    }
-
-                    if response.statusCode >= 400 {
-                        // Create enum for possible errors
-                        resolver.set(NetworkError(statusCode: response.statusCode, data: data))
-                    } else {
-                        resolver.set(Void())
+                        resolver.set(data)
                     }
                 }
             }.resume()
@@ -117,10 +86,3 @@ open class MagicBellNetworkDataSource<T> {
         }
     }
 }
-
-/**
- Generic T Network -> Notification get put delete
-
- Notification Network
-
- */

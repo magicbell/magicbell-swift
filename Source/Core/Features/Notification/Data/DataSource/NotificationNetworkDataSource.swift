@@ -8,14 +8,17 @@
 import Foundation
 import Harmony
 
-public class NotificationNetworkDataSource: MagicBellNetworkDataSource<Notification> {
+public class NotificationNetworkDataSource {
     private let environment: Environment
+    private let httpClient: HttpClient
+    private let mapper: DataToDecodableMapper<Notification>
 
     public init(environment: Environment,
-                urlSession: URLSession,
+                httpClient: HttpClient,
                 mapper: DataToDecodableMapper<Notification>) {
         self.environment = environment
-        super.init(urlSession: urlSession, mapper: mapper)
+        self.httpClient = httpClient
+        self.mapper = mapper
     }
 }
 
@@ -25,7 +28,7 @@ extension NotificationNetworkDataSource: GetDataSource {
     public func get(_ query: Query) -> Future<Notification> {
         switch query {
         case let notificationQuery as NotificationQuery:
-            let urlRequest = prepareURLRequest(
+            let urlRequest = self.httpClient.prepareURLRequest(
                     baseURL: environment.baseUrl,
                     path: "/notifications/\(notificationQuery.notificationId)",
                     apiKey: environment.apiKey,
@@ -34,7 +37,11 @@ extension NotificationNetworkDataSource: GetDataSource {
                     email: notificationQuery.user.email,
                     isHMACEnabled: environment.isHMACEnabled)
 
-            return performRequest(urlRequest)
+            return self.httpClient.performRequest(urlRequest).map { data in
+                try self.mapper.map(data)
+            }.recover { error in
+                Future(error)
+            }
         default:
             query.fatalError(.get, self)
         }
@@ -45,17 +52,20 @@ extension NotificationNetworkDataSource: GetDataSource {
     }
 }
 
-public class ActionNotificationNetworkDataSource: MagicBellNetworkDataSource<Void> {
+public class ActionNotificationNetworkDataSource {
     public typealias T = Void
 
     private let environment: Environment
+    private let httpClient: HttpClient
+    private let mapper: Mapper<Data, Void>
 
     public init(environment: Environment,
-                urlSession: URLSession) {
+                httpClient: HttpClient) {
         self.environment = environment
-        super.init(urlSession: urlSession, mapper: ClosureMapper { _ in
+        self.httpClient = httpClient
+        self.mapper = ClosureMapper { _ in
             Void()
-        })
+        }
     }
 }
 
@@ -81,7 +91,7 @@ extension ActionNotificationNetworkDataSource: PutDataSource {
                 path.append("/seen")
             }
 
-            var urlRequest = prepareURLRequest(
+            var urlRequest = self.httpClient.prepareURLRequest(
                     baseURL: environment.baseUrl,
                     path: path,
                     apiKey: environment.apiKey,
@@ -92,7 +102,11 @@ extension ActionNotificationNetworkDataSource: PutDataSource {
 
             urlRequest.httpMethod = httpMethod
 
-            return performRequest(urlRequest)
+            return self.httpClient.performRequest(urlRequest).map { data in
+                try self.mapper.map(data)
+            }.recover { error in
+                Future(error)
+            }
         default:
             query.fatalError(.put, self)
         }
@@ -107,7 +121,7 @@ extension ActionNotificationNetworkDataSource: DeleteDataSource {
     public func delete(_ query: Query) -> Future<Void> {
         switch query {
         case let notificationQuery as NotificationQuery:
-            var urlRequest = prepareURLRequest(
+            var urlRequest = self.httpClient.prepareURLRequest(
                     baseURL: environment.baseUrl,
                     path: "/notifications/\(notificationQuery.notificationId)",
                     apiKey: environment.apiKey,
@@ -118,7 +132,11 @@ extension ActionNotificationNetworkDataSource: DeleteDataSource {
 
             urlRequest.httpMethod = "DELETE"
 
-            return performRequest(urlRequest)
+            return self.httpClient.performRequest(urlRequest).map { data in
+                try self.mapper.map(data)
+            }.recover { error in
+                Future(error)
+            }
         default:
             query.fatalError(.put, self)
         }

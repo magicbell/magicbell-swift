@@ -16,17 +16,17 @@ protocol UserPreferencesComponent {
 class DefaultUserPreferencesModule: UserPreferencesComponent {
 
     private let environment: Environment
-    private let urlSession: URLSession
+    private let httpClient: HttpClient
 
     init(environment: Environment,
-         urlSession: URLSession) {
+         httpClient: HttpClient) {
         self.environment = environment
-        self.urlSession = urlSession
+        self.httpClient = httpClient
     }
 
     private lazy var userPreferencesNetworkDatasource = UserPreferencesNetworkDataSource(
             environment: environment,
-            urlSession: urlSession,
+            httpClient: httpClient,
             mapper: DataToDecodableMapper<UserPreferences>())
 
 

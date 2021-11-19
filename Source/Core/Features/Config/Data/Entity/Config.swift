@@ -13,12 +13,12 @@ public class Config: Decodable {
     required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let configContainer = try container
-                .nestedContainer(keyedBy: WebserviceKeys.self, forKey: .ws)
+                .nestedContainer(keyedBy: WebserviceKeys.self, forKey: .websocket)
         channel = try configContainer.decode(String.self, forKey: .channel)
     }
 
     enum CodingKeys: String, CodingKey {
-        case ws
+        case websocket = "ws"
     }
 
     enum WebserviceKeys: String, CodingKey {

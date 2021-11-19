@@ -23,13 +23,13 @@ protocol SDKComponent {
 class DefaultSDKModule: SDKComponent {
     private let environment: Environment
     // TODO: Move it later if we do a custom one.
-    lazy var urlSession = URLSession.shared
+    lazy var httpClient = HttpClient(urlSession: URLSession.shared)
 
     private lazy var executorComponent: ExecutorComponent = DefaultExecutorModule()
-    private lazy var configComponent = DefaultConfigModule(environment: environment, urlSession: urlSession)
-    private lazy var userPreferencesComponent = DefaultUserPreferencesModule(environment: environment, urlSession: urlSession)
-    private lazy var notificationComponent = DefaultNotificationComponent(environment: environment, urlSession: urlSession)
-    private lazy var pushSubscriptionComponent = DefaultPushSubscriptionModule(environment: environment, urlSession: urlSession)
+    private lazy var configComponent = DefaultConfigModule(environment: environment, httpClient: httpClient)
+    private lazy var userPreferencesComponent = DefaultUserPreferencesModule(environment: environment, httpClient: httpClient)
+    private lazy var notificationComponent = DefaultNotificationComponent(environment: environment, httpClient: httpClient)
+    private lazy var pushSubscriptionComponent = DefaultPushSubscriptionModule(environment: environment, httpClient: httpClient)
 
     init(environment: Environment) {
         self.environment = environment

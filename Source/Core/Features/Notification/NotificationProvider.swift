@@ -16,22 +16,22 @@ protocol NotificationComponent {
 
 class DefaultNotificationComponent: NotificationComponent {
     private let environment: Environment
-    private let urlSession: URLSession
+    private let httpClient: HttpClient
 
-    init(environment: Environment, urlSession: URLSession) {
+    init(environment: Environment, httpClient: HttpClient) {
         self.environment = environment
-        self.urlSession = urlSession
+        self.httpClient = httpClient
     }
 
     private lazy var notificationNetworkDataSource = NotificationNetworkDataSource(
             environment: environment,
-            urlSession: urlSession,
+            httpClient: httpClient,
             mapper: DataToDecodableMapper<Notification>()
     )
 
     private lazy var actionNotificationNetworkDataSource = ActionNotificationNetworkDataSource(
             environment: environment,
-            urlSession: urlSession
+            httpClient: httpClient
     )
 
     func getNotificationNetworkDataSource() -> AnyGetDataSource<Notification> {

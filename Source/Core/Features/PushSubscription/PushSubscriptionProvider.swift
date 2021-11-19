@@ -15,16 +15,16 @@ protocol PushSubscriptionComponent {
 
 class DefaultPushSubscriptionModule: PushSubscriptionComponent {
     private let environment: Environment
-    private let urlSession: URLSession
+    private let httpClient: HttpClient
 
-    init(environment: Environment, urlSession: URLSession) {
+    init(environment: Environment, httpClient: HttpClient) {
         self.environment = environment
-        self.urlSession = urlSession
+        self.httpClient = httpClient
     }
 
     private lazy var pushSubscriptionNetworkDataSource = PushSubscriptionNetworkDataSource(
             environment: environment,
-            urlSession: urlSession,
+            httpClient: httpClient,
             mapper: DataToDecodableMapper<PushSubscription>()
     )
 

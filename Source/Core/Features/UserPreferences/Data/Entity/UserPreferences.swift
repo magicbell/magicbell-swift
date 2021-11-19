@@ -13,7 +13,6 @@ public struct UserPreferences: Codable {
     enum CodingKeys: String, CodingKey {
         case notificationPreferences = "notification_preferences"
     }
-
 }
 
 public struct NotificationPreferences: Codable {

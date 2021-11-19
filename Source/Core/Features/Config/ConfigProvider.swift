@@ -13,14 +13,13 @@ protocol ConfigComponent {
 }
 
 class DefaultConfigModule: ConfigComponent {
-
     private let environment: Environment
-    private let urlSession: URLSession
+    private let httpClient: HttpClient
 
     init(environment: Environment,
-         urlSession: URLSession) {
+         httpClient: HttpClient) {
         self.environment = environment
-        self.urlSession = urlSession
+        self.httpClient = httpClient
     }
 
     func getConfigNetworkDataSource() -> AnyGetDataSource<Config> {
@@ -30,7 +29,7 @@ class DefaultConfigModule: ConfigComponent {
     private lazy var configNetworkDataSource = AnyGetDataSource(
             ConfigNetworkDataSource(
                     environment: environment,
-                    urlSession: urlSession,
+                    httpClient: httpClient,
                     mapper: DataToDecodableMapper<Config>()
             )
     )

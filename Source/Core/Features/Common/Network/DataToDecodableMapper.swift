@@ -24,15 +24,15 @@ public class DataToDecodableMapper<T>: Mapper<Data, T> where T: Decodable {
             switch error {
             case let decodingError as DecodingError:
                 switch decodingError {
-                case .dataCorrupted(let context):
+                case let .dataCorrupted(context):
                     print(context)
-                case .keyNotFound(let key, let context):
+                case let .keyNotFound(key, context):
                     print("Key '\(key)' not found:", context.debugDescription)
                     print("codingPath:", context.codingPath)
-                case .valueNotFound(let value, let context):
+                case let .valueNotFound(value, context):
                     print("Value '\(value)' not found:", context.debugDescription)
                     print("codingPath:", context.codingPath)
-                case .typeMismatch(let type, let context):
+                case let .typeMismatch(type, context):
                     print("Type '\(type)' mismatch:", context.debugDescription)
                     print("codingPath:", context.codingPath)
                 @unknown default:

@@ -9,32 +9,40 @@ import Foundation
 import Harmony
 import CommonCrypto
 
-public class ConfigNetworkDataSource: MagicBellNetworkDataSource<Config>, GetDataSource {
+public class ConfigNetworkDataSource {
 
     public typealias T = Config
 
     private let environment: Environment
+    private let httpClient: HttpClient
+    private let mapper: DataToDecodableMapper<Config>
 
     public init(environment: Environment,
-                urlSession: URLSession,
+                httpClient: HttpClient,
                 mapper: DataToDecodableMapper<Config>) {
         self.environment = environment
-        super.init(urlSession: urlSession, mapper: mapper)
+        self.httpClient = httpClient
+        self.mapper = mapper
     }
-
+}
+extension ConfigNetworkDataSource: GetDataSource {
     public func get(_ query: Query) -> Future<Config> {
         switch query {
         case let userQuery as UserQuery:
-            let urlRequest = prepareURLRequest(
-                    baseURL: environment.baseUrl,
-                    path: "/config",
-                    apiKey: environment.apiKey,
-                    apiSecret: environment.apiSecret,
-                    externalId: userQuery.externalId,
-                    email: userQuery.email,
-                    isHMACEnabled: environment.isHMACEnabled)
+            let urlRequest = self.httpClient.prepareURLRequest(
+                baseURL: environment.baseUrl,
+                path: "/config",
+                apiKey: environment.apiKey,
+                apiSecret: environment.apiSecret,
+                externalId: userQuery.externalId,
+                email: userQuery.email,
+                isHMACEnabled: environment.isHMACEnabled)
 
-            return performRequest(urlRequest)
+            return self.httpClient.performRequest(urlRequest).map { data in
+                try self.mapper.map(data)
+            }.recover { error in
+                Future(error)
+            }
         default:
             query.fatalError(.get, self)
         }

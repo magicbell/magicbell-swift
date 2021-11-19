@@ -8,17 +8,20 @@
 import Foundation
 import Harmony
 
-public class UserPreferencesNetworkDataSource: MagicBellNetworkDataSource<UserPreferences> {
+public class UserPreferencesNetworkDataSource {
 
     public typealias T = UserPreferences
 
     private let environment: Environment
+    private let httpClient: HttpClient
+    private let mapper: DataToDecodableMapper<T>
 
     public init(environment: Environment,
-                urlSession: URLSession,
-                mapper: DataToDecodableMapper<UserPreferences>) {
+                httpClient: HttpClient,
+                mapper: DataToDecodableMapper<T>) {
         self.environment = environment
-        super.init(urlSession: urlSession, mapper: mapper)
+        self.httpClient = httpClient
+        self.mapper = mapper
     }
 }
 
@@ -26,16 +29,20 @@ extension UserPreferencesNetworkDataSource: GetDataSource {
     public func get(_ query: Query) -> Future<UserPreferences> {
         switch query {
         case let userQuery as UserQuery:
-            let urlRequest = prepareURLRequest(
-                    baseURL: environment.baseUrl,
-                    path: "/notification_preferences",
-                    apiKey: environment.apiKey,
-                    apiSecret: environment.apiSecret,
-                    externalId: userQuery.externalId,
-                    email: userQuery.email,
-                    isHMACEnabled: environment.isHMACEnabled)
+            let urlRequest = self.httpClient.prepareURLRequest(
+                baseURL: environment.baseUrl,
+                path: "/notification_preferences",
+                apiKey: environment.apiKey,
+                apiSecret: environment.apiSecret,
+                externalId: userQuery.externalId,
+                email: userQuery.email,
+                isHMACEnabled: environment.isHMACEnabled)
 
-            return performRequest(urlRequest)
+            return self.httpClient.performRequest(urlRequest).map { data in
+                try self.mapper.map(data)
+            }.recover { error in
+                Future(error)
+            }
         default:
             query.fatalError(.get, self)
         }
@@ -55,14 +62,14 @@ extension UserPreferencesNetworkDataSource: PutDataSource {
                 return Future(CoreError.NotValid())
             }
 
-            var urlRequest = prepareURLRequest(
-                    baseURL: environment.baseUrl,
-                    path: "/notification_preferences",
-                    apiKey: environment.apiKey,
-                    apiSecret: environment.apiSecret,
-                    externalId: userQuery.externalId,
-                    email: userQuery.email,
-                    isHMACEnabled: environment.isHMACEnabled)
+            var urlRequest = self.httpClient.prepareURLRequest(
+                baseURL: environment.baseUrl,
+                path: "/notification_preferences",
+                apiKey: environment.apiKey,
+                apiSecret: environment.apiSecret,
+                externalId: userQuery.externalId,
+                email: userQuery.email,
+                isHMACEnabled: environment.isHMACEnabled)
 
             urlRequest.httpMethod = "PUT"
 
@@ -71,11 +78,14 @@ extension UserPreferencesNetworkDataSource: PutDataSource {
             } catch {
                 return Future(MappingError<T>(error))
             }
-            return performRequest(urlRequest)
+            return self.httpClient.performRequest(urlRequest).map { data in
+                try self.mapper.map(data)
+            }.recover { error in
+                Future(error)
+            }
         default:
             query.fatalError(.get, self)
         }
-
     }
 
     public func putAll(_ array: [UserPreferences], in query: Query) -> Future<[UserPreferences]> {

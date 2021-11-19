@@ -40,7 +40,7 @@ extension PushSubscriptionNetworkDataSource: PutDataSource {
             do {
                 urlRequest.httpBody = try JSONEncoder().encode(value)
             } catch {
-                return Future(NetworkError(message: "Error encoding PushSubscription"))
+                return Future(MappingError<T>(error))
             }
             return performRequest(urlRequest)
         default:

@@ -8,41 +8,29 @@
 import Foundation
 import Harmony
 
-public class UserPreferencesNetworkDataSource {
+public class UserPreferencesNetworkDataSource: GetDataSource, PutDataSource {
 
     public typealias T = UserPreferences
 
-    private let environment: Environment
     private let httpClient: HttpClient
-    private let mapper: DataToDecodableMapper<T>
+    private let mapper: Mapper<Data, UserPreferences>
 
-    public init(environment: Environment,
-                httpClient: HttpClient,
-                mapper: DataToDecodableMapper<T>) {
-        self.environment = environment
+    public init(httpClient: HttpClient, mapper: Mapper<Data, UserPreferences>) {
         self.httpClient = httpClient
         self.mapper = mapper
     }
-}
 
-extension UserPreferencesNetworkDataSource: GetDataSource {
     public func get(_ query: Query) -> Future<UserPreferences> {
         switch query {
         case let userQuery as UserQuery:
             let urlRequest = self.httpClient.prepareURLRequest(
-                baseURL: environment.baseUrl,
                 path: "/notification_preferences",
-                apiKey: environment.apiKey,
-                apiSecret: environment.apiSecret,
                 externalId: userQuery.externalId,
-                email: userQuery.email,
-                isHMACEnabled: environment.isHMACEnabled)
-
-            return self.httpClient.performRequest(urlRequest).map { data in
-                try self.mapper.map(data)
-            }.recover { error in
-                Future(error)
-            }
+                email: userQuery.email
+            )
+            return self.httpClient
+                .performRequest(urlRequest)
+                .map { try self.mapper.map($0) }
         default:
             query.fatalError(.get, self)
         }
@@ -51,10 +39,7 @@ extension UserPreferencesNetworkDataSource: GetDataSource {
     public func getAll(_ query: Query) -> Future<[UserPreferences]> {
         query.fatalError(.getAll, self)
     }
-}
 
-
-extension UserPreferencesNetworkDataSource: PutDataSource {
     public func put(_ value: UserPreferences?, in query: Query) -> Future<UserPreferences> {
         switch query {
         case let userQuery as UserQuery:
@@ -63,26 +48,20 @@ extension UserPreferencesNetworkDataSource: PutDataSource {
             }
 
             var urlRequest = self.httpClient.prepareURLRequest(
-                baseURL: environment.baseUrl,
                 path: "/notification_preferences",
-                apiKey: environment.apiKey,
-                apiSecret: environment.apiSecret,
                 externalId: userQuery.externalId,
-                email: userQuery.email,
-                isHMACEnabled: environment.isHMACEnabled)
-
+                email: userQuery.email
+            )
             urlRequest.httpMethod = "PUT"
 
             do {
                 urlRequest.httpBody = try JSONEncoder().encode(value)
             } catch {
-                return Future(MappingError<T>(error))
+                return Future(MappingError(className: "\(T.self)"))
             }
-            return self.httpClient.performRequest(urlRequest).map { data in
-                try self.mapper.map(data)
-            }.recover { error in
-                Future(error)
-            }
+            return self.httpClient
+                .performRequest(urlRequest)
+                .map { try self.mapper.map($0) }
         default:
             query.fatalError(.get, self)
         }

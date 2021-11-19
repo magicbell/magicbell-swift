@@ -8,34 +8,35 @@
 import Foundation
 import Harmony
 
-public class HttpClient {
+public protocol HttpClient {
+    func prepareURLRequest(path: String, externalId: String?, email: String?) -> URLRequest
+    func performRequest(_ urlRequest: URLRequest) -> Future<Data>
+}
+
+public class DefaultHttpClient: HttpClient {
 
     private let urlSession: URLSession
+    private let environment: Environment
 
-    init(urlSession: URLSession) {
+    init(urlSession: URLSession, environment: Environment) {
         self.urlSession = urlSession
+        self.environment = environment
     }
 
-    func prepareURLRequest(baseURL: URL,
-                           path: String,
-                           apiKey: String,
-                           apiSecret: String,
-                           externalId: String?,
-                           email: String?,
-                           isHMACEnabled: Bool) -> URLRequest {
-        var urlRequest = URLRequest(url: baseURL.appendingPathComponent(path))
+    public func prepareURLRequest(path: String, externalId: String?, email: String?) -> URLRequest {
+        var urlRequest = URLRequest(url: environment.baseUrl.appendingPathComponent(path))
 
-        urlRequest.addValue(apiKey, forHTTPHeaderField: "X-MAGICBELL-API-KEY")
+        urlRequest.addValue(environment.apiKey, forHTTPHeaderField: "X-MAGICBELL-API-KEY")
 
-        if isHMACEnabled {
-            addHMACHeader(apiSecret, externalId, email, &urlRequest)
+        if environment.isHMACEnabled {
+            addHMACHeader(environment.apiSecret, externalId, email, &urlRequest)
         }
         addIdAndOrEmailHeader(externalId, email, &urlRequest)
 
         return urlRequest
     }
 
-    func performRequest(_ urlRequest: URLRequest) -> Future<Data> {
+    public func performRequest(_ urlRequest: URLRequest) -> Future<Data> {
         Future { resolver in
             urlSession.dataTask(with: urlRequest) { data, response, error in
                 if let error = error {

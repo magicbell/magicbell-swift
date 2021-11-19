@@ -8,33 +8,28 @@
 import Foundation
 import Harmony
 
-protocol UserPreferencesComponent {
+public protocol UserPreferencesComponent {
     func getUserPreferencesNetworkDataSource() -> AnyGetDataSource<UserPreferences>
     func getPutUserPreferenceNetworkDataSource() -> AnyPutDataSource<UserPreferences>
 }
 
-class DefaultUserPreferencesModule: UserPreferencesComponent {
-
-    private let environment: Environment
+public class DefaultUserPreferencesModule: UserPreferencesComponent {
     private let httpClient: HttpClient
 
-    init(environment: Environment,
-         httpClient: HttpClient) {
-        self.environment = environment
+    init(httpClient: HttpClient) {
         self.httpClient = httpClient
     }
 
     private lazy var userPreferencesNetworkDatasource = UserPreferencesNetworkDataSource(
-            environment: environment,
-            httpClient: httpClient,
-            mapper: DataToDecodableMapper<UserPreferences>())
+        httpClient: httpClient,
+        mapper: DataToDecodableMapper<UserPreferences>()
+    )
 
-
-    func getUserPreferencesNetworkDataSource() -> AnyGetDataSource<UserPreferences> {
+    public func getUserPreferencesNetworkDataSource() -> AnyGetDataSource<UserPreferences> {
         AnyGetDataSource(userPreferencesNetworkDatasource)
     }
 
-    func getPutUserPreferenceNetworkDataSource() -> AnyPutDataSource<UserPreferences> {
+    public func getPutUserPreferenceNetworkDataSource() -> AnyPutDataSource<UserPreferences> {
         AnyPutDataSource(userPreferencesNetworkDatasource)
     }
 }

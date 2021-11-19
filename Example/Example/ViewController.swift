@@ -18,11 +18,13 @@ class ViewController: UIViewController {
             let deviceToken = "abdcde12345"
 
             // Channel Notification
-            let config = try MagicBell.shared.getConfig().get(userQuery).result.get()
+            let getConfigNetworkDataSource = MagicBell.shared.sdkProvider.configComponent.getConfigNetworkDataSource()
+            let config = try getConfigNetworkDataSource.get(userQuery).result.get()
             print("Channel for notifications --> \(config.channel)")
 
             // User preferences
-            let userPreferences = try MagicBell.shared.getUserPreferences().get(userQuery).result.get()
+            let getUserPreferencesNetworkDataSource = MagicBell.shared.sdkProvider.userPreferencesComponent.getUserPreferencesNetworkDataSource()
+            let userPreferences = try getUserPreferencesNetworkDataSource.get(userQuery).result.get()
             print("User preferences --> \(userPreferences)")
 
             if let categories = userPreferences.notificationPreferences?.categories {
@@ -34,40 +36,45 @@ class ViewController: UIViewController {
                 }
             }
 
-            let userPreferencesUpdated = try MagicBell.shared.putUserPreferences().put(userPreferences, in: userQuery).result.get()
+            let getPutUserPreferenceNetworkDataSource = MagicBell.shared.sdkProvider.userPreferencesComponent.getPutUserPreferenceNetworkDataSource()
+            let userPreferencesUpdated = try getPutUserPreferenceNetworkDataSource.put(userPreferences, in: userQuery).result.get()
             print("New user preferences --> \(userPreferencesUpdated)")
 
 
             // Notification
-            let notification = try MagicBell.shared.getNotificationDataSource().get(
-                    NotificationQuery(notificationId: notificationId, userQuery: userQuery)
-            ).result.get()
+
+            let notificationDataSource = MagicBell.shared.sdkProvider.notificationComponent.getNotificationNetworkDataSource()
+            let actionNotificationDataSource = MagicBell.shared.sdkProvider.notificationComponent.getActionNotificationNetworkDataSource()
+
+            let notification = try notificationDataSource.get(NotificationQuery(notificationId: notificationId, userQuery: userQuery)).result.get()
             print("Notification --> \(notification)")
 
             // Mark Notification as readed
-            _ = try MagicBell.shared.getActionNotificationDataSource().put(nil,
-                    in: NotificationActionQuery(action: .markAsRead,
-                            notificationId: notificationId,
-                            userQuery: userQuery)).result.get()
-            let notificationReaded = try MagicBell.shared.getNotificationDataSource().get(NotificationQuery(notificationId: notificationId,
-                    userQuery: userQuery)).result.get()
+            _ = try actionNotificationDataSource.put(nil, in: NotificationActionQuery(action: .markAsRead,
+                                                      notificationId: notificationId,
+                                                      userQuery: userQuery)).result.get()
+            let notificationReaded = try notificationDataSource.get(NotificationQuery(notificationId: notificationId,
+                                                                                      userQuery: userQuery)).result.get()
             print(notificationReaded)
 
             // Uncomment to delete a notification
-//            _ = MagicBell.shared.getDeleteNotificationDataSource().delete(NotificationQuery(notificationId: notificationId,
-//                                                                                            userQuery: userQuery))
+            // let deleteNotificationDataSource = MagicBell.shared.sdkProvider.notificationComponent.getDeleteNotificationNetworkDataSource()
+            // _ = deleteNotificationDataSource.delete(NotificationQuery(notificationId: notificationId, userQuery: userQuery))
 
             // Push subscription
-            let pushSubscription = try MagicBell.shared.getPushSubscriptionDataSource().put(
-                    PushSubscription(deviceToken: deviceToken, platform: "ios"),
-                    in: RegisterPushSubscriptionQuery(user: userQuery)
+            let getPushSubscriptionNetworkDataSource = MagicBell.shared.sdkProvider.pushSubscriptionComponent.getPushSubscriptionNetworkDataSource()
+            let pushSubscription = try getPushSubscriptionNetworkDataSource.put(
+                PushSubscription(
+                    deviceToken: deviceToken,
+                    platform: "ios"
+                ),
+                in: RegisterPushSubscriptionQuery(user: userQuery)
             ).result.get()
             print("Push subscription --> \(pushSubscription)")
 
             // Uncomment to delete a device
-//            _ = try MagicBell.shared.getDeletePushSubscriptionDataSource().delete(DeletePushSubscriptionQuery(user: userQuery,
-//                                                                                                              deviceToken: deviceToken)
-//            ).result.get()
+            // let deletePushSubscriptionNetworkDataSource = MagicBell.shared.sdkProvider.pushSubscriptionComponent.getDeletePushSubscriptionNetworkDataSource()
+            // _ = try deletePushSubscriptionNetworkDataSource.delete(DeletePushSubscriptionQuery(user: userQuery, deviceToken: deviceToken)).result.get()
         } catch let error as LocalizedError {
             print(error.errorDescription ?? "Error description not provided")
         } catch {

@@ -8,41 +8,37 @@
 import Foundation
 import Harmony
 
-protocol NotificationComponent {
+public protocol NotificationComponent {
     func getNotificationNetworkDataSource() -> AnyGetDataSource<Notification>
     func getActionNotificationNetworkDataSource() -> AnyPutDataSource<Void>
     func getDeleteNotificationNetworkDataSource() -> DeleteDataSource
 }
 
-class DefaultNotificationComponent: NotificationComponent {
-    private let environment: Environment
+public class DefaultNotificationComponent: NotificationComponent {
     private let httpClient: HttpClient
 
-    init(environment: Environment, httpClient: HttpClient) {
-        self.environment = environment
+    init(httpClient: HttpClient) {
         self.httpClient = httpClient
     }
 
     private lazy var notificationNetworkDataSource = NotificationNetworkDataSource(
-            environment: environment,
-            httpClient: httpClient,
-            mapper: DataToDecodableMapper<Notification>()
+        httpClient: httpClient,
+        mapper: DataToDecodableMapper<Notification>()
     )
 
     private lazy var actionNotificationNetworkDataSource = ActionNotificationNetworkDataSource(
-            environment: environment,
-            httpClient: httpClient
+        httpClient: httpClient
     )
 
-    func getNotificationNetworkDataSource() -> AnyGetDataSource<Notification> {
+    public func getNotificationNetworkDataSource() -> AnyGetDataSource<Notification> {
         AnyGetDataSource(notificationNetworkDataSource)
     }
 
-    func getActionNotificationNetworkDataSource() -> AnyPutDataSource<Void> {
+    public func getActionNotificationNetworkDataSource() -> AnyPutDataSource<Void> {
         AnyPutDataSource(actionNotificationNetworkDataSource)
     }
 
-    func getDeleteNotificationNetworkDataSource() -> DeleteDataSource {
+    public func getDeleteNotificationNetworkDataSource() -> DeleteDataSource {
         actionNotificationNetworkDataSource
     }
 }

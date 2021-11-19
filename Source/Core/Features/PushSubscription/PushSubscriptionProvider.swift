@@ -8,31 +8,28 @@
 import Foundation
 import Harmony
 
-protocol PushSubscriptionComponent {
+public protocol PushSubscriptionComponent {
     func getPushSubscriptionNetworkDataSource() -> AnyPutDataSource<PushSubscription>
     func getDeletePushSubscriptionNetworkDataSource() -> DeleteDataSource
 }
 
-class DefaultPushSubscriptionModule: PushSubscriptionComponent {
-    private let environment: Environment
+public class DefaultPushSubscriptionModule: PushSubscriptionComponent {
     private let httpClient: HttpClient
 
-    init(environment: Environment, httpClient: HttpClient) {
-        self.environment = environment
+    init(httpClient: HttpClient) {
         self.httpClient = httpClient
     }
 
     private lazy var pushSubscriptionNetworkDataSource = PushSubscriptionNetworkDataSource(
-            environment: environment,
             httpClient: httpClient,
             mapper: DataToDecodableMapper<PushSubscription>()
     )
 
-    func getPushSubscriptionNetworkDataSource() -> AnyPutDataSource<PushSubscription> {
+    public func getPushSubscriptionNetworkDataSource() -> AnyPutDataSource<PushSubscription> {
         AnyPutDataSource(pushSubscriptionNetworkDataSource)
     }
 
-    func getDeletePushSubscriptionNetworkDataSource() -> DeleteDataSource {
+    public func getDeletePushSubscriptionNetworkDataSource() -> DeleteDataSource {
         pushSubscriptionNetworkDataSource
     }
 }

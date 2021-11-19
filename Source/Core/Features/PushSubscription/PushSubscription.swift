@@ -37,8 +37,8 @@ public struct PushSubscription: Codable {
     }
 
 
-    public init(deviceToken: String, platform: String) {
-        id = nil
+    public init(id: String? = nil, deviceToken: String, platform: String) {
+        self.id = id
         self.deviceToken = deviceToken
         self.platform = platform
     }

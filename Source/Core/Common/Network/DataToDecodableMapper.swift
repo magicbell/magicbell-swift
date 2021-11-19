@@ -43,7 +43,7 @@ public class DataToDecodableMapper<T>: Mapper<Data, T> where T: Decodable {
             }
             #endif
 
-            throw MappingError<T>(error)
+            throw MappingError(className: "\(T.self)")
         }
     }
 }

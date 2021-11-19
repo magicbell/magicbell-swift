@@ -8,23 +8,17 @@
 import Foundation
 import Harmony
 
-class PushSubscriptionNetworkDataSource {
+class PushSubscriptionNetworkDataSource: PutDataSource, DeleteDataSource {
     typealias T = PushSubscription
 
-    private let environment: Environment
     private let httpClient: HttpClient
     private let mapper: DataToDecodableMapper<PushSubscription>
 
-    public init(environment: Environment,
-                httpClient: HttpClient,
-                mapper: DataToDecodableMapper<PushSubscription>) {
-        self.environment = environment
+    public init(httpClient: HttpClient, mapper: DataToDecodableMapper<PushSubscription>) {
         self.httpClient = httpClient
         self.mapper = mapper
     }
-}
 
-extension PushSubscriptionNetworkDataSource: PutDataSource {
     func put(_ value: PushSubscription?, in query: Query) -> Future<PushSubscription> {
         switch query {
         case let pushSubscriptionQuery as RegisterPushSubscriptionQuery:
@@ -32,25 +26,20 @@ extension PushSubscriptionNetworkDataSource: PutDataSource {
                 return Future(NetworkError(message: "Value cannot be nil"))
             }
             var urlRequest = httpClient.prepareURLRequest(
-                baseURL: environment.baseUrl,
                 path: "/push_subscriptions",
-                apiKey: environment.apiKey,
-                apiSecret: environment.apiSecret,
                 externalId: pushSubscriptionQuery.user.externalId,
-                email: pushSubscriptionQuery.user.email,
-                isHMACEnabled: environment.isHMACEnabled)
+                email: pushSubscriptionQuery.user.email
+            )
             urlRequest.httpMethod = "POST"
             do {
                 urlRequest.httpBody = try JSONEncoder().encode(value)
             } catch {
-                return Future(MappingError<T>(error))
+                return Future(MappingError(className: "\(T.self)"))
             }
 
-            return self.httpClient.performRequest(urlRequest).map { data in
-                try self.mapper.map(data)
-            }.recover { error in
-                Future(error)
-            }
+            return self.httpClient
+                .performRequest(urlRequest)
+                .map { try self.mapper.map($0) }
         default:
             query.fatalError(.put, self)
         }
@@ -59,28 +48,20 @@ extension PushSubscriptionNetworkDataSource: PutDataSource {
     func putAll(_ array: [PushSubscription], in query: Query) -> Future<[PushSubscription]> {
         query.fatalError(.putAll, self)
     }
-}
 
-extension PushSubscriptionNetworkDataSource: DeleteDataSource {
     public func delete(_ query: Query) -> Future<Void> {
         switch query {
         case let deletePushSubscriptionQuery as DeletePushSubscriptionQuery:
             var urlRequest = self.httpClient.prepareURLRequest(
-                baseURL: environment.baseUrl,
                 path: "/push_subscriptions/\(deletePushSubscriptionQuery.deviceToken)",
-                apiKey: environment.apiKey,
-                apiSecret: environment.apiSecret,
                 externalId: deletePushSubscriptionQuery.user.externalId,
-                email: deletePushSubscriptionQuery.user.email,
-                isHMACEnabled: environment.isHMACEnabled)
-
+                email: deletePushSubscriptionQuery.user.email
+            )
             urlRequest.httpMethod = "DELETE"
 
-            return self.httpClient.performRequest(urlRequest).map { _ in
-                Void()
-            }.recover { error in
-                Future(error)
-            }
+            return self.httpClient
+                .performRequest(urlRequest)
+                .map { _ in Void() }
         default:
             query.fatalError(.delete, self)
         }

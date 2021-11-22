@@ -12,9 +12,10 @@ class PushSubscriptionNetworkDataSource: PutDataSource, DeleteDataSource {
     typealias T = PushSubscription
 
     private let httpClient: HttpClient
-    private let mapper: DataToDecodableMapper<PushSubscription>
+    private let mapper: Mapper<Data, PushSubscription>
 
-    public init(httpClient: HttpClient, mapper: DataToDecodableMapper<PushSubscription>) {
+    public init(httpClient: HttpClient,
+                mapper: Mapper<Data, PushSubscription>) {
         self.httpClient = httpClient
         self.mapper = mapper
     }

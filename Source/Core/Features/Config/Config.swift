@@ -7,21 +7,26 @@
 
 import Foundation
 
-public class Config: Decodable {
+public class Config: Codable {
     public let channel: String
 
     required public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let configContainer = try container
-                .nestedContainer(keyedBy: WebserviceKeys.self, forKey: .websocket)
+        let container = try decoder.container(keyedBy: ContainerKeys.self)
+        let configContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .websocket)
         channel = try configContainer.decode(String.self, forKey: .channel)
     }
 
-    enum CodingKeys: String, CodingKey {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: ContainerKeys.self)
+        var configContainer = container.nestedContainer(keyedBy: CodingKeys.self, forKey: .websocket)
+        try configContainer.encode(channel, forKey: .channel)
+    }
+
+    enum ContainerKeys: String, CodingKey {
         case websocket = "ws"
     }
 
-    enum WebserviceKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case channel
     }
 }

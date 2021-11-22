@@ -11,11 +11,17 @@ public struct PushSubscription: Codable {
     public let id: String?
     public let deviceToken, platform: String
 
+    public init(id: String? = nil, deviceToken: String, platform: String) {
+        self.id = id
+        self.deviceToken = deviceToken
+        self.platform = platform
+    }
+
     enum ContainerKeys: String, CodingKey {
         case pushSubscription = "push_subscription"
     }
 
-    enum PushSubscriptionKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case id
         case deviceToken = "device_token"
         case platform
@@ -23,7 +29,7 @@ public struct PushSubscription: Codable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: ContainerKeys.self)
-        let values = try container.nestedContainer(keyedBy: PushSubscriptionKeys.self, forKey: .pushSubscription)
+        let values = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .pushSubscription)
         id = try values.decodeIfPresent(String.self, forKey: .id)
         deviceToken = try values.decode(String.self, forKey: .deviceToken)
         platform = try values.decode(String.self, forKey: .platform)
@@ -31,15 +37,8 @@ public struct PushSubscription: Codable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: ContainerKeys.self)
-        var pushSubscriptionContainer = container.nestedContainer(keyedBy: PushSubscriptionKeys.self, forKey: .pushSubscription)
+        var pushSubscriptionContainer = container.nestedContainer(keyedBy: CodingKeys.self, forKey: .pushSubscription)
         try pushSubscriptionContainer.encode(deviceToken, forKey: .deviceToken)
         try pushSubscriptionContainer.encode(platform, forKey: .platform)
-    }
-
-
-    public init(id: String? = nil, deviceToken: String, platform: String) {
-        self.id = id
-        self.deviceToken = deviceToken
-        self.platform = platform
     }
 }

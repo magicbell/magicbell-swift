@@ -30,6 +30,12 @@
 		59C12ECF2746DC7100311D24 /* PushSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C12ECE2746DC7100311D24 /* PushSubscription.swift */; };
 		59C12ED12746E48100311D24 /* PushSubscriptionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C12ED02746E48100311D24 /* PushSubscriptionProvider.swift */; };
 		59C12ED42747131000311D24 /* MappingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C12ED32747131000311D24 /* MappingError.swift */; };
+		59C3CDBC274D039D0043BA77 /* MagicBellError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDBB274D039D0043BA77 /* MagicBellError.swift */; };
+		59C3CDBE274D2BDB0043BA77 /* UserProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDBD274D2BDB0043BA77 /* UserProvider.swift */; };
+		59C3CDC0274D2CC20043BA77 /* GetUserConfigInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDBF274D2CC20043BA77 /* GetUserConfigInteractor.swift */; };
+		59C3CDC2274D2F220043BA77 /* EncodableToDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDC1274D2F220043BA77 /* EncodableToDataMapper.swift */; };
+		59C3CDC4274D36360043BA77 /* DeleteUserConfigInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDC3274D36360043BA77 /* DeleteUserConfigInteractor.swift */; };
+		59C3CDC6274D4ED40043BA77 /* ErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDC5274D4ED40043BA77 /* ErrorEntity.swift */; };
 		59EF99BC27446D6900FB2378 /* MagicBell.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59EF99B127446D6900FB2378 /* MagicBell.framework */; };
 		59EF99C127446D6900FB2378 /* MagicBellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF99C027446D6900FB2378 /* MagicBellTests.swift */; };
 		59EF99CC27446DAD00FB2378 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 59EF99CB27446DAD00FB2378 /* Podfile */; };
@@ -72,6 +78,12 @@
 		59C12ECE2746DC7100311D24 /* PushSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSubscription.swift; sourceTree = "<group>"; };
 		59C12ED02746E48100311D24 /* PushSubscriptionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSubscriptionProvider.swift; sourceTree = "<group>"; };
 		59C12ED32747131000311D24 /* MappingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappingError.swift; sourceTree = "<group>"; };
+		59C3CDBB274D039D0043BA77 /* MagicBellError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBellError.swift; sourceTree = "<group>"; };
+		59C3CDBD274D2BDB0043BA77 /* UserProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProvider.swift; sourceTree = "<group>"; };
+		59C3CDBF274D2CC20043BA77 /* GetUserConfigInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserConfigInteractor.swift; sourceTree = "<group>"; };
+		59C3CDC1274D2F220043BA77 /* EncodableToDataMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodableToDataMapper.swift; sourceTree = "<group>"; };
+		59C3CDC3274D36360043BA77 /* DeleteUserConfigInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteUserConfigInteractor.swift; sourceTree = "<group>"; };
+		59C3CDC5274D4ED40043BA77 /* ErrorEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorEntity.swift; sourceTree = "<group>"; };
 		59EF99B127446D6900FB2378 /* MagicBell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MagicBell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59EF99BB27446D6900FB2378 /* MagicBellTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MagicBellTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		59EF99C027446D6900FB2378 /* MagicBellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBellTests.swift; sourceTree = "<group>"; };
@@ -133,6 +145,7 @@
 		59799E34274659B100BFB375 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				59C3CDB8274CD36E0043BA77 /* User */,
 				59799E2F2746583200BFB375 /* Config */,
 				59799E562746609A00BFB375 /* Notification */,
 				59799E5E274660AD00BFB375 /* UserPreferences */,
@@ -174,6 +187,7 @@
 				59799E3E27465BB500BFB375 /* HttpClient.swift */,
 				59799E3D27465BB500BFB375 /* DataToDecodableMapper.swift */,
 				59799E4327465C9200BFB375 /* String+HMAC.swift */,
+				59C3CDC1274D2F220043BA77 /* EncodableToDataMapper.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -248,8 +262,20 @@
 			children = (
 				59799E6A274671A100BFB375 /* NetworkError.swift */,
 				59C12ED32747131000311D24 /* MappingError.swift */,
+				59C3CDBB274D039D0043BA77 /* MagicBellError.swift */,
+				59C3CDC5274D4ED40043BA77 /* ErrorEntity.swift */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		59C3CDB8274CD36E0043BA77 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				59C3CDBD274D2BDB0043BA77 /* UserProvider.swift */,
+				59C3CDBF274D2CC20043BA77 /* GetUserConfigInteractor.swift */,
+				59C3CDC3274D36360043BA77 /* DeleteUserConfigInteractor.swift */,
+			);
+			path = User;
 			sourceTree = "<group>";
 		};
 		59EF99A727446D6900FB2378 = {
@@ -499,7 +525,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59C3CDC0274D2CC20043BA77 /* GetUserConfigInteractor.swift in Sources */,
 				D2D277262747C9CF00B5F69E /* ActionNotificationNetworkDataSource.swift in Sources */,
+				59C3CDC4274D36360043BA77 /* DeleteUserConfigInteractor.swift in Sources */,
 				59799E5C2746609A00BFB375 /* NotificationNetworkDataSource.swift in Sources */,
 				59C12ECF2746DC7100311D24 /* PushSubscription.swift in Sources */,
 				59799E4427465C9200BFB375 /* String+HMAC.swift in Sources */,
@@ -508,6 +536,7 @@
 				59C12ECC2746DBC200311D24 /* PushSubscriptionNetworkDataSource.swift in Sources */,
 				59799E4727465F8F00BFB375 /* ConfigProvider.swift in Sources */,
 				59799E65274660AD00BFB375 /* UserPreferencesProvider.swift in Sources */,
+				59C3CDBE274D2BDB0043BA77 /* UserProvider.swift in Sources */,
 				59799E67274660AD00BFB375 /* UserPreferences.swift in Sources */,
 				59799E552746604F00BFB375 /* Config.swift in Sources */,
 				59799E66274660AD00BFB375 /* UserPreferencesNetworkDataSource.swift in Sources */,
@@ -517,12 +546,15 @@
 				59C12ED12746E48100311D24 /* PushSubscriptionProvider.swift in Sources */,
 				59799E4027465BB500BFB375 /* HttpClient.swift in Sources */,
 				D2D2772B2747D43200B5F69E /* PushSubscriptionQuery.swift in Sources */,
+				59C3CDBC274D039D0043BA77 /* MagicBellError.swift in Sources */,
 				59799E312746587000BFB375 /* MagicBell.swift in Sources */,
 				59799E38274659D800BFB375 /* Environment.swift in Sources */,
+				59C3CDC2274D2F220043BA77 /* EncodableToDataMapper.swift in Sources */,
 				59799E6B274671A100BFB375 /* NetworkError.swift in Sources */,
 				D2D277292747D40A00B5F69E /* NotificationQuery.swift in Sources */,
 				59799E33274658B100BFB375 /* SDKProvider.swift in Sources */,
 				59799E542746604F00BFB375 /* ConfigNetworkDataSource.swift in Sources */,
+				59C3CDC6274D4ED40043BA77 /* ErrorEntity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

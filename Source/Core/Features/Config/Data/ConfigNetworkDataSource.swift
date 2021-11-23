@@ -23,12 +23,12 @@ public class ConfigNetworkDataSource: GetDataSource {
     public func get(_ query: Query) -> Future<Config> {
         switch query {
         case let userQuery as UserQuery:
-            let urlRequest = self.httpClient.prepareURLRequest(
+            let urlRequest = httpClient.prepareURLRequest(
                 path: "/config",
                 externalId: userQuery.externalId,
                 email: userQuery.email
             )
-            return self.httpClient
+            return httpClient
                 .performRequest(urlRequest)
                 .map { try self.mapper.map($0) }
         default:

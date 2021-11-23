@@ -13,23 +13,23 @@ public protocol PushSubscriptionComponent {
     func getDeletePushSubscriptionNetworkDataSource() -> DeleteDataSource
 }
 
-public class DefaultPushSubscriptionModule: PushSubscriptionComponent {
+class DefaultPushSubscriptionModule: PushSubscriptionComponent {
     private let httpClient: HttpClient
-
+    
     init(httpClient: HttpClient) {
         self.httpClient = httpClient
     }
-
+    
     private lazy var pushSubscriptionNetworkDataSource = PushSubscriptionNetworkDataSource(
-            httpClient: httpClient,
-            mapper: DataToDecodableMapper<PushSubscription>()
+        httpClient: httpClient,
+        mapper: DataToDecodableMapper<PushSubscription>()
     )
-
-    public func getPushSubscriptionNetworkDataSource() -> AnyPutDataSource<PushSubscription> {
+    
+    func getPushSubscriptionNetworkDataSource() -> AnyPutDataSource<PushSubscription> {
         AnyPutDataSource(pushSubscriptionNetworkDataSource)
     }
-
-    public func getDeletePushSubscriptionNetworkDataSource() -> DeleteDataSource {
+    
+    func getDeletePushSubscriptionNetworkDataSource() -> DeleteDataSource {
         pushSubscriptionNetworkDataSource
     }
 }

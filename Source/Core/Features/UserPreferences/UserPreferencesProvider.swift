@@ -13,7 +13,7 @@ public protocol UserPreferencesComponent {
     func getPutUserPreferenceNetworkDataSource() -> AnyPutDataSource<UserPreferences>
 }
 
-public class DefaultUserPreferencesModule: UserPreferencesComponent {
+class DefaultUserPreferencesModule: UserPreferencesComponent {
     private let httpClient: HttpClient
 
     init(httpClient: HttpClient) {
@@ -25,11 +25,11 @@ public class DefaultUserPreferencesModule: UserPreferencesComponent {
         mapper: DataToDecodableMapper<UserPreferences>()
     )
 
-    public func getUserPreferencesNetworkDataSource() -> AnyGetDataSource<UserPreferences> {
+    func getUserPreferencesNetworkDataSource() -> AnyGetDataSource<UserPreferences> {
         AnyGetDataSource(userPreferencesNetworkDatasource)
     }
 
-    public func getPutUserPreferenceNetworkDataSource() -> AnyPutDataSource<UserPreferences> {
+    func getPutUserPreferenceNetworkDataSource() -> AnyPutDataSource<UserPreferences> {
         AnyPutDataSource(userPreferencesNetworkDatasource)
     }
 }

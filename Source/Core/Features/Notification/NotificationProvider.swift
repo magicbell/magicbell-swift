@@ -14,7 +14,7 @@ public protocol NotificationComponent {
     func getDeleteNotificationNetworkDataSource() -> DeleteDataSource
 }
 
-public class DefaultNotificationComponent: NotificationComponent {
+class DefaultNotificationComponent: NotificationComponent {
     private let httpClient: HttpClient
 
     init(httpClient: HttpClient) {
@@ -30,15 +30,15 @@ public class DefaultNotificationComponent: NotificationComponent {
         httpClient: httpClient
     )
 
-    public func getNotificationNetworkDataSource() -> AnyGetDataSource<Notification> {
+    func getNotificationNetworkDataSource() -> AnyGetDataSource<Notification> {
         AnyGetDataSource(notificationNetworkDataSource)
     }
 
-    public func getActionNotificationNetworkDataSource() -> AnyPutDataSource<Void> {
+    func getActionNotificationNetworkDataSource() -> AnyPutDataSource<Void> {
         AnyPutDataSource(actionNotificationNetworkDataSource)
     }
 
-    public func getDeleteNotificationNetworkDataSource() -> DeleteDataSource {
+    func getDeleteNotificationNetworkDataSource() -> DeleteDataSource {
         actionNotificationNetworkDataSource
     }
 }

@@ -10,16 +10,13 @@ import Harmony
 struct LoginInteractor {
     private let logger: Logger
     private let getUserConfig: GetUserConfigInteractor
-    private let deleteUserConfig: DeleteUserConfigInteractor
     private let storeUserQuery: StoreUserQueryInteractor
 
     init(logger: Logger,
          getUserConfig: GetUserConfigInteractor,
-         deleteUserConfig: DeleteUserConfigInteractor,
          storeUserQuery: StoreUserQueryInteractor) {
         self.logger = logger
         self.getUserConfig = getUserConfig
-        self.deleteUserConfig = deleteUserConfig
         self.storeUserQuery = storeUserQuery
     }
 

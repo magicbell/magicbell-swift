@@ -52,9 +52,6 @@ class DefaultUserComponent: UserComponent {
             getUserConfig: GetUserConfigInteractor(
                 userConfigRepository.toGetByQueryInteractor(executor)
             ),
-            deleteUserConfig: DeleteUserConfigInteractor(
-                userConfigRepository.toDeleteAllByQueryInteractor(executor)
-            ),
             storeUserQuery: storeUserQuery
         )
     }

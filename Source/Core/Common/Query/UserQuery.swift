@@ -8,7 +8,7 @@
 import Foundation
 import Harmony
 
-public class UserQuery: KeyQuery {
+public class UserQuery: IdempotentQuery, KeyQuery {
     let externalId: String?
     let email: String?
 

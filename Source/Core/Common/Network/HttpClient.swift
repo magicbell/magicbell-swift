@@ -10,7 +10,15 @@ import Harmony
 
 public protocol HttpClient {
     func prepareURLRequest(path: String, externalId: String?, email: String?) -> URLRequest
+    func prepareURLRequest(path: String, externalId: String?, email: String?, idempotentKey: String?) -> URLRequest
     func performRequest(_ urlRequest: URLRequest) -> Future<Data>
+}
+
+extension HttpClient {
+    // Extending to make idempotentKey optional and default to nil
+    public func prepareURLRequest(path: String, externalId: String?, email: String?) -> URLRequest {
+        return prepareURLRequest(path: path, externalId: externalId, email: email, idempotentKey: nil)
+    }
 }
 
 public class DefaultHttpClient: HttpClient {
@@ -23,15 +31,33 @@ public class DefaultHttpClient: HttpClient {
         self.environment = environment
     }
 
-    public func prepareURLRequest(path: String, externalId: String?, email: String?) -> URLRequest {
+    public func prepareURLRequest(path: String, externalId: String?, email: String?, idempotentKey: String? = nil) -> URLRequest {
         var urlRequest = URLRequest(url: environment.baseUrl.appendingPathComponent(path))
 
-        urlRequest.addValue(environment.apiKey, forHTTPHeaderField: "X-MAGICBELL-API-KEY")
+        // Adding API Key
+        addAPIKeyHeader(environment.apiKey, urlRequest: &urlRequest)
 
+        // Adding User Authentication headers
+        addUserAuthenticationHeaders(
+            externalId: externalId,
+            email: email,
+            urlRequest: &urlRequest
+        )
+
+        // Adding HMAC if enabled
         if environment.isHMACEnabled {
-            addHMACHeader(environment.apiSecret, externalId, email, &urlRequest)
+            addHMACHeader(
+                apiSecret: environment.apiSecret,
+                externalId: externalId,
+                email: email,
+                urlRequest: &urlRequest
+            )
         }
-        addIdAndOrEmailHeader(externalId, email, &urlRequest)
+
+        // Adding idempotent key if defined
+        if let key = idempotentKey {
+            addIdempotentKeyHeader(key, urlRequest: &urlRequest)
+        }
 
         return urlRequest
     }
@@ -61,11 +87,21 @@ public class DefaultHttpClient: HttpClient {
         }
     }
 
-    private func addHMACHeader(_ apiSecret: String,
-                               _ externalId: String?,
-                               _ email: String?,
-                               _ urlRequest: inout URLRequest) {
 
+    private func addAPIKeyHeader(_ apiKey: String, urlRequest: inout URLRequest) {
+        urlRequest.addValue(apiKey, forHTTPHeaderField: "X-MAGICBELL-API-KEY")
+    }
+
+    private func addIdempotentKeyHeader(_ idempotentKey: String, urlRequest: inout URLRequest) {
+        urlRequest.addValue(idempotentKey, forHTTPHeaderField: "IDEMPOTENCY-KEY")
+    }
+
+    private func addHMACHeader(
+        apiSecret: String,
+        externalId: String?,
+        email: String?,
+        urlRequest: inout URLRequest
+    ) {
         if let externalId = externalId {
             let hmac: String = externalId.hmac(key: apiSecret)
             urlRequest.addValue(hmac, forHTTPHeaderField: "X-MAGICBELL-USER-HMAC")
@@ -75,10 +111,11 @@ public class DefaultHttpClient: HttpClient {
         }
     }
 
-    private func addIdAndOrEmailHeader(_ externalId: String?,
-                                       _ email: String?,
-                                       _ urlRequest: inout URLRequest) {
-
+    private func addUserAuthenticationHeaders(
+        externalId: String?,
+        email: String?,
+        urlRequest: inout URLRequest
+    ) {
         if let externalId = externalId {
             urlRequest.addValue(externalId, forHTTPHeaderField: "X-MAGICBELL-USER-EXTERNAL-ID")
         }

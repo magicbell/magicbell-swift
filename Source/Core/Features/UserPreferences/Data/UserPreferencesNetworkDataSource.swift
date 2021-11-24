@@ -26,7 +26,8 @@ public class UserPreferencesNetworkDataSource: GetDataSource, PutDataSource {
             let urlRequest = self.httpClient.prepareURLRequest(
                 path: "/notification_preferences",
                 externalId: userQuery.externalId,
-                email: userQuery.email
+                email: userQuery.email,
+                idempotentKey: userQuery.idempotentKey
             )
             return self.httpClient
                 .performRequest(urlRequest)
@@ -50,7 +51,8 @@ public class UserPreferencesNetworkDataSource: GetDataSource, PutDataSource {
             var urlRequest = self.httpClient.prepareURLRequest(
                 path: "/notification_preferences",
                 externalId: userQuery.externalId,
-                email: userQuery.email
+                email: userQuery.email,
+                idempotentKey: userQuery.idempotentKey
             )
             urlRequest.httpMethod = "PUT"
 

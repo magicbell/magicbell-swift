@@ -41,6 +41,7 @@
 		59EF99CC27446DAD00FB2378 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 59EF99CB27446DAD00FB2378 /* Podfile */; };
 		59EF9AC52744710300FB2378 /* MagicBell.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 59EF9AC42744710300FB2378 /* MagicBell.podspec */; };
 		59EF9ACB2744792A00FB2378 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 59EF9ACA2744792A00FB2378 /* LICENSE */; };
+		D2153EF6274E9CB8009C2DDC /* IdempotentQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2153EF5274E9CB8009C2DDC /* IdempotentQuery.swift */; };
 		D2D277262747C9CF00B5F69E /* ActionNotificationNetworkDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D277252747C9CF00B5F69E /* ActionNotificationNetworkDataSource.swift */; };
 		D2D277292747D40A00B5F69E /* NotificationQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D277282747D40A00B5F69E /* NotificationQuery.swift */; };
 		D2D2772B2747D43200B5F69E /* PushSubscriptionQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D2772A2747D43200B5F69E /* PushSubscriptionQuery.swift */; };
@@ -95,6 +96,7 @@
 		9EF8CEE464FC13C082743CBD /* Pods-MagicBell-MagicBellTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell-MagicBellTests.release.xcconfig"; path = "Target Support Files/Pods-MagicBell-MagicBellTests/Pods-MagicBell-MagicBellTests.release.xcconfig"; sourceTree = "<group>"; };
 		B45D82557E72257F11E3D387 /* libPods-MagicBell-MagicBellTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MagicBell-MagicBellTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5F30FD4909C599F35D72FF1 /* Pods-MagicBell.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell.release.xcconfig"; path = "Target Support Files/Pods-MagicBell/Pods-MagicBell.release.xcconfig"; sourceTree = "<group>"; };
+		D2153EF5274E9CB8009C2DDC /* IdempotentQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdempotentQuery.swift; sourceTree = "<group>"; };
 		D2D277252747C9CF00B5F69E /* ActionNotificationNetworkDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionNotificationNetworkDataSource.swift; sourceTree = "<group>"; };
 		D2D277282747D40A00B5F69E /* NotificationQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationQuery.swift; sourceTree = "<group>"; };
 		D2D2772A2747D43200B5F69E /* PushSubscriptionQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSubscriptionQuery.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 		59799E39274659FB00BFB375 /* Query */ = {
 			isa = PBXGroup;
 			children = (
+				D2153EF5274E9CB8009C2DDC /* IdempotentQuery.swift */,
 				59799E3A27465A0E00BFB375 /* UserQuery.swift */,
 			);
 			path = Query;
@@ -539,6 +542,7 @@
 				59C3CDBE274D2BDB0043BA77 /* UserProvider.swift in Sources */,
 				59799E67274660AD00BFB375 /* UserPreferences.swift in Sources */,
 				59799E552746604F00BFB375 /* Config.swift in Sources */,
+				D2153EF6274E9CB8009C2DDC /* IdempotentQuery.swift in Sources */,
 				59799E66274660AD00BFB375 /* UserPreferencesNetworkDataSource.swift in Sources */,
 				59799E69274662E900BFB375 /* NotificationProvider.swift in Sources */,
 				59799E3B27465A0E00BFB375 /* UserQuery.swift in Sources */,

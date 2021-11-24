@@ -18,19 +18,19 @@ public class ActionNotificationNetworkDataSource: PutDataSource, DeleteDataSourc
 
     public func put(_ value: Void?, in query: Query) -> Future<Void> {
         switch query {
-        case let notificationActionQuery as NotificationActionQuery:
+        case let query as NotificationActionQuery:
             var path = "/notifications"
             var httpMethod = "POST"
-            switch notificationActionQuery.action {
+            switch query.action {
             case .markAsRead:
-                path.append("/\(notificationActionQuery.notificationId)/read")
+                path.append("/\(query.notificationId)/read")
             case .markAsUnread:
-                path.append("/\(notificationActionQuery.notificationId)/unread")
+                path.append("/\(query.notificationId)/unread")
             case .unarchive:
-                path.append("/\(notificationActionQuery.notificationId)/archive")
+                path.append("/\(query.notificationId)/archive")
                 httpMethod = "DELETE"
             case .archive:
-                path.append("/\(notificationActionQuery.notificationId)/archive")
+                path.append("/\(query.notificationId)/archive")
             case .markAllAsRead:
                 path.append("/read")
             case .markAllAsSeen:
@@ -39,8 +39,9 @@ public class ActionNotificationNetworkDataSource: PutDataSource, DeleteDataSourc
 
             var urlRequest = self.httpClient.prepareURLRequest(
                 path: path,
-                externalId: notificationActionQuery.user.externalId,
-                email: notificationActionQuery.user.email
+                externalId: query.userQuery.externalId,
+                email: query.userQuery.email,
+                idempotentKey: query.idempotentKey
             )
             urlRequest.httpMethod = httpMethod
 
@@ -58,11 +59,12 @@ public class ActionNotificationNetworkDataSource: PutDataSource, DeleteDataSourc
 
     public func delete(_ query: Query) -> Future<Void> {
         switch query {
-        case let notificationQuery as NotificationQuery:
+        case let query as NotificationQuery:
             var urlRequest = self.httpClient.prepareURLRequest(
-                path: "/notifications/\(notificationQuery.notificationId)",
-                externalId: notificationQuery.user.externalId,
-                email: notificationQuery.user.email
+                path: "/notifications/\(query.notificationId)",
+                externalId: query.userQuery.externalId,
+                email: query.userQuery.email,
+                idempotentKey: query.idempotentKey
             )
             urlRequest.httpMethod = "DELETE"
 

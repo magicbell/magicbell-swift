@@ -22,11 +22,12 @@ public class NotificationNetworkDataSource: GetDataSource {
 
     public func get(_ query: Query) -> Future<Notification> {
         switch query {
-        case let notificationQuery as NotificationQuery:
+        case let query as NotificationQuery:
             let urlRequest = self.httpClient.prepareURLRequest(
-                path: "/notifications/\(notificationQuery.notificationId)",
-                externalId: notificationQuery.user.externalId,
-                email: notificationQuery.user.email
+                path: "/notifications/\(query.notificationId)",
+                externalId: query.userQuery.externalId,
+                email: query.userQuery.email,
+                idempotentKey: query.idempotentKey
             )
             return self.httpClient
                 .performRequest(urlRequest)

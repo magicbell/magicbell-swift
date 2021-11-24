@@ -22,14 +22,15 @@ class PushSubscriptionNetworkDataSource: PutDataSource, DeleteDataSource {
 
     func put(_ value: PushSubscription?, in query: Query) -> Future<PushSubscription> {
         switch query {
-        case let pushSubscriptionQuery as RegisterPushSubscriptionQuery:
+        case let query as UserQuery:
             guard let value = value else {
                 return Future(NetworkError(message: "Value cannot be nil"))
             }
             var urlRequest = httpClient.prepareURLRequest(
                 path: "/push_subscriptions",
-                externalId: pushSubscriptionQuery.user.externalId,
-                email: pushSubscriptionQuery.user.email
+                externalId: query.externalId,
+                email: query.email,
+                idempotentKey: query.idempotentKey
             )
             urlRequest.httpMethod = "POST"
             do {
@@ -52,11 +53,12 @@ class PushSubscriptionNetworkDataSource: PutDataSource, DeleteDataSource {
 
     public func delete(_ query: Query) -> Future<Void> {
         switch query {
-        case let deletePushSubscriptionQuery as DeletePushSubscriptionQuery:
+        case let query as DeletePushSubscriptionQuery:
             var urlRequest = self.httpClient.prepareURLRequest(
-                path: "/push_subscriptions/\(deletePushSubscriptionQuery.deviceToken)",
-                externalId: deletePushSubscriptionQuery.user.externalId,
-                email: deletePushSubscriptionQuery.user.email
+                path: "/push_subscriptions/\(query.deviceToken)",
+                externalId: query.userQuery.externalId,
+                email: query.userQuery.email,
+                idempotentKey: query.idempotentKey
             )
             urlRequest.httpMethod = "DELETE"
 

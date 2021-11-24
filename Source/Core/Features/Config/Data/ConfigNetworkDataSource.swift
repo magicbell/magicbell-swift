@@ -22,11 +22,12 @@ public class ConfigNetworkDataSource: GetDataSource {
 
     public func get(_ query: Query) -> Future<Config> {
         switch query {
-        case let userQuery as UserQuery:
+        case let query as UserQuery:
             let urlRequest = httpClient.prepareURLRequest(
                 path: "/config",
-                externalId: userQuery.externalId,
-                email: userQuery.email
+                externalId: query.externalId,
+                email: query.email,
+                idempotentKey: query.idempotentKey
             )
             return httpClient
                 .performRequest(urlRequest)

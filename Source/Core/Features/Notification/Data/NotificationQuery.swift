@@ -7,13 +7,13 @@
 
 import Harmony
 
-public class NotificationQuery: Query {
-    public let user: UserQuery
+public class NotificationQuery: IdempotentQuery {
+    public let userQuery: UserQuery
     public let notificationId: String
 
     public init(notificationId: String, userQuery: UserQuery) {
         self.notificationId = notificationId
-        user = userQuery
+        self.userQuery = userQuery
     }
 }
 

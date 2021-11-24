@@ -19,7 +19,7 @@ class ViewController: UIViewController {
                 apiSecret: "72c5cdbba85d089d7f11ab090cb4c6773cbafaa8"
             )
 
-            let userQuery = UserQuery(email: "javier@mobilejazz.com")
+            let userQueryFactory: () -> UserQuery = { UserQuery(email: "javier@mobilejazz.com") }
             let notificationId = "f43fb412-b8b2-47af-bf9b-61b92b5e9c20"
             let deviceToken = "abdcde12345"
 
@@ -28,13 +28,14 @@ class ViewController: UIViewController {
 //            let config = try getConfigNetworkDataSource.get(userQuery).result.get()
 //            print("Channel for notifications --> \(config.channel)")
 
-            let config = try MagicBell.shared.sdkProvider.userConfigComponent.getUserConfigInteractor().execute(refresh: true, userQuery: userQuery).result.get()
+            let config = try MagicBell.shared.sdkProvider.userConfigComponent.getUserConfigInteractor()
+                .execute(refresh: true, userQuery: userQueryFactory()).result.get()
             print("Channel for notifications --> \(config.channel)")
-            _ = MagicBell.shared.sdkProvider.userConfigComponent.deleteUserConfigInteractor().execute(userQuery: userQuery)
-            print("Removed config for user --> \(userQuery.key)")
+            _ = MagicBell.shared.sdkProvider.userConfigComponent.deleteUserConfigInteractor().execute(userQuery: userQueryFactory())
+            print("Removed config for user --> \(userQueryFactory().key)")
             // User preferences
             let getUserPreferencesNetworkDataSource = MagicBell.shared.sdkProvider.userPreferencesComponent.getUserPreferencesNetworkDataSource()
-            let userPreferences = try getUserPreferencesNetworkDataSource.get(userQuery).result.get()
+            let userPreferences = try getUserPreferencesNetworkDataSource.get(userQueryFactory()).result.get()
             print("User preferences --> \(userPreferences)")
 
             if let categories = userPreferences.notificationPreferences?.categories {
@@ -47,7 +48,7 @@ class ViewController: UIViewController {
             }
 
             let getPutUserPreferenceNetworkDataSource = MagicBell.shared.sdkProvider.userPreferencesComponent.getPutUserPreferenceNetworkDataSource()
-            let userPreferencesUpdated = try getPutUserPreferenceNetworkDataSource.put(userPreferences, in: userQuery).result.get()
+            let userPreferencesUpdated = try getPutUserPreferenceNetworkDataSource.put(userPreferences, in: userQueryFactory()).result.get()
             print("New user preferences --> \(userPreferencesUpdated)")
 
 
@@ -56,15 +57,15 @@ class ViewController: UIViewController {
             let notificationDataSource = MagicBell.shared.sdkProvider.notificationComponent.getNotificationNetworkDataSource()
             let actionNotificationDataSource = MagicBell.shared.sdkProvider.notificationComponent.getActionNotificationNetworkDataSource()
 
-            let notification = try notificationDataSource.get(NotificationQuery(notificationId: notificationId, userQuery: userQuery)).result.get()
+            let notification = try notificationDataSource.get(NotificationQuery(notificationId: notificationId, userQuery: userQueryFactory())).result.get()
             print("Notification --> \(notification)")
 
             // Mark Notification as readed
             _ = try actionNotificationDataSource.put(nil, in: NotificationActionQuery(action: .markAsRead,
                                                       notificationId: notificationId,
-                                                      userQuery: userQuery)).result.get()
+                                                      userQuery: userQueryFactory())).result.get()
             let notificationReaded = try notificationDataSource.get(NotificationQuery(notificationId: notificationId,
-                                                                                      userQuery: userQuery)).result.get()
+                                                                                      userQuery: userQueryFactory())).result.get()
             print(notificationReaded)
 
             // Uncomment to delete a notification
@@ -74,11 +75,8 @@ class ViewController: UIViewController {
             // Push subscription
             let getPushSubscriptionNetworkDataSource = MagicBell.shared.sdkProvider.pushSubscriptionComponent.getPushSubscriptionNetworkDataSource()
             let pushSubscription = try getPushSubscriptionNetworkDataSource.put(
-                PushSubscription(
-                    deviceToken: deviceToken,
-                    platform: "ios"
-                ),
-                in: RegisterPushSubscriptionQuery(user: userQuery)
+                PushSubscription(deviceToken: deviceToken),
+                in: userQueryFactory()
             ).result.get()
             print("Push subscription --> \(pushSubscription)")
 

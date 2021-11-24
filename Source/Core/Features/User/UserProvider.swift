@@ -8,28 +8,25 @@
 import Foundation
 import Harmony
 
-public protocol UserComponent {
-    func getUserConfigInteractor() -> GetUserConfigInteractor
-    func deleteUserConfigInteractor() -> DeleteUserConfigInteractor
+protocol UserComponent {
+    func getLoginInteractor() -> LoginInteractor
+    func getLogoutInteractor() -> LogoutInteractor
+    func getUserQueryInteractor() -> GetUserQueryInteractor
 }
 
 class DefaultUserComponent: UserComponent {
 
+    private let logger: Logger
     private let configComponent: ConfigComponent
     private let executor: Executor
 
-    init(configComponent: ConfigComponent,
-         executor: Executor) {
+    init(logger: Logger,
+         configComponent: ConfigComponent,
+         executor: Executor
+    ) {
+        self.logger = logger
         self.configComponent = configComponent
         self.executor = executor
-    }
-
-    func getUserConfigInteractor() -> GetUserConfigInteractor {
-        return GetUserConfigInteractor(userConfigRepository.toGetByQueryInteractor(executor))
-    }
-
-    func deleteUserConfigInteractor() -> DeleteUserConfigInteractor {
-        return DeleteUserConfigInteractor(userConfigRepository.toDeleteAllByQueryInteractor(executor))
     }
 
     private lazy var userConfigRepository: AnyRepository<Config> = {
@@ -42,4 +39,42 @@ class DefaultUserComponent: UserComponent {
 
         return AnyRepository(CacheRepository(main: configDataSourceAssembler, cache: configStorage))
     }()
+
+    private lazy var userQueryStorageRepository = SingleDataSourceRepository(InMemoryDataSource<UserQuery>())
+
+    func getLoginInteractor() -> LoginInteractor {
+        let storeUserQuery = StoreUserQueryInteractor(
+            storeUserQuery: userQueryStorageRepository.toPutByQueryInteractor(executor)
+        )
+
+        return LoginInteractor(
+            logger: logger,
+            getUserConfig: GetUserConfigInteractor(
+                userConfigRepository.toGetByQueryInteractor(executor)
+            ),
+            deleteUserConfig: DeleteUserConfigInteractor(
+                userConfigRepository.toDeleteAllByQueryInteractor(executor)
+            ),
+            storeUserQuery: storeUserQuery
+        )
+    }
+
+    func getLogoutInteractor() -> LogoutInteractor {
+        let deleteUserQuery = DeleteUserQueryInteractor(
+            deleteUserQuery: userQueryStorageRepository.toDeleteByQueryInteractor(executor)
+        )
+        return LogoutInteractor(
+            logger: logger,
+            deleteUserConfig: DeleteUserConfigInteractor(
+                userConfigRepository.toDeleteAllByQueryInteractor(executor)
+            ),
+            deleteUserQuery: deleteUserQuery
+        )
+    }
+
+    func getUserQueryInteractor() -> GetUserQueryInteractor {
+        return GetUserQueryInteractor(
+            getUserQuery: userQueryStorageRepository.toGetByQueryInteractor(executor)
+        )
+    }
 }

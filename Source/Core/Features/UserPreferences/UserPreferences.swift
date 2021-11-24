@@ -29,7 +29,10 @@ public struct NotificationPreferences: Codable {
 }
 
 public struct Category: Codable {
-    public var email, inApp, mobilePush, webPush: Bool?
+    public var email: Bool?
+    public var inApp: Bool?
+    public var mobilePush: Bool?
+    public var webPush: Bool?
 
     enum CodingKeys: String, CodingKey {
         case email

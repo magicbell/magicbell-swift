@@ -13,11 +13,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         do {
-
             MagicBell.configure(
                 apiKey: "34ed17a8482e44c765d9e163015a8d586f0b3383",
                 apiSecret: "72c5cdbba85d089d7f11ab090cb4c6773cbafaa8"
             )
+
+            MagicBell.login(email: "javier@mobilejazz.com")
+
+            // MagicBell.logout()
 
             let userQuery = UserQuery(email: "javier@mobilejazz.com")
             let notificationId = "f43fb412-b8b2-47af-bf9b-61b92b5e9c20"
@@ -28,10 +31,6 @@ class ViewController: UIViewController {
 //            let config = try getConfigNetworkDataSource.get(userQuery).result.get()
 //            print("Channel for notifications --> \(config.channel)")
 
-            let config = try MagicBell.shared.sdkProvider.userConfigComponent.getUserConfigInteractor().execute(refresh: true, userQuery: userQuery).result.get()
-            print("Channel for notifications --> \(config.channel)")
-            _ = MagicBell.shared.sdkProvider.userConfigComponent.deleteUserConfigInteractor().execute(userQuery: userQuery)
-            print("Removed config for user --> \(userQuery.key)")
             // User preferences
             let getUserPreferencesNetworkDataSource = MagicBell.shared.sdkProvider.userPreferencesComponent.getUserPreferencesNetworkDataSource()
             let userPreferences = try getUserPreferencesNetworkDataSource.get(userQuery).result.get()

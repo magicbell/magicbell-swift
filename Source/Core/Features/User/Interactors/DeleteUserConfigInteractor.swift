@@ -8,14 +8,14 @@
 import Foundation
 import Harmony
 
-public struct DeleteUserConfigInteractor {
+struct DeleteUserConfigInteractor {
     private let deleteUserConfigInteractor: Interactor.DeleteAllByQuery
 
     public init(_ deleteUserConfigInteractor: Interactor.DeleteAllByQuery) {
         self.deleteUserConfigInteractor = deleteUserConfigInteractor
     }
 
-    public func execute(userQuery: UserQuery) -> Future<Void> {
+    public func execute() -> Future<Void> {
         return deleteUserConfigInteractor.execute(AllObjectsQuery(), CacheOperation())
     }
 }

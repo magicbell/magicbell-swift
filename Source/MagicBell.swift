@@ -8,6 +8,8 @@
 import Foundation
 import Harmony
 
+let magicBellTag = "MagicBell"
+
 ///
 /// Public MagicBell SDK interface.
 ///
@@ -20,7 +22,10 @@ public class MagicBell {
     /// Main initializer
     /// - Parameter environment: The enviroment used in the SDK.
     private init(environment: Environment) {
-        sdkProvider = DefaultSDKModule(environment: environment)
+        sdkProvider = DefaultSDKModule(
+            environment: environment,
+            logger: DeviceConsoleLogger()
+        )
     }
 
     /// Pointer to the shared instance. Do not access this value. Instead, use the `shared` getter.
@@ -70,5 +75,36 @@ public class MagicBell {
             baseUrl: baseUrl,
             isHMACEnabled: enableHMAC
         ))
+    }
+
+    /// User identification login.
+    /// - Parameters:
+    ///   - email: The user's email
+    public static func login(email: String) {
+        let login = shared.sdkProvider.getUserComponent().getLoginInteractor()
+        login.execute(email: email)
+    }
+
+    /// User identification login.
+    /// - Parameters:
+    ///   - userId: The user's identifier
+    public static func login(userId: String) {
+        let login = shared.sdkProvider.getUserComponent().getLoginInteractor()
+        login.execute(userId: userId)
+    }
+
+    /// User identification login.
+    /// - Parameters:
+    ///   - email: The user's email
+    ///   - userId: The user's identifier
+    public static func login(email: String, userId: String) {
+        let login = shared.sdkProvider.getUserComponent().getLoginInteractor()
+        login.execute(email: email, userId: userId)
+    }
+
+    /// Removes user identification.
+    public static func logout() {
+        let logout = shared.sdkProvider.getUserComponent().getLogoutInteractor()
+        logout.execute()
     }
 }

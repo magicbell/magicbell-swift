@@ -15,7 +15,7 @@ public protocol HttpClient {
 
 public class DefaultHttpClient: HttpClient {
 
-    private let urlSession: URLSession
+    var urlSession: URLSession
     private let environment: Environment
 
     init(urlSession: URLSession, environment: Environment) {

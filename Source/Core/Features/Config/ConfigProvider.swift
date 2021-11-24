@@ -8,18 +8,18 @@
 import Foundation
 import Harmony
 
-public protocol ConfigComponent {
+protocol ConfigComponent {
     func getConfigNetworkDataSource() -> AnyGetDataSource<Config>
 }
 
-public class DefaultConfigModule: ConfigComponent {
+class DefaultConfigModule: ConfigComponent {
     private let httpClient: HttpClient
     
     init(httpClient: HttpClient) {
         self.httpClient = httpClient
     }
     
-    public func getConfigNetworkDataSource() -> AnyGetDataSource<Config> {
+    func getConfigNetworkDataSource() -> AnyGetDataSource<Config> {
         configNetworkDataSource
     }
     

@@ -28,16 +28,17 @@ public class DefaultSDKModule: SDKComponent {
 
     // TODO: make it private once not required for development
     public lazy var executorComponent: ExecutorComponent = DefaultExecutorModule()
-    public lazy var configComponent = DefaultConfigModule(httpClient: httpClient)
-    public lazy var userPreferencesComponent = DefaultUserPreferencesModule(httpClient: httpClient)
-    public lazy var notificationComponent = DefaultNotificationComponent(httpClient: httpClient)
-    public lazy var pushSubscriptionComponent = DefaultPushSubscriptionModule(httpClient: httpClient)
+    private lazy var configComponent: ConfigComponent = DefaultConfigModule(httpClient: httpClient)
+    public lazy var userPreferencesComponent: UserPreferencesComponent = DefaultUserPreferencesModule(httpClient: httpClient)
+    public lazy var notificationComponent: NotificationComponent = DefaultNotificationComponent(httpClient: httpClient)
+    public lazy var pushSubscriptionComponent: PushSubscriptionComponent = DefaultPushSubscriptionModule(httpClient: httpClient)
+    public lazy var userConfigComponent: UserComponent = DefaultUserComponent(configComponent: configComponent, executor: executorComponent.mainExecutor)
 }
 
 public protocol ExecutorComponent {
     var mainExecutor: DispatchQueueExecutor { get }
 }
 
-public class DefaultExecutorModule: ExecutorComponent {
+class DefaultExecutorModule: ExecutorComponent {
     public lazy var mainExecutor = DispatchQueueExecutor()
 }

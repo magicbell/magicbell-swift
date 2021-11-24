@@ -8,7 +8,7 @@
 import Foundation
 import Harmony
 
-public class UserQuery: Query {
+public class UserQuery: KeyQuery {
     let externalId: String?
     let email: String?
 
@@ -25,5 +25,15 @@ public class UserQuery: Query {
     public init(email: String) {
         externalId = nil
         self.email = email
+    }
+
+    public var key: String {
+        if let externalId = externalId {
+            return externalId
+        } else if let email = email {
+            return email
+        } else {
+            Swift.fatalError("should never happen")
+        }
     }
 }

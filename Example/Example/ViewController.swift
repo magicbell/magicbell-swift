@@ -13,6 +13,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         do {
+
+            MagicBell.configure(
+                apiKey: "34ed17a8482e44c765d9e163015a8d586f0b3383",
+                apiSecret: "72c5cdbba85d089d7f11ab090cb4c6773cbafaa8"
+            )
+
             let userQuery = UserQuery(email: "javier@mobilejazz.com")
             let notificationId = "f43fb412-b8b2-47af-bf9b-61b92b5e9c20"
             let deviceToken = "abdcde12345"

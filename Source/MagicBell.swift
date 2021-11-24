@@ -8,24 +8,67 @@
 import Foundation
 import Harmony
 
+///
+/// Public MagicBell SDK interface.
+///
 public class MagicBell {
-    // MARK: - Properties
-    private static var magicBell: MagicBell = {
-        MagicBell()
-    }()
 
-    // MARK: -
-    public let sdkProvider: DefaultSDKModule // TODO: replace with SDKProvider
+    // TODO: Replace with SDKProvider
+    // TODO: Make private (currently public for dev purposes)
+    public let sdkProvider: DefaultSDKModule
 
-    // Initialization
-    private init() {
-        sdkProvider = DefaultSDKModule(environment: Environment(
-            apiKey: "34ed17a8482e44c765d9e163015a8d586f0b3383",
-            apiSecret: "72c5cdbba85d089d7f11ab090cb4c6773cbafaa8",
-            baseUrl: URL(string: "https://api.magicbell.com")!,
-            isHMACEnabled: false))
+    /// Main initializer
+    /// - Parameter environment: The enviroment used in the SDK.
+    private init(environment: Environment) {
+        sdkProvider = DefaultSDKModule(environment: environment)
     }
 
-    // MARK: - Accessors
-    public static var shared: MagicBell = magicBell
+    /// Pointer to the shared instance. Do not access this value. Instead, use the `shared` getter.
+    private static var _instance: MagicBell?
+
+    // TODO: Make private (currently public for dev purposes)
+    /// Public access to the shared instance
+    public static var shared: MagicBell {
+        if let instance = _instance {
+            return instance
+        }
+        fatalError("MagicBell hasn't been initialized yet. Please, call MagicBell.configure to initialize the SDK.")
+    }
+
+    /// MagicBell's default API URL
+    public static let defaultBaseUrl: URL = {
+        if let url = URL(string: "https://api.magicbell.com") {
+            return url
+        }
+        fatalError("Failed to initialize MagicBell's base URL")
+    }()
+
+
+    /// Main configuration method. Must be called prior to any call to MagicBell.
+    /// This method can only be called once and must be called from the main thread.
+    /// - Parameters:
+    ///   - apiKey: The Api Key of your account
+    ///   - apiSecret: The Api Secret of your account
+    ///   - baseUrl: The base url of the api server. Default to api.magicbell.com.
+    ///   - enableHMAC: Enables HMAC authentication. Default to true.
+    public static func configure(
+        apiKey: String,
+        apiSecret: String,
+        baseUrl: URL = defaultBaseUrl,
+        enableHMAC: Bool = true
+    ) {
+        guard Thread.isMainThread else {
+            fatalError("MagicBell.configure must be called from the main thread")
+        }
+
+        guard _instance == nil else {
+            fatalError("MagicBell has already been initialized. MagicBell.configure can only be called once.")
+        }
+        _instance = MagicBell(environment: Environment(
+            apiKey: apiKey,
+            apiSecret: apiSecret,
+            baseUrl: baseUrl,
+            isHMACEnabled: enableHMAC
+        ))
+    }
 }

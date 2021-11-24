@@ -29,17 +29,6 @@ class DefaultUserComponent: UserComponent {
         self.executor = executor
     }
 
-    private lazy var userConfigRepository: AnyRepository<Config> = {
-        let configDataSourceAssembler = DataSourceAssembler(get: configComponent.getConfigNetworkDataSource())
-
-        let configDeviceStorageDataSource = DeviceStorageDataSource<Data>(prefix: "magicbell")
-        let configStorage = DataSourceMapper(dataSource: configDeviceStorageDataSource,
-                                             toInMapper: EncodableToDataMapper<Config>(),
-                                             toOutMapper: DataToDecodableMapper<Config>())
-
-        return AnyRepository(CacheRepository(main: configDataSourceAssembler, cache: configStorage))
-    }()
-
     private lazy var userQueryStorageRepository = SingleDataSourceRepository(InMemoryDataSource<UserQuery>())
 
     func getLoginInteractor() -> LoginInteractor {
@@ -49,9 +38,7 @@ class DefaultUserComponent: UserComponent {
 
         return LoginInteractor(
             logger: logger,
-            getUserConfig: GetUserConfigInteractor(
-                userConfigRepository.toGetByQueryInteractor(executor)
-            ),
+            getUserConfig: configComponent.getGetConfigInteractor(),
             storeUserQuery: storeUserQuery
         )
     }
@@ -62,9 +49,7 @@ class DefaultUserComponent: UserComponent {
         )
         return LogoutInteractor(
             logger: logger,
-            deleteUserConfig: DeleteUserConfigInteractor(
-                userConfigRepository.toDeleteAllByQueryInteractor(executor)
-            ),
+            deleteUserConfig: configComponent.getDeleteConfigInteractor(),
             deleteUserQuery: deleteUserQuery
         )
     }

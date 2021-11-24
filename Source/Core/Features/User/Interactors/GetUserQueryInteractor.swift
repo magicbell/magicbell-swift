@@ -8,15 +8,15 @@
 import Harmony
 
 struct GetUserQueryInteractor {
-    private let getUserQuery: Interactor.GetByQuery<UserQuery>
+    private let getUserQueryInteractor: Interactor.GetByQuery<UserQuery>
 
     init(getUserQuery: Interactor.GetByQuery<UserQuery>) {
-        self.getUserQuery = getUserQuery
+        self.getUserQueryInteractor = getUserQuery
     }
 
     /// This methods returns the user query with the user credentials or throws an error if user is not authenticated yet.
     func execute() throws -> UserQuery {
-        return try getUserQuery
+        return try getUserQueryInteractor
             .execute(IdQuery("userQuery"), in: DirectExecutor())
             .mapError { error in
                 if error is CoreError.NotFound {

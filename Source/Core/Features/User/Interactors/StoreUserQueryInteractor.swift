@@ -8,15 +8,15 @@
 import Harmony
 
 struct StoreUserQueryInteractor {
-    private let storeUserQuery: Interactor.PutByQuery<UserQuery>
+    private let storeUserQueryInteractor: Interactor.PutByQuery<UserQuery>
 
     init(storeUserQuery: Interactor.PutByQuery<UserQuery>) {
-        self.storeUserQuery = storeUserQuery
+        self.storeUserQueryInteractor = storeUserQuery
     }
 
     func execute(_ userQuery: UserQuery) {
         var error: Error?
-        storeUserQuery
+        storeUserQueryInteractor
             .execute(userQuery, query: IdQuery("userQuery"), in: DirectExecutor())
             .fail { error in
                 fatalError("Storing a userQuery should never fail: \(error)")

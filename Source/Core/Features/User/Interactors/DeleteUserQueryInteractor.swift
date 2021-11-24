@@ -8,15 +8,15 @@
 import Harmony
 
 struct DeleteUserQueryInteractor {
-    private let deleteUserQuery: Interactor.DeleteByQuery
+    private let deleteUserQueryInteractor: Interactor.DeleteByQuery
 
     init(deleteUserQuery: Interactor.DeleteByQuery) {
-        self.deleteUserQuery = deleteUserQuery
+        self.deleteUserQueryInteractor = deleteUserQuery
     }
 
     func execute() {
         var error: Error?
-        deleteUserQuery
+        deleteUserQueryInteractor
             .execute(IdQuery("userQuery"), in: DirectExecutor())
             .result.get(error: &error)
     }

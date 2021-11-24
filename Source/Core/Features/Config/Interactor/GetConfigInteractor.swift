@@ -8,15 +8,15 @@
 import Foundation
 import Harmony
 
-struct GetUserConfigInteractor {
-    private let getUserConfigInteractor: Interactor.GetByQuery<Config>
+struct GetConfigInteractor {
+    private let getConfigInteractor: Interactor.GetByQuery<Config>
 
-    public init(_ getUserConfigInteractor: Interactor.GetByQuery<Config>) {
-        self.getUserConfigInteractor = getUserConfigInteractor
+    public init(_ getConfigInteractor: Interactor.GetByQuery<Config>) {
+        self.getConfigInteractor = getConfigInteractor
     }
 
     public func execute(forceRefresh: Bool, userQuery: UserQuery) -> Future<Config> {
         let operation: Harmony.Operation = forceRefresh ? MainSyncOperation() : CacheSyncOperation(fallback: true)
-        return getUserConfigInteractor.execute(userQuery, operation)
+        return getConfigInteractor.execute(userQuery, operation)
     }
 }

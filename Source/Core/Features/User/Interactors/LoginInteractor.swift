@@ -9,15 +9,15 @@ import Harmony
 
 struct LoginInteractor {
     private let logger: Logger
-    private let getUserConfig: GetUserConfigInteractor
-    private let storeUserQuery: StoreUserQueryInteractor
+    private let getUserConfigInteractor: GetConfigInteractor
+    private let storeUserQueryInteractor: StoreUserQueryInteractor
 
     init(logger: Logger,
-         getUserConfig: GetUserConfigInteractor,
+         getUserConfig: GetConfigInteractor,
          storeUserQuery: StoreUserQueryInteractor) {
         self.logger = logger
-        self.getUserConfig = getUserConfig
-        self.storeUserQuery = storeUserQuery
+        self.getUserConfigInteractor = getUserConfig
+        self.storeUserQueryInteractor = storeUserQuery
     }
 
     func execute(userId: String) {
@@ -34,11 +34,11 @@ struct LoginInteractor {
 
     private func execute(userQuery: UserQuery) {
         // First, store the user query to allow the rest of the SDK to operate
-        storeUserQuery.execute(userQuery)
+        storeUserQueryInteractor.execute(userQuery)
 
         // Then, attempt to fetch the config.
         // If it fails, it can be refetched later.
-        getUserConfig
+        getUserConfigInteractor
             .execute(forceRefresh: false, userQuery: userQuery)
             .then { _ in
                 logger.info(tag: magicBellTag, "User config successfully retrieved upon login")

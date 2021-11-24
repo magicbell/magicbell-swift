@@ -31,7 +31,10 @@ public class DefaultSDKModule: SDKComponent {
 
     // TODO: make it private once not required for development
     public lazy var executorComponent: ExecutorComponent = DefaultExecutorModule()
-    private lazy var configComponent: ConfigComponent = DefaultConfigModule(httpClient: httpClient)
+    private lazy var configComponent: ConfigComponent = DefaultConfigModule(
+        httpClient: httpClient,
+        executor: executorComponent.mainExecutor
+    )
     public lazy var userPreferencesComponent: UserPreferencesComponent = DefaultUserPreferencesModule(httpClient: httpClient)
     public lazy var notificationComponent: NotificationComponent = DefaultNotificationComponent(httpClient: httpClient)
     public lazy var pushSubscriptionComponent: PushSubscriptionComponent = DefaultPushSubscriptionModule(httpClient: httpClient)

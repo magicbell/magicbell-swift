@@ -7,10 +7,14 @@
 
 import Foundation
 
-class MagicBellError: LocalizedError {
+class MagicBellError: LocalizedError, CustomStringConvertible {
     var errorDescription: String?
 
     public init(_ errorMessage: String) {
         errorDescription = errorMessage
+    }
+
+    var description: String {
+        return errorDescription ?? "MagicBellError"
     }
 }

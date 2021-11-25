@@ -8,38 +8,55 @@
 import Foundation
 import Harmony
 
-public protocol UserComponent {
-    func getUserConfigInteractor() -> GetUserConfigInteractor
-    func deleteUserConfigInteractor() -> DeleteUserConfigInteractor
+protocol UserComponent {
+    func getLoginInteractor() -> LoginInteractor
+    func getLogoutInteractor() -> LogoutInteractor
+    func getUserQueryInteractor() -> GetUserQueryInteractor
 }
 
 class DefaultUserComponent: UserComponent {
 
+    private let logger: Logger
     private let configComponent: ConfigComponent
     private let executor: Executor
 
-    init(configComponent: ConfigComponent,
-         executor: Executor) {
+    init(logger: Logger,
+         configComponent: ConfigComponent,
+         executor: Executor
+    ) {
+        self.logger = logger
         self.configComponent = configComponent
         self.executor = executor
     }
 
-    func getUserConfigInteractor() -> GetUserConfigInteractor {
-        return GetUserConfigInteractor(userConfigRepository.toGetByQueryInteractor(executor))
+    private lazy var userQueryStorageRepository = SingleDataSourceRepository(InMemoryDataSource<UserQuery>())
+
+    func getLoginInteractor() -> LoginInteractor {
+        let storeUserQuery = StoreUserQueryInteractor(
+            storeUserQuery: userQueryStorageRepository.toPutByQueryInteractor(executor)
+        )
+
+        return LoginInteractor(
+            logger: logger,
+            getUserConfig: configComponent.getGetConfigInteractor(),
+            storeUserQuery: storeUserQuery
+        )
     }
 
-    func deleteUserConfigInteractor() -> DeleteUserConfigInteractor {
-        return DeleteUserConfigInteractor(userConfigRepository.toDeleteAllByQueryInteractor(executor))
+    func getLogoutInteractor() -> LogoutInteractor {
+        let deleteUserQuery = DeleteUserQueryInteractor(
+            deleteUserQuery: userQueryStorageRepository.toDeleteByQueryInteractor(executor)
+        )
+        return LogoutInteractor(
+            logger: logger,
+            deleteUserConfig: configComponent.getDeleteConfigInteractor(),
+            deleteUserQuery: deleteUserQuery
+        )
     }
 
-    private lazy var userConfigRepository: AnyRepository<Config> = {
-        let configDataSourceAssembler = DataSourceAssembler(get: configComponent.getConfigNetworkDataSource())
-
-        let configDeviceStorageDataSource = DeviceStorageDataSource<Data>(prefix: "magicbell")
-        let configStorage = DataSourceMapper(dataSource: configDeviceStorageDataSource,
-                                             toInMapper: EncodableToDataMapper<Config>(),
-                                             toOutMapper: DataToDecodableMapper<Config>())
-
-        return AnyRepository(CacheRepository(main: configDataSourceAssembler, cache: configStorage))
-    }()
+    func getUserQueryInteractor() -> GetUserQueryInteractor {
+        return GetUserQueryInteractor(
+            getUserQuery: userQueryStorageRepository.toGetByQueryInteractor(executor)
+        )
+    }
 }

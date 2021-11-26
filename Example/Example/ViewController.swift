@@ -31,16 +31,39 @@ class ViewController: UIViewController {
             //            let config = try getConfigNetworkDataSource.get(userQuery).result.get()
             //            print("Channel for notifications --> \(config.channel)")
 
-            let notificationStore = try MagicBell.shared.sdkProvider.storeComponent.getNotificationStoreInteractor()
-                .execute(
-                    NotificationStoreQuery(name: "Read",
-                                           storeContext: StoreContext(
-                                            name: "Read",
-                                            storePredicate: StorePredicate(read: .unread),
-                                            storePagination: StorePagination()),
-                                           user: userQuery)).result.get()
+            let getStorePagesInteractor = MagicBell.shared.sdkProvider.storeComponent.getStorePagesInteractor()
 
-            print(notificationStore)
+//            getStorePagesInteractor.execute(
+//                storePredicate: StorePredicate(read: .unread),
+//                cursorPredicate: CursorPredicate(),
+//                userQuery: userQuery
+//            ).then { store in
+//                print(store)
+//            }.fail { error in
+//                print("Error: \(error)")
+//            }
+            getStorePagesInteractor.execute(
+                contexts: [
+                    StoreContext("read", StorePredicate(read: .read), CursorPredicate()),
+                    StoreContext("unread", StorePredicate(read: .unread), CursorPredicate())
+                ],
+                userQuery: userQuery
+            ).then { stores in
+                if let store = stores["read"] {
+                    print("READ: \(store)")
+                } else {
+                    print("Missing read store")
+                }
+                if let store = stores["unread"] {
+                    print("UNREAD: \(store)")
+                } else {
+                    print("Missing unread store")
+                }
+            }.fail { error in
+                print("Error: \(error)")
+            }
+            return
+
 
             // User preferences
             let getUserPreferencesNetworkDataSource = MagicBell.shared.sdkProvider.userPreferencesComponent.getUserPreferencesNetworkDataSource()

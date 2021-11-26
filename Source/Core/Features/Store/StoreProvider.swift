@@ -9,7 +9,7 @@ import Foundation
 import Harmony
 
 public protocol StoreComponent {
-    func getNotificationStoreInteractor() -> Interactor.GetByQuery<Stores>
+    func getStorePagesInteractor() -> GetStorePagesInteractor
 }
 
 class DefaultStoreModule: StoreComponent {
@@ -23,11 +23,20 @@ class DefaultStoreModule: StoreComponent {
         self.mainExecutor = executor
     }
 
-    func getNotificationStoreInteractor() -> Interactor.GetByQuery<Stores> {
-        storeNotificationGraphQLRepository.toGetByQueryInteractor(mainExecutor)
-    }
-
-    private lazy var storeNotificationGraphQLRepository: AnyGetRepository<Stores> = {
-        AnyGetRepository(SingleGetDataSourceRepository(StoresGraphQLDataSource(httpClient: httpClient, mapper: DataToDecodableMapper<Stores>(iso8601: true))))
+    private lazy var storeNotificationGraphQLRepository: AnyGetRepository<[String: StorePage]> = {
+        AnyGetRepository(
+            SingleGetDataSourceRepository(
+                StoresGraphQLDataSource(
+                    httpClient: httpClient,
+                    mapper: DataToDecodableMapper<GraphQLResponse<StorePage>>(iso8601: true)
+                )
+            )
+        )
     }()
+
+    func getStorePagesInteractor() -> GetStorePagesInteractor {
+        GetStorePagesInteractor(
+            executor: mainExecutor,
+            getStoreNotificationInteractor: storeNotificationGraphQLRepository.toGetByQueryInteractor(mainExecutor))
+    }
 }

@@ -27,6 +27,7 @@ This is the official MagicBell SDK for iOS. You can easily fetch, delete and cre
   s.swift_versions = ['5.3', '5.4', '5.5']
 
   s.source_files = 'Source/**/*.swift'
+  s.resources = 'Source/**/*.graphql'
 
   s.dependency 'Harmony/Repository'
 

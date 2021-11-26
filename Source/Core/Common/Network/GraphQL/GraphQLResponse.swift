@@ -1,21 +1,21 @@
 //
-//  Stores.swift
+//  GraphQLResult.swift
 //  MagicBell
 //
-//  Created by Javi on 25/11/21.
+//  Created by Joan Martin on 26/11/21.
 //
 
 import Foundation
 
-public struct Stores: Codable {
+public struct GraphQLResponse<T: Codable>: Codable {
     enum DataContainerKeys: String, CodingKey {
         case data
     }
 
-    let stores: [String: StorePage]
+    let response: [String: T]
 
     public init(from decoder: Decoder) throws {
         let dataContainer = try decoder.container(keyedBy: DataContainerKeys.self)
-        stores = try dataContainer.decode([String: StorePage].self, forKey: .data)
+        response = try dataContainer.decode([String: T].self, forKey: .data)
     }
 }

@@ -7,26 +7,8 @@
 
 import Foundation
 
-protocol GraphQLPredicate {
-    var query: String { get }
-}
-
-protocol GraphQLAttributeRepresentation {
-    func stringRepresentation() -> String
-}
-
-struct StoreGraphQLPredicate: GraphQLPredicate {
-    let storeContext: StoreContext
-
-    var query: String {
-        let storePredicateString = storeContext.storePredicate.stringRepresentation()
-        let storePaginationString = storeContext.storePagination.stringRepresentation()
-        return " \(storeContext.name):notifications (\(storePredicateString) \(storePaginationString)) { ...notification }"
-    }
-}
-
-extension StorePredicate: GraphQLAttributeRepresentation {
-    func stringRepresentation() -> String {
+extension StorePredicate: GraphQLRepresentable {
+    var graphQLValue: String {
         var string: [String] = []
 
         switch read {
@@ -72,23 +54,19 @@ extension StorePredicate: GraphQLAttributeRepresentation {
     }
 }
 
-extension StorePagination: GraphQLAttributeRepresentation {
-    func stringRepresentation() -> String {
-        var string: [String] = []
 
-        switch pagination {
-        case .next(let after):
-            string.append("after: \"\(after)\"")
-        case .previous(let before):
-            string.append("before: \"\(before)\"")
-        case .unspecified:
-            break
-        }
+extension StoreContext: GraphQLRepresentable {
+    var graphQLValue: String {
+        let storePredicateString = store.graphQLValue
+        let cursorPredicateString = cursor.graphQLValue
+        return " \(name):notifications (\(storePredicateString) \(cursorPredicateString)) { ...notification }"
+    }
+}
 
-        if let first = first {
-            string.append("first: \(first)")
-        }
-
-        return string.joined(separator: ", ")
+extension StoreQuery: GraphQLRepresentable {
+    var graphQLValue: String {
+        return contexts.map { context in
+            context.graphQLValue
+        }.joined(separator: "\n")
     }
 }

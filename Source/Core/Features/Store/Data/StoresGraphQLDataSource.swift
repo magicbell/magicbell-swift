@@ -33,7 +33,7 @@ class StoresGraphQLDataSource: GetDataSource {
             do {
                 let graphQLQuery = GraphQLRequest(
                     predicate: query,
-                    fragment: .notification
+                    fragment: GraphQLFragment(filename: "NotificationFragment")
                 )
                 urlRequest.httpBody = try JSONEncoder().encode(["query": graphQLQuery.graphQLValue])
             } catch {

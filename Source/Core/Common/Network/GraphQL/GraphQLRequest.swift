@@ -8,35 +8,15 @@
 import Foundation
 
 struct GraphQLRequest: GraphQLRepresentable {
-    enum Fragment {
-        case notification
-
-        func value() -> String {
-            let fileName: String = {
-                switch self {
-                case .notification:
-                    return "NotificationFragment"
-                }
-            }()
-            guard let url = Bundle(for: MagicBell.self).url(forResource: fileName, withExtension: "graphql") else {
-                fatalError("Missing file \(fileName).graphql")
-            }
-            guard let string = try? String(contentsOf: url) else {
-                fatalError("Filed to open \(fileName).graphql")
-            }
-            return string
-        }
-    }
-
     let predicates: [GraphQLRepresentable]
-    let fragment: Fragment
+    let fragment: GraphQLFragment
 
-    init(predicates: [GraphQLRepresentable], fragment: Fragment) {
+    init(predicates: [GraphQLRepresentable], fragment: GraphQLFragment) {
         self.predicates = predicates
         self.fragment = fragment
     }
 
-    init(predicate: GraphQLRepresentable, fragment: Fragment) {
+    init(predicate: GraphQLRepresentable, fragment: GraphQLFragment) {
         self.init(predicates: [predicate], fragment: fragment)
     }
 
@@ -46,7 +26,7 @@ struct GraphQLRequest: GraphQLRepresentable {
             $0.graphQLValue
         }.joined(separator: "\n "))
         query.append("} \n")
-        query.append(fragment.value())
+        query.append(fragment.graphQLValue)
         return query
     }
 }

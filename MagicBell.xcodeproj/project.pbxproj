@@ -61,6 +61,7 @@
 		D2CBA52D27512642002F1E44 /* GraphQLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52C27512642002F1E44 /* GraphQLResponse.swift */; };
 		D2CBA52F275128FA002F1E44 /* StorePredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52E275128FA002F1E44 /* StorePredicate.swift */; };
 		D2CBA53127513747002F1E44 /* StoreContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA53027513747002F1E44 /* StoreContext.swift */; };
+		D2CBA53327513D6A002F1E44 /* GraphQLFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA53227513D6A002F1E44 /* GraphQLFragment.swift */; };
 		D2D277262747C9CF00B5F69E /* ActionNotificationNetworkDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D277252747C9CF00B5F69E /* ActionNotificationNetworkDataSource.swift */; };
 		D2D277292747D40A00B5F69E /* NotificationQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D277282747D40A00B5F69E /* NotificationQuery.swift */; };
 		D2D2772B2747D43200B5F69E /* PushSubscriptionQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D2772A2747D43200B5F69E /* PushSubscriptionQuery.swift */; };
@@ -135,6 +136,7 @@
 		D2CBA52C27512642002F1E44 /* GraphQLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLResponse.swift; sourceTree = "<group>"; };
 		D2CBA52E275128FA002F1E44 /* StorePredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePredicate.swift; sourceTree = "<group>"; };
 		D2CBA53027513747002F1E44 /* StoreContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreContext.swift; sourceTree = "<group>"; };
+		D2CBA53227513D6A002F1E44 /* GraphQLFragment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLFragment.swift; sourceTree = "<group>"; };
 		D2D277252747C9CF00B5F69E /* ActionNotificationNetworkDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionNotificationNetworkDataSource.swift; sourceTree = "<group>"; };
 		D2D277282747D40A00B5F69E /* NotificationQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationQuery.swift; sourceTree = "<group>"; };
 		D2D2772A2747D43200B5F69E /* PushSubscriptionQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSubscriptionQuery.swift; sourceTree = "<group>"; };
@@ -450,6 +452,7 @@
 				D2CBA52627512518002F1E44 /* CursorPredicate.swift */,
 				59569BA4274F7B8A00FF1AA6 /* GraphQLRequest.swift */,
 				D2CBA52C27512642002F1E44 /* GraphQLResponse.swift */,
+				D2CBA53227513D6A002F1E44 /* GraphQLFragment.swift */,
 			);
 			path = GraphQL;
 			sourceTree = "<group>";
@@ -649,6 +652,7 @@
 				D2CBA529275125B3002F1E44 /* GraphQLRepresentable.swift in Sources */,
 				59C12ED42747131000311D24 /* MappingError.swift in Sources */,
 				59C12ECC2746DBC200311D24 /* PushSubscriptionNetworkDataSource.swift in Sources */,
+				D2CBA53327513D6A002F1E44 /* GraphQLFragment.swift in Sources */,
 				D2CBA52D27512642002F1E44 /* GraphQLResponse.swift in Sources */,
 				59799E4727465F8F00BFB375 /* ConfigProvider.swift in Sources */,
 				59799E65274660AD00BFB375 /* UserPreferencesProvider.swift in Sources */,

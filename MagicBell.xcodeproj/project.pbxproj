@@ -9,6 +9,15 @@
 /* Begin PBXBuildFile section */
 		0869C89DF195BCCEF9D2C4E4 /* libPods-MagicBell-MagicBellTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B45D82557E72257F11E3D387 /* libPods-MagicBell-MagicBellTests.a */; };
 		2E565B60D769C36F5A62F8C3 /* libPods-MagicBell.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6568730708C32057869C01 /* libPods-MagicBell.a */; };
+		59569B9A274F752100FF1AA6 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569B99274F752100FF1AA6 /* Store.swift */; };
+		59569B9C274F757100FF1AA6 /* Stores.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569B9B274F757100FF1AA6 /* Stores.swift */; };
+		59569BA2274F785100FF1AA6 /* StoreContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BA1274F785100FF1AA6 /* StoreContext.swift */; };
+		59569BA5274F7B8A00FF1AA6 /* StoreGraphQLQueryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BA4274F7B8A00FF1AA6 /* StoreGraphQLQueryBuilder.swift */; };
+		59569BA8274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BA7274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift */; };
+		59569BAE274F82F100FF1AA6 /* StoreProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BAD274F82F100FF1AA6 /* StoreProvider.swift */; };
+		59569BB0274F838D00FF1AA6 /* NotificationStoreQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BAF274F838D00FF1AA6 /* NotificationStoreQuery.swift */; };
+		59569BB22750EEDF00FF1AA6 /* StoreGraphQLPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BB12750EEDF00FF1AA6 /* StoreGraphQLPredicate.swift */; };
+		59569BB52750FD8700FF1AA6 /* GetNotificationStoreInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BB42750FD8700FF1AA6 /* GetNotificationStoreInteractor.swift */; };
 		59799E312746587000BFB375 /* MagicBell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E302746587000BFB375 /* MagicBell.swift */; };
 		59799E33274658B100BFB375 /* SDKProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E32274658B100BFB375 /* SDKProvider.swift */; };
 		59799E38274659D800BFB375 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E37274659D800BFB375 /* Environment.swift */; };
@@ -57,6 +66,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		59569B99274F752100FF1AA6 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		59569B9B274F757100FF1AA6 /* Stores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stores.swift; sourceTree = "<group>"; };
+		59569BA1274F785100FF1AA6 /* StoreContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreContext.swift; sourceTree = "<group>"; };
+		59569BA4274F7B8A00FF1AA6 /* StoreGraphQLQueryBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreGraphQLQueryBuilder.swift; sourceTree = "<group>"; };
+		59569BA7274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoresGraphQLDataSource.swift; sourceTree = "<group>"; };
+		59569BAD274F82F100FF1AA6 /* StoreProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreProvider.swift; sourceTree = "<group>"; };
+		59569BAF274F838D00FF1AA6 /* NotificationStoreQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStoreQuery.swift; sourceTree = "<group>"; };
+		59569BB12750EEDF00FF1AA6 /* StoreGraphQLPredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreGraphQLPredicate.swift; sourceTree = "<group>"; };
+		59569BB42750FD8700FF1AA6 /* GetNotificationStoreInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNotificationStoreInteractor.swift; sourceTree = "<group>"; };
 		59799E302746587000BFB375 /* MagicBell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBell.swift; sourceTree = "<group>"; };
 		59799E32274658B100BFB375 /* SDKProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKProvider.swift; sourceTree = "<group>"; };
 		59799E37274659D800BFB375 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
@@ -122,6 +140,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		59569BA3274F787C00FF1AA6 /* GraphQL */ = {
+			isa = PBXGroup;
+			children = (
+				59569BA4274F7B8A00FF1AA6 /* StoreGraphQLQueryBuilder.swift */,
+				59569BB12750EEDF00FF1AA6 /* StoreGraphQLPredicate.swift */,
+			);
+			path = GraphQL;
+			sourceTree = "<group>";
+		};
+		59569BA9274F7DE400FF1AA6 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				59569B99274F752100FF1AA6 /* Store.swift */,
+				59569B9B274F757100FF1AA6 /* Stores.swift */,
+				59569BAD274F82F100FF1AA6 /* StoreProvider.swift */,
+				59569BA1274F785100FF1AA6 /* StoreContext.swift */,
+				59569BB32750FCFB00FF1AA6 /* Interactor */,
+				59569BA3274F787C00FF1AA6 /* GraphQL */,
+				59569BAA274F7FBB00FF1AA6 /* Data */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		59569BAA274F7FBB00FF1AA6 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				59569BA7274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift */,
+				59569BAF274F838D00FF1AA6 /* NotificationStoreQuery.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		59569BB32750FCFB00FF1AA6 /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				59569BB42750FD8700FF1AA6 /* GetNotificationStoreInteractor.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
 		59799E2E2746582800BFB375 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,6 +203,7 @@
 		59799E34274659B100BFB375 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				59569BA9274F7DE400FF1AA6 /* Store */,
 				59C3CDB8274CD36E0043BA77 /* User */,
 				59799E2F2746583200BFB375 /* Config */,
 				59799E562746609A00BFB375 /* Notification */,
@@ -525,6 +584,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59569BA5274F7B8A00FF1AA6 /* StoreGraphQLQueryBuilder.swift in Sources */,
 				59C3CDC0274D2CC20043BA77 /* GetUserConfigInteractor.swift in Sources */,
 				D2D277262747C9CF00B5F69E /* ActionNotificationNetworkDataSource.swift in Sources */,
 				59C3CDC4274D36360043BA77 /* DeleteUserConfigInteractor.swift in Sources */,
@@ -532,19 +592,25 @@
 				59C12ECF2746DC7100311D24 /* PushSubscription.swift in Sources */,
 				59799E4427465C9200BFB375 /* String+HMAC.swift in Sources */,
 				59799E3F27465BB500BFB375 /* DataToDecodableMapper.swift in Sources */,
+				59569B9C274F757100FF1AA6 /* Stores.swift in Sources */,
 				59C12ED42747131000311D24 /* MappingError.swift in Sources */,
 				59C12ECC2746DBC200311D24 /* PushSubscriptionNetworkDataSource.swift in Sources */,
 				59799E4727465F8F00BFB375 /* ConfigProvider.swift in Sources */,
 				59799E65274660AD00BFB375 /* UserPreferencesProvider.swift in Sources */,
 				59C3CDBE274D2BDB0043BA77 /* UserProvider.swift in Sources */,
+				59569BA2274F785100FF1AA6 /* StoreContext.swift in Sources */,
 				59799E67274660AD00BFB375 /* UserPreferences.swift in Sources */,
+				59569BB22750EEDF00FF1AA6 /* StoreGraphQLPredicate.swift in Sources */,
 				59799E552746604F00BFB375 /* Config.swift in Sources */,
+				59569BAE274F82F100FF1AA6 /* StoreProvider.swift in Sources */,
+				59569BB0274F838D00FF1AA6 /* NotificationStoreQuery.swift in Sources */,
 				59799E66274660AD00BFB375 /* UserPreferencesNetworkDataSource.swift in Sources */,
 				59799E69274662E900BFB375 /* NotificationProvider.swift in Sources */,
 				59799E3B27465A0E00BFB375 /* UserQuery.swift in Sources */,
 				59799E5D2746609A00BFB375 /* Notification.swift in Sources */,
 				59C12ED12746E48100311D24 /* PushSubscriptionProvider.swift in Sources */,
 				59799E4027465BB500BFB375 /* HttpClient.swift in Sources */,
+				59569BB52750FD8700FF1AA6 /* GetNotificationStoreInteractor.swift in Sources */,
 				D2D2772B2747D43200B5F69E /* PushSubscriptionQuery.swift in Sources */,
 				59C3CDBC274D039D0043BA77 /* MagicBellError.swift in Sources */,
 				59799E312746587000BFB375 /* MagicBell.swift in Sources */,
@@ -552,6 +618,8 @@
 				59C3CDC2274D2F220043BA77 /* EncodableToDataMapper.swift in Sources */,
 				59799E6B274671A100BFB375 /* NetworkError.swift in Sources */,
 				D2D277292747D40A00B5F69E /* NotificationQuery.swift in Sources */,
+				59569BA8274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift in Sources */,
+				59569B9A274F752100FF1AA6 /* Store.swift in Sources */,
 				59799E33274658B100BFB375 /* SDKProvider.swift in Sources */,
 				59799E542746604F00BFB375 /* ConfigNetworkDataSource.swift in Sources */,
 				59C3CDC6274D4ED40043BA77 /* ErrorEntity.swift in Sources */,

@@ -23,15 +23,27 @@ class ViewController: UIViewController {
             let notificationId = "f43fb412-b8b2-47af-bf9b-61b92b5e9c20"
             let deviceToken = "abdcde12345"
 
-//            // Channel Notification
-//            let getConfigNetworkDataSource = MagicBell.shared.sdkProvider.configComponent.getConfigNetworkDataSource()
-//            let config = try getConfigNetworkDataSource.get(userQuery).result.get()
-//            print("Channel for notifications --> \(config.channel)")
+            //            // Channel Notification
+            //            let getConfigNetworkDataSource = MagicBell.shared.sdkProvider.configComponent.getConfigNetworkDataSource()
+            //            let config = try getConfigNetworkDataSource.get(userQuery).result.get()
+            //            print("Channel for notifications --> \(config.channel)")
+
+            let notificationStore = try MagicBell.shared.sdkProvider.storeComponent.getNotificationStoreInteractor()
+                .execute(
+                    NotificationStoreQuery(name: "Read",
+                                           storeContext: StoreContext(
+                                            name: "Read",
+                                            storePredicate: StorePredicate(read: .unread),
+                                            storePagination: StorePagination()),
+                                           user: userQuery)).result.get()
+
+            print(notificationStore)
 
             let config = try MagicBell.shared.sdkProvider.userConfigComponent.getUserConfigInteractor().execute(refresh: true, userQuery: userQuery).result.get()
             print("Channel for notifications --> \(config.channel)")
             _ = MagicBell.shared.sdkProvider.userConfigComponent.deleteUserConfigInteractor().execute(userQuery: userQuery)
             print("Removed config for user --> \(userQuery.key)")
+
             // User preferences
             let getUserPreferencesNetworkDataSource = MagicBell.shared.sdkProvider.userPreferencesComponent.getUserPreferencesNetworkDataSource()
             let userPreferences = try getUserPreferencesNetworkDataSource.get(userQuery).result.get()
@@ -61,8 +73,8 @@ class ViewController: UIViewController {
 
             // Mark Notification as readed
             _ = try actionNotificationDataSource.put(nil, in: NotificationActionQuery(action: .markAsRead,
-                                                      notificationId: notificationId,
-                                                      userQuery: userQuery)).result.get()
+                                                                                      notificationId: notificationId,
+                                                                                      userQuery: userQuery)).result.get()
             let notificationReaded = try notificationDataSource.get(NotificationQuery(notificationId: notificationId,
                                                                                       userQuery: userQuery)).result.get()
             print(notificationReaded)

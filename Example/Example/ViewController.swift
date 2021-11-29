@@ -26,10 +26,44 @@ class ViewController: UIViewController {
             let notificationId = "f43fb412-b8b2-47af-bf9b-61b92b5e9c20"
             let deviceToken = "abdcde12345"
 
-//            // Channel Notification
-//            let getConfigNetworkDataSource = MagicBell.shared.sdkProvider.configComponent.getConfigNetworkDataSource()
-//            let config = try getConfigNetworkDataSource.get(userQuery).result.get()
-//            print("Channel for notifications --> \(config.channel)")
+            //            // Channel Notification
+            //            let getConfigNetworkDataSource = MagicBell.shared.sdkProvider.configComponent.getConfigNetworkDataSource()
+            //            let config = try getConfigNetworkDataSource.get(userQuery).result.get()
+            //            print("Channel for notifications --> \(config.channel)")
+
+            let getStorePagesInteractor = MagicBell.shared.sdkProvider.storeComponent.getStorePagesInteractor()
+
+//            getStorePagesInteractor.execute(
+//                storePredicate: StorePredicate(read: .unread),
+//                cursorPredicate: CursorPredicate(),
+//                userQuery: userQuery
+//            ).then { store in
+//                print(store)
+//            }.fail { error in
+//                print("Error: \(error)")
+//            }
+            getStorePagesInteractor.execute(
+                contexts: [
+                    StoreContext("read", StorePredicate(read: .read), CursorPredicate()),
+                    StoreContext("unread", StorePredicate(read: .unread), CursorPredicate())
+                ],
+                userQuery: userQuery
+            ).then { stores in
+                if let store = stores["read"] {
+                    print("READ: \(store)")
+                } else {
+                    print("Missing read store")
+                }
+                if let store = stores["unread"] {
+                    print("UNREAD: \(store)")
+                } else {
+                    print("Missing unread store")
+                }
+            }.fail { error in
+                print("Error: \(error)")
+            }
+            return
+
 
             // User preferences
             let getUserPreferencesNetworkDataSource = MagicBell.shared.sdkProvider.userPreferencesComponent.getUserPreferencesNetworkDataSource()
@@ -60,8 +94,8 @@ class ViewController: UIViewController {
 
             // Mark Notification as readed
             _ = try actionNotificationDataSource.put(nil, in: NotificationActionQuery(action: .markAsRead,
-                                                      notificationId: notificationId,
-                                                      userQuery: userQuery)).result.get()
+                                                                                      notificationId: notificationId,
+                                                                                      userQuery: userQuery)).result.get()
             let notificationReaded = try notificationDataSource.get(NotificationQuery(notificationId: notificationId,
                                                                                       userQuery: userQuery)).result.get()
             print(notificationReaded)

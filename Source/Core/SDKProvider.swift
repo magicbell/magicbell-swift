@@ -42,6 +42,7 @@ public class DefaultSDKModule: SDKComponent {
     public lazy var userPreferencesComponent: UserPreferencesComponent = DefaultUserPreferencesModule(httpClient: httpClient)
     public lazy var notificationComponent: NotificationComponent = DefaultNotificationComponent(httpClient: httpClient)
     public lazy var pushSubscriptionComponent: PushSubscriptionComponent = DefaultPushSubscriptionModule(httpClient: httpClient)
+    public lazy var storeComponent: StoreComponent = DefaultStoreModule(httpClient: httpClient, executor: executorComponent.mainExecutor)
 
 
     // MARK: SDKComponent

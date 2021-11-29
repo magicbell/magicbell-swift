@@ -21,7 +21,7 @@ struct GraphQLFragment: GraphQLRepresentable {
             fatalError("Missing file \(filename).graphql")
         }
         guard let string = try? String(contentsOf: url) else {
-            fatalError("Filed to open \(filename).graphql")
+            fatalError("Failed to open \(filename).graphql")
         }
         return string
     }

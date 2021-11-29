@@ -20,9 +20,6 @@ public class DataToDecodableMapper<T>: Mapper<Data, T> where T: Decodable {
 
     public override func map(_ from: Data) throws -> T {
         do {
-            #if DEBUG
-            print(String(data: from, encoding: .utf8) ?? "Cannot print data")
-            #endif
             let value = try decoder.decode(T.self, from: from)
             return value
         } catch {

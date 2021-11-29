@@ -107,4 +107,17 @@ public class MagicBell {
         let logout = shared.sdkProvider.getUserComponent().getLogoutInteractor()
         logout.execute()
     }
+
+    public static func createNotificationStore(name: String, predicate: StorePredicate) -> NotificationStore? {
+        do {
+            return try shared.sdkProvider.createNotificationStore(name: name, predicate: predicate)
+        } catch {
+            print("There is another storePredicate with the same. Use MagicBell.getNotificationStore(name) to use it.")
+            return nil
+        }
+    }
+
+    public static func getNotificationStore(name: String) -> NotificationStore? {
+        return shared.sdkProvider.getNotificationStore(name: name)
+    }
 }

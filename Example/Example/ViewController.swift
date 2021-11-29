@@ -31,39 +31,58 @@ class ViewController: UIViewController {
             //            let config = try getConfigNetworkDataSource.get(userQuery).result.get()
             //            print("Channel for notifications --> \(config.channel)")
 
-            let getStorePagesInteractor = MagicBell.shared.sdkProvider.storeComponent.getStorePagesInteractor()
+//            let getStorePagesInteractor = MagicBell.shared.sdkProvider.storeComponent.getStorePagesInteractor()
 
-//            getStorePagesInteractor.execute(
-//                storePredicate: StorePredicate(read: .unread),
-//                cursorPredicate: CursorPredicate(),
-//                userQuery: userQuery
-//            ).then { store in
-//                print(store)
-//            }.fail { error in
-//                print("Error: \(error)")
-//            }
-            getStorePagesInteractor.execute(
-                contexts: [
-                    StoreContext("read", StorePredicate(read: .read), CursorPredicate()),
-                    StoreContext("unread", StorePredicate(read: .unread), CursorPredicate())
-                ],
-                userQuery: userQuery
-            ).then { stores in
-                if let store = stores["read"] {
-                    print("READ: \(store)")
-                } else {
-                    print("Missing read store")
+            //            getStorePagesInteractor.execute(
+            //                storePredicate: StorePredicate(read: .unread),
+            //                cursorPredicate: CursorPredicate(),
+            //                userQuery: userQuery
+            //            ).then { store in
+            //                print(store)
+            //            }.fail { error in
+            //                print("Error: \(error)")
+            //            }
+            //            getStorePagesInteractor.execute(
+            //                contexts: [
+            //                    StoreContext("read", StorePredicate(read: .read), CursorPredicate()),
+            //                    StoreContext("unread", StorePredicate(read: .unread), CursorPredicate())
+            //                ],
+            //                userQuery: userQuery
+            //            ).then { stores in
+            //                if let store = stores["read"] {
+            //                    print("READ: \(store)")
+            //                } else {
+            //                    print("Missing read store")
+            //                }
+            //                if let store = stores["unread"] {
+            //                    print("UNREAD: \(store)")
+            //                } else {
+            //                    print("Missing unread store")
+            //                }
+            //            }.fail { error in
+            //                print("Error: \(error)")
+            //            }
+
+            let notificationStore = MagicBell.createNotificationStore(name: "Testing", predicate: StorePredicate(read: .read))
+
+            notificationStore?.fetch { result in
+                switch result {
+                case .success(let notifications):
+                    print(notifications)
+                    notificationStore?.fetch { result in
+                        switch result {
+                        case .success(let notifications):
+                            print(notifications)
+                        case .failure(let error):
+                            print(error)
+                        }
+                    }
+                case .failure(let error):
+                    print(error)
                 }
-                if let store = stores["unread"] {
-                    print("UNREAD: \(store)")
-                } else {
-                    print("Missing unread store")
-                }
-            }.fail { error in
-                print("Error: \(error)")
             }
-            return
 
+            return
 
             // User preferences
             let getUserPreferencesNetworkDataSource = MagicBell.shared.sdkProvider.userPreferencesComponent.getUserPreferencesNetworkDataSource()

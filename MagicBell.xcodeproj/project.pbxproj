@@ -43,6 +43,10 @@
 		59C3CDC2274D2F220043BA77 /* EncodableToDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDC1274D2F220043BA77 /* EncodableToDataMapper.swift */; };
 		59C3CDC4274D36360043BA77 /* DeleteConfigInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDC3274D36360043BA77 /* DeleteConfigInteractor.swift */; };
 		59C3CDC6274D4ED40043BA77 /* ErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDC5274D4ED40043BA77 /* ErrorEntity.swift */; };
+		59E92013275400F500D8877A /* NotificationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E92012275400F500D8877A /* NotificationStore.swift */; };
+		59E920152754033E00D8877A /* NotificationStoreCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E920142754033E00D8877A /* NotificationStoreCoordinator.swift */; };
+		59E92017275428A100D8877A /* NotificationStoreProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E92016275428A100D8877A /* NotificationStoreProvider.swift */; };
+		59E9201927543FD200D8877A /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E9201827543FD200D8877A /* Observable.swift */; };
 		59EF99BC27446D6900FB2378 /* MagicBell.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59EF99B127446D6900FB2378 /* MagicBell.framework */; };
 		59EF99C127446D6900FB2378 /* MagicBellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF99C027446D6900FB2378 /* MagicBellTests.swift */; };
 		59EF99CC27446DAD00FB2378 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 59EF99CB27446DAD00FB2378 /* Podfile */; };
@@ -112,6 +116,10 @@
 		59C3CDC1274D2F220043BA77 /* EncodableToDataMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodableToDataMapper.swift; sourceTree = "<group>"; };
 		59C3CDC3274D36360043BA77 /* DeleteConfigInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteConfigInteractor.swift; sourceTree = "<group>"; };
 		59C3CDC5274D4ED40043BA77 /* ErrorEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorEntity.swift; sourceTree = "<group>"; };
+		59E92012275400F500D8877A /* NotificationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStore.swift; sourceTree = "<group>"; };
+		59E920142754033E00D8877A /* NotificationStoreCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStoreCoordinator.swift; sourceTree = "<group>"; };
+		59E92016275428A100D8877A /* NotificationStoreProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStoreProvider.swift; sourceTree = "<group>"; };
+		59E9201827543FD200D8877A /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		59EF99B127446D6900FB2378 /* MagicBell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MagicBell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59EF99BB27446D6900FB2378 /* MagicBellTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MagicBellTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		59EF99C027446D6900FB2378 /* MagicBellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBellTests.swift; sourceTree = "<group>"; };
@@ -220,6 +228,7 @@
 		59799E34274659B100BFB375 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				59E92011275400B800D8877A /* NotificationStore */,
 				59569BA9274F7DE400FF1AA6 /* Store */,
 				59C3CDB8274CD36E0043BA77 /* User */,
 				59799E2F2746583200BFB375 /* Config */,
@@ -352,6 +361,17 @@
 				D2153EE3274E465F009C2DDC /* Interactors */,
 			);
 			path = User;
+			sourceTree = "<group>";
+		};
+		59E92011275400B800D8877A /* NotificationStore */ = {
+			isa = PBXGroup;
+			children = (
+				59E92012275400F500D8877A /* NotificationStore.swift */,
+				59E920142754033E00D8877A /* NotificationStoreCoordinator.swift */,
+				59E92016275428A100D8877A /* NotificationStoreProvider.swift */,
+				59E9201827543FD200D8877A /* Observable.swift */,
+			);
+			path = NotificationStore;
 			sourceTree = "<group>";
 		};
 		59EF99A727446D6900FB2378 = {
@@ -645,7 +665,9 @@
 				59C12ECF2746DC7100311D24 /* PushSubscription.swift in Sources */,
 				59799E4427465C9200BFB375 /* String+HMAC.swift in Sources */,
 				D2153EE7274E4683009C2DDC /* LogoutInteractor.swift in Sources */,
+				59E92017275428A100D8877A /* NotificationStoreProvider.swift in Sources */,
 				D2153EED274E4F77009C2DDC /* GetUserQueryInteractor.swift in Sources */,
+				59E9201927543FD200D8877A /* Observable.swift in Sources */,
 				D2CBA52227512462002F1E44 /* PageInfo.swift in Sources */,
 				D2CBA52F275128FA002F1E44 /* StorePredicate.swift in Sources */,
 				59799E3F27465BB500BFB375 /* DataToDecodableMapper.swift in Sources */,
@@ -670,6 +692,7 @@
 				59799E3B27465A0E00BFB375 /* UserQuery.swift in Sources */,
 				59799E5D2746609A00BFB375 /* Notification.swift in Sources */,
 				D2153EF1274E5169009C2DDC /* DeleteUserQueryInteractor.swift in Sources */,
+				59E92013275400F500D8877A /* NotificationStore.swift in Sources */,
 				D2CBA52427512499002F1E44 /* Edge.swift in Sources */,
 				59C12ED12746E48100311D24 /* PushSubscriptionProvider.swift in Sources */,
 				59799E4027465BB500BFB375 /* HttpClient.swift in Sources */,
@@ -684,6 +707,7 @@
 				59569BA8274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift in Sources */,
 				59569B9A274F752100FF1AA6 /* StorePage.swift in Sources */,
 				59799E33274658B100BFB375 /* SDKProvider.swift in Sources */,
+				59E920152754033E00D8877A /* NotificationStoreCoordinator.swift in Sources */,
 				D2153EE5274E4679009C2DDC /* LoginInteractor.swift in Sources */,
 				59799E542746604F00BFB375 /* ConfigNetworkDataSource.swift in Sources */,
 				59C3CDC6274D4ED40043BA77 /* ErrorEntity.swift in Sources */,

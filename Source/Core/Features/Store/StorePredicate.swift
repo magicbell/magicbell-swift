@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct StorePredicate {
+public struct StorePredicate: Hashable {
     public enum Read {
         case read
         case unread
@@ -45,5 +45,28 @@ public struct StorePredicate {
         self.categories = categories
         self.topics = topics
         self.inApp = inApp
+    }
+
+    public static func == (lhs: StorePredicate, rhs: StorePredicate) -> Bool {
+
+        if lhs.read != rhs.read {
+            return false
+        }
+        if lhs.seen != rhs.seen {
+            return false
+        }
+        if lhs.archived != rhs.archived {
+            return false
+        }
+        if lhs.categories != rhs.categories {
+            return false
+        }
+        if lhs.topics != rhs.topics {
+            return false
+        }
+        if lhs.inApp != rhs.inApp {
+            return false
+        }
+        return true
     }
 }

@@ -35,7 +35,7 @@ public struct Notification: Codable {
     public init(from decoder: Decoder) throws {
         let values: KeyedDecodingContainer<CodingKeys>
         if let container = try? decoder.container(keyedBy: ContainerKeys.self),
-           let valuesContainer = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: .notification){
+           let valuesContainer = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: .notification) {
             values = valuesContainer
         } else {
             values = try decoder.container(keyedBy: CodingKeys.self)
@@ -53,8 +53,6 @@ public struct Notification: Codable {
         archivedAt = try values.decodeIfPresent(Date.self, forKey: .archivedAt)
     }
 }
-
-
 
 public struct Recipient: Codable {
     let id, email: String?

@@ -12,10 +12,13 @@ import Harmony
 protocol SDKComponent {
     func getLogger() -> Logger
     func getUserComponent() -> UserComponent
+    func createNotificationStore(name: String, predicate: StorePredicate) throws -> NotificationStore
+    func getNotificationStore(name: String) -> NotificationStore?
 }
 
 // TODO: Remove public
 public class DefaultSDKModule: SDKComponent {
+
     private let environment: Environment
     private let logger: Logger
 
@@ -38,6 +41,10 @@ public class DefaultSDKModule: SDKComponent {
         configComponent: configComponent,
         executor: executorComponent.mainExecutor
     )
+    private lazy var notificationStoreComponent: NotificationStoreComponent = DefaultNotificationStoreModule(storeComponent: storeComponent,
+                                                                                                             userComponent: userComponent,
+                                                                                                             logger: logger)
+
     // TODO: Remove public and make it private
     public lazy var userPreferencesComponent: UserPreferencesComponent = DefaultUserPreferencesModule(httpClient: httpClient)
     public lazy var notificationComponent: NotificationComponent = DefaultNotificationComponent(httpClient: httpClient)
@@ -52,6 +59,14 @@ public class DefaultSDKModule: SDKComponent {
 
     func getUserComponent() -> UserComponent {
         return userComponent
+    }
+
+    func createNotificationStore(name: String, predicate: StorePredicate) throws -> NotificationStore {
+        return try notificationStoreComponent.notificationStoreCoordinator.createNotificationStore(name: name, storePredicate: predicate)
+    }
+
+    func getNotificationStore(name: String) -> NotificationStore? {
+        return notificationStoreComponent.notificationStoreCoordinator.getNotificationStore(name: name)
     }
 }
 

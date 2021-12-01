@@ -21,8 +21,4 @@ public struct StorePage: Codable {
     public let totalCount: Int
     public let unreadCount: Int
     public let unseenCount: Int
-
-    func obtainNotifications() -> [Notification] {
-        return self.edges.map { $0.node }
-    }
 }

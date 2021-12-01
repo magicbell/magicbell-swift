@@ -15,16 +15,17 @@ struct GetUserQueryInteractor {
     }
 
     /// This methods returns the user query with the user credentials or throws an error if user is not authenticated yet.
-    func execute() throws -> UserQuery {
-        return try getUserQueryInteractor
-            .execute(IdQuery("userQuery"), in: DirectExecutor())
-            .mapError { error in
-                if error is CoreError.NotFound {
-                    // In this case, we want to throw an exception, as the user is attempting to perform an action without
-                    // having identified previously a user by email or userId.
-                    return MagicBellError("Can't perform action because user is not identified. Please, call MagicBell.login to identify a user.")
-                }
-                return error
-            }.result.get()
+    func execute() -> Future<UserQuery> {
+        getUserQueryInteractor.execute(IdQuery("userQuery"), in: DirectExecutor()).mapError { error in
+            if error is CoreError.NotFound {
+                return MagicBellError("Can't perform action because user is not identified. Please, call MagicBell.login to identify a user.")
+            }
+            return error
+        }
+    }
+
+    /// This methods returns the user query with the user credentials or throws an error if user is not authenticated yet.
+    func executeSync() throws -> UserQuery {
+        try execute().result.get()
     }
 }

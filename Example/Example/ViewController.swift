@@ -31,7 +31,7 @@ class ViewController: UIViewController {
             //            let config = try getConfigNetworkDataSource.get(userQuery).result.get()
             //            print("Channel for notifications --> \(config.channel)")
 
-//            let getStorePagesInteractor = MagicBell.shared.sdkProvider.storeComponent.getStorePagesInteractor()
+            //            let getStorePagesInteractor = MagicBell.shared.sdkProvider.storeComponent.getStorePagesInteractor()
 
             //            getStorePagesInteractor.execute(
             //                storePredicate: StorePredicate(read: .unread),
@@ -63,24 +63,67 @@ class ViewController: UIViewController {
             //                print("Error: \(error)")
             //            }
 
-            let notificationStore = MagicBell.createNotificationStore(name: "Testing", predicate: StorePredicate(read: .read))
+            let notificationStoreUnread = MagicBell.createNotificationStore(name: "unread", predicate: StorePredicate(read: .unread))
+            let notificationStoreRead = MagicBell.createNotificationStore(name: "read", predicate: StorePredicate(read: .read))
 
-            notificationStore?.fetch { result in
+            notificationStoreRead.fetch { result in
                 switch result {
                 case .success(let notifications):
-                    print(notifications)
-                    notificationStore?.fetch { result in
+                    notificationStoreRead.markNotificationAsRead(notifications[0], completion: { result in
                         switch result {
-                        case .success(let notifications):
-                            print(notifications)
+                        case .success:
+                            print("Mark as read")
                         case .failure(let error):
                             print(error)
                         }
-                    }
+                    })
                 case .failure(let error):
                     print(error)
                 }
             }
+
+            notificationStoreUnread.fetch { result in
+                switch result {
+                case .success(let notifications):
+                    notificationStoreUnread.markNotificationAsUnread(notifications[0], completion: { result in
+                        switch result {
+                        case .success:
+                            print("Mark as unread")
+                        case .failure(let error):
+                            print(error)
+                        }
+                    })
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            //            let notificationStoreRead = MagicBell.createNotificationStore(name: "read", predicate: StorePredicate(read: .read))
+            //
+            //            var notificationsUnread: [Notification] = []
+            //            notificationStoreUnread?.fetch { result in
+            //                switch result {
+            //                case .success(let notifications):
+            //                    notificationsUnread.append(contentsOf: notifications)
+            //                    let notificationUnread = notificationsUnread[0]
+            //
+            //                    MagicBell.markNotificationAsRead(notification: notificationUnread) { result in
+            //                        switch result {
+            //                        case.success(let notifications):
+            //                            let notifications = notificationStoreRead?.edges.map({ edge in
+            //                                edge.node
+            //                            })
+            //                            print(notifications)
+            //                        case .failure(let error):
+            //                            print(error)
+            //                        }
+            //                    }
+            //
+            //
+            //                case .failure(let error):
+            //                    print(error)
+            //                }
+            //            }
+
 
             return
 
@@ -106,15 +149,15 @@ class ViewController: UIViewController {
             // Notification
 
             let notificationDataSource = MagicBell.shared.sdkProvider.notificationComponent.getNotificationNetworkDataSource()
-            let actionNotificationDataSource = MagicBell.shared.sdkProvider.notificationComponent.getActionNotificationNetworkDataSource()
+            let actionNotificationInteractor = MagicBell.shared.sdkProvider.notificationComponent.getActionNotificationInteractor()
 
             let notification = try notificationDataSource.get(NotificationQuery(notificationId: notificationId, userQuery: userQuery)).result.get()
             print("Notification --> \(notification)")
 
             // Mark Notification as readed
-            _ = try actionNotificationDataSource.put(nil, in: NotificationActionQuery(action: .markAsRead,
-                                                                                      notificationId: notificationId,
-                                                                                      userQuery: userQuery)).result.get()
+            _ = try actionNotificationInteractor.execute(nil, query: NotificationActionQuery(action: .markAsRead,
+                                                                                             notificationId: notificationId,
+                                                                                             userQuery: userQuery)).result.get()
             let notificationReaded = try notificationDataSource.get(NotificationQuery(notificationId: notificationId,
                                                                                       userQuery: userQuery)).result.get()
             print(notificationReaded)

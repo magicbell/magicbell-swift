@@ -9,26 +9,32 @@ import Harmony
 
 
 protocol NotificationStoreComponent {
-    var notificationStoreCoordinator: NotificationStoreCoordinator { get }
+    var notificationStoreFactory: NotificationStoreFactory { get }
 }
 
 class DefaultNotificationStoreModule: NotificationStoreComponent {
-    
+
     private let storeComponent: StoreComponent
     private let userComponent: UserComponent
+    private let notificationComponent: NotificationComponent
+    let notificationStoreFactory: NotificationStoreFactory
+    private let executor: Executor
     private let logger: Logger
-    
-    internal init(storeComponent: StoreComponent,
-                  userComponent: UserComponent,
-                  logger: Logger) {
+
+    init(storeComponent: StoreComponent,
+         userComponent: UserComponent,
+         notificationComponent: NotificationComponent,
+         executor: Executor,
+         logger: Logger) {
         self.storeComponent = storeComponent
         self.userComponent = userComponent
+        self.notificationComponent = notificationComponent
+        self.notificationStoreFactory = DefautNotificationStoreFactory(
+            getUserQueryInteractor: userComponent.getUserQueryInteractor(),
+            getPageStoreInteractor: storeComponent.getStorePagesInteractor(),
+            actionNotificationInteractor: notificationComponent.getActionNotificationInteractor(),
+            logger: logger)
+        self.executor = executor
         self.logger = logger
     }
-    
-    lazy var notificationStoreCoordinator: NotificationStoreCoordinator = {
-        NotificationStoreCoordinator(getStorePagesInteractor: storeComponent.getStorePagesInteractor(),
-                                     getUserQueryInteractor: userComponent.getUserQueryInteractor(),
-                                     logger: logger)
-    }()
 }

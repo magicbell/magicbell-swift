@@ -12,13 +12,11 @@ import Harmony
 protocol SDKComponent {
     func getLogger() -> Logger
     func getUserComponent() -> UserComponent
-    func createNotificationStore(name: String, predicate: StorePredicate) throws -> NotificationStore
-    func getNotificationStore(name: String) -> NotificationStore?
+    func createNotificationStore(name: String?, predicate: StorePredicate) throws -> NotificationStore
 }
 
 // TODO: Remove public
 public class DefaultSDKModule: SDKComponent {
-
     private let environment: Environment
     private let logger: Logger
 
@@ -28,26 +26,29 @@ public class DefaultSDKModule: SDKComponent {
     }
 
     private lazy var httpClient: HttpClient = DefaultHttpClient(
-        urlSession: URLSession.shared,
-        environment: environment
+            urlSession: URLSession.shared,
+            environment: environment
     )
     private lazy var executorComponent: ExecutorComponent = DefaultExecutorModule()
     private lazy var configComponent: ConfigComponent = DefaultConfigModule(
-        httpClient: httpClient,
-        executor: executorComponent.mainExecutor
+            httpClient: httpClient,
+            executor: executorComponent.mainExecutor
     )
     private lazy var userComponent: UserComponent = DefaultUserComponent(
-        logger: logger,
-        configComponent: configComponent,
-        executor: executorComponent.mainExecutor
+            logger: logger,
+            configComponent: configComponent,
+            executor: executorComponent.mainExecutor
     )
     private lazy var notificationStoreComponent: NotificationStoreComponent = DefaultNotificationStoreModule(storeComponent: storeComponent,
-                                                                                                             userComponent: userComponent,
-                                                                                                             logger: logger)
+            userComponent: userComponent,
+            notificationComponent: notificationComponent,
+            executor: executorComponent.mainExecutor,
+            logger: logger)
 
     // TODO: Remove public and make it private
     public lazy var userPreferencesComponent: UserPreferencesComponent = DefaultUserPreferencesModule(httpClient: httpClient)
-    public lazy var notificationComponent: NotificationComponent = DefaultNotificationComponent(httpClient: httpClient)
+    public lazy var notificationComponent: NotificationComponent = DefaultNotificationComponent(httpClient: httpClient, executor:
+    executorComponent.mainExecutor)
     public lazy var pushSubscriptionComponent: PushSubscriptionComponent = DefaultPushSubscriptionModule(httpClient: httpClient)
     public lazy var storeComponent: StoreComponent = DefaultStoreModule(httpClient: httpClient, executor: executorComponent.mainExecutor)
 
@@ -61,12 +62,8 @@ public class DefaultSDKModule: SDKComponent {
         return userComponent
     }
 
-    func createNotificationStore(name: String, predicate: StorePredicate) throws -> NotificationStore {
-        return try notificationStoreComponent.notificationStoreCoordinator.createNotificationStore(name: name, storePredicate: predicate)
-    }
-
-    func getNotificationStore(name: String) -> NotificationStore? {
-        return notificationStoreComponent.notificationStoreCoordinator.getNotificationStore(name: name)
+    func createNotificationStore(name: String?, predicate: StorePredicate) -> NotificationStore {
+        return notificationStoreComponent.notificationStoreFactory.createNotificationStore(name: name, predicate: predicate)
     }
 }
 

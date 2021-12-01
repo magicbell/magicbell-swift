@@ -48,7 +48,6 @@ public struct StorePredicate: Hashable {
     }
 
     public static func == (lhs: StorePredicate, rhs: StorePredicate) -> Bool {
-
         if lhs.read != rhs.read {
             return false
         }
@@ -68,5 +67,12 @@ public struct StorePredicate: Hashable {
             return false
         }
         return true
+    }
+}
+
+extension StorePredicate {
+    func matchNotification(_ notification: Notification) -> Bool {
+        let validator = StorePredicateValidator(storePredicate: self)
+        return validator.validateNotification(notification)
     }
 }

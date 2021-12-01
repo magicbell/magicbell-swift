@@ -10,15 +10,22 @@ import Harmony
 
 public protocol NotificationComponent {
     func getNotificationNetworkDataSource() -> AnyGetDataSource<Notification>
-    func getActionNotificationNetworkDataSource() -> AnyPutDataSource<Void>
+    func getActionNotificationInteractor() -> Interactor.PutByQuery<Void>
     func getDeleteNotificationNetworkDataSource() -> DeleteDataSource
 }
 
 class DefaultNotificationComponent: NotificationComponent {
     private let httpClient: HttpClient
+    private let executor: Executor
 
-    init(httpClient: HttpClient) {
+    init(httpClient: HttpClient,
+         executor: Executor) {
         self.httpClient = httpClient
+        self.executor = executor
+    }
+
+    func getActionNotificationInteractor() -> Interactor.PutByQuery<Void> {
+        actionNotificationNetworkDataSource.toPutRepository().toPutByQueryInteractor(executor)
     }
 
     private lazy var notificationNetworkDataSource = NotificationNetworkDataSource(
@@ -32,10 +39,6 @@ class DefaultNotificationComponent: NotificationComponent {
 
     func getNotificationNetworkDataSource() -> AnyGetDataSource<Notification> {
         AnyGetDataSource(notificationNetworkDataSource)
-    }
-
-    func getActionNotificationNetworkDataSource() -> AnyPutDataSource<Void> {
-        AnyPutDataSource(actionNotificationNetworkDataSource)
     }
 
     func getDeleteNotificationNetworkDataSource() -> DeleteDataSource {

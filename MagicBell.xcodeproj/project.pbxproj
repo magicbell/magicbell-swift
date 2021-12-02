@@ -9,11 +9,8 @@
 /* Begin PBXBuildFile section */
 		0869C89DF195BCCEF9D2C4E4 /* libPods-MagicBell-MagicBellTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B45D82557E72257F11E3D387 /* libPods-MagicBell-MagicBellTests.a */; };
 		2E565B60D769C36F5A62F8C3 /* libPods-MagicBell.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6568730708C32057869C01 /* libPods-MagicBell.a */; };
-		591FAD522757DCAE0085BDF9 /* NotificationStoreFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591FAD512757DCAE0085BDF9 /* NotificationStoreFactory.swift */; };
 		5953192E27561BA8006673E9 /* StorePredicateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953192D27561BA8006673E9 /* StorePredicateValidator.swift */; };
-		5953193027561CC5006673E9 /* MarkNotificationAsReadInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953192F27561CC5006673E9 /* MarkNotificationAsReadInteractor.swift */; };
 		595319322756249A006673E9 /* StorePredicateValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595319312756249A006673E9 /* StorePredicateValidatorTests.swift */; };
-		5953193527567FBF006673E9 /* UpdateStoreFromNotificationChangeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953193427567FBF006673E9 /* UpdateStoreFromNotificationChangeInteractor.swift */; };
 		59569B9A274F752100FF1AA6 /* StorePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569B99274F752100FF1AA6 /* StorePage.swift */; };
 		59569BA5274F7B8A00FF1AA6 /* GraphQLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BA4274F7B8A00FF1AA6 /* GraphQLRequest.swift */; };
 		59569BA8274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BA7274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift */; };
@@ -49,12 +46,15 @@
 		59C3CDC4274D36360043BA77 /* DeleteConfigInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDC3274D36360043BA77 /* DeleteConfigInteractor.swift */; };
 		59C3CDC6274D4ED40043BA77 /* ErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDC5274D4ED40043BA77 /* ErrorEntity.swift */; };
 		59E92013275400F500D8877A /* NotificationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E92012275400F500D8877A /* NotificationStore.swift */; };
-		59E92017275428A100D8877A /* NotificationStoreProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E92016275428A100D8877A /* NotificationStoreProvider.swift */; };
 		59EF99BC27446D6900FB2378 /* MagicBell.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59EF99B127446D6900FB2378 /* MagicBell.framework */; };
 		59EF99C127446D6900FB2378 /* MagicBellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF99C027446D6900FB2378 /* MagicBellTests.swift */; };
 		59EF99CC27446DAD00FB2378 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 59EF99CB27446DAD00FB2378 /* Podfile */; };
 		59EF9AC52744710300FB2378 /* MagicBell.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 59EF9AC42744710300FB2378 /* MagicBell.podspec */; };
 		59EF9ACB2744792A00FB2378 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 59EF9ACA2744792A00FB2378 /* LICENSE */; };
+		59F4596B2758C39F008F3BC8 /* FetchStorePageInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4596A2758C39F008F3BC8 /* FetchStorePageInteractor.swift */; };
+		59F4596E2758C739008F3BC8 /* ActionNotificationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4596D2758C739008F3BC8 /* ActionNotificationInteractor.swift */; };
+		59F459702758CC25008F3BC8 /* DeleteNotificationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4596F2758CC25008F3BC8 /* DeleteNotificationInteractor.swift */; };
+		59F459722758D0DB008F3BC8 /* GetNotificationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F459712758D0DB008F3BC8 /* GetNotificationInteractor.swift */; };
 		D2153EE5274E4679009C2DDC /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2153EE4274E4679009C2DDC /* LoginInteractor.swift */; };
 		D2153EE7274E4683009C2DDC /* LogoutInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2153EE6274E4683009C2DDC /* LogoutInteractor.swift */; };
 		D2153EED274E4F77009C2DDC /* GetUserQueryInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2153EEC274E4F77009C2DDC /* GetUserQueryInteractor.swift */; };
@@ -85,11 +85,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		591FAD512757DCAE0085BDF9 /* NotificationStoreFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStoreFactory.swift; sourceTree = "<group>"; };
 		5953192D27561BA8006673E9 /* StorePredicateValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePredicateValidator.swift; sourceTree = "<group>"; };
-		5953192F27561CC5006673E9 /* MarkNotificationAsReadInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkNotificationAsReadInteractor.swift; sourceTree = "<group>"; };
 		595319312756249A006673E9 /* StorePredicateValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePredicateValidatorTests.swift; sourceTree = "<group>"; };
-		5953193427567FBF006673E9 /* UpdateStoreFromNotificationChangeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateStoreFromNotificationChangeInteractor.swift; sourceTree = "<group>"; };
 		59569B99274F752100FF1AA6 /* StorePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePage.swift; sourceTree = "<group>"; };
 		59569BA4274F7B8A00FF1AA6 /* GraphQLRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLRequest.swift; sourceTree = "<group>"; };
 		59569BA7274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoresGraphQLDataSource.swift; sourceTree = "<group>"; };
@@ -125,13 +122,16 @@
 		59C3CDC3274D36360043BA77 /* DeleteConfigInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteConfigInteractor.swift; sourceTree = "<group>"; };
 		59C3CDC5274D4ED40043BA77 /* ErrorEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorEntity.swift; sourceTree = "<group>"; };
 		59E92012275400F500D8877A /* NotificationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStore.swift; sourceTree = "<group>"; };
-		59E92016275428A100D8877A /* NotificationStoreProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStoreProvider.swift; sourceTree = "<group>"; };
 		59EF99B127446D6900FB2378 /* MagicBell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MagicBell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59EF99BB27446D6900FB2378 /* MagicBellTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MagicBellTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		59EF99C027446D6900FB2378 /* MagicBellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBellTests.swift; sourceTree = "<group>"; };
 		59EF99CB27446DAD00FB2378 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		59EF9AC42744710300FB2378 /* MagicBell.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = MagicBell.podspec; sourceTree = "<group>"; };
 		59EF9ACA2744792A00FB2378 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		59F4596A2758C39F008F3BC8 /* FetchStorePageInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStorePageInteractor.swift; sourceTree = "<group>"; };
+		59F4596D2758C739008F3BC8 /* ActionNotificationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionNotificationInteractor.swift; sourceTree = "<group>"; };
+		59F4596F2758CC25008F3BC8 /* DeleteNotificationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteNotificationInteractor.swift; sourceTree = "<group>"; };
+		59F459712758D0DB008F3BC8 /* GetNotificationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNotificationInteractor.swift; sourceTree = "<group>"; };
 		87D00462DCDB8304EBB132EA /* Pods-MagicBell-MagicBellTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell-MagicBellTests.debug.xcconfig"; path = "Target Support Files/Pods-MagicBell-MagicBellTests/Pods-MagicBell-MagicBellTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9A6568730708C32057869C01 /* libPods-MagicBell.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MagicBell.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EF8CEE464FC13C082743CBD /* Pods-MagicBell-MagicBellTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell-MagicBellTests.release.xcconfig"; path = "Target Support Files/Pods-MagicBell-MagicBellTests/Pods-MagicBell-MagicBellTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -178,15 +178,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5953193327567E94006673E9 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				5953192F27561CC5006673E9 /* MarkNotificationAsReadInteractor.swift */,
-				5953193427567FBF006673E9 /* UpdateStoreFromNotificationChangeInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
 		59569BA9274F7DE400FF1AA6 /* Store */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +186,7 @@
 				D2CBA52E275128FA002F1E44 /* StorePredicate.swift */,
 				5953192D27561BA8006673E9 /* StorePredicateValidator.swift */,
 				D2CBA53027513747002F1E44 /* StoreContext.swift */,
+				59E92012275400F500D8877A /* NotificationStore.swift */,
 				59569BB32750FCFB00FF1AA6 /* Interactor */,
 				59569BAA274F7FBB00FF1AA6 /* Data */,
 			);
@@ -216,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				59569BB42750FD8700FF1AA6 /* GetStorePagesInteractor.swift */,
+				59F4596A2758C39F008F3BC8 /* FetchStorePageInteractor.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -244,7 +237,6 @@
 		59799E34274659B100BFB375 /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				59E92011275400B800D8877A /* NotificationStore */,
 				59569BA9274F7DE400FF1AA6 /* Store */,
 				59C3CDB8274CD36E0043BA77 /* User */,
 				59799E2F2746583200BFB375 /* Config */,
@@ -307,6 +299,7 @@
 			children = (
 				59799E5B2746609A00BFB375 /* Notification.swift */,
 				59799E68274662E900BFB375 /* NotificationProvider.swift */,
+				59F4596C2758C72B008F3BC8 /* Interactor */,
 				59799E572746609A00BFB375 /* Data */,
 			);
 			path = Notification;
@@ -379,17 +372,6 @@
 			path = User;
 			sourceTree = "<group>";
 		};
-		59E92011275400B800D8877A /* NotificationStore */ = {
-			isa = PBXGroup;
-			children = (
-				5953193327567E94006673E9 /* Interactor */,
-				59E92012275400F500D8877A /* NotificationStore.swift */,
-				59E92016275428A100D8877A /* NotificationStoreProvider.swift */,
-				591FAD512757DCAE0085BDF9 /* NotificationStoreFactory.swift */,
-			);
-			path = NotificationStore;
-			sourceTree = "<group>";
-		};
 		59EF99A727446D6900FB2378 = {
 			isa = PBXGroup;
 			children = (
@@ -437,6 +419,16 @@
 				59EF9ACA2744792A00FB2378 /* LICENSE */,
 			);
 			name = Deployment;
+			sourceTree = "<group>";
+		};
+		59F4596C2758C72B008F3BC8 /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				59F4596D2758C739008F3BC8 /* ActionNotificationInteractor.swift */,
+				59F4596F2758CC25008F3BC8 /* DeleteNotificationInteractor.swift */,
+				59F459712758D0DB008F3BC8 /* GetNotificationInteractor.swift */,
+			);
+			path = Interactor;
 			sourceTree = "<group>";
 		};
 		B6A4AD0160030AF76A38354D /* Pods */ = {
@@ -682,7 +674,6 @@
 				59C12ECF2746DC7100311D24 /* PushSubscription.swift in Sources */,
 				59799E4427465C9200BFB375 /* String+HMAC.swift in Sources */,
 				D2153EE7274E4683009C2DDC /* LogoutInteractor.swift in Sources */,
-				59E92017275428A100D8877A /* NotificationStoreProvider.swift in Sources */,
 				D2153EED274E4F77009C2DDC /* GetUserQueryInteractor.swift in Sources */,
 				D2CBA52227512462002F1E44 /* PageInfo.swift in Sources */,
 				D2CBA52F275128FA002F1E44 /* StorePredicate.swift in Sources */,
@@ -696,15 +687,19 @@
 				59799E65274660AD00BFB375 /* UserPreferencesProvider.swift in Sources */,
 				59C3CDBE274D2BDB0043BA77 /* UserProvider.swift in Sources */,
 				59799E67274660AD00BFB375 /* UserPreferences.swift in Sources */,
+				59F4596E2758C739008F3BC8 /* ActionNotificationInteractor.swift in Sources */,
 				59569BB22750EEDF00FF1AA6 /* StoreGraphQLRepresentableExtensions.swift in Sources */,
 				D2CBA52727512518002F1E44 /* CursorPredicate.swift in Sources */,
 				59799E552746604F00BFB375 /* Config.swift in Sources */,
+				59F459702758CC25008F3BC8 /* DeleteNotificationInteractor.swift in Sources */,
 				59569BAE274F82F100FF1AA6 /* StoreProvider.swift in Sources */,
 				D2CBA53127513747002F1E44 /* StoreContext.swift in Sources */,
 				59569BB0274F838D00FF1AA6 /* StoreQuery.swift in Sources */,
 				D2153EEF274E503E009C2DDC /* StoreUserQueryInteractor.swift in Sources */,
+				59F4596B2758C39F008F3BC8 /* FetchStorePageInteractor.swift in Sources */,
 				59799E66274660AD00BFB375 /* UserPreferencesNetworkDataSource.swift in Sources */,
 				59799E69274662E900BFB375 /* NotificationProvider.swift in Sources */,
+				59F459722758D0DB008F3BC8 /* GetNotificationInteractor.swift in Sources */,
 				59799E3B27465A0E00BFB375 /* UserQuery.swift in Sources */,
 				59799E5D2746609A00BFB375 /* Notification.swift in Sources */,
 				D2153EF1274E5169009C2DDC /* DeleteUserQueryInteractor.swift in Sources */,
@@ -714,7 +709,6 @@
 				59799E4027465BB500BFB375 /* HttpClient.swift in Sources */,
 				59569BB52750FD8700FF1AA6 /* GetStorePagesInteractor.swift in Sources */,
 				D2D2772B2747D43200B5F69E /* PushSubscriptionQuery.swift in Sources */,
-				5953193527567FBF006673E9 /* UpdateStoreFromNotificationChangeInteractor.swift in Sources */,
 				59C3CDBC274D039D0043BA77 /* MagicBellError.swift in Sources */,
 				59799E312746587000BFB375 /* MagicBell.swift in Sources */,
 				59799E38274659D800BFB375 /* Environment.swift in Sources */,
@@ -723,8 +717,6 @@
 				D2D277292747D40A00B5F69E /* NotificationQuery.swift in Sources */,
 				59569BA8274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift in Sources */,
 				59569B9A274F752100FF1AA6 /* StorePage.swift in Sources */,
-				5953193027561CC5006673E9 /* MarkNotificationAsReadInteractor.swift in Sources */,
-				591FAD522757DCAE0085BDF9 /* NotificationStoreFactory.swift in Sources */,
 				59799E33274658B100BFB375 /* SDKProvider.swift in Sources */,
 				5953192E27561BA8006673E9 /* StorePredicateValidator.swift in Sources */,
 				D2153EE5274E4679009C2DDC /* LoginInteractor.swift in Sources */,

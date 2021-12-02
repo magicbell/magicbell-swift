@@ -63,8 +63,8 @@ class ViewController: UIViewController {
             //                print("Error: \(error)")
             //            }
 
-            let notificationStoreUnread = MagicBell.createNotificationStore(name: "unread", predicate: StorePredicate(read: .unread))
-            let notificationStoreRead = MagicBell.createNotificationStore(name: "read", predicate: StorePredicate(read: .read))
+            let notificationStoreUnread = MagicBell.createStore(name: "unread", predicate: StorePredicate(read: .unread))
+            let notificationStoreRead = MagicBell.createStore(name: "read", predicate: StorePredicate(read: .read))
 
             notificationStoreRead.fetch { result in
                 switch result {

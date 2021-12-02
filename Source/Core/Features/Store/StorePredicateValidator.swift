@@ -76,6 +76,7 @@ struct StorePredicateValidator {
     }
 
     func validateInApp(_ notification: Notification) -> Bool {
+        // TODO: What is the validation?
         true
     }
 }

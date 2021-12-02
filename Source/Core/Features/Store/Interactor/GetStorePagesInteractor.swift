@@ -1,5 +1,5 @@
 //
-//  GetNotificationStoreInteractor.swift
+//  GetStorePagesInteractor.swift
 //  MagicBell
 //
 //  Created by Javi on 26/11/21.

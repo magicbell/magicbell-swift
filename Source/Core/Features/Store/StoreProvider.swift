@@ -8,19 +8,29 @@
 import Foundation
 import Harmony
 
-public protocol StoreComponent {
+protocol StoreComponent {
     func getStorePagesInteractor() -> GetStorePagesInteractor
+    func createStore(name: String?, predicate: StorePredicate) -> NotificationStore
 }
 
 class DefaultStoreModule: StoreComponent {
 
     private let httpClient: HttpClient
     private let mainExecutor: Executor
+    private let userComponent: UserComponent
+    private let notificationComponent: NotificationComponent
+    private let logger: Logger
 
     init(httpClient: HttpClient,
-         executor: Executor) {
+         executor: Executor,
+         userComponent: UserComponent,
+         notificationComponent: NotificationComponent,
+         logger: Logger) {
         self.httpClient = httpClient
         self.mainExecutor = executor
+        self.userComponent = userComponent
+        self.notificationComponent = notificationComponent
+        self.logger = logger
     }
 
     private lazy var storeNotificationGraphQLRepository: AnyGetRepository<[String: StorePage]> = {
@@ -38,5 +48,20 @@ class DefaultStoreModule: StoreComponent {
         GetStorePagesInteractor(
             executor: mainExecutor,
             getStoreNotificationInteractor: storeNotificationGraphQLRepository.toGetByQueryInteractor(mainExecutor))
+    }
+
+    func createStore(name: String?, predicate: StorePredicate) -> NotificationStore {
+
+        let fetchStorePageInteractor = FetchStorePageInteractor(executor: mainExecutor,
+                                                                getUserQueryInteractor: userComponent.getUserQueryInteractor(),
+                                                                getStorePagesInteractor: getStorePagesInteractor())
+
+        return NotificationStore(name: name ?? UUID().uuidString,
+                                 storePredicate: predicate,
+                                 getUserQueryInteractor: userComponent.getUserQueryInteractor(),
+                                 fetchStorePageInteractor: fetchStorePageInteractor,
+                                 actionNotificationInteractor: notificationComponent.getActionNotificationInteractor(),
+                                 deleteNotificationInteractor: notificationComponent.getDeleteNotificationInteractor(),
+                                 logger: logger)
     }
 }

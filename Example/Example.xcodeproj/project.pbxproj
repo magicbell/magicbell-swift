@@ -10,12 +10,14 @@
 		1E002DCC874FAAA78D0A7E0E /* libPods-ExampleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 724A5962DCE0D13357CD4A80 /* libPods-ExampleTests.a */; };
 		59EF9A942744700700FB2378 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF9A932744700700FB2378 /* AppDelegate.swift */; };
 		59EF9A962744700700FB2378 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF9A952744700700FB2378 /* SceneDelegate.swift */; };
-		59EF9A982744700700FB2378 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF9A972744700700FB2378 /* ViewController.swift */; };
+		59EF9A982744700700FB2378 /* MagicBellStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF9A972744700700FB2378 /* MagicBellStoreViewController.swift */; };
 		59EF9A9B2744700700FB2378 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59EF9A992744700700FB2378 /* Main.storyboard */; };
 		59EF9A9D2744700800FB2378 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59EF9A9C2744700800FB2378 /* Assets.xcassets */; };
 		59EF9AA02744700800FB2378 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59EF9A9E2744700800FB2378 /* LaunchScreen.storyboard */; };
 		59EF9AAB2744700800FB2378 /* ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF9AAA2744700800FB2378 /* ExampleTests.swift */; };
 		B81D767668E9D045969B54DB /* libPods-Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1B37DC95048721987CEA7C6 /* libPods-Example.a */; };
+		D2DC15F62758C68000282C27 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC15F52758C68000282C27 /* UIColorExtensions.swift */; };
+		D2DC15F82758CC0B00282C27 /* MagicBellStoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC15F72758CC0B00282C27 /* MagicBellStoreCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +42,7 @@
 		59EF9A902744700700FB2378 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59EF9A932744700700FB2378 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59EF9A952744700700FB2378 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		59EF9A972744700700FB2378 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		59EF9A972744700700FB2378 /* MagicBellStoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBellStoreViewController.swift; sourceTree = "<group>"; };
 		59EF9A9A2744700700FB2378 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		59EF9A9C2744700800FB2378 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		59EF9A9F2744700800FB2378 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -50,6 +52,8 @@
 		59EF9AB02744700800FB2378 /* ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		724A5962DCE0D13357CD4A80 /* libPods-ExampleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ExampleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1B37DC95048721987CEA7C6 /* libPods-Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2DC15F52758C68000282C27 /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
+		D2DC15F72758CC0B00282C27 /* MagicBellStoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBellStoreCell.swift; sourceTree = "<group>"; };
 		DF44A9CD695AE99752AF8FFD /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		E2DDE89866B11F9F224480D2 /* Pods-ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleTests.release.xcconfig"; path = "Target Support Files/Pods-ExampleTests/Pods-ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		FEF067DB8F5EA953AD527EC5 /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -129,7 +133,9 @@
 			children = (
 				59EF9A932744700700FB2378 /* AppDelegate.swift */,
 				59EF9A952744700700FB2378 /* SceneDelegate.swift */,
-				59EF9A972744700700FB2378 /* ViewController.swift */,
+				59EF9A972744700700FB2378 /* MagicBellStoreViewController.swift */,
+				D2DC15F72758CC0B00282C27 /* MagicBellStoreCell.swift */,
+				D2DC15F52758C68000282C27 /* UIColorExtensions.swift */,
 				59EF9A992744700700FB2378 /* Main.storyboard */,
 				59EF9A9C2744700800FB2378 /* Assets.xcassets */,
 				59EF9A9E2744700800FB2378 /* LaunchScreen.storyboard */,
@@ -363,9 +369,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59EF9A982744700700FB2378 /* ViewController.swift in Sources */,
+				59EF9A982744700700FB2378 /* MagicBellStoreViewController.swift in Sources */,
+				D2DC15F82758CC0B00282C27 /* MagicBellStoreCell.swift in Sources */,
 				59EF9A942744700700FB2378 /* AppDelegate.swift in Sources */,
 				59EF9A962744700700FB2378 /* SceneDelegate.swift in Sources */,
+				D2DC15F62758C68000282C27 /* UIColorExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -106,14 +106,22 @@ public class MagicBell {
     public static func logout() {
         let logout = shared.sdkProvider.getUserComponent().getLogoutInteractor()
         logout.execute()
+        // TODO: teardown stores
+        shared.stores.removeAll()
     }
 
-    /// Creates a notification store.
+    private var stores: [NotificationStore] = []
+
+    /// Returns a notification store for the given predicate. The store instnace will be kept, and returned later if used an equal predicate.
     /// - Parameters:
-    ///    - name: Notification store's name. Optional.
     ///    - predicate: Notification store's predicate. Define an scope for the notification store. Read, Seen, Archive, Categories, Topics and inApp.
     /// - Returns: A `NotificationStore` with all the actions. MarkNotifications, MarkAllNotifications, FetchNotifications, ReloadStore.
-    public static func createStore(name: String?, predicate: StorePredicate) -> NotificationStore {
-        return shared.sdkProvider.createStore(name: name, predicate: predicate)
+    public static func storeFor(predicate: StorePredicate) -> NotificationStore {
+        if let store = shared.stores.first(where: { $0.predicate.hashValue == predicate.hashValue }) {
+            return store
+        }
+        let store = shared.sdkProvider.createStore(name: nil, predicate: predicate)
+        shared.stores.append(store)
+        return store
     }
 }

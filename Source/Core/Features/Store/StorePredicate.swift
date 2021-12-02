@@ -7,20 +7,20 @@
 
 import Foundation
 
-public struct StorePredicate: Hashable {
-    public enum Read {
+public struct StorePredicate: Hashable, Equatable {
+    public enum Read: Int {
         case read
         case unread
         case unspecified
     }
 
-    public enum Seen {
+    public enum Seen: Int {
         case seen
         case unseen
         case unspecified
     }
 
-    public enum Archived {
+    public enum Archived: Int {
         case archived
         case unarchived
         case unspecified
@@ -31,20 +31,25 @@ public struct StorePredicate: Hashable {
     public let archived: Archived
     public let categories: [String]
     public let topics: [String]
-    public let inApp: String?
 
     public init(read: StorePredicate.Read = .unspecified,
                 seen: StorePredicate.Seen = .unspecified,
                 archived: StorePredicate.Archived = .unspecified,
                 categories: [String] = [],
-                topics: [String] = [],
-                inApp: String? = nil) {
+                topics: [String] = []) {
         self.read = read
         self.seen = seen
         self.archived = archived
         self.categories = categories
         self.topics = topics
-        self.inApp = inApp
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(read.hashValue)
+        hasher.combine(seen.hashValue)
+        hasher.combine(archived.hashValue)
+        hasher.combine(categories.hashValue)
+        hasher.combine(topics.hashValue)
     }
 
     public static func == (lhs: StorePredicate, rhs: StorePredicate) -> Bool {
@@ -61,9 +66,6 @@ public struct StorePredicate: Hashable {
             return false
         }
         if lhs.topics != rhs.topics {
-            return false
-        }
-        if lhs.inApp != rhs.inApp {
             return false
         }
         return true

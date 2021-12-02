@@ -46,10 +46,6 @@ extension StorePredicate: GraphQLRepresentable {
             string.append("topics:[\(topics.map { "\"\($0)\"" }.joined(separator: ", "))]")
         }
 
-        if let inApp = inApp {
-            string.append("inApp: \"\(inApp)\"")
-        }
-
         return string.joined(separator: ", ")
     }
 }

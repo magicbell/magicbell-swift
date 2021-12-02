@@ -8,17 +8,38 @@
 import Foundation
 import Harmony
 
-public protocol NotificationComponent {
-    func getNotificationNetworkDataSource() -> AnyGetDataSource<Notification>
-    func getActionNotificationNetworkDataSource() -> AnyPutDataSource<Void>
-    func getDeleteNotificationNetworkDataSource() -> DeleteDataSource
+protocol NotificationComponent {
+    func getNotificationInteractor() -> GetNotificationInteractor
+    func getActionNotificationInteractor() -> ActionNotificationInteractor
+    func getDeleteNotificationInteractor() -> DeleteNotificationInteractor
 }
 
 class DefaultNotificationComponent: NotificationComponent {
-    private let httpClient: HttpClient
 
-    init(httpClient: HttpClient) {
+    private let httpClient: HttpClient
+    private let executor: Executor
+    private let userComponent: UserComponent
+
+    init(httpClient: HttpClient,
+         executor: Executor,
+         userComponent: UserComponent) {
         self.httpClient = httpClient
+        self.executor = executor
+        self.userComponent = userComponent
+    }
+
+
+    func getNotificationInteractor() -> GetNotificationInteractor {
+        let getNotificationInteractor = notificationNetworkDataSource.toGetRepository().toGetByQueryInteractor(executor)
+        return GetNotificationInteractor(executor: executor,
+                                         getUserQueryInteractor: userComponent.getUserQueryInteractor(),
+                                         getInteractor: getNotificationInteractor)
+    }
+
+    func getActionNotificationInteractor() -> ActionNotificationInteractor {
+        return ActionNotificationInteractor(executor: executor,
+                                            getUserQueryInteractor: userComponent.getUserQueryInteractor(),
+                                            actionInteractor: actionNotificationNetworkDataSource.toPutRepository().toPutByQueryInteractor(executor))
     }
 
     private lazy var notificationNetworkDataSource = NotificationNetworkDataSource(
@@ -30,15 +51,10 @@ class DefaultNotificationComponent: NotificationComponent {
         httpClient: httpClient
     )
 
-    func getNotificationNetworkDataSource() -> AnyGetDataSource<Notification> {
-        AnyGetDataSource(notificationNetworkDataSource)
-    }
-
-    func getActionNotificationNetworkDataSource() -> AnyPutDataSource<Void> {
-        AnyPutDataSource(actionNotificationNetworkDataSource)
-    }
-
-    func getDeleteNotificationNetworkDataSource() -> DeleteDataSource {
-        actionNotificationNetworkDataSource
+    func getDeleteNotificationInteractor() -> DeleteNotificationInteractor {
+        let deleteNotificationInteractor = actionNotificationNetworkDataSource.toDeleteRepository().toDeleteByQueryInteractor(executor)
+        return DeleteNotificationInteractor(executor: executor,
+                                            getUserQueryInteractor: userComponent.getUserQueryInteractor(),
+                                            deleteInteractor: deleteNotificationInteractor)
     }
 }

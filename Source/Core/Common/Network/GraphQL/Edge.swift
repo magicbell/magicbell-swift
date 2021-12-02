@@ -8,8 +8,9 @@
 import Foundation
 
 public struct Edge<T: Codable>: Codable {
+
     public let cursor: String
-    public let node: T
+    public var node: T
 
     enum CodingKeys: String, CodingKey {
         case cursor

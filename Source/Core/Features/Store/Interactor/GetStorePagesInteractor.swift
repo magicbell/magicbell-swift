@@ -1,5 +1,5 @@
 //
-//  GetNotificationStoreInteractor.swift
+//  GetStorePagesInteractor.swift
 //  MagicBell
 //
 //  Created by Javi on 26/11/21.
@@ -21,12 +21,14 @@ public struct GetStorePagesInteractor {
 
     public func execute(storePredicate: StorePredicate,
                         cursorPredicate: CursorPredicate,
-                        userQuery: UserQuery) -> Future<StorePage> {
+                        userQuery: UserQuery,
+                        in executor: Executor? = nil) -> Future<StorePage> {
         execute(
             contexts: [
                 StoreContext("data", storePredicate, cursorPredicate)
             ],
-            userQuery: userQuery
+            userQuery: userQuery,
+            in: executor
         ).map { stores in
             guard let store = stores["data"] else {
                 throw MagicBellError("Server didn't response correct data")
@@ -37,9 +39,11 @@ public struct GetStorePagesInteractor {
 
     public func execute(
         contexts: [StoreContext],
-        userQuery: UserQuery
+        userQuery: UserQuery,
+        in executor: Executor? = nil
     ) -> Future<[String: StorePage]> {
-        return executor.submit { resolver in
+        let exec = (executor ?? self.executor)
+        return exec.submit { resolver in
             let stores = try getStoreNotificationInteractor.execute(
                 StoreQuery(
                     contexts: contexts,

@@ -12,6 +12,7 @@ import Harmony
 protocol SDKComponent {
     func getLogger() -> Logger
     func getUserComponent() -> UserComponent
+    func createStore(name: String?, predicate: StorePredicate) throws -> NotificationStore
 }
 
 // TODO: Remove public
@@ -38,11 +39,18 @@ public class DefaultSDKModule: SDKComponent {
         configComponent: configComponent,
         executor: executorComponent.mainExecutor
     )
+
     // TODO: Remove public and make it private
     public lazy var userPreferencesComponent: UserPreferencesComponent = DefaultUserPreferencesModule(httpClient: httpClient)
-    public lazy var notificationComponent: NotificationComponent = DefaultNotificationComponent(httpClient: httpClient)
+    private lazy var notificationComponent: NotificationComponent = DefaultNotificationComponent(httpClient: httpClient,
+                                                                                                 executor: executorComponent.mainExecutor,
+                                                                                                 userComponent: userComponent)
     public lazy var pushSubscriptionComponent: PushSubscriptionComponent = DefaultPushSubscriptionModule(httpClient: httpClient)
-    public lazy var storeComponent: StoreComponent = DefaultStoreModule(httpClient: httpClient, executor: executorComponent.mainExecutor)
+    private lazy var storeComponent: StoreComponent = DefaultStoreModule(httpClient: httpClient,
+                                                                         executor: executorComponent.mainExecutor,
+                                                                         userComponent: userComponent,
+                                                                         notificationComponent: notificationComponent,
+                                                                         logger: logger)
 
 
     // MARK: SDKComponent
@@ -52,6 +60,10 @@ public class DefaultSDKModule: SDKComponent {
 
     func getUserComponent() -> UserComponent {
         return userComponent
+    }
+
+    func createStore(name: String?, predicate: StorePredicate) -> NotificationStore {
+        return storeComponent.createStore(name: name, predicate: predicate)
     }
 }
 

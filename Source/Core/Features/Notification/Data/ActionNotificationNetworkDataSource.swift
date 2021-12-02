@@ -42,6 +42,7 @@ public class ActionNotificationNetworkDataSource: PutDataSource, DeleteDataSourc
                 externalId: notificationActionQuery.user.externalId,
                 email: notificationActionQuery.user.email
             )
+            
             urlRequest.httpMethod = httpMethod
 
             return self.httpClient

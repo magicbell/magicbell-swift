@@ -39,7 +39,11 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         refreshControl.addTarget(self, action: #selector(refreshAction(sender:)), for: .valueChanged)
         tableView.addSubview(refreshControl)
 
-        store.fetch { result in
+        reloadStore()
+    }
+
+    private func reloadStore() {
+        store.refresh { result in
             switch result {
             case .success:
                 self.tableView.reloadData()
@@ -82,6 +86,56 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
                 NSAttributedString.Key.foregroundColor: navigationBarTitleColor  // nav text color
             ]
         }
+    }
+
+    @IBAction func menuAction(_ sender: Any) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Login", style: .default) { _ in
+            let alert = UIAlertController(title: "Login", message: "Insert user's email", preferredStyle: .alert)
+            alert.addTextField { textField in
+                textField.placeholder = "john@doe.com"
+            }
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Login", style: .default) { _ in
+                guard let email = alert.textFields?.first?.text else {
+                    return
+                }
+                MagicBell.login(email: email)
+                self.reloadStore()
+            })
+            self.present(alert, animated: true, completion: nil)
+        })
+
+        alert.addAction(UIAlertAction(title: "Logout", style: .destructive) { _ in
+            MagicBell.logout()
+        })
+
+        alert.addAction(UIAlertAction(title: "Customize Predicate", style: .default) { _ in
+            let alert = UIAlertController(title: "Customize Predicate", message: nil, preferredStyle: .actionSheet)
+
+            alert.addAction(UIAlertAction(title: "All Notifications", style: .default) { _ in
+                self.store = MagicBell.createStore(name: "Main", predicate: StorePredicate())
+                self.reloadStore()
+            })
+            alert.addAction(UIAlertAction(title: "Only Read", style: .default) { _ in
+                self.store = MagicBell.createStore(name: "Main", predicate: StorePredicate(read: .read))
+                self.reloadStore()
+            })
+            alert.addAction(UIAlertAction(title: "Only Unread", style: .default) { _ in
+                self.store = MagicBell.createStore(name: "Main", predicate: StorePredicate(read: .unread))
+                self.reloadStore()
+            })
+            alert.addAction(UIAlertAction(title: "By Category", style: .default) { _ in
+                self.store = MagicBell.createStore(name: "Main", predicate: StorePredicate(categories: ["order_created"]))
+                self.reloadStore()
+            })
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        })
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        present(alert, animated: true, completion: nil)
     }
 
     @IBAction func globalAction(_ sender: Any) {
@@ -235,7 +289,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     }
 
     // MARK: NotificationStoreDelegate
-    
+
     func didReloadStore(_ store: NotificationStore) {
         self.tableView.reloadData()
     }

@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0869C89DF195BCCEF9D2C4E4 /* libPods-MagicBell-MagicBellTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B45D82557E72257F11E3D387 /* libPods-MagicBell-MagicBellTests.a */; };
-		2E565B60D769C36F5A62F8C3 /* libPods-MagicBell.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A6568730708C32057869C01 /* libPods-MagicBell.a */; };
+		21F1F394DEED61CA70F2F5B5 /* libPods-MagicBell.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA7B29C1DFF1B9F5C98D4B0 /* libPods-MagicBell.a */; };
+		2CDEB16D0FED70964823671A /* libPods-MagicBell-MagicBellTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 481F1461ECEFB25E4FB7FBDE /* libPods-MagicBell-MagicBellTests.a */; };
 		5953192E27561BA8006673E9 /* StorePredicateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953192D27561BA8006673E9 /* StorePredicateValidator.swift */; };
 		595319322756249A006673E9 /* StorePredicateValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595319312756249A006673E9 /* StorePredicateValidatorTests.swift */; };
 		59569B9A274F752100FF1AA6 /* StorePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569B99274F752100FF1AA6 /* StorePage.swift */; };
@@ -85,6 +85,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		481F1461ECEFB25E4FB7FBDE /* libPods-MagicBell-MagicBellTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MagicBell-MagicBellTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E54DA462E941D835159B3EF /* Pods-MagicBell-MagicBellTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell-MagicBellTests.debug.xcconfig"; path = "Target Support Files/Pods-MagicBell-MagicBellTests/Pods-MagicBell-MagicBellTests.debug.xcconfig"; sourceTree = "<group>"; };
+		58A4768E881F0F48DA11959A /* Pods-MagicBell.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell.release.xcconfig"; path = "Target Support Files/Pods-MagicBell/Pods-MagicBell.release.xcconfig"; sourceTree = "<group>"; };
 		5953192D27561BA8006673E9 /* StorePredicateValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePredicateValidator.swift; sourceTree = "<group>"; };
 		595319312756249A006673E9 /* StorePredicateValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePredicateValidatorTests.swift; sourceTree = "<group>"; };
 		59569B99274F752100FF1AA6 /* StorePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePage.swift; sourceTree = "<group>"; };
@@ -132,11 +135,8 @@
 		59F4596D2758C739008F3BC8 /* ActionNotificationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionNotificationInteractor.swift; sourceTree = "<group>"; };
 		59F4596F2758CC25008F3BC8 /* DeleteNotificationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteNotificationInteractor.swift; sourceTree = "<group>"; };
 		59F459712758D0DB008F3BC8 /* GetNotificationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNotificationInteractor.swift; sourceTree = "<group>"; };
-		87D00462DCDB8304EBB132EA /* Pods-MagicBell-MagicBellTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell-MagicBellTests.debug.xcconfig"; path = "Target Support Files/Pods-MagicBell-MagicBellTests/Pods-MagicBell-MagicBellTests.debug.xcconfig"; sourceTree = "<group>"; };
-		9A6568730708C32057869C01 /* libPods-MagicBell.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MagicBell.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9EF8CEE464FC13C082743CBD /* Pods-MagicBell-MagicBellTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell-MagicBellTests.release.xcconfig"; path = "Target Support Files/Pods-MagicBell-MagicBellTests/Pods-MagicBell-MagicBellTests.release.xcconfig"; sourceTree = "<group>"; };
-		B45D82557E72257F11E3D387 /* libPods-MagicBell-MagicBellTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MagicBell-MagicBellTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B5F30FD4909C599F35D72FF1 /* Pods-MagicBell.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell.release.xcconfig"; path = "Target Support Files/Pods-MagicBell/Pods-MagicBell.release.xcconfig"; sourceTree = "<group>"; };
+		81C27FF31812D07F0A77CA5D /* Pods-MagicBell.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell.debug.xcconfig"; path = "Target Support Files/Pods-MagicBell/Pods-MagicBell.debug.xcconfig"; sourceTree = "<group>"; };
+		8CA7B29C1DFF1B9F5C98D4B0 /* libPods-MagicBell.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MagicBell.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2153EE4274E4679009C2DDC /* LoginInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInteractor.swift; sourceTree = "<group>"; };
 		D2153EE6274E4683009C2DDC /* LogoutInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutInteractor.swift; sourceTree = "<group>"; };
 		D2153EEC274E4F77009C2DDC /* GetUserQueryInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserQueryInteractor.swift; sourceTree = "<group>"; };
@@ -154,7 +154,7 @@
 		D2D277252747C9CF00B5F69E /* ActionNotificationNetworkDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionNotificationNetworkDataSource.swift; sourceTree = "<group>"; };
 		D2D277282747D40A00B5F69E /* NotificationQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationQuery.swift; sourceTree = "<group>"; };
 		D2D2772A2747D43200B5F69E /* PushSubscriptionQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSubscriptionQuery.swift; sourceTree = "<group>"; };
-		E08F4FE039CF6555F98AA627 /* Pods-MagicBell.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell.debug.xcconfig"; path = "Target Support Files/Pods-MagicBell/Pods-MagicBell.debug.xcconfig"; sourceTree = "<group>"; };
+		E762A2AAD51FE9D565FF0B75 /* Pods-MagicBell-MagicBellTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell-MagicBellTests.release.xcconfig"; path = "Target Support Files/Pods-MagicBell-MagicBellTests/Pods-MagicBell-MagicBellTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,7 +162,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E565B60D769C36F5A62F8C3 /* libPods-MagicBell.a in Frameworks */,
+				21F1F394DEED61CA70F2F5B5 /* libPods-MagicBell.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,7 +171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				59EF99BC27446D6900FB2378 /* MagicBell.framework in Frameworks */,
-				0869C89DF195BCCEF9D2C4E4 /* libPods-MagicBell-MagicBellTests.a in Frameworks */,
+				2CDEB16D0FED70964823671A /* libPods-MagicBell-MagicBellTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,7 +381,7 @@
 				59EF99BF27446D6900FB2378 /* Tests */,
 				59EF99B227446D6900FB2378 /* Products */,
 				B6A4AD0160030AF76A38354D /* Pods */,
-				C81E1EAED55DB36BA416DA0E /* Frameworks */,
+				FCF841BB2A3257B07D1791DE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -434,21 +434,12 @@
 		B6A4AD0160030AF76A38354D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				E08F4FE039CF6555F98AA627 /* Pods-MagicBell.debug.xcconfig */,
-				B5F30FD4909C599F35D72FF1 /* Pods-MagicBell.release.xcconfig */,
-				87D00462DCDB8304EBB132EA /* Pods-MagicBell-MagicBellTests.debug.xcconfig */,
-				9EF8CEE464FC13C082743CBD /* Pods-MagicBell-MagicBellTests.release.xcconfig */,
+				81C27FF31812D07F0A77CA5D /* Pods-MagicBell.debug.xcconfig */,
+				58A4768E881F0F48DA11959A /* Pods-MagicBell.release.xcconfig */,
+				4E54DA462E941D835159B3EF /* Pods-MagicBell-MagicBellTests.debug.xcconfig */,
+				E762A2AAD51FE9D565FF0B75 /* Pods-MagicBell-MagicBellTests.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		C81E1EAED55DB36BA416DA0E /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				9A6568730708C32057869C01 /* libPods-MagicBell.a */,
-				B45D82557E72257F11E3D387 /* libPods-MagicBell-MagicBellTests.a */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		D2153EE3274E465F009C2DDC /* Interactors */ = {
@@ -486,6 +477,15 @@
 			path = GraphQL;
 			sourceTree = "<group>";
 		};
+		FCF841BB2A3257B07D1791DE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8CA7B29C1DFF1B9F5C98D4B0 /* libPods-MagicBell.a */,
+				481F1461ECEFB25E4FB7FBDE /* libPods-MagicBell-MagicBellTests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -503,7 +503,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 59EF99C527446D6900FB2378 /* Build configuration list for PBXNativeTarget "MagicBell" */;
 			buildPhases = (
-				10B26CCF254067862B3B621E /* [CP] Check Pods Manifest.lock */,
+				EA77F61865F4593E69074E08 /* [CP] Check Pods Manifest.lock */,
 				59EF99AC27446D6900FB2378 /* Headers */,
 				59EF99AD27446D6900FB2378 /* Sources */,
 				59EF99AE27446D6900FB2378 /* Frameworks */,
@@ -523,7 +523,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 59EF99C827446D6900FB2378 /* Build configuration list for PBXNativeTarget "MagicBellTests" */;
 			buildPhases = (
-				F3B636662228005CCFA2F038 /* [CP] Check Pods Manifest.lock */,
+				57A1166646854D13A921303B /* [CP] Check Pods Manifest.lock */,
 				59EF99B727446D6900FB2378 /* Sources */,
 				59EF99B827446D6900FB2378 /* Frameworks */,
 				59EF99B927446D6900FB2378 /* Resources */,
@@ -596,7 +596,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		10B26CCF254067862B3B621E /* [CP] Check Pods Manifest.lock */ = {
+		57A1166646854D13A921303B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -611,7 +611,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MagicBell-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-MagicBell-MagicBellTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -636,7 +636,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif [ -x \"${PODS_ROOT}/SwiftLint/swiftlint\" ]; then\n    \"${PODS_ROOT}/SwiftLint/swiftlint\"\nelse\n    >&2 echo \"warning: SwiftLint not installed, please run `pod install --repo-update`.\"\nfi\n";
 		};
-		F3B636662228005CCFA2F038 /* [CP] Check Pods Manifest.lock */ = {
+		EA77F61865F4593E69074E08 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -651,7 +651,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MagicBell-MagicBellTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-MagicBell-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -869,7 +869,7 @@
 		};
 		59EF99C627446D6900FB2378 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E08F4FE039CF6555F98AA627 /* Pods-MagicBell.debug.xcconfig */;
+			baseConfigurationReference = 81C27FF31812D07F0A77CA5D /* Pods-MagicBell.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -897,7 +897,7 @@
 		};
 		59EF99C727446D6900FB2378 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B5F30FD4909C599F35D72FF1 /* Pods-MagicBell.release.xcconfig */;
+			baseConfigurationReference = 58A4768E881F0F48DA11959A /* Pods-MagicBell.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -925,7 +925,7 @@
 		};
 		59EF99C927446D6900FB2378 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 87D00462DCDB8304EBB132EA /* Pods-MagicBell-MagicBellTests.debug.xcconfig */;
+			baseConfigurationReference = 4E54DA462E941D835159B3EF /* Pods-MagicBell-MagicBellTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -947,7 +947,7 @@
 		};
 		59EF99CA27446D6900FB2378 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9EF8CEE464FC13C082743CBD /* Pods-MagicBell-MagicBellTests.release.xcconfig */;
+			baseConfigurationReference = E762A2AAD51FE9D565FF0B75 /* Pods-MagicBell-MagicBellTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

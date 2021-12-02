@@ -112,8 +112,8 @@ public class MagicBell {
     /// - Parameters:
     ///    - name: Notification store's name. Optional.
     ///    - predicate: Notification store's predicate. Define an scope for the notification store. Read, Seen, Archive, Categories, Topics and inApp.
-    /// - Returns: A `NotificationStore` with all the actions. MarkNotifications, MarkAllNotifications, FetchNotifications, ReloadNotificationStore.
-    public static func createNotificationStore(name: String?, predicate: StorePredicate) -> NotificationStore {
-        return shared.sdkProvider.createNotificationStore(name: name, predicate: predicate)
+    /// - Returns: A `NotificationStore` with all the actions. MarkNotifications, MarkAllNotifications, FetchNotifications, ReloadStore.
+    public static func createStore(name: String?, predicate: StorePredicate) -> NotificationStore {
+        return shared.sdkProvider.createStore(name: name, predicate: predicate)
     }
 }

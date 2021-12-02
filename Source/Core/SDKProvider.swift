@@ -12,7 +12,7 @@ import Harmony
 protocol SDKComponent {
     func getLogger() -> Logger
     func getUserComponent() -> UserComponent
-    func createNotificationStore(name: String?, predicate: StorePredicate) throws -> NotificationStore
+    func createStore(name: String?, predicate: StorePredicate) throws -> NotificationStore
 }
 
 // TODO: Remove public
@@ -26,31 +26,31 @@ public class DefaultSDKModule: SDKComponent {
     }
 
     private lazy var httpClient: HttpClient = DefaultHttpClient(
-            urlSession: URLSession.shared,
-            environment: environment
+        urlSession: URLSession.shared,
+        environment: environment
     )
     private lazy var executorComponent: ExecutorComponent = DefaultExecutorModule()
     private lazy var configComponent: ConfigComponent = DefaultConfigModule(
-            httpClient: httpClient,
-            executor: executorComponent.mainExecutor
+        httpClient: httpClient,
+        executor: executorComponent.mainExecutor
     )
     private lazy var userComponent: UserComponent = DefaultUserComponent(
-            logger: logger,
-            configComponent: configComponent,
-            executor: executorComponent.mainExecutor
+        logger: logger,
+        configComponent: configComponent,
+        executor: executorComponent.mainExecutor
     )
-    private lazy var notificationStoreComponent: NotificationStoreComponent = DefaultNotificationStoreModule(storeComponent: storeComponent,
-            userComponent: userComponent,
-            notificationComponent: notificationComponent,
-            executor: executorComponent.mainExecutor,
-            logger: logger)
 
     // TODO: Remove public and make it private
     public lazy var userPreferencesComponent: UserPreferencesComponent = DefaultUserPreferencesModule(httpClient: httpClient)
-    public lazy var notificationComponent: NotificationComponent = DefaultNotificationComponent(httpClient: httpClient, executor:
-    executorComponent.mainExecutor)
+    private lazy var notificationComponent: NotificationComponent = DefaultNotificationComponent(httpClient: httpClient,
+                                                                                                 executor: executorComponent.mainExecutor,
+                                                                                                 userComponent: userComponent)
     public lazy var pushSubscriptionComponent: PushSubscriptionComponent = DefaultPushSubscriptionModule(httpClient: httpClient)
-    public lazy var storeComponent: StoreComponent = DefaultStoreModule(httpClient: httpClient, executor: executorComponent.mainExecutor)
+    private lazy var storeComponent: StoreComponent = DefaultStoreModule(httpClient: httpClient,
+                                                                         executor: executorComponent.mainExecutor,
+                                                                         userComponent: userComponent,
+                                                                         notificationComponent: notificationComponent,
+                                                                         logger: logger)
 
 
     // MARK: SDKComponent
@@ -62,8 +62,8 @@ public class DefaultSDKModule: SDKComponent {
         return userComponent
     }
 
-    func createNotificationStore(name: String?, predicate: StorePredicate) -> NotificationStore {
-        return notificationStoreComponent.notificationStoreFactory.createNotificationStore(name: name, predicate: predicate)
+    func createStore(name: String?, predicate: StorePredicate) -> NotificationStore {
+        return storeComponent.createStore(name: name, predicate: predicate)
     }
 }
 

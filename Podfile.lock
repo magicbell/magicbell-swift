@@ -1,13 +1,13 @@
 PODS:
-  - Harmony/Common (1.1.3):
+  - Harmony/Common (1.1.4):
     - Harmony/Future
-  - Harmony/Future (1.1.3)
-  - Harmony/Repository (1.1.3):
+  - Harmony/Future (1.1.4)
+  - Harmony/Repository (1.1.4):
     - Harmony/Common
     - Harmony/Future
   - MagicBell (0.1.0):
     - Harmony/Repository
-  - SwiftLint (0.45.0)
+  - SwiftLint (0.45.1)
 
 DEPENDENCIES:
   - Harmony/Repository
@@ -24,9 +24,9 @@ EXTERNAL SOURCES:
     :path: "./"
 
 SPEC CHECKSUMS:
-  Harmony: f784af447c5c006a22b74fbde1092283b3a591fa
+  Harmony: c75b73a290fe8399703a90206f4b987ea3c1516c
   MagicBell: f40c1ac9fb84a094ab4b10aff489c952c09da378
-  SwiftLint: e5c7f1fba68eccfc51509d5b2ce1699f5502e0c7
+  SwiftLint: 06ac37e4d38c7068e0935bb30cda95f093bec761
 
 PODFILE CHECKSUM: 9f7a9dd057126b2e13c8d39a26dea944e6515dcc
 

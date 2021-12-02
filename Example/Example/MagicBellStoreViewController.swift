@@ -7,17 +7,15 @@
 
 import UIKit
 import MagicBell
-import struct MagicBell.Notification
 
-class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, UITableViewDelegate, UITableViewDataSource {
+class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, UITableViewDelegate, UITableViewDataSource, NotificationStoreDelegate {
 
     private var isLoadingNextPage = false
 
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var tableView: UITableView!
 
-    private var notificationStore: NotificationStore = MagicBell.createStore(name: "Main", predicate: StorePredicate(read: .unread))
-    private var notifications: [Notification] = []
+    private var store = MagicBell.createStore(name: "Main", predicate: StorePredicate())
 
     var navigationBarColor = UIColor(rgb: 0x6113A3) {
         didSet { applyBarStyle() }
@@ -41,10 +39,9 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         refreshControl.addTarget(self, action: #selector(refreshAction(sender:)), for: .valueChanged)
         tableView.addSubview(refreshControl)
 
-        notificationStore.fetch { result in
+        store.fetch { result in
             switch result {
-            case .success(let notifications):
-                self.notifications.append(contentsOf: notifications)
+            case .success:
                 self.tableView.reloadData()
             case .failure(let error):
                 print(error)
@@ -53,12 +50,10 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     }
 
     @objc private func refreshAction(sender: UIRefreshControl) {
-        notificationStore.fetch(refresh: true) { result in
+        store.refresh { result in
             sender.endRefreshing()
             switch result {
-            case .success(let notifications):
-                self.notifications.removeAll()
-                self.notifications.append(contentsOf: notifications)
+            case .success:
                 self.tableView.reloadData()
             case .failure(let error):
                 print(error)
@@ -93,18 +88,20 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
         alert.addAction(UIAlertAction(title: "Mark All Read", style: .default) { _ in
-            self.notificationStore.markAllNotificationsAsRead { error in
+            self.store.markAllRead { error in
                 if error != nil {
                     print("Action not completed")
                 }
+                self.tableView.reloadData()
             }
         })
 
         alert.addAction(UIAlertAction(title: "Mark All Seen", style: .default) { _ in
-            self.notificationStore.markAllNotificationsAsSeen { error in
+            self.store.markAllSeen { error in
                 if error != nil {
                     print("Action not completed")
                 }
+                self.tableView.reloadData()
             }
         })
 
@@ -122,7 +119,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     // MARK: UITableViewDataSource
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notifications.count
+        return store.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -130,7 +127,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
             fatalError("Couldn't dequeue a MagicBellStoreCell")
         }
 
-        let notification = notifications[indexPath.row]
+        let notification = store[indexPath.row]
 
         cell.titleLabel.text = notification.title
         cell.bodyLabel.text = notification.content
@@ -158,42 +155,45 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        let notification = notificationStore.notifications[indexPath.row]
+        let notification = store[indexPath.row]
 
         let alert = UIAlertController(title: "Notification Title", message: nil, preferredStyle: .actionSheet)
 
         if notification.archivedAt == nil {
             alert.addAction(UIAlertAction(title: "Archive", style: .default) { _ in
-                self.notificationStore.markNotificationAsArchived(notification) { error in
-                    if error != nil {
-                        print("Action not completed")
+                self.store.archive(notification) { error in
+                    if error == nil {
+                        self.tableView.reloadRows(at: [indexPath], with: .none)
                     }
                 }
+                self.tableView.reloadRows(at: [indexPath], with: .none)
             })
         } else {
             alert.addAction(UIAlertAction(title: "Unarchive", style: .default) { _ in
-                self.notificationStore.markNotificationAsUnarchived(notification) { error in
-                    if error != nil {
-                        print("Action not completed")
+                self.store.unarchive(notification) { error in
+                    if error == nil {
+                        self.tableView.reloadRows(at: [indexPath], with: .none)
                     }
                 }
+                self.tableView.reloadRows(at: [indexPath], with: .none)
             })
         }
 
         if notification.readAt == nil {
 
             alert.addAction(UIAlertAction(title: "Mark Read", style: .default) { _ in
-                self.notificationStore.markNotificationAsRead(notification) { error in
-                    if error != nil {
-                        print("Action not completed")
+                self.store.markAsRead(notification) { error in
+                    if error == nil {
+                        self.tableView.reloadRows(at: [indexPath], with: .none)
                     }
                 }
+                self.tableView.reloadRows(at: [indexPath], with: .none)
             })
         } else {
             alert.addAction(UIAlertAction(title: "Mark Unread", style: .default) { _ in
-                self.notificationStore.markNotificationAsUnread(notification) { error in
-                    if error != nil {
-                        print("Action not completed")
+                self.store.markAsUnread(notification) { error in
+                    if error == nil {
+                        self.tableView.reloadRows(at: [indexPath], with: .none)
                     }
                 }
             })
@@ -202,9 +202,9 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive) { _ in
-            self.notificationStore.removeNotification(notification) { error in
-                if error != nil {
-                    print("Action not completed")
+            self.store.delete(notification) { error in
+                if error == nil {
+                    self.tableView.deleteRows(at: [indexPath], with: .none)
                 }
             }
         })
@@ -214,21 +214,43 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if !isLoadingNextPage &&
-            (scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.bounds.size.height - 200) &&
-            notificationStore.hasNextPage {
+            (scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.bounds.size.height - 200) && store.hasNextPage {
             isLoadingNextPage = true
             print("Load next page")
-            notificationStore.fetch { result in
+            store.fetch { result in
                 print("Load completed")
                 self.isLoadingNextPage = false
                 switch result {
                 case .success(let notifications):
-                    self.notifications.append(contentsOf: notifications)
-                    self.tableView.reloadData()
+                    self.tableView.insertRows(at: notifications.enumerated().map { id, _ in
+                        IndexPath(row: self.store.count - notifications.count + id, section: 0)
+                    }, with: .fade)
+
+                    // self.tableView.reloadData()
                 case .failure(let error):
                     print(error)
                 }
             }
         }
+    }
+
+    // MARK: NotificationStoreDelegate
+
+    func store(_ store: NotificationStore, didChangeNotificationAt indexes: [Int]) {
+        self.tableView.reloadRows(at: indexes.map { idx in
+            IndexPath(row: idx, section: 0)
+        }, with: .fade)
+    }
+
+    func store(_ store: NotificationStore, didDeleteNotificationAt indexes: [Int]) {
+        self.tableView.deleteRows(at: indexes.map { idx in
+            IndexPath(row: idx, section: 0)
+        }, with: .fade)
+    }
+
+    func store(_ store: NotificationStore, didInsertNotificationsAt indexes: [Int]) {
+        self.tableView.insertRows(at: indexes.map { idx in
+            IndexPath(row: idx, section: 0)
+        }, with: .fade)
     }
 }

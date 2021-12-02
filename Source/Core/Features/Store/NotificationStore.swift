@@ -7,8 +7,15 @@
 
 import Harmony
 
+public protocol NotificationStoreDelegate: AnyObject {
+    func store(_ store: NotificationStore, didInsertNotificationsAt indexes: [Int])
+    func store(_ store: NotificationStore, didChangeNotificationAt indexes: [Int])
+    func store(_ store: NotificationStore, didDeleteNotificationAt indexes: [Int])
+}
+
 public class NotificationStore {
-    private let defaultNumberNotification = 20
+
+    private let pageSize = 20
     
     private let getUserQueryInteractor: GetUserQueryInteractor
     private let fetchStorePageInteractor: FetchStorePageInteractor
@@ -16,8 +23,7 @@ public class NotificationStore {
     private let deleteNotificationInteractor: DeleteNotificationInteractor
     
     public let name: String
-    public let storePredicate: StorePredicate
-    public var notifications: [Notification] { edges.map { $0.node } }
+    public let predicate: StorePredicate
     private var edges: [Edge<Notification>] = []
     public private(set) var totalCount: Int = 0
     public private(set) var unreadCount: Int = 0
@@ -28,15 +34,17 @@ public class NotificationStore {
     private var nextPageCursor: String?
     public private(set) var hasNextPage = true
     
-    init(name: String,
-         storePredicate: StorePredicate,
-         getUserQueryInteractor: GetUserQueryInteractor,
-         fetchStorePageInteractor: FetchStorePageInteractor,
-         actionNotificationInteractor: ActionNotificationInteractor,
-         deleteNotificationInteractor: DeleteNotificationInteractor,
-         logger: Logger) {
+    init(
+        name: String,
+        predicate: StorePredicate,
+        getUserQueryInteractor: GetUserQueryInteractor,
+        fetchStorePageInteractor: FetchStorePageInteractor,
+        actionNotificationInteractor: ActionNotificationInteractor,
+        deleteNotificationInteractor: DeleteNotificationInteractor,
+        logger: Logger
+    ) {
         self.name = name
-        self.storePredicate = storePredicate
+        self.predicate = predicate
         self.getUserQueryInteractor = getUserQueryInteractor
         self.fetchStorePageInteractor = fetchStorePageInteractor
         self.actionNotificationInteractor = actionNotificationInteractor
@@ -44,47 +52,74 @@ public class NotificationStore {
         self.logger = logger
     }
 
-    /// Returns an array of notifications. It can be called multiple times to obtain all the notifications.
-    /// - Parameters:
-    ///    - refresh: Restore the notification store to the initial status
-    ///    - completion: Closure with a `Result<[Notification], Error>`
-    public func fetch(refresh: Bool = false, completion: @escaping (Result<[Notification], Error>) -> Void) {
-        if refresh {
-            clear()
+    public weak var delegate: NotificationStoreDelegate?
+
+    public var count: Int {
+        return edges.count
+    }
+
+    public subscript(index: Int) -> Notification {
+        get {
+            return edges[index].node
         }
-        
+    }
+
+    /// Clears the store and fetches first page.
+    /// - Parameters:
+    ///    - completion: Closure with a `Result<[Notification], Error>`
+    public func refresh(completion: @escaping (Result<[Notification], Error>) -> Void) {
+        let cursorPredicate = CursorPredicate(size: pageSize)
+        fetchStorePageInteractor.execute(storePredicate: predicate, cursorPredicate: cursorPredicate)
+            .then { storePage in
+                self.clear()
+                self.configurePagination(storePage)
+                self.configureCount(storePage)
+                let newEdges = storePage.edges
+                self.edges.append(contentsOf: newEdges)
+                let notificationsT = newEdges.map { notificationEdge in
+                    notificationEdge.node
+                }
+                completion(.success(notificationsT))
+            }.fail { error in
+                completion(.failure(error))
+            }
+    }
+
+    /// Returns an array of notifications for the next pages. It can be called multiple times to obtain all pages.
+    /// - Parameters:
+    ///    - completion: Closure with a `Result<[Notification], Error>`
+    public func fetch(completion: @escaping (Result<[Notification], Error>) -> Void) {
         guard hasNextPage else {
             completion(.success([]))
             return
         }
-        
         let cursorPredicate: CursorPredicate = {
             if let after = nextPageCursor {
-                return CursorPredicate(cursor: .next(after), size: defaultNumberNotification)
+                return CursorPredicate(cursor: .next(after), size: pageSize)
             } else {
-                return CursorPredicate(size: defaultNumberNotification)
+                return CursorPredicate(size: pageSize)
             }
         }()
-        
-        fetchStorePageInteractor.execute(storePredicate: storePredicate, cursorPredicate: cursorPredicate).then { storePage in
-            self.configurePagination(storePage)
-            self.configureCount(storePage)
+        fetchStorePageInteractor.execute(storePredicate: predicate, cursorPredicate: cursorPredicate)
+            .then { storePage in
+                self.configurePagination(storePage)
+                self.configureCount(storePage)
 
-            let newEdges = storePage.edges
-            self.edges.append(contentsOf: newEdges)
-            let notificationsT = newEdges.map { notificationEdge in
-                notificationEdge.node
+                let newEdges = storePage.edges
+                self.edges.append(contentsOf: newEdges)
+                let notificationsT = newEdges.map { notificationEdge in
+                    notificationEdge.node
+                }
+                completion(.success(notificationsT))
+            }.fail { error in
+                completion(.failure(error))
             }
-            completion(.success(notificationsT))
-        }.fail { error in
-            completion(.failure(error))
-        }
     }
 
     /// Returns an array of notifications that are newer from the last fetched time. It returns all the notifications, doesn't have pagination.
     /// - Parameters:
     ///    - completion: Closure with a `Result<[Notification], Error>`
-    public func fetchNewElements(completion: @escaping (Result<[Notification], Error>) -> Void) {
+    public func fetchAllPrev(completion: @escaping (Result<[Notification], Error>) -> Void) {
         if let newestCursor = edges.first?.cursor {
             recursiveNewElements(cursor: newestCursor, notifications: []) { result in
                 switch result {
@@ -101,43 +136,26 @@ public class NotificationStore {
             completion(.failure(MagicBellError("Cannot load new elements without initial fetch.")))
         }
     }
-    
-    private func recursiveNewElements(cursor: String, notifications: [Edge<Notification>], completion: @escaping (Result<[Edge<Notification>], Error>) -> Void) {
-        let cursorPredicate = CursorPredicate(cursor: .previous(cursor), size: defaultNumberNotification)
-        fetchStorePageInteractor.execute(storePredicate: storePredicate, cursorPredicate: cursorPredicate).then { storePage in
-            self.configureCount(storePage)
-            var tempNotification = notifications
-            tempNotification.insert(contentsOf: storePage.edges, at: 0)
-            if storePage.pageInfo.hasPreviousPage, let cursor = storePage.pageInfo.startCursor {
-                self.recursiveNewElements(cursor: cursor, notifications: tempNotification, completion: completion)
-            } else {
-                completion(.success(tempNotification))
-            }
-        }.fail { error in
-            completion(.failure(error))
-        }
-    }
 
-    /// Removes the notification from the store.
+    /// Deletes a notification from the store.
     /// - Parameters:
     ///    - notification: Notification will be removed.
     ///    - completion: Closure with a `Error`. Success if error is nil.
-    public func removeNotification(_ notification: Notification, completion: @escaping (Error?) -> Void) {
-        deleteNotificationInteractor.execute(notificationId: notification.id).then { _ in
-            if let notificationIndex = self.edges.firstIndex(where: { $0.node.id == notification.id }) {
-                self.edges.remove(at: notificationIndex)
-                completion(nil)
-            } else {
-                completion(MagicBellError("Notification doesn't exist"))
+    public func delete(_ notification: Notification, completion: @escaping (Error?) -> Void) {
+        deleteNotificationInteractor.execute(notificationId: notification.id)
+            .then { _ in
+                if let notificationIndex = self.edges.firstIndex(where: { $0.node.id == notification.id }) {
+                    self.edges.remove(at: notificationIndex)
+                    completion(nil)
+                }
             }
-        }
     }
 
     /// Marks a notification as read.
     /// - Parameters:
     ///    - notification: Notification will be marked as read and seen.
     ///    - completion: Closure with a `Error`. Success if error is nil.
-    public func markNotificationAsRead(_ notification: Notification, completion: @escaping (Error?) -> Void) {
+    public func markAsRead(_ notification: Notification, completion: @escaping (Error?) -> Void) {
         executeNotificationAction(
             notification: notification,
             action: .markAsRead,
@@ -153,7 +171,7 @@ public class NotificationStore {
     /// - Parameters:
     ///    - notification: Notification will be marked as unread.
     ///    - completion: Closure with a `Error`. Success if error is nil.
-    public func markNotificationAsUnread(_ notification: Notification, completion: @escaping (Error?) -> Void) {
+    public func markAsUnread(_ notification: Notification, completion: @escaping (Error?) -> Void) {
         executeNotificationAction(
             notification: notification,
             action: .markAsUnread,
@@ -165,7 +183,7 @@ public class NotificationStore {
     /// - Parameters:
     ///    - notification: Notification will be marked as archived.
     ///    - completion: Closure with a `Error`. Success if error is nil.
-    public func markNotificationAsArchived(_ notification: Notification, completion: @escaping (Error?) -> Void) {
+    public func archive(_ notification: Notification, completion: @escaping (Error?) -> Void) {
         executeNotificationAction(
             notification: notification,
             action: .archive,
@@ -177,42 +195,26 @@ public class NotificationStore {
     /// - Parameters:
     ///    - notification: Notification will be marked as unarchived.
     ///    - completion: Closure with a `Error`. Success if error is nil.
-    public func markNotificationAsUnarchived(_ notification: Notification, completion: @escaping (Error?) -> Void) {
+    public func unarchive(_ notification: Notification, completion: @escaping (Error?) -> Void) {
         executeNotificationAction(
             notification: notification,
             action: .unarchive,
             modificationsBlock: { $0.archivedAt = nil },
             completion: completion)
     }
-    
-    private func executeNotificationAction(notification: Notification,
-                                           action: NotificationActionQuery.Action,
-                                           modificationsBlock: @escaping (inout Notification) -> Void,
-                                           completion: @escaping (Error?) -> Void) {
-        actionNotificationInteractor.execute(action: action, notificationId: notification.id).then { _ in
-            if let notificationIndex = self.edges.firstIndex(where: { $0.node.id == notification.id }) {
-                var notificationToModify = self.edges[notificationIndex].node
-                modificationsBlock(&notificationToModify)
-                self.edges[notificationIndex].node = notificationToModify
-                completion(nil)
-            } else {
-                completion(MagicBellError("Notification not found in store"))
-            }
-        }.fail { error in
-            completion(error)
-        }
-    }
 
     /// Marks all notifications as read.
     /// - Parameters:
     ///    - completion: Closure with a `Error`. Success if error is nil.
-    public func markAllNotificationsAsRead(completion: @escaping (Error?) -> Void) {
+    public func markAllRead(completion: @escaping (Error?) -> Void) {
         executeAllNotificationsAction(
             action: .markAllAsRead,
             modificationsBlock: {
-                let now = Date()
-                $0.readAt = now
-                $0.seenAt = now
+                if $0.readAt == nil {
+                    let now = Date()
+                    $0.readAt = now
+                    $0.seenAt = now
+                }
             },
             completion: completion)
     }
@@ -220,27 +222,15 @@ public class NotificationStore {
     /// Marks all notifications as seen.
     /// - Parameters:
     ///    - completion: Closure with a `Error`. Success if error is nil.
-    public func markAllNotificationsAsSeen(completion: @escaping (Error?) -> Void) {
+    public func markAllSeen(completion: @escaping (Error?) -> Void) {
         executeAllNotificationsAction(
             action: .markAllAsSeen,
             modificationsBlock: {
-                $0.seenAt = Date()
+                if $0.seenAt == nil {
+                    $0.seenAt = Date()
+                }
             },
             completion: completion)
-    }
-    
-    private func executeAllNotificationsAction(action: NotificationActionQuery.Action,
-                                              modificationsBlock: @escaping (inout Notification) -> Void,
-                                              completion: @escaping (Error?) -> Void) {
-        actionNotificationInteractor.execute(action: action).then { _ in
-            for i in self.edges.indices {
-                var notification = self.edges[i].node
-                modificationsBlock(&notification)
-            }
-            completion(nil)
-        }.fail { error in
-            completion(error)
-        }
     }
     
     public func clear() {
@@ -251,13 +241,69 @@ public class NotificationStore {
         nextPageCursor = nil
         hasNextPage = true
     }
-    
+
+     // MARK: - Private Methods
+
+    private func recursiveNewElements(
+        cursor: String,
+        notifications: [Edge<Notification>],
+        completion: @escaping (Result<[Edge<Notification>], Error>) -> Void
+    ) {
+        let cursorPredicate = CursorPredicate(cursor: .previous(cursor), size: pageSize)
+        fetchStorePageInteractor.execute(storePredicate: predicate, cursorPredicate: cursorPredicate).then { storePage in
+            self.configureCount(storePage)
+            var tempNotification = notifications
+            tempNotification.insert(contentsOf: storePage.edges, at: 0)
+            if storePage.pageInfo.hasPreviousPage, let cursor = storePage.pageInfo.startCursor {
+                self.recursiveNewElements(cursor: cursor, notifications: tempNotification, completion: completion)
+            } else {
+                completion(.success(tempNotification))
+            }
+        }.fail { error in
+            completion(.failure(error))
+        }
+    }
+
+    private func executeNotificationAction(
+        notification: Notification,
+        action: NotificationActionQuery.Action,
+        modificationsBlock: @escaping (inout Notification) -> Void,
+        completion: @escaping (Error?) -> Void
+    ) {
+        actionNotificationInteractor.execute(action: action, notificationId: notification.id).then { _ in
+            if let notificationIndex = self.edges.firstIndex(where: { $0.node.id == notification.id }) {
+                modificationsBlock(&self.edges[notificationIndex].node)
+                completion(nil)
+            } else {
+                completion(MagicBellError("Notification not found in store"))
+            }
+        }.fail { error in
+            completion(error)
+        }
+    }
+
+    private func executeAllNotificationsAction(
+        action: NotificationActionQuery.Action,
+        modificationsBlock: @escaping (inout Notification) -> Void,
+        completion: @escaping (Error?) -> Void
+    ) {
+        actionNotificationInteractor.execute(action: action).then { _ in
+            for i in self.edges.indices {
+                modificationsBlock(&self.edges[i].node)
+            }
+            completion(nil)
+        }.fail { error in
+            completion(error)
+        }
+    }
+
+
     private func configurePagination(_ page: StorePage) {
         let pageInfo = page.pageInfo
         nextPageCursor = pageInfo.endCursor
         hasNextPage = pageInfo.hasNextPage
     }
-    
+
     private func configureCount(_ page: StorePage) {
         totalCount = page.totalCount
         unreadCount = page.unreadCount

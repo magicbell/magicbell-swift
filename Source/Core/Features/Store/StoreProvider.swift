@@ -57,7 +57,7 @@ class DefaultStoreModule: StoreComponent {
                                                                 getStorePagesInteractor: getStorePagesInteractor())
 
         return NotificationStore(name: name ?? UUID().uuidString,
-                                 storePredicate: predicate,
+                                 predicate: predicate,
                                  getUserQueryInteractor: userComponent.getUserQueryInteractor(),
                                  fetchStorePageInteractor: fetchStorePageInteractor,
                                  actionNotificationInteractor: notificationComponent.getActionNotificationInteractor(),

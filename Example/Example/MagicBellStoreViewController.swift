@@ -15,7 +15,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var tableView: UITableView!
 
-    private var store = MagicBell.createStore(name: "Main", predicate: StorePredicate())
+    private var store = MagicBell.storeFor(predicate: StorePredicate())
 
     var navigationBarColor = UIColor(rgb: 0x6113A3) {
         didSet { applyBarStyle() }
@@ -114,19 +114,19 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
             let alert = UIAlertController(title: "Customize Predicate", message: nil, preferredStyle: .actionSheet)
 
             alert.addAction(UIAlertAction(title: "All Notifications", style: .default) { _ in
-                self.store = MagicBell.createStore(name: "Main", predicate: StorePredicate())
+                self.store = MagicBell.storeFor(predicate: StorePredicate())
                 self.reloadStore()
             })
             alert.addAction(UIAlertAction(title: "Only Read", style: .default) { _ in
-                self.store = MagicBell.createStore(name: "Main", predicate: StorePredicate(read: .read))
+                self.store = MagicBell.storeFor(predicate: StorePredicate(read: .read))
                 self.reloadStore()
             })
             alert.addAction(UIAlertAction(title: "Only Unread", style: .default) { _ in
-                self.store = MagicBell.createStore(name: "Main", predicate: StorePredicate(read: .unread))
+                self.store = MagicBell.storeFor(predicate: StorePredicate(read: .unread))
                 self.reloadStore()
             })
             alert.addAction(UIAlertAction(title: "By Category", style: .default) { _ in
-                self.store = MagicBell.createStore(name: "Main", predicate: StorePredicate(categories: ["order_created"]))
+                self.store = MagicBell.storeFor(predicate: StorePredicate(categories: ["order_created"]))
                 self.reloadStore()
             })
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

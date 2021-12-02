@@ -8,6 +8,7 @@
 import Harmony
 
 public protocol NotificationStoreDelegate: AnyObject {
+    func didReloadStore(_ store: NotificationStore)
     func store(_ store: NotificationStore, didInsertNotificationsAt indexes: [Int])
     func store(_ store: NotificationStore, didChangeNotificationAt indexes: [Int])
     func store(_ store: NotificationStore, didDeleteNotificationAt indexes: [Int])

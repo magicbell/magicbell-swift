@@ -235,6 +235,10 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     }
 
     // MARK: NotificationStoreDelegate
+    
+    func didReloadStore(_ store: NotificationStore) {
+        self.tableView.reloadData()
+    }
 
     func store(_ store: NotificationStore, didChangeNotificationAt indexes: [Int]) {
         self.tableView.reloadRows(at: indexes.map { idx in

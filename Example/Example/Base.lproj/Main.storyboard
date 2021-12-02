@@ -66,6 +66,11 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <items>
                                     <navigationItem title="Title" id="HHV-mh-iZF">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="d6H-f0-Cjz">
+                                            <connections>
+                                                <action selector="menuAction:" destination="lZK-lU-qnt" id="yg7-Mb-toj"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" systemItem="action" id="EZt-mq-D8C">
                                             <connections>
                                                 <action selector="globalAction:" destination="lZK-lU-qnt" id="E1C-ZO-LjS"/>

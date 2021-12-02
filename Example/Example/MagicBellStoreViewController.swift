@@ -10,6 +10,8 @@ import MagicBell
 
 class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, UITableViewDelegate, UITableViewDataSource {
 
+    private var isLoadingNextPage = false
+
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var tableView: UITableView!
 
@@ -146,5 +148,16 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         })
 
         present(alert, animated: true, completion: nil)
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if !isLoadingNextPage && (scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.bounds.size.height - 200) {
+            isLoadingNextPage = true
+            print("Load next page")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                print("Load completed")
+                self.isLoadingNextPage = false
+            }
+        }
     }
 }

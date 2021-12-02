@@ -7,6 +7,7 @@
 
 import UIKit
 import MagicBell
+import struct MagicBell.Notification
 
 class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, UITableViewDelegate, UITableViewDataSource {
 
@@ -14,6 +15,9 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
 
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var tableView: UITableView!
+
+    private var notificationStore: NotificationStore = MagicBell.createStore(name: "Main", predicate: StorePredicate(read: .unread))
+    private var notifications: [Notification] = []
 
     var navigationBarColor = UIColor(rgb: 0x6113A3) {
         didSet { applyBarStyle() }
@@ -36,11 +40,30 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshAction(sender:)), for: .valueChanged)
         tableView.addSubview(refreshControl)
+
+        notificationStore.fetch { result in
+            switch result {
+            case .success(let notifications):
+                self.notifications.append(contentsOf: notifications)
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 
     @objc private func refreshAction(sender: UIRefreshControl) {
-        print("Refresh")
-        sender.endRefreshing()
+        notificationStore.fetch(refresh: true) { result in
+            sender.endRefreshing()
+            switch result {
+            case .success(let notifications):
+                self.notifications.removeAll()
+                self.notifications.append(contentsOf: notifications)
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -70,11 +93,19 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
         alert.addAction(UIAlertAction(title: "Mark All Read", style: .default) { _ in
-            print("Mark All Read")
+            self.notificationStore.markAllNotificationsAsRead { error in
+                if error != nil {
+                    print("Action not completed")
+                }
+            }
         })
 
         alert.addAction(UIAlertAction(title: "Mark All Seen", style: .default) { _ in
-            print("Mark All Seen")
+            self.notificationStore.markAllNotificationsAsSeen { error in
+                if error != nil {
+                    print("Action not completed")
+                }
+            }
         })
 
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -91,7 +122,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     // MARK: UITableViewDataSource
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return notifications.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -99,12 +130,16 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
             fatalError("Couldn't dequeue a MagicBellStoreCell")
         }
 
-        cell.titleLabel.text = "My Notification"
+        let notification = notifications[indexPath.row]
 
-        cell.accessoryView = unreadBadgeView()
+        cell.titleLabel.text = notification.title
+        cell.bodyLabel.text = notification.content
 
-        // swiftlint:disable:next line_length
-        cell.bodyLabel.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        if notification.readAt == nil {
+            cell.accessoryView = unreadBadgeView()
+        } else {
+            cell.accessoryView = nil
+        }
 
         return cell
     }
@@ -123,40 +158,76 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
+        let notification = notificationStore.notifications[indexPath.row]
+
         let alert = UIAlertController(title: "Notification Title", message: nil, preferredStyle: .actionSheet)
 
-        alert.addAction(UIAlertAction(title: "Archive", style: .default) { _ in
-            print("Archive")
-        })
+        if notification.archivedAt == nil {
+            alert.addAction(UIAlertAction(title: "Archive", style: .default) { _ in
+                self.notificationStore.markNotificationAsArchived(notification) { error in
+                    if error != nil {
+                        print("Action not completed")
+                    }
+                }
+            })
+        } else {
+            alert.addAction(UIAlertAction(title: "Unarchive", style: .default) { _ in
+                self.notificationStore.markNotificationAsUnarchived(notification) { error in
+                    if error != nil {
+                        print("Action not completed")
+                    }
+                }
+            })
+        }
 
-        alert.addAction(UIAlertAction(title: "Unarchive", style: .default) { _ in
-            print("Unarchive")
-        })
+        if notification.readAt == nil {
 
-        alert.addAction(UIAlertAction(title: "Mark Read", style: .default) { _ in
-            print("Mark Read")
-        })
-
-        alert.addAction(UIAlertAction(title: "Mark Unread", style: .default) { _ in
-            print("Mark Unread")
-        })
+            alert.addAction(UIAlertAction(title: "Mark Read", style: .default) { _ in
+                self.notificationStore.markNotificationAsRead(notification) { error in
+                    if error != nil {
+                        print("Action not completed")
+                    }
+                }
+            })
+        } else {
+            alert.addAction(UIAlertAction(title: "Mark Unread", style: .default) { _ in
+                self.notificationStore.markNotificationAsUnread(notification) { error in
+                    if error != nil {
+                        print("Action not completed")
+                    }
+                }
+            })
+        }
 
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive) { _ in
-            print("Delete")
+            self.notificationStore.removeNotification(notification) { error in
+                if error != nil {
+                    print("Action not completed")
+                }
+            }
         })
 
         present(alert, animated: true, completion: nil)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if !isLoadingNextPage && (scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.bounds.size.height - 200) {
+        if !isLoadingNextPage &&
+            (scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.bounds.size.height - 200) &&
+            notificationStore.hasNextPage {
             isLoadingNextPage = true
             print("Load next page")
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            notificationStore.fetch { result in
                 print("Load completed")
                 self.isLoadingNextPage = false
+                switch result {
+                case .success(let notifications):
+                    self.notifications.append(contentsOf: notifications)
+                    self.tableView.reloadData()
+                case .failure(let error):
+                    print(error)
+                }
             }
         }
     }

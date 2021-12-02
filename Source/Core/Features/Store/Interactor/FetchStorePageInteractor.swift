@@ -24,7 +24,11 @@ struct FetchStorePageInteractor {
         return executor.submit { resolver in
             // Do catch try to avoid
             let userQuery = try getUserQueryInteractor.execute()
-            resolver.set(getStorePagesInteractor.execute(storePredicate: storePredicate, cursorPredicate: cursorPredicate, userQuery: userQuery))
+            let storePage = try getStorePagesInteractor.execute(storePredicate: storePredicate,
+                                                                cursorPredicate: cursorPredicate,
+                                                                userQuery: userQuery,
+                                                                in: DirectExecutor()).result.get()
+            resolver.set(storePage)
         }
     }
 }

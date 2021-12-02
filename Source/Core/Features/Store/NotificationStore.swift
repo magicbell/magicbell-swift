@@ -72,10 +72,10 @@ public class NotificationStore {
 
             let newEdges = storePage.edges
             self.edges.append(contentsOf: newEdges)
-            let notifications = newEdges.map { notificationEdge in
+            let notificationsT = newEdges.map { notificationEdge in
                 notificationEdge.node
             }
-            completion(.success(notifications))
+            completion(.success(notificationsT))
         }.fail { error in
             completion(.failure(error))
         }
@@ -207,7 +207,7 @@ public class NotificationStore {
     /// - Parameters:
     ///    - completion: Closure with a `Error`. Success if error is nil.
     public func markAllNotificationsAsRead(completion: @escaping (Error?) -> Void) {
-        executeAllNotificationAction(
+        executeAllNotificationsAction(
             action: .markAllAsRead,
             modificationsBlock: {
                 let now = Date()
@@ -220,8 +220,8 @@ public class NotificationStore {
     /// Marks all notifications as seen.
     /// - Parameters:
     ///    - completion: Closure with a `Error`. Success if error is nil.
-    public func markAllNotificationAsSeen(completion: @escaping (Error?) -> Void) {
-        executeAllNotificationAction(
+    public func markAllNotificationsAsSeen(completion: @escaping (Error?) -> Void) {
+        executeAllNotificationsAction(
             action: .markAllAsSeen,
             modificationsBlock: {
                 $0.seenAt = Date()
@@ -229,7 +229,7 @@ public class NotificationStore {
             completion: completion)
     }
     
-    private func executeAllNotificationAction(action: NotificationActionQuery.Action,
+    private func executeAllNotificationsAction(action: NotificationActionQuery.Action,
                                               modificationsBlock: @escaping (inout Notification) -> Void,
                                               completion: @escaping (Error?) -> Void) {
         actionNotificationInteractor.execute(action: action).then { _ in

@@ -11,25 +11,28 @@ import Harmony
 protocol UserComponent {
     func getLoginInteractor() -> LoginInteractor
     func getLogoutInteractor() -> LogoutInteractor
-    func getUserQueryInteractor() -> GetUserQueryInteractor
 }
 
 class DefaultUserComponent: UserComponent {
 
     private let logger: Logger
     private let configComponent: ConfigComponent
+    private let userQueryStorageRepository: AnyRepository<UserQuery>
+    private let storeRealTimeComponent: StoreRealTimeComponent
     private let executor: Executor
 
     init(logger: Logger,
          configComponent: ConfigComponent,
+         userQueryStorageRepository: AnyRepository<UserQuery>,
+         storeRealTimeComponent: StoreRealTimeComponent,
          executor: Executor
     ) {
         self.logger = logger
         self.configComponent = configComponent
+        self.userQueryStorageRepository = userQueryStorageRepository
+        self.storeRealTimeComponent = storeRealTimeComponent
         self.executor = executor
     }
-
-    private lazy var userQueryStorageRepository = SingleDataSourceRepository(InMemoryDataSource<UserQuery>())
 
     func getLoginInteractor() -> LoginInteractor {
         let storeUserQuery = StoreUserQueryInteractor(
@@ -39,7 +42,8 @@ class DefaultUserComponent: UserComponent {
         return LoginInteractor(
             logger: logger,
             getUserConfig: configComponent.getGetConfigInteractor(),
-            storeUserQuery: storeUserQuery
+            storeUserQuery: storeUserQuery,
+            storeRealTimeComponent: storeRealTimeComponent
         )
     }
 
@@ -50,13 +54,8 @@ class DefaultUserComponent: UserComponent {
         return LogoutInteractor(
             logger: logger,
             deleteUserConfig: configComponent.getDeleteConfigInteractor(),
-            deleteUserQuery: deleteUserQuery
-        )
-    }
-
-    func getUserQueryInteractor() -> GetUserQueryInteractor {
-        return GetUserQueryInteractor(
-            getUserQuery: userQueryStorageRepository.toGetByQueryInteractor(executor)
+            deleteUserQuery: deleteUserQuery,
+            storeRealTimeComponent: storeRealTimeComponent
         )
     }
 }

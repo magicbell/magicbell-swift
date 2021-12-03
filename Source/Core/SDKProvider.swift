@@ -34,9 +34,19 @@ public class DefaultSDKModule: SDKComponent {
         httpClient: httpClient,
         executor: executorComponent.mainExecutor
     )
+
+    private lazy var userQueryStorageComponent: UserQueryStorageComponent = DefaultUserQueryStorageModule()
+
+    private lazy var userQueryComponent: UserQueryComponent = DefaultUserQueryModule(
+        userQueryStorageRepository: userQueryStorageComponent.getUserQueryStorageProvider(),
+        executor: executorComponent.mainExecutor
+    )
+
     private lazy var userComponent: UserComponent = DefaultUserComponent(
         logger: logger,
         configComponent: configComponent,
+        userQueryStorageRepository: userQueryStorageComponent.getUserQueryStorageProvider(),
+        storeRealTimeComponent: storeRealTimeComponent,
         executor: executorComponent.mainExecutor
     )
 
@@ -44,14 +54,19 @@ public class DefaultSDKModule: SDKComponent {
     public lazy var userPreferencesComponent: UserPreferencesComponent = DefaultUserPreferencesModule(httpClient: httpClient)
     private lazy var notificationComponent: NotificationComponent = DefaultNotificationComponent(httpClient: httpClient,
                                                                                                  executor: executorComponent.mainExecutor,
-                                                                                                 userComponent: userComponent)
+                                                                                                 userQueryComponent: userQueryComponent)
     public lazy var pushSubscriptionComponent: PushSubscriptionComponent = DefaultPushSubscriptionModule(httpClient: httpClient)
     private lazy var storeComponent: StoreComponent = DefaultStoreModule(httpClient: httpClient,
                                                                          executor: executorComponent.mainExecutor,
-                                                                         userComponent: userComponent,
+                                                                         userQueryComponent: userQueryComponent,
                                                                          notificationComponent: notificationComponent,
+                                                                         storeRealTimeComponent: storeRealTimeComponent,
                                                                          logger: logger)
-
+    private lazy var storeRealTimeComponent: StoreRealTimeComponent = DefaultStoreRealTimeModule(configComponent: configComponent,
+                                                                                                 userQueryComponent: userQueryComponent,
+                                                                                                 environment: environment,
+                                                                                                 logger: logger)
+    
 
     // MARK: SDKComponent
     func getLogger() -> Logger {

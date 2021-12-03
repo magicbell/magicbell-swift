@@ -40,6 +40,8 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         tableView.addSubview(refreshControl)
 
         reloadStore()
+
+        store.delegate = self
     }
 
     private func reloadStore() {
@@ -114,19 +116,27 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
             let alert = UIAlertController(title: "Customize Predicate", message: nil, preferredStyle: .actionSheet)
 
             alert.addAction(UIAlertAction(title: "All Notifications", style: .default) { _ in
+                self.store.delegate = nil
                 self.store = MagicBell.storeFor(predicate: StorePredicate())
+                self.store.delegate = self
                 self.reloadStore()
             })
             alert.addAction(UIAlertAction(title: "Only Read", style: .default) { _ in
+                self.store.delegate = nil
                 self.store = MagicBell.storeFor(predicate: StorePredicate(read: .read))
+                self.store.delegate = self
                 self.reloadStore()
             })
             alert.addAction(UIAlertAction(title: "Only Unread", style: .default) { _ in
+                self.store.delegate = nil
                 self.store = MagicBell.storeFor(predicate: StorePredicate(read: .unread))
+                self.store.delegate = self
                 self.reloadStore()
             })
             alert.addAction(UIAlertAction(title: "By Category", style: .default) { _ in
+                self.store.delegate = nil
                 self.store = MagicBell.storeFor(predicate: StorePredicate(categories: ["order_created"]))
+                self.store.delegate = self
                 self.reloadStore()
             })
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

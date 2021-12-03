@@ -17,19 +17,22 @@ class DefaultStoreModule: StoreComponent {
 
     private let httpClient: HttpClient
     private let mainExecutor: Executor
-    private let userComponent: UserComponent
+    private let userQueryComponent: UserQueryComponent
     private let notificationComponent: NotificationComponent
+    private let realTimeComponent: StoreRealTimeComponent
     private let logger: Logger
 
     init(httpClient: HttpClient,
          executor: Executor,
-         userComponent: UserComponent,
+         userQueryComponent: UserQueryComponent,
          notificationComponent: NotificationComponent,
+         storeRealTimeComponent: StoreRealTimeComponent,
          logger: Logger) {
         self.httpClient = httpClient
         self.mainExecutor = executor
-        self.userComponent = userComponent
+        self.userQueryComponent = userQueryComponent
         self.notificationComponent = notificationComponent
+        self.realTimeComponent = storeRealTimeComponent
         self.logger = logger
     }
 
@@ -53,15 +56,19 @@ class DefaultStoreModule: StoreComponent {
     func createStore(name: String?, predicate: StorePredicate) -> NotificationStore {
 
         let fetchStorePageInteractor = FetchStorePageInteractor(executor: mainExecutor,
-                                                                getUserQueryInteractor: userComponent.getUserQueryInteractor(),
+                                                                getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
                                                                 getStorePagesInteractor: getStorePagesInteractor())
 
-        return NotificationStore(name: name ?? UUID().uuidString,
-                                 predicate: predicate,
-                                 getUserQueryInteractor: userComponent.getUserQueryInteractor(),
-                                 fetchStorePageInteractor: fetchStorePageInteractor,
-                                 actionNotificationInteractor: notificationComponent.getActionNotificationInteractor(),
-                                 deleteNotificationInteractor: notificationComponent.getDeleteNotificationInteractor(),
-                                 logger: logger)
+        let store = NotificationStore(name: name ?? UUID().uuidString,
+                                      predicate: predicate,
+                                      getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
+                                      fetchStorePageInteractor: fetchStorePageInteractor,
+                                      actionNotificationInteractor: notificationComponent.getActionNotificationInteractor(),
+                                      deleteNotificationInteractor: notificationComponent.getDeleteNotificationInteractor(),
+                                      logger: logger)
+
+        realTimeComponent.getStoreRealmTime().addObserver(store)
+
+        return store
     }
 }

@@ -11,13 +11,16 @@ struct LoginInteractor {
     private let logger: Logger
     private let getUserConfigInteractor: GetConfigInteractor
     private let storeUserQueryInteractor: StoreUserQueryInteractor
+    private let storeRealTimeComponent: StoreRealTimeComponent
 
     init(logger: Logger,
          getUserConfig: GetConfigInteractor,
-         storeUserQuery: StoreUserQueryInteractor) {
+         storeUserQuery: StoreUserQueryInteractor,
+         storeRealTimeComponent: StoreRealTimeComponent) {
         self.logger = logger
         self.getUserConfigInteractor = getUserConfig
         self.storeUserQueryInteractor = storeUserQuery
+        self.storeRealTimeComponent = storeRealTimeComponent
     }
 
     func execute(userId: String) {
@@ -42,6 +45,7 @@ struct LoginInteractor {
             .execute(forceRefresh: false, userQuery: userQuery)
             .then { _ in
                 logger.info(tag: magicBellTag, "User config successfully retrieved upon login")
+                storeRealTimeComponent.getStoreRealmTime().startListening()
             }
     }
 }

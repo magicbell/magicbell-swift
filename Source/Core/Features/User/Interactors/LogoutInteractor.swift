@@ -11,13 +11,16 @@ struct LogoutInteractor {
     private let logger: Logger
     private let deleteUserConfigInteractor: DeleteConfigInteractor
     private let deleteUserQueryInteractor: DeleteUserQueryInteractor
+    private let storeRealTimeComponent: StoreRealTimeComponent
 
     init(logger: Logger,
          deleteUserConfig: DeleteConfigInteractor,
-         deleteUserQuery: DeleteUserQueryInteractor) {
+         deleteUserQuery: DeleteUserQueryInteractor,
+         storeRealTimeComponent: StoreRealTimeComponent) {
         self.logger = logger
         self.deleteUserConfigInteractor = deleteUserConfig
         self.deleteUserQueryInteractor = deleteUserQuery
+        self.storeRealTimeComponent = storeRealTimeComponent
     }
 
     func execute() {
@@ -26,5 +29,6 @@ struct LogoutInteractor {
         deleteUserConfigInteractor.execute().result.get(error: &error)
         assert(error == nil, "No error must be produced upon deleting user data.")
         logger.info(tag: magicBellTag, "User has been logged out from MagicBell.")
+        storeRealTimeComponent.getStoreRealmTime().stopListening()
     }
 }

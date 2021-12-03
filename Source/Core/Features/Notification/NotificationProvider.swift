@@ -18,27 +18,27 @@ class DefaultNotificationComponent: NotificationComponent {
 
     private let httpClient: HttpClient
     private let executor: Executor
-    private let userComponent: UserComponent
+    private let userQueryComponent: UserQueryComponent
 
     init(httpClient: HttpClient,
          executor: Executor,
-         userComponent: UserComponent) {
+         userQueryComponent: UserQueryComponent) {
         self.httpClient = httpClient
         self.executor = executor
-        self.userComponent = userComponent
+        self.userQueryComponent = userQueryComponent
     }
 
 
     func getNotificationInteractor() -> GetNotificationInteractor {
         let getNotificationInteractor = notificationNetworkDataSource.toGetRepository().toGetByQueryInteractor(executor)
         return GetNotificationInteractor(executor: executor,
-                                         getUserQueryInteractor: userComponent.getUserQueryInteractor(),
+                                         getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
                                          getInteractor: getNotificationInteractor)
     }
 
     func getActionNotificationInteractor() -> ActionNotificationInteractor {
         return ActionNotificationInteractor(executor: executor,
-                                            getUserQueryInteractor: userComponent.getUserQueryInteractor(),
+                                            getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
                                             actionInteractor: actionNotificationNetworkDataSource.toPutRepository().toPutByQueryInteractor(executor))
     }
 
@@ -54,7 +54,7 @@ class DefaultNotificationComponent: NotificationComponent {
     func getDeleteNotificationInteractor() -> DeleteNotificationInteractor {
         let deleteNotificationInteractor = actionNotificationNetworkDataSource.toDeleteRepository().toDeleteByQueryInteractor(executor)
         return DeleteNotificationInteractor(executor: executor,
-                                            getUserQueryInteractor: userComponent.getUserQueryInteractor(),
+                                            getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
                                             deleteInteractor: deleteNotificationInteractor)
     }
 }

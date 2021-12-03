@@ -7,6 +7,7 @@
 
 import Harmony
 
+
 public protocol NotificationStoreDelegate: AnyObject {
     func didReloadStore(_ store: NotificationStore)
     func store(_ store: NotificationStore, didInsertNotificationsAt indexes: [Int])
@@ -14,7 +15,7 @@ public protocol NotificationStoreDelegate: AnyObject {
     func store(_ store: NotificationStore, didDeleteNotificationAt indexes: [Int])
 }
 
-public class NotificationStore {
+public class NotificationStore: StoreRealTimeObserver {
 
     private let pageSize = 20
     
@@ -60,9 +61,7 @@ public class NotificationStore {
     }
 
     public subscript(index: Int) -> Notification {
-        get {
-            return edges[index].node
-        }
+        return edges[index].node
     }
 
     /// Clears the store and fetches first page.
@@ -77,10 +76,10 @@ public class NotificationStore {
                 self.configureCount(storePage)
                 let newEdges = storePage.edges
                 self.edges.append(contentsOf: newEdges)
-                let notificationsT = newEdges.map { notificationEdge in
+                let notifications = newEdges.map { notificationEdge in
                     notificationEdge.node
                 }
-                completion(.success(notificationsT))
+                completion(.success(notifications))
             }.fail { error in
                 completion(.failure(error))
             }
@@ -243,7 +242,7 @@ public class NotificationStore {
         hasNextPage = true
     }
 
-     // MARK: - Private Methods
+    // MARK: - Private Methods
 
     private func recursiveNewElements(
         cursor: String,
@@ -309,5 +308,83 @@ public class NotificationStore {
         totalCount = page.totalCount
         unreadCount = page.unreadCount
         unseenCount = page.unseenCount
+    }
+
+    // MARK: - Observer methods
+    func notifyNewNotification(id: String) {
+        /**
+         If GraphQL allows us to query for notificationId, then we can query for the predicate + notificationID. If we obtain a result, it means that this new notification is part of this store. Then, we set the notification in the first position of the array + set the new cursor as the newest one.
+
+         Now, we just refresh all the store.
+         */
+        refresh { _ in
+            self.delegate?.didReloadStore(self)
+        }
+    }
+
+    func notifyDeleteNotification(id: String) {
+        if let storeIndex = edges.firstIndex(where: { $0.node.id == id }) {
+            edges.remove(at: storeIndex)
+            delegate?.store(self, didDeleteNotificationAt: [storeIndex])
+        }
+    }
+
+    func notifyNotificationChange(id: String, change: NotificationChange) {
+        if let storeIndex = edges.firstIndex(where: { $0.node.id == id }) {
+            // If exist
+            var notification = edges[storeIndex].node
+            switch change {
+            case .read:
+                let now = Date()
+                notification.readAt = now
+                notification.seenAt = now
+
+            case .unread:
+                notification.readAt = nil
+            }
+
+            if predicate.matchNotification(notification) {
+                edges[storeIndex].node = notification
+                delegate?.store(self, didChangeNotificationAt: [storeIndex])
+            } else {
+                edges.remove(at: storeIndex)
+                delegate?.store(self, didDeleteNotificationAt: [storeIndex])
+            }
+        } else {
+            /**
+             If GraphQL allows us to query for notificationId, then we can query for the predicate + notificationID. If we obtain a result, it means that this new notification is part of this store. If not, we can remove it from the current store.
+
+             The next step would be to place it in the correct position. we check the range from the newest to the oldest one. if it's older than the oldest one, we don't add it to the store yet. if it's the newest one, we place in the first position and update the newest cursor.
+
+             Now, we just refresh the store with the predicate.
+             */
+            refresh { _ in
+                self.delegate?.didReloadStore(self)
+            }
+        }
+    }
+    
+    func notifyAllNotificationRead() {
+        switch predicate.read {
+        case .read, .unspecified:
+            refresh { _ in
+                self.delegate?.didReloadStore(self)
+            }
+        case .unread:
+            clear()
+            delegate?.didReloadStore(self)
+        }
+    }
+
+    func notifyAllNotificationSeen() {
+        switch predicate.seen {
+        case .seen, .unspecified:
+            refresh { _ in
+                self.delegate?.didReloadStore(self)
+            }
+        case.unseen:
+            clear()
+            delegate?.didReloadStore(self)
+        }
     }
 }

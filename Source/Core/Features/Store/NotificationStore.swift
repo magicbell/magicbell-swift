@@ -34,23 +34,23 @@ public class NotificationStore: StoreRealTimeObserver {
     public let predicate: StorePredicate
     private var edges: [Edge<Notification>] = []
     public private(set) var totalCount: Int = 0 {
-        willSet {
-            if newValue != totalCount {
-                countDelegate?.store(self, didChangeTotalCount: newValue)
+        didSet {
+            if oldValue != totalCount {
+                forEachCountObserver { $0.store(self, didChangeTotalCount: totalCount) }
             }
         }
     }
     public private(set) var unreadCount: Int = 0 {
-        willSet {
-            if newValue != unreadCount {
-                countDelegate?.store(self, didChangeTotalUnreadCount: newValue)
+        didSet {
+            if oldValue != unreadCount {
+                forEachCountObserver { $0.store(self, didChangeTotalUnreadCount: unreadCount) }
             }
         }
     }
     public private(set) var unseenCount: Int = 0 {
-        willSet {
-            if newValue != unseenCount {
-                countDelegate?.store(self, didChangeTotalUnseenCount: newValue)
+        didSet {
+            if oldValue != unseenCount {
+                forEachCountObserver { $0.store(self, didChangeTotalUnseenCount: unseenCount) }
             }
         }
     }
@@ -78,8 +78,8 @@ public class NotificationStore: StoreRealTimeObserver {
         self.logger = logger
     }
 
-    public weak var contentDelegate: NotificationStoreContentDelegate?
-    public weak var countDelegate: NotificationStoreCountDelegate?
+    private var contentObservers = NSHashTable<AnyObject>.weakObjects()
+    private var countObservers = NSHashTable<AnyObject>.weakObjects()
 
     public var count: Int {
         return edges.count
@@ -186,15 +186,7 @@ public class NotificationStore: StoreRealTimeObserver {
             notification: notification,
             action: .markAsRead,
             modificationsBlock: {
-                self.unreadCount -= 1
-                self.updateTotalCountBasedOnPredicateWhenNotificationIsUnread(self.predicate)
-                if $0.seenAt == nil {
-                    self.unseenCount -= 1
-                }
-
-                let now = Date()
-                $0.readAt = now
-                $0.seenAt = now
+                self.markNotificationAsRead(&$0, with: self.predicate)
             },
             completion: completion)
     }
@@ -208,10 +200,7 @@ public class NotificationStore: StoreRealTimeObserver {
             notification: notification,
             action: .markAsUnread,
             modificationsBlock: {
-                self.updateUnreadCountBasedOnPredicate(self.predicate)
-                self.updateTotalCountBasedOnPredicateWhenNotificationIsRead(self.predicate)
-
-                $0.readAt = nil
+                self.markNotificationAsUnread(&$0, with: self.predicate)
             },
             completion: completion)
     }
@@ -270,6 +259,8 @@ public class NotificationStore: StoreRealTimeObserver {
             completion: completion)
     }
 
+    // MARK: - Private Methods
+
     private func clear() {
         edges = []
         totalCount = 0
@@ -278,8 +269,6 @@ public class NotificationStore: StoreRealTimeObserver {
         nextPageCursor = nil
         hasNextPage = true
     }
-
-    // MARK: - Private Methods
 
     private func recursiveNewElements(
         cursor: String,
@@ -354,7 +343,7 @@ public class NotificationStore: StoreRealTimeObserver {
          Now, we just refresh all the store.
          */
         refresh { _ in
-            self.contentDelegate?.didReloadStore(self)
+            self.forEachContentObserver { $0.didReloadStore(self) }
         }
     }
 
@@ -362,7 +351,7 @@ public class NotificationStore: StoreRealTimeObserver {
         if let storeIndex = edges.firstIndex(where: { $0.node.id == id }) {
             updateCountersWhenDelete(notification: edges[storeIndex].node, predicate: self.predicate)
             edges.remove(at: storeIndex)
-            contentDelegate?.store(self, didDeleteNotificationAt: [storeIndex])
+            forEachContentObserver { $0.store(self, didDeleteNotificationAt: [storeIndex]) }
         }
     }
 
@@ -372,33 +361,17 @@ public class NotificationStore: StoreRealTimeObserver {
             var notification = edges[storeIndex].node
             switch change {
             case .read:
-                if notification.seenAt == nil {
-                    unseenCount -= 1
-                }
-
-                if notification.readAt == nil {
-                    unreadCount -= 1
-                    updateTotalCountBasedOnPredicateWhenNotificationIsUnread(predicate)
-                }
-
-                let now = Date()
-                notification.readAt = now
-                notification.seenAt = now
+                markNotificationAsRead(&notification, with: self.predicate)
             case .unread:
-                if notification.readAt != nil {
-                    updateUnreadCountBasedOnPredicate(predicate)
-                    updateTotalCountBasedOnPredicateWhenNotificationIsRead(predicate)
-                }
-
-                notification.readAt = nil
+                markNotificationAsUnread(&notification, with: self.predicate)
             }
 
             if predicate.matchNotification(notification) {
                 edges[storeIndex].node = notification
-                contentDelegate?.store(self, didChangeNotificationAt: [storeIndex])
+                self.forEachContentObserver { $0.store(self, didChangeNotificationAt: [storeIndex]) }
             } else {
                 edges.remove(at: storeIndex)
-                contentDelegate?.store(self, didDeleteNotificationAt: [storeIndex])
+                self.forEachContentObserver { $0.store(self, didDeleteNotificationAt: [storeIndex]) }
             }
         } else {
             /**
@@ -409,7 +382,7 @@ public class NotificationStore: StoreRealTimeObserver {
              Now, we just refresh the store with the predicate.
              */
             refresh { _ in
-                self.contentDelegate?.didReloadStore(self)
+                self.forEachContentObserver { $0.didReloadStore(self) }
             }
         }
     }
@@ -418,11 +391,11 @@ public class NotificationStore: StoreRealTimeObserver {
         switch predicate.read {
         case .read, .unspecified:
             refresh { _ in
-                self.contentDelegate?.didReloadStore(self)
+                self.forEachContentObserver { $0.didReloadStore(self) }
             }
         case .unread:
             clear()
-            contentDelegate?.didReloadStore(self)
+            self.forEachContentObserver { $0.didReloadStore(self) }
         }
     }
 
@@ -430,49 +403,91 @@ public class NotificationStore: StoreRealTimeObserver {
         switch predicate.seen {
         case .seen, .unspecified:
             refresh { _ in
-                self.contentDelegate?.didReloadStore(self)
+                self.forEachContentObserver { $0.didReloadStore(self) }
             }
         case .unseen:
             clear()
-            contentDelegate?.didReloadStore(self)
-            self.unseenCount = 0
+            self.forEachContentObserver { $0.didReloadStore(self) }
         }
+    }
+
+    // MARK: - Notification modification function
+
+    private func markNotificationAsRead( _ notification: inout Notification, with predicate: StorePredicate) {
+        if notification.seenAt == nil {
+            unseenCount -= 1
+        }
+
+        if notification.readAt == nil {
+            unreadCount -= 1
+            switch self.predicate.read {
+            case .read:
+                totalCount += 1
+            case .unread:
+                totalCount -= 1
+            case .unspecified:
+                // Do nothing
+                break
+            }
+        }
+
+        let now = Date()
+        notification.readAt = now
+        notification.seenAt = now
+    }
+
+    private func markNotificationAsUnread(_ notification: inout Notification, with predicate: StorePredicate) {
+        if notification.readAt != nil {
+            // When a predicate is read, unread count is always 0
+            switch self.predicate.read {
+            case .read:
+                totalCount -= 1
+                unreadCount = 0
+            case .unread:
+                totalCount += 1
+                unreadCount += 1
+            case .unspecified:
+                unreadCount += 1
+            }
+        }
+        notification.readAt = nil
+    }
+
+    // MARK: - Notification store observer methods
+
+    private func forEachContentObserver(action: (NotificationStoreContentDelegate) -> Void) {
+        contentObservers.allObjects.forEach {
+            if let contentDelegate = $0 as? NotificationStoreContentDelegate {
+                action(contentDelegate)
+            }
+        }
+    }
+
+    private func forEachCountObserver(action: (NotificationStoreCountDelegate) -> Void) {
+        countObservers.allObjects.forEach {
+            if let countDelegate = $0 as? NotificationStoreCountDelegate {
+                action(countDelegate)
+            }
+        }
+    }
+
+    public func addContentObserver(_ observer: NotificationStoreContentDelegate) {
+        contentObservers.add(observer)
+    }
+
+    public func removeContentObserver(_ observer: NotificationStoreContentDelegate) {
+        contentObservers.remove(observer)
+    }
+
+    public func addCountObserver(_ observer: NotificationStoreCountDelegate) {
+        countObservers.add(observer)
+    }
+
+    public func removeCountObserver(_ observer: NotificationStoreCountDelegate) {
+        countObservers.remove(observer)
     }
 
     // MARK: - Counter methods
-
-    private func updateTotalCountBasedOnPredicateWhenNotificationIsRead(_ predicate: StorePredicate) {
-        switch self.predicate.read {
-        case .read:
-            totalCount -= 1
-        case .unread:
-            totalCount += 1
-        case .unspecified:
-            // Do nothing
-            break
-        }
-    }
-
-    private func updateTotalCountBasedOnPredicateWhenNotificationIsUnread(_ predicate: StorePredicate) {
-        switch self.predicate.read {
-        case .read:
-            totalCount += 1
-        case .unread:
-            totalCount -= 1
-        case .unspecified:
-            // Do nothing
-            break
-        }
-    }
-
-    private func updateUnreadCountBasedOnPredicate(_ predicate: StorePredicate) {
-        // When a predicate is read, unread count is always 0
-        if predicate.read != .read {
-            unreadCount += 1
-        } else {
-            unreadCount = 0
-        }
-    }
 
     private func updateCountersWhenDelete(notification: Notification, predicate: StorePredicate) {
         self.totalCount -= 1

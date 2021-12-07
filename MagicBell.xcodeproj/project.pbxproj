@@ -34,6 +34,7 @@
 		59799E67274660AD00BFB375 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E64274660AD00BFB375 /* UserPreferences.swift */; };
 		59799E69274662E900BFB375 /* NotificationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E68274662E900BFB375 /* NotificationProvider.swift */; };
 		59799E6B274671A100BFB375 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E6A274671A100BFB375 /* NetworkError.swift */; };
+		59827B55275FD7C9009D93D8 /* AblyMessageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59827B54275FD7C9009D93D8 /* AblyMessageProcessor.swift */; };
 		59C12ECC2746DBC200311D24 /* PushSubscriptionNetworkDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C12ECB2746DBC200311D24 /* PushSubscriptionNetworkDataSource.swift */; };
 		59C12ECF2746DC7100311D24 /* PushSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C12ECE2746DC7100311D24 /* PushSubscription.swift */; };
 		59C12ED12746E48100311D24 /* PushSubscriptionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C12ED02746E48100311D24 /* PushSubscriptionProvider.swift */; };
@@ -54,7 +55,7 @@
 		59F4596E2758C739008F3BC8 /* ActionNotificationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4596D2758C739008F3BC8 /* ActionNotificationInteractor.swift */; };
 		59F459702758CC25008F3BC8 /* DeleteNotificationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4596F2758CC25008F3BC8 /* DeleteNotificationInteractor.swift */; };
 		59F459722758D0DB008F3BC8 /* GetNotificationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F459712758D0DB008F3BC8 /* GetNotificationInteractor.swift */; };
-		59F4597527597FF7008F3BC8 /* AblyConector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597427597FF7008F3BC8 /* AblyConector.swift */; };
+		59F4597527597FF7008F3BC8 /* AblyConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597427597FF7008F3BC8 /* AblyConnector.swift */; };
 		59F45979275A434A008F3BC8 /* StoreRealTimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F45978275A434A008F3BC8 /* StoreRealTimeProvider.swift */; };
 		59F4597B275A48AD008F3BC8 /* StoreRealTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597A275A48AD008F3BC8 /* StoreRealTime.swift */; };
 		59F4597D275A50FD008F3BC8 /* UserQueryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597C275A50FD008F3BC8 /* UserQueryProvider.swift */; };
@@ -118,6 +119,7 @@
 		59799E64274660AD00BFB375 /* UserPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPreferences.swift; sourceTree = "<group>"; };
 		59799E68274662E900BFB375 /* NotificationProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationProvider.swift; sourceTree = "<group>"; };
 		59799E6A274671A100BFB375 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		59827B54275FD7C9009D93D8 /* AblyMessageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyMessageProcessor.swift; sourceTree = "<group>"; };
 		59C12ECB2746DBC200311D24 /* PushSubscriptionNetworkDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSubscriptionNetworkDataSource.swift; sourceTree = "<group>"; };
 		59C12ECE2746DC7100311D24 /* PushSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSubscription.swift; sourceTree = "<group>"; };
 		59C12ED02746E48100311D24 /* PushSubscriptionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSubscriptionProvider.swift; sourceTree = "<group>"; };
@@ -139,7 +141,7 @@
 		59F4596D2758C739008F3BC8 /* ActionNotificationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionNotificationInteractor.swift; sourceTree = "<group>"; };
 		59F4596F2758CC25008F3BC8 /* DeleteNotificationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteNotificationInteractor.swift; sourceTree = "<group>"; };
 		59F459712758D0DB008F3BC8 /* GetNotificationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNotificationInteractor.swift; sourceTree = "<group>"; };
-		59F4597427597FF7008F3BC8 /* AblyConector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyConector.swift; sourceTree = "<group>"; };
+		59F4597427597FF7008F3BC8 /* AblyConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyConnector.swift; sourceTree = "<group>"; };
 		59F45978275A434A008F3BC8 /* StoreRealTimeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRealTimeProvider.swift; sourceTree = "<group>"; };
 		59F4597A275A48AD008F3BC8 /* StoreRealTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRealTime.swift; sourceTree = "<group>"; };
 		59F4597C275A50FD008F3BC8 /* UserQueryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserQueryProvider.swift; sourceTree = "<group>"; };
@@ -447,7 +449,8 @@
 		59F4597327597FEA008F3BC8 /* StoreRealTime */ = {
 			isa = PBXGroup;
 			children = (
-				59F4597427597FF7008F3BC8 /* AblyConector.swift */,
+				59F4597427597FF7008F3BC8 /* AblyConnector.swift */,
+				59827B54275FD7C9009D93D8 /* AblyMessageProcessor.swift */,
 				59F45978275A434A008F3BC8 /* StoreRealTimeProvider.swift */,
 				59F4597A275A48AD008F3BC8 /* StoreRealTime.swift */,
 			);
@@ -707,6 +710,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				59569BA5274F7B8A00FF1AA6 /* GraphQLRequest.swift in Sources */,
+				59827B55275FD7C9009D93D8 /* AblyMessageProcessor.swift in Sources */,
 				D2CBA520275121C2002F1E44 /* NotificationFragment.graphql in Sources */,
 				59C3CDC0274D2CC20043BA77 /* GetConfigInteractor.swift in Sources */,
 				D2D277262747C9CF00B5F69E /* ActionNotificationNetworkDataSource.swift in Sources */,
@@ -718,7 +722,7 @@
 				D2153EED274E4F77009C2DDC /* GetUserQueryInteractor.swift in Sources */,
 				D2CBA52227512462002F1E44 /* PageInfo.swift in Sources */,
 				D2CBA52F275128FA002F1E44 /* StorePredicate.swift in Sources */,
-				59F4597527597FF7008F3BC8 /* AblyConector.swift in Sources */,
+				59F4597527597FF7008F3BC8 /* AblyConnector.swift in Sources */,
 				59799E3F27465BB500BFB375 /* DataToDecodableMapper.swift in Sources */,
 				D2CBA529275125B3002F1E44 /* GraphQLRepresentable.swift in Sources */,
 				59F4597D275A50FD008F3BC8 /* UserQueryProvider.swift in Sources */,

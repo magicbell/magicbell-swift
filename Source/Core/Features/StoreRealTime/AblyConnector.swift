@@ -10,6 +10,8 @@ import Ably
 
 class AblyConnector: StoreRealTime {
 
+    private let tag = "AblyConnector"
+
     private let getConfigInteractor: GetConfigInteractor
     private let userQueryInteractor: GetUserQueryInteractor
     private let environment: Environment
@@ -22,11 +24,11 @@ class AblyConnector: StoreRealTime {
 
     internal init(getConfigInteractor: GetConfigInteractor,
                   userQueryInteractor: GetUserQueryInteractor,
-                  envinroment: Environment,
+                  environment: Environment,
                   logger: Logger) {
         self.getConfigInteractor = getConfigInteractor
         self.userQueryInteractor = userQueryInteractor
-        self.environment = envinroment
+        self.environment = environment
         self.logger = logger
     }
 
@@ -34,14 +36,14 @@ class AblyConnector: StoreRealTime {
 
     func startListening() {
         if status == .disconnected {
-            self.status = .connecting
+            status = .connecting
             connect()
         }
     }
 
     func stopListening() {
         disconnect()
-        self.status = .disconnected
+        status = .disconnected
     }
 
     func addObserver(_ store: StoreRealTimeObserver) {
@@ -77,7 +79,7 @@ class AblyConnector: StoreRealTime {
                 self.startListeningMessages(channel: config.channel)
             }
         } catch {
-            logger.info(tag: "AblyConnector", "\(error)")
+            logger.info(tag: tag, "\(error)")
         }
     }
 
@@ -85,7 +87,6 @@ class AblyConnector: StoreRealTime {
         ablyClient?.connection.close()
         ablyClient = nil
         observers.removeAllObjects()
-        stopReconnectionTimer()
     }
 
     private func generateAblyHeaders(apiKey: String,
@@ -120,15 +121,22 @@ class AblyConnector: StoreRealTime {
             let stateChange = stateChange
             switch stateChange.current {
             case .initialized, .connecting:
-                self.stopReconnectionTimer()
+                break
             case .connected:
                 self.status = .connected
-                self.stopReconnectionTimer()
-            default:
+            case .disconnected:
+                self.status = .connecting
+                self.logger.info(tag: self.tag, "Ably is disconnected. Retrying every 15 seconds.")
+            case .suspended:
+                self.status = .connecting
+                self.logger.info(tag: self.tag, "Ably is suspended. Retrying every 30 seconds.")
+            case .closed:
                 if self.status != .disconnected {
                     self.status = .connecting
-                    self.startReconnectionTimer()
+                    self.connect()
                 }
+            default:
+                break
             }
         }
     }
@@ -141,66 +149,34 @@ class AblyConnector: StoreRealTime {
     }
 
     private func processAblyMessage(_ message: ARTMessage) {
-        if let event = message.name,
-           let eventData = message.data as? [String: String?] {
-            let eventParts = event.split(separator: "/", maxSplits: 1)
-            if !eventParts.isEmpty &&
-                eventParts.count == 2 &&
-                eventParts[0] == "notifications" {
-                switch eventParts[1] {
-                case "new":
-                    if let notificationId = eventData["id"] as? String {
-                        sendAllObservers { $0.notifyNewNotification(id: notificationId) }
-                    } else {
-                        logger.info(tag: "AblyConnector", "NotificationID is missing in the JSON")
-                    }
-                case "read":
-                    if let notificationId = eventData["id"] as? String {
-                        sendAllObservers { $0.notifyNotificationChange(id: notificationId, change: .read) }
-                    } else {
-                        logger.info(tag: "AblyConnector", "NotificationID is missing in the JSON")
-                    }
-                case "unread":
-                    if let notificationId = eventData["id"] as? String {
-                        sendAllObservers { $0.notifyNotificationChange(id: notificationId, change: .unread) }
-                    } else {
-                        logger.info(tag: "AblyConnector", "NotificationID is missing in the JSON")
-                    }
-                case "delete":
-                    if let notificationId = eventData["id"] as? String {
-                        sendAllObservers { $0.notifyDeleteNotification(id: notificationId) }
-                    } else {
-                        logger.info(tag: "AblyConnector", "NotificationID is missing in the JSON")
-                    }
-                case "read/all":
-                    sendAllObservers { $0.notifyAllNotificationRead() }
-                case "seen/all":
-                    sendAllObservers { $0.notifyAllNotificationSeen() }
-                default:
-                    logger.info(tag: "AblyConnector", "Event unprocessed \(event)")
-                }
-            } else {
-                logger.info(tag: "AblyConnector", "Event unprocessed \(event)")
+        do {
+            let ablyMessageProcessor = AblyMessageProcessor(logger: logger)
+            let message = try ablyMessageProcessor.processAblyMessage(message)
+
+            switch message {
+            case .new(let notificationId):
+                sendAllObservers { $0.notifyNewNotification(id: notificationId) }
+            case .read(let notificationId):
+                sendAllObservers { $0.notifyNotificationChange(id: notificationId, change: .read) }
+            case .unread(let notificationId):
+                sendAllObservers { $0.notifyNotificationChange(id: notificationId, change: .unread) }
+            case .delete(let notificationId):
+                sendAllObservers { $0.notifyDeleteNotification(id: notificationId) }
+            case .readAll:
+                sendAllObservers { $0.notifyAllNotificationRead() }
+            case .seenAll:
+                sendAllObservers { $0.notifyAllNotificationSeen() }
             }
-        } else {
-            logger.info(tag: "AblyConnector", "Message unprocessed \(message)")
+        } catch {
+            logger.info(tag: tag, error.localizedDescription)
         }
     }
 
     private func sendAllObservers(block: (StoreRealTimeObserver) -> Void) {
-        observers.allObjects
-            .compactMap { $0 as? StoreRealTimeObserver }
-            .forEach { block($0) }
-    }
-
-    private func startReconnectionTimer() {
-        reconnectionTimer?.invalidate()
-        reconnectionTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [weak self] _ in
-            self?.connect()
+        observers.allObjects.forEach {
+            if let storeRealTimeObserver = $0 as? StoreRealTimeObserver {
+                block(storeRealTimeObserver)
+            }
         }
-    }
-
-    private func stopReconnectionTimer() {
-        reconnectionTimer?.invalidate()
     }
 }

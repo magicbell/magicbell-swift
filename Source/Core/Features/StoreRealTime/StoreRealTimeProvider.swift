@@ -35,7 +35,7 @@ class DefaultStoreRealTimeModule: StoreRealTimeComponent {
         return AblyConnector(
             getConfigInteractor: configComponent.getGetConfigInteractor(),
             userQueryInteractor: userQueryComponent.getUserQueryInteractor(),
-            envinroment: environment,
+            environment: environment,
             logger: logger
         )
     }()

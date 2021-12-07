@@ -17,6 +17,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     @IBOutlet weak var actionsItem: BadgeBarButtonItem!
 
     private var store = MagicBell.storeFor(predicate: StorePredicate())
+    private var unreadStore = MagicBell.storeFor(predicate: StorePredicate(read: .unread))
 
     var navigationBarColor = UIColor(rgb: 0x6113A3) {
         didSet { applyBarStyle() }
@@ -42,8 +43,10 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
 
         reloadStore()
 
-        store.contentDelegate = self
-        store.countDelegate = self
+        store.addContentObserver(self)
+        store.addCountObserver(self)
+
+        unreadStore.addCountObserver(self)
     }
 
     private func reloadStore() {
@@ -139,11 +142,11 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     }
 
     private func assignDelegateFor(predicate: StorePredicate) {
-        store.contentDelegate = nil
-        store.countDelegate = nil
+        store.removeContentObserver(self)
+        store.removeCountObserver(self)
         store = MagicBell.storeFor(predicate: predicate)
-        store.contentDelegate = self
-        store.countDelegate = self
+        store.addContentObserver(self)
+        store.addCountObserver(self)
         reloadStore()
     }
 
@@ -324,14 +327,25 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     // MARK: NotificationStoreCountDelegate
 
     func store(_ store: NotificationStore, didChangeTotalCount count: Int) {
-        title = "Notifications - \(count)"
+        if store === unreadStore {
+            print("New unread message for unread invisible store \(count)")
+        } else {
+            title = "Notifications - \(count)"
+        }
     }
 
     func store(_ store: NotificationStore, didChangeTotalUnreadCount count: Int) {
-        print("Unread notification - \(count)")
+        if store === unreadStore {
+            print("New unread message for unread invisible store \(count)")
+        } else {
+            print("Unread notification - \(count)")
+        }
     }
 
     func store(_ store: NotificationStore, didChangeTotalUnseenCount count: Int) {
+        if store === unreadStore {
+            return
+        }
         actionsItem.badgeNumber = count
     }
 }

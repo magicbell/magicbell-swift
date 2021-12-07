@@ -141,7 +141,6 @@ class AblyConnector: StoreRealTime {
     }
 
     private func processAblyMessage(_ message: ARTMessage) {
-        print(message)
         if let event = message.name,
            let eventData = message.data as? [String: String?] {
             let eventParts = event.split(separator: "/", maxSplits: 1)

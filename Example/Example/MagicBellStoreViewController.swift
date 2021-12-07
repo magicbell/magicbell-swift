@@ -8,12 +8,13 @@
 import UIKit
 import MagicBell
 
-class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, UITableViewDelegate, UITableViewDataSource, NotificationStoreDelegate {
+class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, UITableViewDelegate, UITableViewDataSource, NotificationStoreContentDelegate, NotificationStoreCountDelegate {
 
     private var isLoadingNextPage = false
 
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var actionsItem: BadgeBarButtonItem!
 
     private var store = MagicBell.storeFor(predicate: StorePredicate())
 
@@ -41,7 +42,8 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
 
         reloadStore()
 
-        store.delegate = self
+        store.contentDelegate = self
+        store.countDelegate = self
     }
 
     private func reloadStore() {
@@ -116,28 +118,16 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
             let alert = UIAlertController(title: "Customize Predicate", message: nil, preferredStyle: .actionSheet)
 
             alert.addAction(UIAlertAction(title: "All Notifications", style: .default) { _ in
-                self.store.delegate = nil
-                self.store = MagicBell.storeFor(predicate: StorePredicate())
-                self.store.delegate = self
-                self.reloadStore()
+                self.assignDelegateFor(predicate: StorePredicate())
             })
             alert.addAction(UIAlertAction(title: "Only Read", style: .default) { _ in
-                self.store.delegate = nil
-                self.store = MagicBell.storeFor(predicate: StorePredicate(read: .read))
-                self.store.delegate = self
-                self.reloadStore()
+                self.assignDelegateFor(predicate: StorePredicate(read: .read))
             })
             alert.addAction(UIAlertAction(title: "Only Unread", style: .default) { _ in
-                self.store.delegate = nil
-                self.store = MagicBell.storeFor(predicate: StorePredicate(read: .unread))
-                self.store.delegate = self
-                self.reloadStore()
+                self.assignDelegateFor(predicate: StorePredicate(read: .unread))
             })
             alert.addAction(UIAlertAction(title: "By Category", style: .default) { _ in
-                self.store.delegate = nil
-                self.store = MagicBell.storeFor(predicate: StorePredicate(categories: ["order_created"]))
-                self.store.delegate = self
-                self.reloadStore()
+                self.assignDelegateFor(predicate: StorePredicate(categories: ["order_created"]))
             })
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
@@ -146,6 +136,15 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
         present(alert, animated: true, completion: nil)
+    }
+
+    private func assignDelegateFor(predicate: StorePredicate) {
+        store.contentDelegate = nil
+        store.countDelegate = nil
+        store = MagicBell.storeFor(predicate: predicate)
+        store.contentDelegate = self
+        store.countDelegate = self
+        reloadStore()
     }
 
     @IBAction func globalAction(_ sender: Any) {
@@ -298,7 +297,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         }
     }
 
-    // MARK: NotificationStoreDelegate
+    // MARK: NotificationStoreContentDelegate
 
     func didReloadStore(_ store: NotificationStore) {
         self.tableView.reloadData()
@@ -320,5 +319,19 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         self.tableView.insertRows(at: indexes.map { idx in
             IndexPath(row: idx, section: 0)
         }, with: .fade)
+    }
+
+    // MARK: NotificationStoreCountDelegate
+
+    func store(_ store: NotificationStore, didChangeTotalCount count: Int) {
+        title = "Notifications - \(count)"
+    }
+
+    func store(_ store: NotificationStore, didChangeTotalUnreadCount count: Int) {
+        print("Unread notification - \(count)")
+    }
+
+    func store(_ store: NotificationStore, didChangeTotalUnseenCount count: Int) {
+        actionsItem.badgeNumber = count
     }
 }

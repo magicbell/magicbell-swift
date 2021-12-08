@@ -11,16 +11,19 @@ struct LoginInteractor {
     private let logger: Logger
     private let getUserConfigInteractor: GetConfigInteractor
     private let storeUserQueryInteractor: StoreUserQueryInteractor
-    private let storeRealTimeComponent: StoreRealTimeComponent
+    private let storeRealTime: StoreRealTime
+    private let sendPushSubscriptionInteractor: SendPushSubscriptionInteractor
 
     init(logger: Logger,
          getUserConfig: GetConfigInteractor,
          storeUserQuery: StoreUserQueryInteractor,
-         storeRealTimeComponent: StoreRealTimeComponent) {
+         storeRealTime: StoreRealTime,
+         sendPushSubscriptionInteractor: SendPushSubscriptionInteractor) {
         self.logger = logger
         self.getUserConfigInteractor = getUserConfig
         self.storeUserQueryInteractor = storeUserQuery
-        self.storeRealTimeComponent = storeRealTimeComponent
+        self.storeRealTime = storeRealTime
+        self.sendPushSubscriptionInteractor = sendPushSubscriptionInteractor
     }
 
     func execute(userId: String) {
@@ -45,7 +48,15 @@ struct LoginInteractor {
             .execute(forceRefresh: false, userQuery: userQuery)
             .then { _ in
                 logger.info(tag: magicBellTag, "User config successfully retrieved upon login")
-                storeRealTimeComponent.getStoreRealmTime().startListening()
+                storeRealTime.startListening()
+            }
+
+        sendPushSubscriptionInteractor
+            .execute()
+            .then { pushSubscription in
+                logger.info(tag: magicBellTag, "Push subcription is created \(pushSubscription)")
+            }.fail { error in
+                logger.info(tag: magicBellTag, "Push subcription couldn't be created \(error.localizedDescription)")
             }
     }
 }

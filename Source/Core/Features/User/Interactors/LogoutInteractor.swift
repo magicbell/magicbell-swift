@@ -8,27 +8,34 @@
 import Harmony
 
 struct LogoutInteractor {
-    private let logger: Logger
+
     private let deleteUserConfigInteractor: DeleteConfigInteractor
     private let deleteUserQueryInteractor: DeleteUserQueryInteractor
-    private let storeRealTimeComponent: StoreRealTimeComponent
+    private let storeRealTime: StoreRealTime
+    private let deletePushSubscriptionInteractor: DeletePushSubscriptionInteractor
+    private let logger: Logger
 
-    init(logger: Logger,
-         deleteUserConfig: DeleteConfigInteractor,
-         deleteUserQuery: DeleteUserQueryInteractor,
-         storeRealTimeComponent: StoreRealTimeComponent) {
-        self.logger = logger
+    init(
+        deleteUserConfig: DeleteConfigInteractor,
+        deleteUserQuery: DeleteUserQueryInteractor,
+        storeRealTime: StoreRealTime,
+        deletePushSubscriptionInteractor: DeletePushSubscriptionInteractor,
+        logger: Logger
+    ) {
         self.deleteUserConfigInteractor = deleteUserConfig
         self.deleteUserQueryInteractor = deleteUserQuery
-        self.storeRealTimeComponent = storeRealTimeComponent
+        self.storeRealTime = storeRealTime
+        self.deletePushSubscriptionInteractor = deletePushSubscriptionInteractor
+        self.logger = logger
     }
 
     func execute() {
-        deleteUserQueryInteractor.execute()
         var error: Error?
+        storeRealTime.stopListening()
+        deletePushSubscriptionInteractor.execute().result.get(error: &error)
+        deleteUserQueryInteractor.execute()
         deleteUserConfigInteractor.execute().result.get(error: &error)
         assert(error == nil, "No error must be produced upon deleting user data.")
         logger.info(tag: magicBellTag, "User has been logged out from MagicBell.")
-        storeRealTimeComponent.getStoreRealmTime().stopListening()
     }
 }

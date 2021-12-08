@@ -13,6 +13,7 @@ protocol SDKComponent {
     func getLogger() -> Logger
     func getUserComponent() -> UserComponent
     func createStore(name: String?, predicate: StorePredicate) throws -> NotificationStore
+    func getStoreDeviceTokenInteractor() -> StoreDeviceTokenInteractor
 }
 
 // TODO: Remove public
@@ -44,6 +45,7 @@ public class DefaultSDKModule: SDKComponent {
         configComponent: configComponent,
         userQueryComponent: userQueryComponent,
         storeRealTimeComponent: storeRealTimeComponent,
+        pushSubscriptionComponent: pushSubscriptionComponent,
         executor: executorComponent.mainExecutor
     )
 
@@ -52,7 +54,10 @@ public class DefaultSDKModule: SDKComponent {
     private lazy var notificationComponent: NotificationComponent = DefaultNotificationComponent(httpClient: httpClient,
                                                                                                  executor: executorComponent.mainExecutor,
                                                                                                  userQueryComponent: userQueryComponent)
-    public lazy var pushSubscriptionComponent: PushSubscriptionComponent = DefaultPushSubscriptionModule(httpClient: httpClient)
+    private lazy var pushSubscriptionComponent: PushSubscriptionComponent = DefaultPushSubscriptionModule(userQueryComponent: userQueryComponent,
+                                                                                                          httpClient: httpClient,
+                                                                                                          executor: executorComponent.mainExecutor,
+                                                                                                          logger: logger)
     private lazy var storeComponent: StoreComponent = DefaultStoreModule(httpClient: httpClient,
                                                                          executor: executorComponent.mainExecutor,
                                                                          userQueryComponent: userQueryComponent,
@@ -76,6 +81,10 @@ public class DefaultSDKModule: SDKComponent {
 
     func createStore(name: String?, predicate: StorePredicate) -> NotificationStore {
         return storeComponent.createStore(name: name, predicate: predicate)
+    }
+
+    func getStoreDeviceTokenInteractor() -> StoreDeviceTokenInteractor {
+        return pushSubscriptionComponent.getStoreDeviceTokenInteractor()
     }
 }
 

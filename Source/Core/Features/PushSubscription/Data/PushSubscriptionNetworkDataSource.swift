@@ -1,5 +1,5 @@
 //
-//  APNNetworkDataSource.swift
+//  PushSubscriptionNetworkDataSource.swift
 //  MagicBell
 //
 //  Created by Javi on 18/11/21.

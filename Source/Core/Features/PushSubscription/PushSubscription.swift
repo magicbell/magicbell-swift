@@ -1,5 +1,5 @@
 //
-//  APN.swift
+//  PushSubscription.swift
 //  MagicBell
 //
 //  Created by Javi on 18/11/21.

@@ -8,28 +8,66 @@
 import Foundation
 import Harmony
 
-public protocol PushSubscriptionComponent {
-    func getPushSubscriptionNetworkDataSource() -> AnyPutDataSource<PushSubscription>
-    func getDeletePushSubscriptionNetworkDataSource() -> DeleteDataSource
+protocol PushSubscriptionComponent {
+    func getDeletePushSubscriptionInteractor() -> DeletePushSubscriptionInteractor
+    func getStoreDeviceTokenInteractor() -> StoreDeviceTokenInteractor
+    func getSendPushSubscriptionInteractor() -> SendPushSubscriptionInteractor
 }
 
 class DefaultPushSubscriptionModule: PushSubscriptionComponent {
+
+    private let userQueryComponent: UserQueryComponent
     private let httpClient: HttpClient
+    private let executor: Executor
+    private let logger: Logger
     
-    init(httpClient: HttpClient) {
+    init(userQueryComponent: UserQueryComponent,
+         httpClient: HttpClient,
+         executor: Executor,
+         logger: Logger) {
+        self.userQueryComponent = userQueryComponent
         self.httpClient = httpClient
+        self.executor = executor
+        self.logger = logger
+    }
+
+    func getSendPushSubscriptionInteractor() -> SendPushSubscriptionInteractor {
+        SendPushSubscriptionInteractor(executor: executor,
+                                       getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
+                                       getDeviceTokenInteractor: getDeviceTokenInteractor,
+                                       putPushSubscriptionInteractor: putPushSubscriptionInteractor)
+    }
+
+    // MARK: - Push subscription
+
+    private var putPushSubscriptionInteractor: Interactor.PutByQuery<PushSubscription> {
+        pushSubscritionRepository.toPutByQueryInteractor(executor)
     }
     
-    private lazy var pushSubscriptionNetworkDataSource = PushSubscriptionNetworkDataSource(
-        httpClient: httpClient,
-        mapper: DataToDecodableMapper<PushSubscription>()
-    )
-    
-    func getPushSubscriptionNetworkDataSource() -> AnyPutDataSource<PushSubscription> {
-        AnyPutDataSource(pushSubscriptionNetworkDataSource)
+    func getDeletePushSubscriptionInteractor() -> DeletePushSubscriptionInteractor {
+        DeletePushSubscriptionInteractor(executor: executor,
+                                         getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
+                                         getDeviceTokenInteractor: getDeviceTokenInteractor,
+                                         deletePushSubscriptionInteractor: pushSubscritionRepository.toDeleteByQueryInteractor(executor),
+                                         logger: logger)
     }
-    
-    func getDeletePushSubscriptionNetworkDataSource() -> DeleteDataSource {
-        pushSubscriptionNetworkDataSource
+
+    private lazy var pushSubscritionRepository: AnyRepository<PushSubscription> = {
+        let pushSubscriptionNetworkDataSource = PushSubscriptionNetworkDataSource(httpClient: httpClient,
+                                                                                  mapper: DataToDecodableMapper<PushSubscription>())
+        let assemblePushSubscriptionDataSource = DataSourceAssembler(put: pushSubscriptionNetworkDataSource, delete: pushSubscriptionNetworkDataSource)
+        return AnyRepository(SingleDataSourceRepository(assemblePushSubscriptionDataSource))
+    }()
+
+    // MARK: - Device token
+
+    private lazy var deviceTokenInMemoryRepository: AnyRepository<String> = AnyRepository(SingleDataSourceRepository(InMemoryDataSource()))
+
+    func getStoreDeviceTokenInteractor() -> StoreDeviceTokenInteractor {
+        StoreDeviceTokenInteractor(storeDeviceTokenInteractor: deviceTokenInMemoryRepository.toPutByQueryInteractor(executor))
+    }
+
+    private var getDeviceTokenInteractor: Interactor.GetByQuery<String> {
+        deviceTokenInMemoryRepository.toGetByQueryInteractor(executor)
     }
 }

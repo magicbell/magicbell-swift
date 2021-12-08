@@ -17,8 +17,8 @@ public protocol NotificationStoreContentDelegate: AnyObject {
 
 public protocol NotificationStoreCountDelegate: AnyObject {
     func store(_ store: NotificationStore, didChangeTotalCount count: Int)
-    func store(_ store: NotificationStore, didChangeTotalUnreadCount count: Int)
-    func store(_ store: NotificationStore, didChangeTotalUnseenCount count: Int)
+    func store(_ store: NotificationStore, didChangeUnreadCount count: Int)
+    func store(_ store: NotificationStore, didChangeUnseenCount count: Int)
 }
 
 public class NotificationStore: StoreRealTimeObserver {
@@ -43,14 +43,14 @@ public class NotificationStore: StoreRealTimeObserver {
     public private(set) var unreadCount: Int = 0 {
         didSet {
             if oldValue != unreadCount {
-                forEachCountObserver { $0.store(self, didChangeTotalUnreadCount: unreadCount) }
+                forEachCountObserver { $0.store(self, didChangeUnreadCount: unreadCount) }
             }
         }
     }
     public private(set) var unseenCount: Int = 0 {
         didSet {
             if oldValue != unseenCount {
-                forEachCountObserver { $0.store(self, didChangeTotalUnseenCount: unseenCount) }
+                forEachCountObserver { $0.store(self, didChangeUnseenCount: unseenCount) }
             }
         }
     }
@@ -185,8 +185,8 @@ public class NotificationStore: StoreRealTimeObserver {
         executeNotificationAction(
             notification: notification,
             action: .markAsRead,
-            modificationsBlock: {
-                self.markNotificationAsRead(&$0, with: self.predicate)
+            modificationsBlock: { notification in
+                self.markNotificationAsRead(&notification, with: self.predicate)
             },
             completion: completion)
     }
@@ -199,8 +199,8 @@ public class NotificationStore: StoreRealTimeObserver {
         executeNotificationAction(
             notification: notification,
             action: .markAsUnread,
-            modificationsBlock: {
-                self.markNotificationAsUnread(&$0, with: self.predicate)
+            modificationsBlock: { notification in
+                self.markNotificationAsUnread(&notification, with: self.predicate)
             },
             completion: completion)
     }

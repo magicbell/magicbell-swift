@@ -155,24 +155,24 @@ class AblyConnector: StoreRealTime {
 
             switch message {
             case .new(let notificationId):
-                sendAllObservers { $0.notifyNewNotification(id: notificationId) }
+                forEachObserver { $0.notifyNewNotification(id: notificationId) }
             case .read(let notificationId):
-                sendAllObservers { $0.notifyNotificationChange(id: notificationId, change: .read) }
+                forEachObserver { $0.notifyNotificationChange(id: notificationId, change: .read) }
             case .unread(let notificationId):
-                sendAllObservers { $0.notifyNotificationChange(id: notificationId, change: .unread) }
+                forEachObserver { $0.notifyNotificationChange(id: notificationId, change: .unread) }
             case .delete(let notificationId):
-                sendAllObservers { $0.notifyDeleteNotification(id: notificationId) }
+                forEachObserver { $0.notifyDeleteNotification(id: notificationId) }
             case .readAll:
-                sendAllObservers { $0.notifyAllNotificationRead() }
+                forEachObserver { $0.notifyAllNotificationRead() }
             case .seenAll:
-                sendAllObservers { $0.notifyAllNotificationSeen() }
+                forEachObserver { $0.notifyAllNotificationSeen() }
             }
         } catch {
             logger.info(tag: tag, error.localizedDescription)
         }
     }
 
-    private func sendAllObservers(block: (StoreRealTimeObserver) -> Void) {
+    private func forEachObserver(block: (StoreRealTimeObserver) -> Void) {
         observers.allObjects.forEach {
             if let storeRealTimeObserver = $0 as? StoreRealTimeObserver {
                 block(storeRealTimeObserver)

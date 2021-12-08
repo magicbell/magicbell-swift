@@ -334,7 +334,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         }
     }
 
-    func store(_ store: NotificationStore, didChangeTotalUnreadCount count: Int) {
+    func store(_ store: NotificationStore, didChangeUnreadCount count: Int) {
         if store === unreadStore {
             print("New unread message for unread invisible store \(count)")
         } else {
@@ -342,7 +342,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         }
     }
 
-    func store(_ store: NotificationStore, didChangeTotalUnseenCount count: Int) {
+    func store(_ store: NotificationStore, didChangeUnseenCount count: Int) {
         if store === unreadStore {
             return
         }

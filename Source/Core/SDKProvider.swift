@@ -35,17 +35,14 @@ public class DefaultSDKModule: SDKComponent {
         executor: executorComponent.mainExecutor
     )
 
-    private lazy var userQueryStorageComponent: UserQueryStorageComponent = DefaultUserQueryStorageModule()
-
     private lazy var userQueryComponent: UserQueryComponent = DefaultUserQueryModule(
-        userQueryStorageRepository: userQueryStorageComponent.getUserQueryStorageProvider(),
         executor: executorComponent.mainExecutor
     )
 
     private lazy var userComponent: UserComponent = DefaultUserComponent(
         logger: logger,
         configComponent: configComponent,
-        userQueryStorageRepository: userQueryStorageComponent.getUserQueryStorageProvider(),
+        userQueryComponent: userQueryComponent,
         storeRealTimeComponent: storeRealTimeComponent,
         executor: executorComponent.mainExecutor
     )

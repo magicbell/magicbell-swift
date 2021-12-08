@@ -10,15 +10,14 @@ import Harmony
 
 protocol UserQueryComponent {
     func getUserQueryInteractor() -> GetUserQueryInteractor
+    func getStoreUserQueryInteractor() -> StoreUserQueryInteractor
+    func getDeleteUserQueryInteractor() -> DeleteUserQueryInteractor
 }
 
 class DefaultUserQueryModule: UserQueryComponent {
-    private let userQueryStorageRepository: AnyRepository<UserQuery>
     private let executor: Executor
 
-    init(userQueryStorageRepository: AnyRepository<UserQuery>,
-         executor: Executor) {
-        self.userQueryStorageRepository = userQueryStorageRepository
+    init(executor: Executor) {
         self.executor = executor
     }
 
@@ -26,5 +25,23 @@ class DefaultUserQueryModule: UserQueryComponent {
         return GetUserQueryInteractor(
             getUserQuery: userQueryStorageRepository.toGetByQueryInteractor(executor)
         )
+    }
+
+    func getStoreUserQueryInteractor() -> StoreUserQueryInteractor {
+        StoreUserQueryInteractor(
+            storeUserQuery: userQueryStorageRepository.toPutByQueryInteractor(executor)
+        )
+    }
+
+    func getDeleteUserQueryInteractor() -> DeleteUserQueryInteractor {
+        DeleteUserQueryInteractor(
+            deleteUserQuery: userQueryStorageRepository.toDeleteByQueryInteractor(executor)
+        )
+    }
+
+    private lazy var userQueryStorageRepository = AnyRepository(SingleDataSourceRepository(InMemoryDataSource<UserQuery>()))
+
+    func getUserQueryStorageProvider() -> AnyRepository<UserQuery> {
+        return userQueryStorageRepository
     }
 }

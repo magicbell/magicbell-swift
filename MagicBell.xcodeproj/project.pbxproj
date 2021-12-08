@@ -59,7 +59,6 @@
 		59F45979275A434A008F3BC8 /* StoreRealTimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F45978275A434A008F3BC8 /* StoreRealTimeProvider.swift */; };
 		59F4597B275A48AD008F3BC8 /* StoreRealTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597A275A48AD008F3BC8 /* StoreRealTime.swift */; };
 		59F4597D275A50FD008F3BC8 /* UserQueryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597C275A50FD008F3BC8 /* UserQueryProvider.swift */; };
-		59F4597F275A52DB008F3BC8 /* UserQueryStorageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597E275A52DB008F3BC8 /* UserQueryStorageProvider.swift */; };
 		79246F9F6CE3D7240B9A33CC /* Pods_MagicBell.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D4ED1A7740032DA6209723F /* Pods_MagicBell.framework */; };
 		D2153EE5274E4679009C2DDC /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2153EE4274E4679009C2DDC /* LoginInteractor.swift */; };
 		D2153EE7274E4683009C2DDC /* LogoutInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2153EE6274E4683009C2DDC /* LogoutInteractor.swift */; };
@@ -145,7 +144,6 @@
 		59F45978275A434A008F3BC8 /* StoreRealTimeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRealTimeProvider.swift; sourceTree = "<group>"; };
 		59F4597A275A48AD008F3BC8 /* StoreRealTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRealTime.swift; sourceTree = "<group>"; };
 		59F4597C275A50FD008F3BC8 /* UserQueryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserQueryProvider.swift; sourceTree = "<group>"; };
-		59F4597E275A52DB008F3BC8 /* UserQueryStorageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserQueryStorageProvider.swift; sourceTree = "<group>"; };
 		7D4ED1A7740032DA6209723F /* Pods_MagicBell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MagicBell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81C27FF31812D07F0A77CA5D /* Pods-MagicBell.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell.debug.xcconfig"; path = "Target Support Files/Pods-MagicBell/Pods-MagicBell.debug.xcconfig"; sourceTree = "<group>"; };
 		D2153EE4274E4679009C2DDC /* LoginInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInteractor.swift; sourceTree = "<group>"; };
@@ -381,7 +379,6 @@
 			children = (
 				59C3CDBD274D2BDB0043BA77 /* UserProvider.swift */,
 				59F4597C275A50FD008F3BC8 /* UserQueryProvider.swift */,
-				59F4597E275A52DB008F3BC8 /* UserQueryStorageProvider.swift */,
 				D2153EE3274E465F009C2DDC /* Interactors */,
 			);
 			path = User;
@@ -738,7 +735,6 @@
 				59569BB22750EEDF00FF1AA6 /* StoreGraphQLRepresentableExtensions.swift in Sources */,
 				D2CBA52727512518002F1E44 /* CursorPredicate.swift in Sources */,
 				59799E552746604F00BFB375 /* Config.swift in Sources */,
-				59F4597F275A52DB008F3BC8 /* UserQueryStorageProvider.swift in Sources */,
 				59F459702758CC25008F3BC8 /* DeleteNotificationInteractor.swift in Sources */,
 				59569BAE274F82F100FF1AA6 /* StoreProvider.swift in Sources */,
 				D2CBA53127513747002F1E44 /* StoreContext.swift in Sources */,

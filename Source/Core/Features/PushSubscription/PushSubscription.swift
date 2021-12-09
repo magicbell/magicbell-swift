@@ -8,8 +8,11 @@
 import Foundation
 
 public struct PushSubscription: Codable {
+    static let platformIOS = "ios"
+    
     public let id: String?
-    public let deviceToken, platform: String
+    public let deviceToken: String
+    public let platform: String
 
     public init(id: String? = nil, deviceToken: String, platform: String) {
         self.id = id

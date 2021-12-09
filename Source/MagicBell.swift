@@ -15,25 +15,23 @@ let magicBellTag = "MagicBell"
 ///
 public class MagicBell {
 
-    // TODO: Replace with SDKProvider
-    // TODO: Make private (currently public for dev purposes)
-    public let sdkProvider: DefaultSDKModule
+    private let sdkProvider: SDKComponent
 
     /// Main initializer
     /// - Parameter environment: The enviroment used in the SDK.
-    private init(environment: Environment) {
+    private init(environment: Environment,
+                 logLevel: LogLevel) {
+        
         sdkProvider = DefaultSDKModule(
             environment: environment,
-            logger: DeviceConsoleLogger()
+            logLevel: logLevel
         )
     }
 
     /// Pointer to the shared instance. Do not access this value. Instead, use the `shared` getter.
     private static var _instance: MagicBell?
 
-    // TODO: Make private (currently public for dev purposes)
-    /// Public access to the shared instance
-    public static var shared: MagicBell {
+    private static var shared: MagicBell {
         if let instance = _instance {
             return instance
         }
@@ -54,13 +52,15 @@ public class MagicBell {
     /// - Parameters:
     ///   - apiKey: The Api Key of your account
     ///   - apiSecret: The Api Secret of your account
+    ///   - enableHMAC: Enables HMAC authentication. Default to false.
     ///   - baseUrl: The base url of the api server. Default to api.magicbell.com.
-    ///   - enableHMAC: Enables HMAC authentication. Default to true.
+    ///   - logLevel: The log level accepts none or debug. Default to debug.
     public static func configure(
         apiKey: String,
-        apiSecret: String,
+        apiSecret: String? = nil,
+        enableHMAC: Bool = false,
         baseUrl: URL = defaultBaseUrl,
-        enableHMAC: Bool = true
+        logLevel: LogLevel = .debug
     ) {
         guard Thread.isMainThread else {
             fatalError("MagicBell.configure must be called from the main thread")
@@ -69,12 +69,15 @@ public class MagicBell {
         guard _instance == nil else {
             fatalError("MagicBell has already been initialized. MagicBell.configure can only be called once.")
         }
-        _instance = MagicBell(environment: Environment(
-            apiKey: apiKey,
-            apiSecret: apiSecret,
-            baseUrl: baseUrl,
-            isHMACEnabled: enableHMAC
-        ))
+        _instance = MagicBell(
+            environment: Environment(
+                apiKey: apiKey,
+                apiSecret: apiSecret,
+                baseUrl: baseUrl,
+                isHMACEnabled: enableHMAC
+            ),
+            logLevel: logLevel
+        )
     }
 
     /// User identification login.
@@ -123,5 +126,9 @@ public class MagicBell {
         let store = shared.sdkProvider.createStore(name: nil, predicate: predicate)
         shared.stores.append(store)
         return store
+    }
+
+    public static func setDeviceToken(deviceToken: String) {
+        shared.sdkProvider.getSendPushSubscriptionInteractor().execute(deviceTokenString: deviceToken)
     }
 }

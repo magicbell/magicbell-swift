@@ -9,7 +9,7 @@ import Foundation
 
 public struct Environment {
     let apiKey: String
-    let apiSecret: String
+    let apiSecret: String?
     let baseUrl: URL
     let isHMACEnabled: Bool
 }

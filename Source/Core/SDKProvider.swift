@@ -12,18 +12,18 @@ import Harmony
 protocol SDKComponent {
     func getLogger() -> Logger
     func getUserComponent() -> UserComponent
-    func createStore(name: String?, predicate: StorePredicate) throws -> NotificationStore
-    func getStoreDeviceTokenInteractor() -> StoreDeviceTokenInteractor
+    func createStore(name: String?, predicate: StorePredicate) -> NotificationStore
+    func getSendPushSubscriptionInteractor() -> SendPushSubscriptionInteractor
 }
 
-// TODO: Remove public
-public class DefaultSDKModule: SDKComponent {
+class DefaultSDKModule: SDKComponent {
     private let environment: Environment
     private let logger: Logger
 
-    init(environment: Environment, logger: Logger) {
+    init(environment: Environment,
+         logLevel: LogLevel) {
         self.environment = environment
-        self.logger = logger
+        self.logger = logLevel.obtainLogger()
     }
 
     private lazy var httpClient: HttpClient = DefaultHttpClient(
@@ -83,8 +83,8 @@ public class DefaultSDKModule: SDKComponent {
         return storeComponent.createStore(name: name, predicate: predicate)
     }
 
-    func getStoreDeviceTokenInteractor() -> StoreDeviceTokenInteractor {
-        return pushSubscriptionComponent.getStoreDeviceTokenInteractor()
+    func getSendPushSubscriptionInteractor() -> SendPushSubscriptionInteractor {
+        return pushSubscriptionComponent.getSendPushSubscriptionInteractor()
     }
 }
 

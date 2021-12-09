@@ -12,6 +12,7 @@
 		593883B2276036BC001D38FC /* DeviceTokenQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883B1276036BC001D38FC /* DeviceTokenQuery.swift */; };
 		593883B427603773001D38FC /* StoreDeviceTokenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883B327603773001D38FC /* StoreDeviceTokenInteractor.swift */; };
 		593883B727603B9B001D38FC /* DeletePushSubscriptionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883B627603B9B001D38FC /* DeletePushSubscriptionInteractor.swift */; };
+		593883BF2761EBA9001D38FC /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883BE2761EBA9001D38FC /* LogLevel.swift */; };
 		5953192E27561BA8006673E9 /* StorePredicateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953192D27561BA8006673E9 /* StorePredicateValidator.swift */; };
 		595319322756249A006673E9 /* StorePredicateValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595319312756249A006673E9 /* StorePredicateValidatorTests.swift */; };
 		59569B9A274F752100FF1AA6 /* StorePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569B99274F752100FF1AA6 /* StorePage.swift */; };
@@ -100,6 +101,7 @@
 		593883B1276036BC001D38FC /* DeviceTokenQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTokenQuery.swift; sourceTree = "<group>"; };
 		593883B327603773001D38FC /* StoreDeviceTokenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDeviceTokenInteractor.swift; sourceTree = "<group>"; };
 		593883B627603B9B001D38FC /* DeletePushSubscriptionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePushSubscriptionInteractor.swift; sourceTree = "<group>"; };
+		593883BE2761EBA9001D38FC /* LogLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogLevel.swift; sourceTree = "<group>"; };
 		5953192D27561BA8006673E9 /* StorePredicateValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePredicateValidator.swift; sourceTree = "<group>"; };
 		595319312756249A006673E9 /* StorePredicateValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePredicateValidatorTests.swift; sourceTree = "<group>"; };
 		59569B99274F752100FF1AA6 /* StorePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePage.swift; sourceTree = "<group>"; };
@@ -206,6 +208,14 @@
 			path = Interactor;
 			sourceTree = "<group>";
 		};
+		593883BD2761EB9E001D38FC /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				593883BE2761EBA9001D38FC /* LogLevel.swift */,
+			);
+			path = Logger;
+			sourceTree = "<group>";
+		};
 		59569BA9274F7DE400FF1AA6 /* Store */ = {
 			isa = PBXGroup;
 			children = (
@@ -279,6 +289,7 @@
 		59799E35274659B900BFB375 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				593883BD2761EB9E001D38FC /* Logger */,
 				59C12ED2274712F200311D24 /* Error */,
 				59799E3C27465B8800BFB375 /* Network */,
 				59799E39274659FB00BFB375 /* Query */,
@@ -749,6 +760,7 @@
 				D2CBA52D27512642002F1E44 /* GraphQLResponse.swift in Sources */,
 				59799E4727465F8F00BFB375 /* ConfigProvider.swift in Sources */,
 				59799E65274660AD00BFB375 /* UserPreferencesProvider.swift in Sources */,
+				593883BF2761EBA9001D38FC /* LogLevel.swift in Sources */,
 				59C3CDBE274D2BDB0043BA77 /* UserProvider.swift in Sources */,
 				593883B2276036BC001D38FC /* DeviceTokenQuery.swift in Sources */,
 				59799E67274660AD00BFB375 /* UserPreferences.swift in Sources */,

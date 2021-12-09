@@ -56,7 +56,12 @@ struct LoginInteractor {
             .then { pushSubscription in
                 logger.info(tag: magicBellTag, "Push subcription is created \(pushSubscription)")
             }.fail { error in
-                logger.info(tag: magicBellTag, "Push subcription couldn't be created \(error.localizedDescription)")
+                switch error {
+                case is CoreError.NotFound:
+                    break
+                default:
+                    logger.info(tag: magicBellTag, "Send device token failed: \(error)")
+                }
             }
     }
 }

@@ -21,10 +21,12 @@ class DefaultPushSubscriptionModule: PushSubscriptionComponent {
     private let executor: Executor
     private let logger: Logger
     
-    init(userQueryComponent: UserQueryComponent,
-         httpClient: HttpClient,
-         executor: Executor,
-         logger: Logger) {
+    init(
+        userQueryComponent: UserQueryComponent,
+        httpClient: HttpClient,
+        executor: Executor,
+        logger: Logger
+    ) {
         self.userQueryComponent = userQueryComponent
         self.httpClient = httpClient
         self.executor = executor
@@ -32,10 +34,14 @@ class DefaultPushSubscriptionModule: PushSubscriptionComponent {
     }
 
     func getSendPushSubscriptionInteractor() -> SendPushSubscriptionInteractor {
-        SendPushSubscriptionInteractor(executor: executor,
-                                       getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
-                                       getDeviceTokenInteractor: getDeviceTokenInteractor,
-                                       putPushSubscriptionInteractor: putPushSubscriptionInteractor)
+        SendPushSubscriptionInteractor(
+            executor: executor,
+            getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
+            getDeviceTokenInteractor: getDeviceTokenInteractor,
+            putPushSubscriptionInteractor: putPushSubscriptionInteractor,
+            storeDeviceTokenInteractor: getStoreDeviceTokenInteractor(),
+            logger: logger
+        )
     }
 
     // MARK: - Push subscription
@@ -45,23 +51,27 @@ class DefaultPushSubscriptionModule: PushSubscriptionComponent {
     }
     
     func getDeletePushSubscriptionInteractor() -> DeletePushSubscriptionInteractor {
-        DeletePushSubscriptionInteractor(executor: executor,
-                                         getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
-                                         getDeviceTokenInteractor: getDeviceTokenInteractor,
-                                         deletePushSubscriptionInteractor: pushSubscritionRepository.toDeleteByQueryInteractor(executor),
-                                         logger: logger)
+        DeletePushSubscriptionInteractor(
+            executor: executor,
+            getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
+            getDeviceTokenInteractor: getDeviceTokenInteractor,
+            deletePushSubscriptionInteractor: pushSubscritionRepository.toDeleteByQueryInteractor(executor),
+            logger: logger
+        )
     }
 
     private lazy var pushSubscritionRepository: AnyRepository<PushSubscription> = {
-        let pushSubscriptionNetworkDataSource = PushSubscriptionNetworkDataSource(httpClient: httpClient,
-                                                                                  mapper: DataToDecodableMapper<PushSubscription>())
+        let pushSubscriptionNetworkDataSource = PushSubscriptionNetworkDataSource(
+            httpClient: httpClient,
+            mapper: DataToDecodableMapper<PushSubscription>()
+        )
         let assemblePushSubscriptionDataSource = DataSourceAssembler(put: pushSubscriptionNetworkDataSource, delete: pushSubscriptionNetworkDataSource)
         return AnyRepository(SingleDataSourceRepository(assemblePushSubscriptionDataSource))
     }()
 
     // MARK: - Device token
 
-    private lazy var deviceTokenInMemoryRepository: AnyRepository<String> = AnyRepository(SingleDataSourceRepository(InMemoryDataSource()))
+    private lazy var deviceTokenInMemoryRepository = SingleDataSourceRepository(InMemoryDataSource<String>())
 
     func getStoreDeviceTokenInteractor() -> StoreDeviceTokenInteractor {
         StoreDeviceTokenInteractor(storeDeviceTokenInteractor: deviceTokenInMemoryRepository.toPutByQueryInteractor(executor))

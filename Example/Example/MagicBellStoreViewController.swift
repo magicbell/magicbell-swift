@@ -8,7 +8,8 @@
 import UIKit
 import MagicBell
 
-class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, UITableViewDelegate, UITableViewDataSource, NotificationStoreContentDelegate, NotificationStoreCountDelegate {
+class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, UITableViewDelegate, UITableViewDataSource,
+                                        NotificationStoreContentDelegate, NotificationStoreCountDelegate {
 
     private var isLoadingNextPage = false
 
@@ -47,16 +48,25 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         store.addCountObserver(self)
 
         unreadStore.addCountObserver(self)
+
+        MagicBell.setDeviceToken(deviceToken: "1234")
     }
 
+    // swiftlint:disable empty_count
     private func reloadStore() {
-        store.refresh { result in
-            switch result {
-            case .success:
-                self.tableView.reloadData()
-            case .failure(let error):
-                print(error)
+        if store.count == 0 {
+            store.refresh { result in
+                switch result {
+                case .success:
+                    self.tableView.reloadData()
+                    self.actionsItem.badgeNumber = self.store.unseenCount
+                case .failure(let error):
+                    print(error)
+                }
             }
+        } else {
+            tableView.reloadData()
+            actionsItem.badgeNumber = store.unseenCount
         }
     }
 
@@ -143,7 +153,9 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
 
     private func assignDelegateFor(predicate: StorePredicate) {
         store.removeContentObserver(self)
-        store.removeCountObserver(self)
+        if store !== unreadStore {
+            store.removeCountObserver(self)
+        }
         store = MagicBell.storeFor(predicate: predicate)
         store.addContentObserver(self)
         store.addCountObserver(self)
@@ -328,7 +340,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
 
     func store(_ store: NotificationStore, didChangeTotalCount count: Int) {
         if store === unreadStore {
-            print("New unread message for unread invisible store \(count)")
+            print("New unread message for unread invisible store. TotalCount: \(count)")
         } else {
             title = "Notifications - \(count)"
         }
@@ -336,16 +348,13 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
 
     func store(_ store: NotificationStore, didChangeUnreadCount count: Int) {
         if store === unreadStore {
-            print("New unread message for unread invisible store \(count)")
+            print("New unread message for unread invisible store. UnreadCount: \(count)")
         } else {
             print("Unread notification - \(count)")
         }
     }
 
     func store(_ store: NotificationStore, didChangeUnseenCount count: Int) {
-        if store === unreadStore {
-            return
-        }
         actionsItem.badgeNumber = count
     }
 }

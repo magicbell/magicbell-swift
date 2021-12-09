@@ -32,7 +32,9 @@ struct LogoutInteractor {
     func execute() {
         var error: Error?
         storeRealTime.stopListening()
-        deletePushSubscriptionInteractor.execute().result.get(error: &error)
+        deletePushSubscriptionInteractor.execute().then { _ in
+            logger.info(tag: magicBellTag, "Device token was unregistered succesfully")
+        }
         deleteUserQueryInteractor.execute()
         deleteUserConfigInteractor.execute().result.get(error: &error)
         assert(error == nil, "No error must be produced upon deleting user data.")

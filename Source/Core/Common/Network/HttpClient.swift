@@ -28,8 +28,9 @@ public class DefaultHttpClient: HttpClient {
 
         urlRequest.addValue(environment.apiKey, forHTTPHeaderField: "X-MAGICBELL-API-KEY")
 
-        if environment.isHMACEnabled {
-            addHMACHeader(environment.apiSecret, externalId, email, &urlRequest)
+        if environment.isHMACEnabled,
+           let apiSecret = environment.apiSecret {
+            addHMACHeader(apiSecret, externalId, email, &urlRequest)
         }
         addIdAndOrEmailHeader(externalId, email, &urlRequest)
 

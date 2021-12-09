@@ -9,19 +9,19 @@ import Harmony
 import Ably
 
 class AblyConnector: StoreRealTime {
-
+    
     private let tag = "AblyConnector"
-
+    
     private let getConfigInteractor: GetConfigInteractor
     private let userQueryInteractor: GetUserQueryInteractor
     private let environment: Environment
     private let logger: Logger
-
+    
     private(set) var status: StoreRealTimeStatus = .disconnected
     private var ablyClient: ARTRealtime?
-
+    
     private var observers = NSHashTable<AnyObject>.weakObjects()
-
+    
     internal init(getConfigInteractor: GetConfigInteractor,
                   userQueryInteractor: GetUserQueryInteractor,
                   environment: Environment,
@@ -31,29 +31,29 @@ class AblyConnector: StoreRealTime {
         self.environment = environment
         self.logger = logger
     }
-
+    
     private var reconnectionTimer: Timer?
-
+    
     func startListening() {
         if status == .disconnected {
             status = .connecting
             connect()
         }
     }
-
+    
     func stopListening() {
         disconnect()
         status = .disconnected
     }
-
+    
     func addObserver(_ store: StoreRealTimeObserver) {
         observers.add(store)
     }
-
+    
     func removeObserver(_ store: StoreRealTimeObserver) {
         observers.remove(store)
     }
-
+    
     private func connect() {
         do {
             ablyClient?.connection.close()
@@ -68,13 +68,13 @@ class AblyConnector: StoreRealTime {
                                                        externalId: userQuery.externalId,
                                                        email: userQuery.email)
                 options.authHeaders = headers
-
+                
                 // Establish connection
                 self.ablyClient = ARTRealtime(options: options)
-
+                
                 // Listening connection changes
                 self.startListenConnectionChanges()
-
+                
                 // Listening events
                 self.startListeningMessages(channel: config.channel)
             }
@@ -82,21 +82,22 @@ class AblyConnector: StoreRealTime {
             logger.info(tag: tag, "\(error)")
         }
     }
-
+    
     private func disconnect() {
         ablyClient?.connection.close()
         ablyClient = nil
         observers.removeAllObjects()
     }
-
+    
     private func generateAblyHeaders(apiKey: String,
-                                     apiSecret: String,
+                                     apiSecret: String?,
                                      isHMACEnabled: Bool,
                                      externalId: String?,
                                      email: String?) -> [String: String] {
-
+        
         var headers = ["X-MAGICBELL-API-KEY": apiKey]
-        if isHMACEnabled {
+        if let apiSecret = apiSecret,
+           isHMACEnabled {
             if let externalId = externalId {
                 let hmac = externalId.hmac(key: apiSecret)
                 headers["X-MAGICBELL-USER-HMAC"] = hmac
@@ -105,6 +106,7 @@ class AblyConnector: StoreRealTime {
                 headers["X-MAGICBELL-USER-HMAC"] = hmac
             }
         }
+        
         if let externalId = externalId {
             headers["X-MAGICBELL-USER-EXTERNAL-ID"] = externalId
         }
@@ -113,7 +115,7 @@ class AblyConnector: StoreRealTime {
         }
         return headers
     }
-
+    
     private func startListenConnectionChanges() {
         // Listen connection events
         self.ablyClient?.connection.on { stateChange in
@@ -140,19 +142,19 @@ class AblyConnector: StoreRealTime {
             }
         }
     }
-
+    
     private func startListeningMessages(channel: String) {
         let channel = ablyClient?.channels.get(channel)
         channel?.subscribe { message in
             self.processAblyMessage(message)
         }
     }
-
+    
     private func processAblyMessage(_ message: ARTMessage) {
         do {
             let ablyMessageProcessor = AblyMessageProcessor(logger: logger)
             let message = try ablyMessageProcessor.processAblyMessage(message)
-
+            
             switch message {
             case .new(let notificationId):
                 forEachObserver { $0.notifyNewNotification(id: notificationId) }
@@ -171,7 +173,7 @@ class AblyConnector: StoreRealTime {
             logger.info(tag: tag, error.localizedDescription)
         }
     }
-
+    
     private func forEachObserver(block: (StoreRealTimeObserver) -> Void) {
         observers.allObjects.forEach {
             if let storeRealTimeObserver = $0 as? StoreRealTimeObserver {

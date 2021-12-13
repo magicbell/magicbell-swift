@@ -30,6 +30,7 @@ This is the official MagicBell SDK for iOS. You can easily fetch, delete and cre
   s.resources = 'Source/**/*.graphql'
 
   s.dependency 'Harmony/Repository'
+  s.dependency 'Ably', '1.2.7'
 
   # s.resource_bundles = {
   #   'MagicBell' => ['MagicBell/Assets/*.png']

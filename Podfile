@@ -1,5 +1,6 @@
 # Uncomment the next line to define a global platform for your project
 platform :ios, '12.0'
+use_frameworks!
 
 target 'MagicBell' do
     project './MagicBell.xcodeproj'
@@ -7,6 +8,7 @@ target 'MagicBell' do
 
     # Pods for MagicBell
     pod 'Harmony/Repository'
+    pod 'Ably', '1.2.7', :modular_headers => true
 
 
     target 'MagicBellTests' do

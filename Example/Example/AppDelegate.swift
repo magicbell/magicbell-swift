@@ -7,6 +7,7 @@
 
 import UIKit
 import MagicBell
+import UserNotifications
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         MagicBell.configure(
             apiKey: "34ed17a8482e44c765d9e163015a8d586f0b3383",
-            apiSecret: "72c5cdbba85d089d7f11ab090cb4c6773cbafaa8"
+            apiSecret: "72c5cdbba85d089d7f11ab090cb4c6773cbafaa8",
+            logLevel: .debug
         )
 
         MagicBell.login(email: "javier@mobilejazz.com")
@@ -37,5 +39,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running,
         // this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+    }
+
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        // Storing device token when refreshed
+        MagicBell.setDeviceToken(deviceToken: deviceToken)
     }
 }

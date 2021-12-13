@@ -128,6 +128,14 @@ public class MagicBell {
         return store
     }
 
+    /// Deletes a notification store for the given predicate if exists.
+    /// - Parameters:
+    ///    - predicate: Notification store's predicate.
+    public static func deleteStoreWith(predicate: StorePredicate) {
+        if let storeIndex = shared.stores.firstIndex(where: { $0.predicate.hashValue == predicate.hashValue }) {
+            shared.stores.remove(at: storeIndex)
+        }
+    }
 
     /// Sets the APN token for the current logged user. This token is revoked when logout is called. Once the user is registered from the notification, `didRegisterForRemoteNotificationsWithDeviceToken` is being called, retrieve the token and call setDeviceToken.
     /// - Parameters:

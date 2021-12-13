@@ -14,6 +14,8 @@ protocol SDKComponent {
     func getUserComponent() -> UserComponent
     func createStore(name: String?, predicate: StorePredicate) -> NotificationStore
     func getSendPushSubscriptionInteractor() -> SendPushSubscriptionInteractor
+    func getUserPreferencesInteractor() -> GetUserPreferencesInteractor
+    func updateUserPreferencesInteractor() -> UpdateUserPreferencesInteractor
 }
 
 class DefaultSDKModule: SDKComponent {
@@ -49,8 +51,9 @@ class DefaultSDKModule: SDKComponent {
         executor: executorComponent.mainExecutor
     )
 
-    // TODO: Remove public and make it private
-    public lazy var userPreferencesComponent: UserPreferencesComponent = DefaultUserPreferencesModule(httpClient: httpClient)
+    private lazy var userPreferencesComponent: UserPreferencesComponent = DefaultUserPreferencesModule(httpClient: httpClient,
+                                                                                                      executor: executorComponent.mainExecutor,
+                                                                                                      userQueryComponent: userQueryComponent)
     private lazy var notificationComponent: NotificationComponent = DefaultNotificationComponent(httpClient: httpClient,
                                                                                                  executor: executorComponent.mainExecutor,
                                                                                                  userQueryComponent: userQueryComponent)
@@ -85,6 +88,14 @@ class DefaultSDKModule: SDKComponent {
 
     func getSendPushSubscriptionInteractor() -> SendPushSubscriptionInteractor {
         return pushSubscriptionComponent.getSendPushSubscriptionInteractor()
+    }
+
+    func getUserPreferencesInteractor() -> GetUserPreferencesInteractor {
+        return userPreferencesComponent.getGetUserPreferencesInteractor()
+    }
+
+    func updateUserPreferencesInteractor() -> UpdateUserPreferencesInteractor {
+        return userPreferencesComponent.getUpdateUserPreferencesInteractor()
     }
 }
 

@@ -128,7 +128,40 @@ public class MagicBell {
         return store
     }
 
+
+    /// Sets the APN token for the current logged user. This token is revoked when logout is called. Once the user is registered from the notification, `didRegisterForRemoteNotificationsWithDeviceToken` is being called, retrieve the token and call setDeviceToken.
+    /// - Parameters:
+    ///     - deviceToken: String from the `didRegisterForRemoteNotificationsWithDeviceToken` AppDelegate method.
     public static func setDeviceToken(deviceToken: String) {
         shared.sdkProvider.getSendPushSubscriptionInteractor().execute(deviceTokenString: deviceToken)
+    }
+
+    /// Returns a dictionary with each category and notification preferences. Each category has four different channels: email, inApp, mobile push and web push.
+    /// - Parameters:
+    ///     - completion: Closure with a `Result`. Success returns the `UserPreferences`.
+    public static func obtainUserPreferences(completion: @escaping(Result<UserPreferences, Error>) -> Void) {
+        shared.sdkProvider.getUserPreferencesInteractor().execute().then { userPreferences in
+            completion(.success(userPreferences))
+        }.fail { error in
+            completion(.failure(error))
+        }
+    }
+
+    /// Updates all the user preferences.
+    /// - Parameters:
+    ///     - completion: Closure with a `Result`. Success returns the `UserPreferences`.
+    public static func updateUserPreferences(_ userPreferences: UserPreferences, completion: @escaping(Result<UserPreferences, Error>) -> Void) {
+        shared.sdkProvider.updateUserPreferencesInteractor().execute(userPreferences: userPreferences).then { userPreferences in
+            completion(.success(userPreferences))
+        }.fail { error in
+            completion(.failure(error))
+        }
+    }
+
+    /// Updates preferences for a specific category.
+    /// - Parameters:
+    ///     - completion: Closure with a `Result`. Success returns the `UserPreferences`.
+    public static func updateNotificationPreferences(_ preferences: Preferences, for category: String, completion: @escaping(Result<UserPreferences, Error>) -> Void) {
+        updateUserPreferences(UserPreferences(categories: [category: preferences]), completion: completion)
     }
 }

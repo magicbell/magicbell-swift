@@ -2,42 +2,33 @@
 //  UserPreferences.swift
 //  MagicBell
 //
-//  Created by Javi on 17/11/21.
+//  Created by Javi on 9/12/21.
 //
 
 import Foundation
 
-public struct UserPreferences: Codable {
-    public var notificationPreferences: NotificationPreferences?
+public class UserPreferences {
+    public private (set) var preferences: [String: Preferences]
 
-    enum CodingKeys: String, CodingKey {
-        case notificationPreferences = "notification_preferences"
+    public func availableNotificationPreferences() -> [String] {
+        Array(preferences.keys)
+    }
+
+    init(categories: [String: Preferences]) {
+        self.preferences = categories
     }
 }
 
-public struct NotificationPreferences: Codable {
-    public var categories: [String: Category]?
+public class Preferences {
+    public var email: Bool
+    public var inApp: Bool
+    public var mobilePush: Bool
+    public var webPush: Bool
 
-    enum CodingKeys: String, CodingKey {
-        case categories
-    }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        categories = try container.decode([String: Category].self, forKey: .categories)
-    }
-}
-
-public struct Category: Codable {
-    public var email: Bool?
-    public var inApp: Bool?
-    public var mobilePush: Bool?
-    public var webPush: Bool?
-
-    enum CodingKeys: String, CodingKey {
-        case email
-        case inApp = "in_app"
-        case mobilePush = "mobile_push"
-        case webPush = "web_push"
+    init(email: Bool, inApp: Bool, mobilePush: Bool, webPush: Bool) {
+        self.email = email
+        self.inApp = inApp
+        self.mobilePush = mobilePush
+        self.webPush = webPush
     }
 }

@@ -10,17 +10,17 @@ import Harmony
 
 public class UserPreferencesNetworkDataSource: GetDataSource, PutDataSource {
 
-    public typealias T = UserPreferences
+    public typealias T = UserPreferencesEntity
 
     private let httpClient: HttpClient
-    private let mapper: Mapper<Data, UserPreferences>
+    private let mapper: Mapper<Data, UserPreferencesEntity>
 
-    public init(httpClient: HttpClient, mapper: Mapper<Data, UserPreferences>) {
+    public init(httpClient: HttpClient, mapper: Mapper<Data, UserPreferencesEntity>) {
         self.httpClient = httpClient
         self.mapper = mapper
     }
 
-    public func get(_ query: Query) -> Future<UserPreferences> {
+    public func get(_ query: Query) -> Future<UserPreferencesEntity> {
         switch query {
         case let userQuery as UserQuery:
             let urlRequest = self.httpClient.prepareURLRequest(
@@ -36,11 +36,11 @@ public class UserPreferencesNetworkDataSource: GetDataSource, PutDataSource {
         }
     }
 
-    public func getAll(_ query: Query) -> Future<[UserPreferences]> {
+    public func getAll(_ query: Query) -> Future<[UserPreferencesEntity]> {
         query.fatalError(.getAll, self)
     }
 
-    public func put(_ value: UserPreferences?, in query: Query) -> Future<UserPreferences> {
+    public func put(_ value: UserPreferencesEntity?, in query: Query) -> Future<UserPreferencesEntity> {
         switch query {
         case let userQuery as UserQuery:
             guard let value = value else {
@@ -67,7 +67,7 @@ public class UserPreferencesNetworkDataSource: GetDataSource, PutDataSource {
         }
     }
 
-    public func putAll(_ array: [UserPreferences], in query: Query) -> Future<[UserPreferences]> {
+    public func putAll(_ array: [UserPreferencesEntity], in query: Query) -> Future<[UserPreferencesEntity]> {
         query.fatalError(.putAll, self)
     }
 }

@@ -9,10 +9,15 @@ import Harmony
 
 class UserPreferencesEntityToUserPreferencesMapper: Mapper<UserPreferencesEntity, UserPreferences> {
     override func map(_ from: UserPreferencesEntity) throws -> UserPreferences {
-
+        
         if let preferencesEntity = from.preferences {
-            let categories = Dictionary(uniqueKeysWithValues:
-                                        preferencesEntity.map { key, value in (key, Preferences(email: value.email, inApp: value.inApp, mobilePush: value.mobilePush, webPush: value.webPush)) })
+            let categories = Dictionary(uniqueKeysWithValues: preferencesEntity.map { key, value in
+                (key,
+                 Preferences(email: value.email,
+                             inApp: value.inApp,
+                             mobilePush: value.mobilePush,
+                             webPush: value.webPush))
+            })
             return UserPreferences(categories: categories)
         } else {
             return UserPreferences(categories: [:])

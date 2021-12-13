@@ -62,10 +62,8 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
                     switch result {
                     case .success(let userPreferences):
                         print(userPreferences)
-
                     case .failure(let error):
                         print(error)
-
                     }
                 }
             case .failure(let error):

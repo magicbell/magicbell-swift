@@ -27,11 +27,11 @@ public struct UserPreferencesEntity: Codable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: ContainerKeys.self)
-        var values =  container.nestedContainer(keyedBy: CodingKeys.self, forKey: .notificationPreferences)
+        var values = container.nestedContainer(keyedBy: CodingKeys.self, forKey: .notificationPreferences)
         try values.encode(preferences, forKey: .categories)
     }
 
-    init(preferences: [String : PreferencesEntity]? = nil) {
+    init(preferences: [String: PreferencesEntity]) {
         self.preferences = preferences
     }
 }

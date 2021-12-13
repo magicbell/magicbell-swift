@@ -24,6 +24,7 @@ protocol StoreRealTimeObserver: AnyObject {
     func notifyNotificationChange(id: String, change: NotificationChange)
     func notifyAllNotificationRead()
     func notifyAllNotificationSeen()
+    func notifyReloadStore()
 }
 
 enum NotificationChange {

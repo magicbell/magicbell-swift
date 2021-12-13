@@ -411,6 +411,12 @@ public class NotificationStore: StoreRealTimeObserver {
         }
     }
 
+    func notifyReloadStore() {
+        refresh { _ in
+            self.forEachContentObserver { $0.didReloadStore(self) }
+        }
+    }
+
     // MARK: - Notification modification function
 
     private func markNotificationAsRead( _ notification: inout Notification, with predicate: StorePredicate) {

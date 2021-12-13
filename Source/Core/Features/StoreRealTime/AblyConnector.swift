@@ -18,6 +18,7 @@ class AblyConnector: StoreRealTime {
     private let logger: Logger
     
     private(set) var status: StoreRealTimeStatus = .disconnected
+    private var reloadStore = false
     private var ablyClient: ARTRealtime?
     
     private var observers = NSHashTable<AnyObject>.weakObjects()
@@ -125,6 +126,9 @@ class AblyConnector: StoreRealTime {
             case .initialized, .connecting:
                 break
             case .connected:
+                if self.reloadStore {
+                    self.forEachObserver { $0.notifyReloadStore() }
+                }
                 self.status = .connected
             case .disconnected:
                 self.status = .connecting
@@ -133,6 +137,7 @@ class AblyConnector: StoreRealTime {
                 self.status = .connecting
                 self.logger.info(tag: self.tag, "Ably is suspended. Retrying every 30 seconds.")
             case .closed:
+                self.reloadStore = true
                 if self.status != .disconnected {
                     self.status = .connecting
                     self.connect()

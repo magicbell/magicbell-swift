@@ -10,7 +10,7 @@ import Harmony
 
 protocol PushSubscriptionComponent {
     func getDeletePushSubscriptionInteractor() -> DeletePushSubscriptionInteractor
-    func getStoreDeviceTokenInteractor() -> StoreDeviceTokenInteractor
+    func getSaveDeviceTokenInteractor() -> SaveDeviceTokenInteractor
     func getSendPushSubscriptionInteractor() -> SendPushSubscriptionInteractor
 }
 
@@ -39,7 +39,6 @@ class DefaultPushSubscriptionModule: PushSubscriptionComponent {
             getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
             getDeviceTokenInteractor: getDeviceTokenInteractor,
             putPushSubscriptionInteractor: putPushSubscriptionInteractor,
-            storeDeviceTokenInteractor: getStoreDeviceTokenInteractor(),
             logger: logger
         )
     }
@@ -73,8 +72,8 @@ class DefaultPushSubscriptionModule: PushSubscriptionComponent {
 
     private lazy var deviceTokenInMemoryRepository = SingleDataSourceRepository(InMemoryDataSource<String>())
 
-    func getStoreDeviceTokenInteractor() -> StoreDeviceTokenInteractor {
-        StoreDeviceTokenInteractor(storeDeviceTokenInteractor: deviceTokenInMemoryRepository.toPutByQueryInteractor(executor))
+    func getSaveDeviceTokenInteractor() -> SaveDeviceTokenInteractor {
+        SaveDeviceTokenInteractor(saveDeviceTokenInteractor: deviceTokenInMemoryRepository.toPutByQueryInteractor(executor))
     }
 
     private var getDeviceTokenInteractor: Interactor.GetByQuery<String> {

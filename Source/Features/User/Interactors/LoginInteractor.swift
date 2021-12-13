@@ -47,8 +47,8 @@ struct LoginInteractor {
         getUserConfigInteractor
             .execute(forceRefresh: false, userQuery: userQuery)
             .then { _ in
-                logger.info(tag: magicBellTag, "User config successfully retrieved upon login")
-                storeRealTime.startListening()
+                self.logger.info(tag: magicBellTag, "User config successfully retrieved upon login")
+                self.storeRealTime.startListening()
             }
 
         sendPushSubscriptionInteractor
@@ -58,6 +58,7 @@ struct LoginInteractor {
             }.fail { error in
                 switch error {
                 case is CoreError.NotFound:
+                    // Nothing to be done. Token might not exist yet.
                     break
                 default:
                     logger.info(tag: magicBellTag, "Send device token failed: \(error)")

@@ -18,9 +18,9 @@ class UserPreferencesEntityToUserPreferencesMapper: Mapper<UserPreferencesEntity
                              mobilePush: value.mobilePush,
                              webPush: value.webPush))
             })
-            return UserPreferences(categories: categories)
+            return UserPreferences(categories)
         } else {
-            return UserPreferences(categories: [:])
+            return UserPreferences([:])
         }
     }
 }

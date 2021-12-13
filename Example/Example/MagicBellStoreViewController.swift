@@ -46,30 +46,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
 
         store.addContentObserver(self)
         store.addCountObserver(self)
-
         unreadStore.addCountObserver(self)
-
-        MagicBell.setDeviceToken(deviceToken: "1234")
-
-        MagicBell.obtainUserPreferences { result in
-            switch result {
-            case .success(let userPreferences):
-                userPreferences.availableNotificationPreferences().forEach { notificationPreferences in
-                    userPreferences.preferences[notificationPreferences]?.webPush = false
-                }
-
-                MagicBell.updateUserPreferences(userPreferences) { result in
-                    switch result {
-                    case .success(let userPreferences):
-                        print(userPreferences)
-                    case .failure(let error):
-                        print(error)
-                    }
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
     }
 
     // swiftlint:disable empty_count

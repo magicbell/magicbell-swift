@@ -23,7 +23,7 @@ struct UpdateUserPreferencesInteractor {
         self.updateUserPreferencesInteractor = updateUserPreferencesInteractor
     }
 
-    func execute(userPreferences: UserPreferences) -> Future<UserPreferences> {
+    func execute(_ userPreferences: UserPreferences) -> Future<UserPreferences> {
         return executor.submit { resolver in
             let userQuery = try getUserQueryInteractor.execute()
             resolver.set(updateUserPreferencesInteractor.execute(userPreferences, query: userQuery, in: DirectExecutor()))

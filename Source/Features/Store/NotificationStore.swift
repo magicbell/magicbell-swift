@@ -7,20 +7,6 @@
 
 import Harmony
 
-
-public protocol NotificationStoreContentDelegate: AnyObject {
-    func didReloadStore(_ store: NotificationStore)
-    func store(_ store: NotificationStore, didInsertNotificationsAt indexes: [Int])
-    func store(_ store: NotificationStore, didChangeNotificationAt indexes: [Int])
-    func store(_ store: NotificationStore, didDeleteNotificationAt indexes: [Int])
-}
-
-public protocol NotificationStoreCountDelegate: AnyObject {
-    func store(_ store: NotificationStore, didChangeTotalCount count: Int)
-    func store(_ store: NotificationStore, didChangeUnreadCount count: Int)
-    func store(_ store: NotificationStore, didChangeUnseenCount count: Int)
-}
-
 public class NotificationStore: StoreRealTimeObserver {
 
     private let pageSize = 20
@@ -335,6 +321,18 @@ public class NotificationStore: StoreRealTimeObserver {
         unseenCount = page.unseenCount
     }
 
+    private func refreshAndNotifyObservers() {
+        refresh { result in
+            switch result {
+            case .success:
+                self.forEachContentObserver { $0.didReloadStore(self) }
+            case .failure:
+                // Do nothing. If error, we just not notify observers as nothing could be refreshed.
+                break
+            }
+        }
+    }
+
     // MARK: - Observer methods
     func notifyNewNotification(id: String) {
         /**
@@ -342,9 +340,7 @@ public class NotificationStore: StoreRealTimeObserver {
 
          Now, we just refresh all the store.
          */
-        refresh { _ in
-            self.forEachContentObserver { $0.didReloadStore(self) }
-        }
+        refreshAndNotifyObservers()
     }
 
     func notifyDeleteNotification(id: String) {
@@ -381,18 +377,14 @@ public class NotificationStore: StoreRealTimeObserver {
 
              Now, we just refresh the store with the predicate.
              */
-            refresh { _ in
-                self.forEachContentObserver { $0.didReloadStore(self) }
-            }
+            refreshAndNotifyObservers()
         }
     }
 
     func notifyAllNotificationRead() {
         switch predicate.read {
         case .read, .unspecified:
-            refresh { _ in
-                self.forEachContentObserver { $0.didReloadStore(self) }
-            }
+            refreshAndNotifyObservers()
         case .unread:
             clear()
             self.forEachContentObserver { $0.didReloadStore(self) }
@@ -402,9 +394,7 @@ public class NotificationStore: StoreRealTimeObserver {
     func notifyAllNotificationSeen() {
         switch predicate.seen {
         case .seen, .unspecified:
-            refresh { _ in
-                self.forEachContentObserver { $0.didReloadStore(self) }
-            }
+            refreshAndNotifyObservers()
         case .unseen:
             clear()
             self.forEachContentObserver { $0.didReloadStore(self) }
@@ -412,9 +402,7 @@ public class NotificationStore: StoreRealTimeObserver {
     }
 
     func notifyReloadStore() {
-        refresh { _ in
-            self.forEachContentObserver { $0.didReloadStore(self) }
-        }
+        refreshAndNotifyObservers()
     }
 
     // MARK: - Notification modification function

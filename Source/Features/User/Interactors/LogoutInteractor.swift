@@ -30,14 +30,21 @@ struct LogoutInteractor {
     }
 
     func execute() {
-        var error: Error?
         storeRealTime.stopListening()
-        deletePushSubscriptionInteractor.execute().then { _ in
-            logger.info(tag: magicBellTag, "Device token was unregistered succesfully")
-        }
+        deletePushSubscriptionInteractor.execute()
+            .then { _ in
+                logger.info(tag: magicBellTag, "Device token was unregistered succesfully")
+            }.fail { error in
+                logger.error(tag: magicBellTag, "Device token couldn't be unregistered: \(error)")
+            }
         deleteUserQueryInteractor.execute()
-        deleteUserConfigInteractor.execute().result.get(error: &error)
-        assert(error == nil, "No error must be produced upon deleting user data.")
+        deleteUserConfigInteractor.execute()
+            .then { _ in
+                logger.info(tag: magicBellTag, "UserConfig was deleted succesfully.")
+            }.fail { error in
+                assertionFailure("No error must be produced upon deleting user data.")
+                logger.error(tag: magicBellTag, "UserConfig couldn't be deleted: \(error)")
+            }
         logger.info(tag: magicBellTag, "User has been logged out from MagicBell.")
     }
 }

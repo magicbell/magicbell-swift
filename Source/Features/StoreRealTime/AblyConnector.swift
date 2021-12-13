@@ -18,7 +18,6 @@ class AblyConnector: StoreRealTime {
     private let logger: Logger
     
     private(set) var status: StoreRealTimeStatus = .disconnected
-    private var reloadStore = false
     private var ablyClient: ARTRealtime?
     
     private var observers = NSHashTable<AnyObject>.weakObjects()
@@ -59,42 +58,55 @@ class AblyConnector: StoreRealTime {
         do {
             ablyClient?.connection.close()
             let userQuery = try userQueryInteractor.execute()
-            getConfigInteractor.execute(forceRefresh: false, userQuery: userQuery).then { config in
-                let options = ARTClientOptions()
-                options.authUrl = URL(string: String(format: "%@/ws/auth", self.environment.baseUrl.absoluteString))
-                options.authMethod = "POST"
-                let headers = self.generateAblyHeaders(apiKey: self.environment.apiKey,
-                                                       apiSecret: self.environment.apiSecret,
-                                                       isHMACEnabled: self.environment.isHMACEnabled,
-                                                       externalId: userQuery.externalId,
-                                                       email: userQuery.email)
-                options.authHeaders = headers
-                
-                // Establish connection
-                self.ablyClient = ARTRealtime(options: options)
-                
-                // Listening connection changes
-                self.startListenConnectionChanges()
-                
-                // Listening events
-                self.startListeningMessages(channel: config.channel)
-            }
+            getConfigInteractor.execute(forceRefresh: false, userQuery: userQuery)
+                .then { config in
+                    let options = ARTClientOptions()
+                    options.authUrl = URL(string: String(format: "%@/ws/auth", self.environment.baseUrl.absoluteString))
+                    options.authMethod = "POST"
+                    let headers = self.generateAblyHeaders(apiKey: self.environment.apiKey,
+                                                           apiSecret: self.environment.apiSecret,
+                                                           isHMACEnabled: self.environment.isHMACEnabled,
+                                                           externalId: userQuery.externalId,
+                                                           email: userQuery.email)
+                    options.authHeaders = headers
+
+                    // Establish connection
+                    self.ablyClient = ARTRealtime(options: options)
+
+                    // Listening connection changes
+                    self.startListenConnectionChanges()
+
+                    // Listening events
+                    self.startListeningMessages(channel: config.channel)
+                }
+                .fail { error in
+                    self.logger.info(tag: self.tag, "User Config couldn't be retrieved. Attempting to fetch config and connect to ably in 30 seconds: \(error)")
+                    self.reconnectionTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: false) { _ in
+                        if self.status != .disconnected {
+                            self.connect()
+                        }
+                    }
+                }
         } catch {
             logger.info(tag: tag, "\(error)")
         }
     }
     
     private func disconnect() {
+        reconnectionTimer?.invalidate()
+        reconnectionTimer = nil
         ablyClient?.connection.close()
         ablyClient = nil
         observers.removeAllObjects()
     }
     
-    private func generateAblyHeaders(apiKey: String,
-                                     apiSecret: String?,
-                                     isHMACEnabled: Bool,
-                                     externalId: String?,
-                                     email: String?) -> [String: String] {
+    private func generateAblyHeaders(
+        apiKey: String,
+        apiSecret: String?,
+        isHMACEnabled: Bool,
+        externalId: String?,
+        email: String?
+    ) -> [String: String] {
         
         var headers = ["X-MAGICBELL-API-KEY": apiKey]
         if let apiSecret = apiSecret,
@@ -126,9 +138,6 @@ class AblyConnector: StoreRealTime {
             case .initialized, .connecting:
                 break
             case .connected:
-                if self.reloadStore {
-                    self.forEachObserver { $0.notifyReloadStore() }
-                }
                 self.status = .connected
             case .disconnected:
                 self.status = .connecting
@@ -137,8 +146,9 @@ class AblyConnector: StoreRealTime {
                 self.status = .connecting
                 self.logger.info(tag: self.tag, "Ably is suspended. Retrying every 30 seconds.")
             case .closed:
-                self.reloadStore = true
                 if self.status != .disconnected {
+                    // As ably connection cannot be stablished, notify stores to reload themselves to keep data in sync
+                    self.forEachObserver { $0.notifyReloadStore() }
                     self.status = .connecting
                     self.connect()
                 }

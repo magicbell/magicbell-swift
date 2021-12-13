@@ -14,7 +14,6 @@ protocol StoreComponent {
 }
 
 class DefaultStoreModule: StoreComponent {
-
     private let httpClient: HttpClient
     private let mainExecutor: Executor
     private let userQueryComponent: UserQueryComponent
@@ -54,21 +53,19 @@ class DefaultStoreModule: StoreComponent {
     }
 
     func createStore(name: String?, predicate: StorePredicate) -> NotificationStore {
-
-        let fetchStorePageInteractor = FetchStorePageInteractor(executor: mainExecutor,
-                                                                getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
-                                                                getStorePagesInteractor: getStorePagesInteractor())
-
-        let store = NotificationStore(name: name ?? UUID().uuidString,
-                                      predicate: predicate,
-                                      getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
-                                      fetchStorePageInteractor: fetchStorePageInteractor,
-                                      actionNotificationInteractor: notificationComponent.getActionNotificationInteractor(),
-                                      deleteNotificationInteractor: notificationComponent.getDeleteNotificationInteractor(),
-                                      logger: logger)
-
-        realTimeComponent.getStoreRealmTime().addObserver(store)
-
-        return store
+        let fetchStorePageInteractor = FetchStorePageInteractor(
+            executor: mainExecutor,
+            getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
+            getStorePagesInteractor: getStorePagesInteractor()
+        )
+        return NotificationStore(
+            name: name ?? UUID().uuidString,
+            predicate: predicate,
+            getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
+            fetchStorePageInteractor: fetchStorePageInteractor,
+            actionNotificationInteractor: notificationComponent.getActionNotificationInteractor(),
+            deleteNotificationInteractor: notificationComponent.getDeleteNotificationInteractor(),
+            logger: logger
+        )
     }
 }

@@ -32,12 +32,14 @@ public class UserPreferencesNetworkDataSource: GetDataSource, PutDataSource {
                 .performRequest(urlRequest)
                 .map { try self.mapper.map($0) }
         default:
-            query.fatalError(.get, self)
+            assertionFailure("Should never happen")
+            return Future(CoreError.NotImplemented())
         }
     }
 
     public func getAll(_ query: Query) -> Future<[UserPreferencesEntity]> {
-        query.fatalError(.getAll, self)
+        assertionFailure("Should never happen")
+        return Future(CoreError.NotImplemented())
     }
 
     public func put(_ value: UserPreferencesEntity?, in query: Query) -> Future<UserPreferencesEntity> {
@@ -63,11 +65,13 @@ public class UserPreferencesNetworkDataSource: GetDataSource, PutDataSource {
                 .performRequest(urlRequest)
                 .map { try self.mapper.map($0) }
         default:
-            query.fatalError(.get, self)
+            assertionFailure("Should never happen")
+            return Future(CoreError.NotImplemented())
         }
     }
 
     public func putAll(_ array: [UserPreferencesEntity], in query: Query) -> Future<[UserPreferencesEntity]> {
-        query.fatalError(.putAll, self)
+        assertionFailure("Should never happen")
+        return Future(CoreError.NotImplemented())
     }
 }

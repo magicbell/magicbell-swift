@@ -42,12 +42,14 @@ class PushSubscriptionNetworkDataSource: PutDataSource, DeleteDataSource {
                 .performRequest(urlRequest)
                 .map { try self.mapper.map($0) }
         default:
-            query.fatalError(.put, self)
+            assertionFailure("Should never happen")
+            return Future(CoreError.NotImplemented())
         }
     }
 
     func putAll(_ array: [PushSubscription], in query: Query) -> Future<[PushSubscription]> {
-        query.fatalError(.putAll, self)
+        assertionFailure("Should never happen")
+        return Future(CoreError.NotImplemented())
     }
 
     public func delete(_ query: Query) -> Future<Void> {
@@ -64,11 +66,13 @@ class PushSubscriptionNetworkDataSource: PutDataSource, DeleteDataSource {
                 .performRequest(urlRequest)
                 .map { _ in Void() }
         default:
-            query.fatalError(.delete, self)
+            assertionFailure("Should never happen")
+            return Future(CoreError.NotImplemented())
         }
     }
 
     func deleteAll(_ query: Query) -> Future<Void> {
-        query.fatalError(.deleteAll, self)
+        assertionFailure("Should never happen")
+        return Future(CoreError.NotImplemented())
     }
 }

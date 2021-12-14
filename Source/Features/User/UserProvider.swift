@@ -42,7 +42,6 @@ class DefaultUserComponent: UserComponent {
             logger: logger,
             getUserConfig: configComponent.getGetConfigInteractor(),
             storeUserQuery: userQueryComponent.getStoreUserQueryInteractor(),
-            storeRealTime: storeRealTimeComponent.getStoreRealmTime(),
             sendPushSubscriptionInteractor: pushSubscriptionComponent.getSendPushSubscriptionInteractor()
         )
     }
@@ -51,7 +50,6 @@ class DefaultUserComponent: UserComponent {
         return LogoutInteractor(
             deleteUserConfig: configComponent.getDeleteConfigInteractor(),
             deleteUserQuery: userQueryComponent.getDeleteUserQueryInteractor(),
-            storeRealTime: storeRealTimeComponent.getStoreRealmTime(),
             deletePushSubscriptionInteractor: pushSubscriptionComponent.getDeletePushSubscriptionInteractor(),
             logger: logger
         )

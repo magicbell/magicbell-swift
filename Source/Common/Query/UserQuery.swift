@@ -8,32 +8,26 @@
 import Foundation
 import Harmony
 
-public class UserQuery: KeyQuery {
+class UserQuery: KeyQuery {
     let externalId: String?
     let email: String?
+    let key: String
 
-    public init(externalId: String, email: String) {
+    init(externalId: String, email: String) {
         self.externalId = externalId
         self.email = email
+        self.key = externalId
     }
 
-    public init(externalId: String) {
+    init(externalId: String) {
         self.externalId = externalId
-        email = nil
+        self.email = nil
+        self.key = externalId
     }
 
-    public init(email: String) {
-        externalId = nil
+    init(email: String) {
+        self.externalId = nil
         self.email = email
-    }
-
-    public var key: String {
-        if let externalId = externalId {
-            return externalId
-        } else if let email = email {
-            return email
-        } else {
-            Swift.fatalError("should never happen")
-        }
+        self.key = email
     }
 }

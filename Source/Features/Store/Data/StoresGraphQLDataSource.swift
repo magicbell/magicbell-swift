@@ -46,11 +46,13 @@ class StoresGraphQLDataSource: GetDataSource {
                         try self.mapper.map($0).response
                     }
         default:
-            query.fatalError(.get, self)
+            assertionFailure("Should never happen")
+            return Future(CoreError.NotImplemented())
         }
     }
 
     public func getAll(_ query: Query) -> Future<[[String: StorePage]]> {
-        query.fatalError(.getAll, self)
+        assertionFailure("Should never happen")
+        return Future(CoreError.NotImplemented())
     }
 }

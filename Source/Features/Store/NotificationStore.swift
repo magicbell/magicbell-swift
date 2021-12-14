@@ -11,14 +11,16 @@ public class NotificationStore: StoreRealTimeObserver {
 
     private let pageSize = 20
 
-    private let getUserQueryInteractor: GetUserQueryInteractor
     private let fetchStorePageInteractor: FetchStorePageInteractor
     private let actionNotificationInteractor: ActionNotificationInteractor
     private let deleteNotificationInteractor: DeleteNotificationInteractor
 
     public let name: String
     public let predicate: StorePredicate
+
+    private let userQuery: UserQuery
     private var edges: [Edge<Notification>] = []
+
     public private(set) var totalCount: Int = 0 {
         didSet {
             if oldValue != totalCount {
@@ -45,19 +47,17 @@ public class NotificationStore: StoreRealTimeObserver {
 
     private var nextPageCursor: String?
     public private(set) var hasNextPage = true
-
-    init(
-        name: String,
-        predicate: StorePredicate,
-        getUserQueryInteractor: GetUserQueryInteractor,
-        fetchStorePageInteractor: FetchStorePageInteractor,
-        actionNotificationInteractor: ActionNotificationInteractor,
-        deleteNotificationInteractor: DeleteNotificationInteractor,
-        logger: Logger
-    ) {
+    
+    init(name: String,
+         predicate: StorePredicate,
+         userQuery: UserQuery,
+         fetchStorePageInteractor: FetchStorePageInteractor,
+         actionNotificationInteractor: ActionNotificationInteractor,
+         deleteNotificationInteractor: DeleteNotificationInteractor,
+         logger: Logger) {
         self.name = name
         self.predicate = predicate
-        self.getUserQueryInteractor = getUserQueryInteractor
+        self.userQuery = userQuery
         self.fetchStorePageInteractor = fetchStorePageInteractor
         self.actionNotificationInteractor = actionNotificationInteractor
         self.deleteNotificationInteractor = deleteNotificationInteractor
@@ -80,7 +80,7 @@ public class NotificationStore: StoreRealTimeObserver {
     ///    - completion: Closure with a `Result<[Notification], Error>`
     public func refresh(completion: @escaping (Result<[Notification], Error>) -> Void) {
         let cursorPredicate = CursorPredicate(size: pageSize)
-        fetchStorePageInteractor.execute(storePredicate: predicate, cursorPredicate: cursorPredicate)
+        fetchStorePageInteractor.execute(storePredicate: predicate, userQuery: userQuery, cursorPredicate: cursorPredicate)
             .then { storePage in
                 self.clear()
                 self.configurePagination(storePage)
@@ -111,7 +111,7 @@ public class NotificationStore: StoreRealTimeObserver {
                 return CursorPredicate(size: pageSize)
             }
         }()
-        fetchStorePageInteractor.execute(storePredicate: predicate, cursorPredicate: cursorPredicate)
+        fetchStorePageInteractor.execute(storePredicate: predicate, userQuery: userQuery, cursorPredicate: cursorPredicate)
             .then { storePage in
                 self.configurePagination(storePage)
                 self.configureCount(storePage)
@@ -153,7 +153,8 @@ public class NotificationStore: StoreRealTimeObserver {
     ///    - notification: Notification will be removed.
     ///    - completion: Closure with a `Error`. Success if error is nil.
     public func delete(_ notification: Notification, completion: @escaping (Error?) -> Void) {
-        deleteNotificationInteractor.execute(notificationId: notification.id)
+        deleteNotificationInteractor
+            .execute(notificationId: notification.id, userQuery: userQuery)
             .then { _ in
                 if let notificationIndex = self.edges.firstIndex(where: { $0.node.id == notification.id }) {
                     self.updateCountersWhenDelete(notification: self.edges[notificationIndex].node, predicate: self.predicate)
@@ -262,18 +263,20 @@ public class NotificationStore: StoreRealTimeObserver {
         completion: @escaping (Result<[Edge<Notification>], Error>) -> Void
     ) {
         let cursorPredicate = CursorPredicate(cursor: .previous(cursor), size: pageSize)
-        fetchStorePageInteractor.execute(storePredicate: predicate, cursorPredicate: cursorPredicate).then { storePage in
-            self.configureCount(storePage)
-            var tempNotification = notifications
-            tempNotification.insert(contentsOf: storePage.edges, at: 0)
-            if storePage.pageInfo.hasPreviousPage, let cursor = storePage.pageInfo.startCursor {
-                self.recursiveNewElements(cursor: cursor, notifications: tempNotification, completion: completion)
-            } else {
-                completion(.success(tempNotification))
+        fetchStorePageInteractor
+            .execute(storePredicate: predicate, userQuery: userQuery, cursorPredicate: cursorPredicate)
+            .then { storePage in
+                self.configureCount(storePage)
+                var tempNotification = notifications
+                tempNotification.insert(contentsOf: storePage.edges, at: 0)
+                if storePage.pageInfo.hasPreviousPage, let cursor = storePage.pageInfo.startCursor {
+                    self.recursiveNewElements(cursor: cursor, notifications: tempNotification, completion: completion)
+                } else {
+                    completion(.success(tempNotification))
+                }
+            }.fail { error in
+                completion(.failure(error))
             }
-        }.fail { error in
-            completion(.failure(error))
-        }
     }
 
     private func executeNotificationAction(
@@ -282,16 +285,18 @@ public class NotificationStore: StoreRealTimeObserver {
         modificationsBlock: @escaping (inout Notification) -> Void,
         completion: @escaping (Error?) -> Void
     ) {
-        actionNotificationInteractor.execute(action: action, notificationId: notification.id).then { _ in
-            if let notificationIndex = self.edges.firstIndex(where: { $0.node.id == notification.id }) {
-                modificationsBlock(&self.edges[notificationIndex].node)
-                completion(nil)
-            } else {
-                completion(MagicBellError("Notification not found in store"))
+        actionNotificationInteractor
+            .execute(action: action, userQuery: userQuery, notificationId: notification.id)
+            .then { _ in
+                if let notificationIndex = self.edges.firstIndex(where: { $0.node.id == notification.id }) {
+                    modificationsBlock(&self.edges[notificationIndex].node)
+                    completion(nil)
+                } else {
+                    completion(MagicBellError("Notification not found in store"))
+                }
+            }.fail { error in
+                completion(error)
             }
-        }.fail { error in
-            completion(error)
-        }
     }
 
     private func executeAllNotificationsAction(
@@ -299,14 +304,16 @@ public class NotificationStore: StoreRealTimeObserver {
         modificationsBlock: @escaping (inout Notification) -> Void,
         completion: @escaping (Error?) -> Void
     ) {
-        actionNotificationInteractor.execute(action: action).then { _ in
-            for i in self.edges.indices {
-                modificationsBlock(&self.edges[i].node)
+        actionNotificationInteractor
+            .execute(action: action, userQuery: userQuery)
+            .then { _ in
+                for i in self.edges.indices {
+                    modificationsBlock(&self.edges[i].node)
+                }
+                completion(nil)
+            }.fail { error in
+                completion(error)
             }
-            completion(nil)
-        }.fail { error in
-            completion(error)
-        }
     }
 
     private func configurePagination(_ page: StorePage) {
@@ -351,7 +358,7 @@ public class NotificationStore: StoreRealTimeObserver {
         }
     }
 
-    func notifyNotificationChange(id: String, change: NotificationChange) {
+    func notifyNotificationChange(id: String, change: StoreRealTimeNotificationChange) {
         if let storeIndex = edges.firstIndex(where: { $0.node.id == id }) {
             // If exist
             var notification = edges[storeIndex].node

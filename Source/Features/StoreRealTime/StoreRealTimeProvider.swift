@@ -8,7 +8,7 @@
 import Harmony
 
 protocol StoreRealTimeComponent {
-    func getStoreRealmTime() -> StoreRealTime
+    func createStoreRealmTime(userQuery: UserQuery) -> StoreRealTime
 }
 
 class DefaultStoreRealTimeModule: StoreRealTimeComponent {
@@ -27,16 +27,12 @@ class DefaultStoreRealTimeModule: StoreRealTimeComponent {
         self.logger = logger
     }
 
-    func getStoreRealmTime() -> StoreRealTime {
-        return ablyConnector
-    }
-
-    private lazy var ablyConnector: AblyConnector = {
+    func createStoreRealmTime(userQuery: UserQuery) -> StoreRealTime {
         return AblyConnector(
             getConfigInteractor: configComponent.getGetConfigInteractor(),
-            userQueryInteractor: userQueryComponent.getUserQueryInteractor(),
+            userQuery: userQuery,
             environment: environment,
             logger: logger
         )
-    }()
+    }
 }

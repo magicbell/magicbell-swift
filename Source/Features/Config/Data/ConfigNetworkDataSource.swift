@@ -32,11 +32,13 @@ public class ConfigNetworkDataSource: GetDataSource {
                 .performRequest(urlRequest)
                 .map { try self.mapper.map($0) }
         default:
-            query.fatalError(.get, self)
+            assertionFailure("Should never happen")
+            return Future(CoreError.NotImplemented())
         }
     }
 
     public func getAll(_ query: Query) -> Future<[Config]> {
-        query.fatalError(.getAll, self)
+        assertionFailure("Should never happen")
+        return Future(CoreError.NotImplemented())
     }
 }

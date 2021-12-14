@@ -7,19 +7,19 @@
 
 import Harmony
 
-public class RegisterPushSubscriptionQuery: Query {
-    public let user: UserQuery
+class RegisterPushSubscriptionQuery: Query {
+    let user: UserQuery
 
-    public init(user: UserQuery) {
+    init(user: UserQuery) {
         self.user = user
     }
 }
 
-public class DeletePushSubscriptionQuery: Query {
-    public let user: UserQuery
-    public let deviceToken: String
+class DeletePushSubscriptionQuery: Query {
+    let user: UserQuery
+    let deviceToken: String
 
-    public init(user: UserQuery, deviceToken: String) {
+    init(user: UserQuery, deviceToken: String) {
         self.user = user
         self.deviceToken = deviceToken
     }

@@ -18,9 +18,6 @@ struct StoreUserQueryInteractor {
         var error: Error?
         storeUserQueryInteractor
             .execute(userQuery, query: IdQuery("userQuery"), in: DirectExecutor())
-            .fail { error in
-                fatalError("Storing a userQuery should never fail: \(error)")
-            }
             .result.get(error: &error)
     }
 }

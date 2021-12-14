@@ -58,8 +58,7 @@ class DefaultSDKModule: SDKComponent {
     )
     private lazy var notificationComponent = DefaultNotificationComponent(
         httpClient: httpClient,
-        executor: executorComponent.mainExecutor,
-        userQueryComponent: userQueryComponent
+        executor: executorComponent.mainExecutor
     )
     private lazy var pushSubscriptionComponent = DefaultPushSubscriptionModule(
         userQueryComponent: userQueryComponent,

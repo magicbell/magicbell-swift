@@ -11,34 +11,31 @@ struct LoginInteractor {
     private let logger: Logger
     private let getUserConfigInteractor: GetConfigInteractor
     private let storeUserQueryInteractor: StoreUserQueryInteractor
-    private let storeRealTime: StoreRealTime
     private let sendPushSubscriptionInteractor: SendPushSubscriptionInteractor
 
     init(logger: Logger,
          getUserConfig: GetConfigInteractor,
          storeUserQuery: StoreUserQueryInteractor,
-         storeRealTime: StoreRealTime,
          sendPushSubscriptionInteractor: SendPushSubscriptionInteractor) {
         self.logger = logger
         self.getUserConfigInteractor = getUserConfig
         self.storeUserQueryInteractor = storeUserQuery
-        self.storeRealTime = storeRealTime
         self.sendPushSubscriptionInteractor = sendPushSubscriptionInteractor
     }
 
-    func execute(userId: String) {
-        execute(userQuery: UserQuery(externalId: userId))
+    func execute(userId: String) -> UserQuery {
+        return execute(userQuery: UserQuery(externalId: userId))
     }
 
-    func execute(email: String) {
-        execute(userQuery: UserQuery(email: email))
+    func execute(email: String) -> UserQuery {
+        return execute(userQuery: UserQuery(email: email))
     }
 
-    func execute(email: String, userId: String) {
-        execute(userQuery: UserQuery(externalId: userId, email: email))
+    func execute(email: String, userId: String) -> UserQuery {
+        return execute(userQuery: UserQuery(externalId: userId, email: email))
     }
 
-    private func execute(userQuery: UserQuery) {
+    private func execute(userQuery: UserQuery) -> UserQuery {
         // First, store the user query to allow the rest of the SDK to operate
         storeUserQueryInteractor.execute(userQuery)
 
@@ -48,7 +45,6 @@ struct LoginInteractor {
             .execute(forceRefresh: false, userQuery: userQuery)
             .then { _ in
                 self.logger.info(tag: magicBellTag, "User config successfully retrieved upon login")
-                self.storeRealTime.startListening()
             }
 
         sendPushSubscriptionInteractor
@@ -64,5 +60,7 @@ struct LoginInteractor {
                     logger.info(tag: magicBellTag, "Send device token failed: \(error)")
                 }
             }
+
+        return userQuery
     }
 }

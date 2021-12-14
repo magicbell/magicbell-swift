@@ -9,21 +9,19 @@ import Harmony
 
 class GetNotificationInteractor {
     private let executor: Executor
-    private let getUserQueryInteractor: GetUserQueryInteractor
-    private let getInteractor: Interactor.GetByQuery<Notification>
+    private let getNotificationInteractor: Interactor.GetByQuery<Notification>
 
     init(executor: Executor,
-         getUserQueryInteractor: GetUserQueryInteractor,
-         getInteractor: Interactor.GetByQuery<Notification>) {
+         getNotificationInteractor: Interactor.GetByQuery<Notification>) {
         self.executor = executor
-        self.getUserQueryInteractor = getUserQueryInteractor
-        self.getInteractor = getInteractor
+        self.getNotificationInteractor = getNotificationInteractor
     }
 
-    func execute(notificationId: String) -> Future <Notification> {
+    func execute(notificationId: String, userQuery: UserQuery) -> Future <Notification> {
         executor.submit { resolver in
-            let userQuery = try self.getUserQueryInteractor.execute()
-            resolver.set(self.getInteractor.execute(NotificationQuery(notificationId: notificationId, userQuery: userQuery), in: DirectExecutor()))
+            let query = NotificationQuery(notificationId: notificationId, userQuery: userQuery)
+            let notification = try self.getNotificationInteractor.execute(query, in: DirectExecutor()).result.get()
+            resolver.set(notification)
         }
     }
 }

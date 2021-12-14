@@ -13,21 +13,22 @@ class AblyConnector: StoreRealTime {
     private let tag = "AblyConnector"
     
     private let getConfigInteractor: GetConfigInteractor
-    private let userQueryInteractor: GetUserQueryInteractor
+
     private let environment: Environment
     private let logger: Logger
+    private let userQuery: UserQuery
     
     private(set) var status: StoreRealTimeStatus = .disconnected
     private var ablyClient: ARTRealtime?
     
     private var observers = NSHashTable<AnyObject>.weakObjects()
     
-    internal init(getConfigInteractor: GetConfigInteractor,
-                  userQueryInteractor: GetUserQueryInteractor,
-                  environment: Environment,
-                  logger: Logger) {
+    init(getConfigInteractor: GetConfigInteractor,
+         userQuery: UserQuery,
+         environment: Environment,
+         logger: Logger) {
         self.getConfigInteractor = getConfigInteractor
-        self.userQueryInteractor = userQueryInteractor
+        self.userQuery = userQuery
         self.environment = environment
         self.logger = logger
     }
@@ -55,41 +56,39 @@ class AblyConnector: StoreRealTime {
     }
     
     private func connect() {
-        do {
-            ablyClient?.connection.close()
-            let userQuery = try userQueryInteractor.execute()
-            getConfigInteractor.execute(forceRefresh: false, userQuery: userQuery)
-                .then { config in
-                    let options = ARTClientOptions()
-                    options.authUrl = URL(string: String(format: "%@/ws/auth", self.environment.baseUrl.absoluteString))
-                    options.authMethod = "POST"
-                    let headers = self.generateAblyHeaders(apiKey: self.environment.apiKey,
-                                                           apiSecret: self.environment.apiSecret,
-                                                           isHMACEnabled: self.environment.isHMACEnabled,
-                                                           externalId: userQuery.externalId,
-                                                           email: userQuery.email)
-                    options.authHeaders = headers
+        ablyClient?.connection.close()
+        getConfigInteractor
+            .execute(forceRefresh: false, userQuery: userQuery)
+            .then { config in
+                let options = ARTClientOptions()
+                options.authUrl = URL(string: String(format: "%@/ws/auth", self.environment.baseUrl.absoluteString))
+                options.authMethod = "POST"
+                let headers = self.generateAblyHeaders(
+                    apiKey: self.environment.apiKey,
+                    apiSecret: self.environment.apiSecret,
+                    isHMACEnabled: self.environment.isHMACEnabled,
+                    externalId: self.userQuery.externalId,
+                    email: self.userQuery.email
+                )
+                options.authHeaders = headers
 
-                    // Establish connection
-                    self.ablyClient = ARTRealtime(options: options)
+                // Establish connection
+                self.ablyClient = ARTRealtime(options: options)
 
-                    // Listening connection changes
-                    self.startListenConnectionChanges()
+                // Listening connection changes
+                self.startListenConnectionChanges()
 
-                    // Listening events
-                    self.startListeningMessages(channel: config.channel)
-                }
-                .fail { error in
-                    self.logger.info(tag: self.tag, "User Config couldn't be retrieved. Attempting to fetch config and connect to ably in 30 seconds: \(error)")
-                    self.reconnectionTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: false) { _ in
-                        if self.status != .disconnected {
-                            self.connect()
-                        }
+                // Listening events
+                self.startListeningMessages(channel: config.channel)
+            }
+            .fail { error in
+                self.logger.info(tag: self.tag, "User Config couldn't be retrieved. Attempting to fetch config and connect to ably in 30 seconds: \(error)")
+                self.reconnectionTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: false) { _ in
+                    if self.status != .disconnected {
+                        self.connect()
                     }
                 }
-        } catch {
-            logger.info(tag: tag, "\(error)")
-        }
+            }
     }
     
     private func disconnect() {

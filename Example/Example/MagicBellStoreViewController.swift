@@ -17,8 +17,8 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var actionsItem: BadgeBarButtonItem!
 
-    private var store = MagicBell.storeFor(predicate: StorePredicate())
-    private var unreadStore = MagicBell.storeFor(predicate: StorePredicate(read: .unread))
+    private var store = magicBell.store!.with(predicate: StorePredicate())
+    private var unreadStore = magicBell.store!.with(predicate: StorePredicate(read: .unread))
 
     var navigationBarColor = UIColor(rgb: 0x6113A3) {
         didSet { applyBarStyle() }
@@ -114,14 +114,14 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
                 guard let email = alert.textFields?.first?.text else {
                     return
                 }
-                MagicBell.login(email: email)
+                magicBell.login(email: email)
                 self.reloadStore()
             })
             self.present(alert, animated: true, completion: nil)
         })
 
         alert.addAction(UIAlertAction(title: "Logout", style: .destructive) { _ in
-            MagicBell.logout()
+            magicBell.logout()
         })
 
         alert.addAction(UIAlertAction(title: "Customize Predicate", style: .default) { _ in
@@ -153,7 +153,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         if store !== unreadStore {
             store.removeCountObserver(self)
         }
-        store = MagicBell.storeFor(predicate: predicate)
+        store = magicBell.store!.with(predicate: predicate)
         store.addContentObserver(self)
         store.addCountObserver(self)
         reloadStore()

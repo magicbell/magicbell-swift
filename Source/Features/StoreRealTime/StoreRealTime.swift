@@ -21,13 +21,13 @@ enum StoreRealTimeStatus {
 protocol StoreRealTimeObserver: AnyObject {
     func notifyNewNotification(id: String)
     func notifyDeleteNotification(id: String)
-    func notifyNotificationChange(id: String, change: NotificationChange)
+    func notifyNotificationChange(id: String, change: StoreRealTimeNotificationChange)
     func notifyAllNotificationRead()
     func notifyAllNotificationSeen()
     func notifyReloadStore()
 }
 
-enum NotificationChange {
+enum StoreRealTimeNotificationChange {
     case read
     case unread
 }

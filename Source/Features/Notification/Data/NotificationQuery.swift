@@ -7,18 +7,18 @@
 
 import Harmony
 
-public class NotificationQuery: Query {
-    public let user: UserQuery
-    public let notificationId: String
+class NotificationQuery: Query {
+    let user: UserQuery
+    let notificationId: String
 
-    public init(notificationId: String, userQuery: UserQuery) {
+    init(notificationId: String, userQuery: UserQuery) {
         self.notificationId = notificationId
         user = userQuery
     }
 }
 
-public class NotificationActionQuery: NotificationQuery {
-    public enum Action {
+class NotificationActionQuery: NotificationQuery {
+    enum Action {
         case markAsRead,
              markAsUnread,
              archive,
@@ -27,9 +27,9 @@ public class NotificationActionQuery: NotificationQuery {
              markAllAsSeen
     }
 
-    public let action: Action
+    let action: Action
 
-    public init(action: Action, notificationId: String, userQuery: UserQuery) {
+    init(action: Action, notificationId: String, userQuery: UserQuery) {
         self.action = action
         super.init(notificationId: notificationId, userQuery: userQuery)
     }

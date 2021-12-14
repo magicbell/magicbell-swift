@@ -9,8 +9,7 @@ import Foundation
 import Harmony
 
 protocol StoreComponent {
-    func getStorePagesInteractor() -> GetStorePagesInteractor
-    func createStore(name: String?, predicate: StorePredicate) -> NotificationStore
+    func storeDirector(with userQuery: UserQuery) -> StoreDirector
 }
 
 class DefaultStoreModule: StoreComponent {
@@ -46,26 +45,27 @@ class DefaultStoreModule: StoreComponent {
         )
     }()
 
-    func getStorePagesInteractor() -> GetStorePagesInteractor {
+    private func getStorePagesInteractor() -> GetStorePagesInteractor {
         GetStorePagesInteractor(
             executor: mainExecutor,
             getStoreNotificationInteractor: storeNotificationGraphQLRepository.toGetByQueryInteractor(mainExecutor))
     }
 
-    func createStore(name: String?, predicate: StorePredicate) -> NotificationStore {
-        let fetchStorePageInteractor = FetchStorePageInteractor(
+    private func getFetchStorePageInteractor() -> FetchStorePageInteractor {
+        FetchStorePageInteractor(
             executor: mainExecutor,
-            getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
             getStorePagesInteractor: getStorePagesInteractor()
         )
-        return NotificationStore(
-            name: name ?? UUID().uuidString,
-            predicate: predicate,
-            getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
-            fetchStorePageInteractor: fetchStorePageInteractor,
+    }
+
+    func storeDirector(with userQuery: UserQuery) -> StoreDirector {
+        RealTimeByPredicateStoreDirector(
+            logger: logger,
+            userQuery: userQuery,
+            fetchStorePageInteractor: getFetchStorePageInteractor(),
             actionNotificationInteractor: notificationComponent.getActionNotificationInteractor(),
             deleteNotificationInteractor: notificationComponent.getDeleteNotificationInteractor(),
-            logger: logger
+            storeRealTime: realTimeComponent.createStoreRealmTime(userQuery: userQuery)
         )
     }
 }

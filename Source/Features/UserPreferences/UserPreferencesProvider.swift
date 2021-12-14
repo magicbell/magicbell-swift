@@ -9,20 +9,23 @@ import Foundation
 import Harmony
 
 protocol UserPreferencesComponent {
-    func getGetUserPreferencesInteractor() -> GetUserPreferencesInteractor
-    func getUpdateUserPreferencesInteractor() -> UpdateUserPreferencesInteractor
+    func userPreferencesDirector(with userQuery: UserQuery) -> UserPreferencesDirector
 }
 
 class DefaultUserPreferencesModule: UserPreferencesComponent {
+
+    private let logger: Logger
     private let httpClient: HttpClient
     private let executor: Executor
     private let userQueryComponent: UserQueryComponent
 
     init(
+        logger: Logger,
         httpClient: HttpClient,
         executor: Executor,
         userQueryComponent: UserQueryComponent
     ) {
+        self.logger = logger
         self.userQueryComponent = userQueryComponent
         self.httpClient = httpClient
         self.executor = executor
@@ -37,26 +40,32 @@ class DefaultUserPreferencesModule: UserPreferencesComponent {
         let userPreferencesAssemblerDataSource = DataSourceAssembler(get: userPreferencesNetworkDataSource, put: userPreferencesNetworkDataSource)
         let repository = SingleDataSourceRepository(userPreferencesAssemblerDataSource)
         let repositoryMapper = RepositoryMapper(
-                repository: repository,
-                toInMapper: UserPreferencesToUserPreferencesEntityMapper(),
-                toOutMapper: UserPreferencesEntityToUserPreferencesMapper()
+            repository: repository,
+            toInMapper: UserPreferencesToUserPreferencesEntityMapper(),
+            toOutMapper: UserPreferencesEntityToUserPreferencesMapper()
         )
         return AnyRepository(repositoryMapper)
     }()
 
-    func getGetUserPreferencesInteractor() -> GetUserPreferencesInteractor {
+    private func getGetUserPreferencesInteractor() -> GetUserPreferencesInteractor {
         return GetUserPreferencesInteractor(
             executor: executor,
-            getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
             getUserPreferencesInteractor: userPreferencesRepository.toGetByQueryInteractor(executor)
         )
     }
 
-    func getUpdateUserPreferencesInteractor() -> UpdateUserPreferencesInteractor {
+    private func getUpdateUserPreferencesInteractor() -> UpdateUserPreferencesInteractor {
         return UpdateUserPreferencesInteractor(
             executor: executor,
-            getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
             updateUserPreferencesInteractor: userPreferencesRepository.toPutByQueryInteractor(executor)
+        )
+    }
+
+    func userPreferencesDirector(with userQuery: UserQuery) -> UserPreferencesDirector {
+        DefaultUserPreferencesDirector(
+            logger: logger,
+            userQuery: userQuery,
+            getUserPreferencesInteractor: getGetUserPreferencesInteractor(), updateUserPreferencesInteractor: getUpdateUserPreferencesInteractor()
         )
     }
 }

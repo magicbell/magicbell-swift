@@ -15,20 +15,17 @@ protocol StoreComponent {
 class DefaultStoreModule: StoreComponent {
     private let httpClient: HttpClient
     private let mainExecutor: Executor
-    private let userQueryComponent: UserQueryComponent
     private let notificationComponent: NotificationComponent
     private let realTimeComponent: StoreRealTimeComponent
     private let logger: Logger
 
     init(httpClient: HttpClient,
          executor: Executor,
-         userQueryComponent: UserQueryComponent,
          notificationComponent: NotificationComponent,
          storeRealTimeComponent: StoreRealTimeComponent,
          logger: Logger) {
         self.httpClient = httpClient
         self.mainExecutor = executor
-        self.userQueryComponent = userQueryComponent
         self.notificationComponent = notificationComponent
         self.realTimeComponent = storeRealTimeComponent
         self.logger = logger

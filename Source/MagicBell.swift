@@ -26,6 +26,7 @@ public class MagicBell {
     /// The Store director. Use this instance to create and dispose stores.
     /// Note this attrtibute is null until a user is logged in.
     public private(set) var store: StoreDirector?
+    public private(set) var userPreferences: UserPreferencesDirector?
 
     /// Main initialization method.
     /// - Parameters:
@@ -59,6 +60,7 @@ public class MagicBell {
         let login = sdkProvider.getUserComponent().getLoginInteractor()
         let userQuery = login.execute(email: email)
         store = sdkProvider.getStoreComponent().storeDirector(with: userQuery)
+        userPreferences = sdkProvider.getUserPreferencesComponent().userPreferencesDirector(with: userQuery)
     }
 
     /// User identification login.
@@ -96,71 +98,6 @@ public class MagicBell {
             .then { _ in
                 let sendPushSubscription = self.sdkProvider.getPushSubscriptionComponent().getSendPushSubscriptionInteractor()
                 _ = sendPushSubscription.execute()
-            }
-    }
-
-    /// Returns the user preferences.
-    /// - Parameters:
-    ///     - completion: Closure with a `Result`. Success returns the `UserPreferences`.
-    public func obtainUserPreferences(completion: @escaping(Result<UserPreferences, Error>) -> Void) {
-        let getUserPreferences = sdkProvider.getUserPreferencesComponent().getGetUserPreferencesInteractor()
-        getUserPreferences.execute()
-            .then { userPreferences in
-                completion(.success(userPreferences))
-            }.fail { error in
-                completion(.failure(error))
-            }
-    }
-
-    /// Updates the user preferences. Update can be partial and only will affect the categories included in the object being sent.
-    /// - Parameters:
-    ///     - completion: Closure with a `Result`. Success returns the `UserPreferences`.
-    public func updateUserPreferences(_ userPreferences: UserPreferences, completion: @escaping(Result<UserPreferences, Error>) -> Void) {
-        let updateUserPreferences = sdkProvider.getUserPreferencesComponent().getUpdateUserPreferencesInteractor()
-        updateUserPreferences.execute(userPreferences)
-            .then { userPreferences in
-                completion(.success(userPreferences))
-            }.fail { error in
-                completion(.failure(error))
-            }
-    }
-
-    /// Returns the notification preferences for a given category.
-    /// - Parameters:
-    ///     - completion: Closure with a `Result`. Success returns the `Preferences` for the given category.
-    public func obtainNotificationPreferences(for category: String, completion: @escaping(Result<Preferences, Error>) -> Void) {
-        let getUserPreferences = sdkProvider.getUserPreferencesComponent().getGetUserPreferencesInteractor()
-        getUserPreferences.execute()
-            .map { userPreferences in
-                guard let preferences = userPreferences.preferences[category] else {
-                    throw MagicBellError("Notification preferences not found for category \(category)")
-                }
-                return preferences
-            }.then { preferences in
-                completion(.success(preferences))
-            }.fail { error in
-                completion(.failure(error))
-            }
-    }
-
-    /// Updates the notification preferences for a given category.
-    /// - Parameters:
-    ///   - preferences: The notification preferences for a given category.
-    ///   - category: The category name.
-    ///   - completion: Closure with a `Result`. Success returns the `UserPreferences`.
-    public func updateNotificationPreferences(_ preferences: Preferences, for category: String, completion: @escaping(Result<Preferences, Error>) -> Void) {
-        let userPreferences = UserPreferences([category: preferences])
-        let updateUserPreferences = sdkProvider.getUserPreferencesComponent().getUpdateUserPreferencesInteractor()
-        updateUserPreferences.execute(userPreferences)
-            .map { userPreferences in
-                guard let preferences = userPreferences.preferences[category] else {
-                    throw MagicBellError("Notification preferences not found for category \(category)")
-                }
-                return preferences
-            }.then { preferences in
-                completion(.success(preferences))
-            }.fail { error in
-                completion(.failure(error))
             }
     }
 }

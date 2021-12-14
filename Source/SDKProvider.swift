@@ -52,6 +52,7 @@ class DefaultSDKModule: SDKComponent {
         executor: executorComponent.mainExecutor
     )
     private lazy var userPreferencesComponent = DefaultUserPreferencesModule(
+        logger: logger,
         httpClient: httpClient,
         executor: executorComponent.mainExecutor,
         userQueryComponent: userQueryComponent
@@ -69,7 +70,6 @@ class DefaultSDKModule: SDKComponent {
     private lazy var storeComponent: StoreComponent = DefaultStoreModule(
         httpClient: httpClient,
         executor: executorComponent.mainExecutor,
-        userQueryComponent: userQueryComponent,
         notificationComponent: notificationComponent,
         storeRealTimeComponent: storeRealTimeComponent,
         logger: logger

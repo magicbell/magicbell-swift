@@ -6,7 +6,7 @@
 //
 
 protocol StoreRealTime {
-    func startListening()
+    func startListening(with config: Config)
     func stopListening()
     func addObserver(_ observer: StoreRealTimeObserver)
     func removeObserver(_ observer: StoreRealTimeObserver)

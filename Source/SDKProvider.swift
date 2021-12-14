@@ -72,6 +72,7 @@ class DefaultSDKModule: SDKComponent {
         executor: executorComponent.mainExecutor,
         notificationComponent: notificationComponent,
         storeRealTimeComponent: storeRealTimeComponent,
+        configComponent: configComponent,
         logger: logger
     )
     private lazy var storeRealTimeComponent = DefaultStoreRealTimeModule(

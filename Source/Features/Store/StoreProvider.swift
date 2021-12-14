@@ -17,17 +17,20 @@ class DefaultStoreModule: StoreComponent {
     private let mainExecutor: Executor
     private let notificationComponent: NotificationComponent
     private let realTimeComponent: StoreRealTimeComponent
+    private let configComponent: ConfigComponent
     private let logger: Logger
 
     init(httpClient: HttpClient,
          executor: Executor,
          notificationComponent: NotificationComponent,
          storeRealTimeComponent: StoreRealTimeComponent,
+         configComponent: ConfigComponent,
          logger: Logger) {
         self.httpClient = httpClient
         self.mainExecutor = executor
         self.notificationComponent = notificationComponent
         self.realTimeComponent = storeRealTimeComponent
+        self.configComponent = configComponent
         self.logger = logger
     }
 
@@ -62,6 +65,7 @@ class DefaultStoreModule: StoreComponent {
             fetchStorePageInteractor: getFetchStorePageInteractor(),
             actionNotificationInteractor: notificationComponent.getActionNotificationInteractor(),
             deleteNotificationInteractor: notificationComponent.getDeleteNotificationInteractor(),
+            getConfigInteractor: configComponent.getGetConfigInteractor(),
             storeRealTime: realTimeComponent.createStoreRealmTime(userQuery: userQuery)
         )
     }

@@ -33,6 +33,7 @@ class RealTimeByPredicateStoreDirector: StoreDirector {
     private let fetchStorePageInteractor: FetchStorePageInteractor
     private let actionNotificationInteractor: ActionNotificationInteractor
     private let deleteNotificationInteractor: DeleteNotificationInteractor
+    private let getConfigInteractor: GetConfigInteractor
 
     private let storeRealTime: StoreRealTime
 
@@ -42,6 +43,7 @@ class RealTimeByPredicateStoreDirector: StoreDirector {
         fetchStorePageInteractor: FetchStorePageInteractor,
         actionNotificationInteractor: ActionNotificationInteractor,
         deleteNotificationInteractor: DeleteNotificationInteractor,
+        getConfigInteractor: GetConfigInteractor,
         storeRealTime: StoreRealTime
     ) {
         self.logger = logger
@@ -49,10 +51,10 @@ class RealTimeByPredicateStoreDirector: StoreDirector {
         self.fetchStorePageInteractor = fetchStorePageInteractor
         self.actionNotificationInteractor = actionNotificationInteractor
         self.deleteNotificationInteractor = deleteNotificationInteractor
+        self.getConfigInteractor = getConfigInteractor
         self.storeRealTime = storeRealTime
 
-        // Start listening for events
-        storeRealTime.startListening()
+        startRealTimeConnection()
     }
 
     deinit {
@@ -60,6 +62,20 @@ class RealTimeByPredicateStoreDirector: StoreDirector {
 
         // Stop listening for events
         storeRealTime.stopListening()
+    }
+
+    private func startRealTimeConnection() {
+        getConfigInteractor
+            .execute(forceRefresh: false, userQuery: userQuery)
+            .then { config in
+                self.storeRealTime.startListening(with: config)
+            }
+            .fail { error in
+                self.logger.info(tag: magicBellTag, "User Config couldn't be retrieved. Attempting to fetch config and connect to ably in 30 seconds: \(error)")
+                Timer.scheduledTimer(withTimeInterval: 30, repeats: false) { [self] _ in
+                    startRealTimeConnection()
+                }
+            }
     }
 
     func with(predicate: StorePredicate) -> NotificationStore {

@@ -45,6 +45,7 @@
 		59799E6B274671A100BFB375 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E6A274671A100BFB375 /* NetworkError.swift */; };
 		59827B55275FD7C9009D93D8 /* AblyMessageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59827B54275FD7C9009D93D8 /* AblyMessageProcessor.swift */; };
 		59B2DDA3276959AC0038B0EA /* UserPreferencesDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B2DDA2276959AC0038B0EA /* UserPreferencesDirector.swift */; };
+		59B2DDA72769682C0038B0EA /* PushSubscriptionDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B2DDA62769682C0038B0EA /* PushSubscriptionDirector.swift */; };
 		59C12ECC2746DBC200311D24 /* PushSubscriptionNetworkDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C12ECB2746DBC200311D24 /* PushSubscriptionNetworkDataSource.swift */; };
 		59C12ECF2746DC7100311D24 /* PushSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C12ECE2746DC7100311D24 /* PushSubscription.swift */; };
 		59C12ED12746E48100311D24 /* PushSubscriptionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C12ED02746E48100311D24 /* PushSubscriptionProvider.swift */; };
@@ -141,6 +142,7 @@
 		59799E6A274671A100BFB375 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		59827B54275FD7C9009D93D8 /* AblyMessageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyMessageProcessor.swift; sourceTree = "<group>"; };
 		59B2DDA2276959AC0038B0EA /* UserPreferencesDirector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferencesDirector.swift; sourceTree = "<group>"; };
+		59B2DDA62769682C0038B0EA /* PushSubscriptionDirector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSubscriptionDirector.swift; sourceTree = "<group>"; };
 		59C12ECB2746DBC200311D24 /* PushSubscriptionNetworkDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSubscriptionNetworkDataSource.swift; sourceTree = "<group>"; };
 		59C12ECE2746DC7100311D24 /* PushSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSubscription.swift; sourceTree = "<group>"; };
 		59C12ED02746E48100311D24 /* PushSubscriptionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSubscriptionProvider.swift; sourceTree = "<group>"; };
@@ -399,6 +401,7 @@
 				59C12ED02746E48100311D24 /* PushSubscriptionProvider.swift */,
 				593883AE27602EA1001D38FC /* Interactor */,
 				59C12EC92746DBAF00311D24 /* Data */,
+				59B2DDA62769682C0038B0EA /* PushSubscriptionDirector.swift */,
 			);
 			path = PushSubscription;
 			sourceTree = "<group>";
@@ -768,6 +771,7 @@
 				59C12ECF2746DC7100311D24 /* PushSubscription.swift in Sources */,
 				59799E4427465C9200BFB375 /* String+HMAC.swift in Sources */,
 				D2153EE7274E4683009C2DDC /* LogoutInteractor.swift in Sources */,
+				59B2DDA72769682C0038B0EA /* PushSubscriptionDirector.swift in Sources */,
 				D2153EED274E4F77009C2DDC /* GetUserQueryInteractor.swift in Sources */,
 				D2CBA52227512462002F1E44 /* PageInfo.swift in Sources */,
 				D2CBA52F275128FA002F1E44 /* StorePredicate.swift in Sources */,

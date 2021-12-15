@@ -48,7 +48,7 @@ struct LoginInteractor {
             }
 
         sendPushSubscriptionInteractor
-            .execute()
+            .execute(userQuery: userQuery)
             .then { pushSubscription in
                 logger.info(tag: magicBellTag, "Push subcription is created \(pushSubscription)")
             }.fail { error in

@@ -26,14 +26,7 @@ struct LogoutInteractor {
         self.logger = logger
     }
 
-    func execute() {
-        deletePushSubscriptionInteractor.execute()
-            .then { _ in
-                logger.info(tag: magicBellTag, "Device token was unregistered succesfully")
-            }.fail { error in
-                logger.error(tag: magicBellTag, "Device token couldn't be unregistered: \(error)")
-            }
-
+    func execute(userQuery: UserQuery) {
         deleteUserQueryInteractor.execute()
 
         deleteUserConfigInteractor.execute()

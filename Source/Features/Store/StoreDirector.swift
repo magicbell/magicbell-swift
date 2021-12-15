@@ -20,7 +20,7 @@ public protocol StoreDirector {
     ///    - predicate: Notification store's predicate.
     func disposeWith(predicate: StorePredicate)
 
-    /// Disposes all created stores.1
+    /// Disposes all created stores.
     func disposeAll()
 }
 

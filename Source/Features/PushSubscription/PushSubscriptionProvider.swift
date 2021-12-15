@@ -36,7 +36,6 @@ class DefaultPushSubscriptionModule: PushSubscriptionComponent {
     func getSendPushSubscriptionInteractor() -> SendPushSubscriptionInteractor {
         SendPushSubscriptionInteractor(
             executor: executor,
-            getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
             getDeviceTokenInteractor: getDeviceTokenInteractor,
             putPushSubscriptionInteractor: putPushSubscriptionInteractor,
             logger: logger
@@ -52,7 +51,6 @@ class DefaultPushSubscriptionModule: PushSubscriptionComponent {
     func getDeletePushSubscriptionInteractor() -> DeletePushSubscriptionInteractor {
         DeletePushSubscriptionInteractor(
             executor: executor,
-            getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
             getDeviceTokenInteractor: getDeviceTokenInteractor,
             deletePushSubscriptionInteractor: pushSubscritionRepository.toDeleteByQueryInteractor(executor),
             logger: logger

@@ -22,11 +22,15 @@ public class MagicBell {
     }()
 
     private let sdkProvider: SDKComponent
-
+    private var userQuery: UserQuery!
     /// The Store director. Use this instance to create and dispose stores.
     /// Note this attrtibute is null until a user is logged in.
     public private(set) var store: StoreDirector?
     public private(set) var userPreferences: UserPreferencesDirector?
+    private var pushSubscription: PushSubscriptionDirector?
+
+    // TODO: Remove UserQueryInteractors
+    // TODO: Create MagicBellUSer that contains all directors
 
     /// Main initialization method.
     /// - Parameters:
@@ -59,6 +63,7 @@ public class MagicBell {
     public func login(email: String) {
         let login = sdkProvider.getUserComponent().getLoginInteractor()
         let userQuery = login.execute(email: email)
+        self.userQuery = userQuery
         store = sdkProvider.getStoreComponent().storeDirector(with: userQuery)
         userPreferences = sdkProvider.getUserPreferencesComponent().userPreferencesDirector(with: userQuery)
     }
@@ -85,7 +90,7 @@ public class MagicBell {
     /// Removes user identification.
     public func logout() {
         let logout = sdkProvider.getUserComponent().getLogoutInteractor()
-        logout.execute()
+        logout.execute(userQuery: userQuery)
         store = nil
     }
 
@@ -96,8 +101,7 @@ public class MagicBell {
         let saveDeviceToken = sdkProvider.getPushSubscriptionComponent().getSaveDeviceTokenInteractor()
         saveDeviceToken.execute(deviceToken: deviceToken)
             .then { _ in
-                let sendPushSubscription = self.sdkProvider.getPushSubscriptionComponent().getSendPushSubscriptionInteractor()
-                _ = sendPushSubscription.execute()
+                self.pushSubscription?.sendPushSubscription()
             }
     }
 }

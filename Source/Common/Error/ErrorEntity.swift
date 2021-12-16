@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ErrorEntity: Decodable {
+struct ErrorEntity: Decodable {
     typealias Message = String
     var errors: [Message] = []
 
@@ -28,7 +28,7 @@ public struct ErrorEntity: Decodable {
         case message
     }
 
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: ContainerKeys.self)
         var values = try container.nestedUnkeyedContainer(forKey: .errors)
         while !values.isAtEnd {

@@ -22,16 +22,10 @@ public class MagicBell {
     }()
 
     private let sdkProvider: SDKComponent
-    private var userQuery: UserQuery!
-    /// The Store director. Use this instance to create and dispose stores.
-    /// Note this attrtibute is null until a user is logged in.
-    public private(set) var store: StoreDirector?
-    public private(set) var userPreferences: UserPreferencesDirector?
-    private var pushSubscription: PushSubscriptionDirector?
 
-    // TODO: Remove UserQueryInteractors
-    // TODO: Create MagicBellUSer that contains all directors
-
+    private var users: [String: UserBell] = [:]
+    private var deviceToken: String?
+    
     /// Main initialization method.
     /// - Parameters:
     ///   - apiKey: The Api Key of your account
@@ -57,51 +51,106 @@ public class MagicBell {
         )
     }
 
-    /// User identification login.
+    /// Creates or retrieve an existing userBell.
     /// - Parameters:
     ///   - email: The user's email
-    public func login(email: String) {
-        let login = sdkProvider.getUserComponent().getLoginInteractor()
-        let userQuery = login.execute(email: email)
-        self.userQuery = userQuery
-        store = sdkProvider.getStoreComponent().storeDirector(with: userQuery)
-        userPreferences = sdkProvider.getUserPreferencesComponent().userPreferencesDirector(with: userQuery)
+    /// - Returns:
+    ///   - A instance of UserBell.
+    public func forUser(email: String) -> UserBell {
+        let userQuery = UserQuery(email: email)
+
+        let user = createUserBellIfNeeded(userQuery: userQuery)
+        return user
     }
 
-    /// User identification login.
+    /// Creates or retrieve an existing userBell.
     /// - Parameters:
     ///   - userId: The user's identifier
-    public func login(userId: String) {
-        let login = sdkProvider.getUserComponent().getLoginInteractor()
-        let userQuery = login.execute(userId: userId)
-        store = sdkProvider.getStoreComponent().storeDirector(with: userQuery)
+    /// - Returns:
+    ///   - A instance of UserBell.
+    public func forUser(userId: String) -> UserBell {
+        let userQuery = UserQuery(externalId: userId)
+        if let user = users[userQuery.key] {
+            return user
+        }
+        let user = createUserBellIfNeeded(userQuery: userQuery)
+        return user
     }
 
-    /// User identification login.
+    /// Creates or retrieve an existing userBell.
     /// - Parameters:
     ///   - email: The user's email
     ///   - userId: The user's identifier
-    public func login(email: String, userId: String) {
-        let login = sdkProvider.getUserComponent().getLoginInteractor()
-        let userQuery = login.execute(email: email, userId: userId)
-        store = sdkProvider.getStoreComponent().storeDirector(with: userQuery)
+    /// - Returns:
+    ///   - A instance of UserBell.
+    public func forUser(email: String, userId: String) -> UserBell {
+        let userQuery = UserQuery(externalId: userId, email: email)
+        if let user = users[userQuery.key] {
+            return user
+        }
+        let user = createUserBellIfNeeded(userQuery: userQuery)
+        return user
     }
 
-    /// Removes user identification.
-    public func logout() {
-        let logout = sdkProvider.getUserComponent().getLogoutInteractor()
-        logout.execute(userQuery: userQuery)
-        store = nil
+    private func createUserBellIfNeeded(userQuery: UserQuery) -> UserBell {
+        if let user = users[userQuery.key] {
+            return user
+        }
+        let userBell = UserBell(
+            userQuery: userQuery,
+            store: sdkProvider.getStoreComponent().storeDirector(with: userQuery),
+            userPreferences: sdkProvider.getUserPreferencesComponent().userPreferencesDirector(with: userQuery),
+            pushSubscription: sdkProvider.getPushSubscriptionComponent().pushSubscriptionDirector(with: userQuery)
+        )
+        users[userQuery.key] = userBell
+        if let deviceToken = self.deviceToken {
+            userBell.pushSubscription.sendPushSubscription(deviceToken)
+        }
+        return userBell
+    }
+
+    /// Removes a userBell and stops all connections.
+    /// - Parameters:
+    ///   - email: The user's email
+    public func removeUserFor(email: String) {
+        let userQuery = UserQuery(email: email)
+        removeUserIfExists(userQuery: userQuery)
+    }
+
+    /// Removes a userBell and stops all connections.
+    /// - Parameters:
+    ///   - userId: The user's identifier
+    public func removeUserFor(userId: String) {
+        let userQuery = UserQuery(externalId: userId)
+        removeUserIfExists(userQuery: userQuery)
+    }
+
+    /// Removes a userBell and stops all connections.
+    /// - Parameters:
+    ///   - email: The user's email
+    ///   - userId: The user's identifier
+    public func removeUserFor(email: String, userId: String) {
+        let userQuery = UserQuery(externalId: userId, email: email)
+        removeUserIfExists(userQuery: userQuery)
+    }
+
+    private func removeUserIfExists(userQuery: UserQuery) {
+        if let user = users[userQuery.key] {
+            user.logout(deviceToken: self.deviceToken)
+            users.removeValue(forKey: userQuery.key)
+        }
     }
 
     /// Sets the APN token for the current logged user. This token is revoked when logout is called. Once the user is registered from the notification, `didRegisterForRemoteNotificationsWithDeviceToken` is being called, retrieve the token and call setDeviceToken.
     /// - Parameters:
     ///     - deviceToken: Data from the `didRegisterForRemoteNotificationsWithDeviceToken` AppDelegate method.
     public func setDeviceToken(deviceToken: Data) {
-        let saveDeviceToken = sdkProvider.getPushSubscriptionComponent().getSaveDeviceTokenInteractor()
-        saveDeviceToken.execute(deviceToken: deviceToken)
-            .then { _ in
-                self.pushSubscription?.sendPushSubscription()
+        self.deviceToken = String(deviceToken: deviceToken)
+        // If users are logged, try to send the device token for them
+        if let deviceToken = self.deviceToken {
+            users.values.forEach { userBell in
+                userBell.pushSubscription.sendPushSubscription(deviceToken)
             }
+        }
     }
 }

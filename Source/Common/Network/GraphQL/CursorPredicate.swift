@@ -7,18 +7,18 @@
 
 import Foundation
 
-public struct CursorPredicate: GraphQLRepresentable {
-    public enum Cursor {
+struct CursorPredicate: GraphQLRepresentable {
+    enum Cursor {
         case next(String),
              previous(String),
              unspecified
     }
 
-    public let cursor: Cursor
-    public let size: Int?
+    let cursor: Cursor
+    let size: Int?
 
-    public init(cursor: Cursor = .unspecified,
-                size: Int? = nil) {
+    init(cursor: Cursor = .unspecified,
+         size: Int? = nil) {
         self.cursor = cursor
         self.size = size
     }

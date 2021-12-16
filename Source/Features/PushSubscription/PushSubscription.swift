@@ -7,14 +7,14 @@
 
 import Foundation
 
-public struct PushSubscription: Codable {
+struct PushSubscription: Codable {
     static let platformIOS = "ios"
     
     public let id: String?
     public let deviceToken: String
     public let platform: String
 
-    public init(id: String? = nil, deviceToken: String, platform: String) {
+    init(id: String? = nil, deviceToken: String, platform: String) {
         self.id = id
         self.deviceToken = deviceToken
         self.platform = platform
@@ -30,7 +30,7 @@ public struct PushSubscription: Codable {
         case platform
     }
 
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: ContainerKeys.self)
         let values = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .pushSubscription)
         id = try values.decodeIfPresent(String.self, forKey: .id)
@@ -38,7 +38,7 @@ public struct PushSubscription: Codable {
         platform = try values.decode(String.self, forKey: .platform)
     }
 
-    public func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: ContainerKeys.self)
         var pushSubscriptionContainer = container.nestedContainer(keyedBy: CodingKeys.self, forKey: .pushSubscription)
         try pushSubscriptionContainer.encode(deviceToken, forKey: .deviceToken)

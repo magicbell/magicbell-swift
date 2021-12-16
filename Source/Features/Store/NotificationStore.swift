@@ -248,7 +248,7 @@ public class NotificationStore: StoreRealTimeObserver {
 
     // MARK: - Private Methods
 
-    private func clear() {
+    func clear() {
         edges = []
         totalCount = 0
         unreadCount = 0

@@ -7,10 +7,10 @@
 
 import Foundation
 
-public struct Edge<T: Codable>: Codable {
+struct Edge<T: Codable>: Codable {
 
-    public let cursor: String
-    public var node: T
+    let cursor: String
+    var node: T
 
     enum CodingKeys: String, CodingKey {
         case cursor

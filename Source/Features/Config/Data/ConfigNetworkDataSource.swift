@@ -8,19 +8,19 @@
 import Foundation
 import Harmony
 
-public class ConfigNetworkDataSource: GetDataSource {
+class ConfigNetworkDataSource: GetDataSource {
 
-    public typealias T = Config
+    typealias T = Config
 
     private let httpClient: HttpClient
     private let mapper: Mapper<Data, Config>
 
-    public init(httpClient: HttpClient, mapper: Mapper<Data, Config>) {
+    init(httpClient: HttpClient, mapper: Mapper<Data, Config>) {
         self.httpClient = httpClient
         self.mapper = mapper
     }
 
-    public func get(_ query: Query) -> Future<Config> {
+    func get(_ query: Query) -> Future<Config> {
         switch query {
         case let userQuery as UserQuery:
             let urlRequest = httpClient.prepareURLRequest(
@@ -37,7 +37,7 @@ public class ConfigNetworkDataSource: GetDataSource {
         }
     }
 
-    public func getAll(_ query: Query) -> Future<[Config]> {
+    func getAll(_ query: Query) -> Future<[Config]> {
         assertionFailure("Should never happen")
         return Future(CoreError.NotImplemented())
     }

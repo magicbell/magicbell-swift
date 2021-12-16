@@ -7,9 +7,9 @@
 
 import Foundation
 
-public struct UserPreferencesEntity: Codable {
+struct UserPreferencesEntity: Codable {
 
-    public var preferences: [String: PreferencesEntity]?
+    var preferences: [String: PreferencesEntity]?
 
     enum ContainerKeys: String, CodingKey {
         case notificationPreferences = "notification_preferences"
@@ -19,13 +19,13 @@ public struct UserPreferencesEntity: Codable {
         case categories
     }
 
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: ContainerKeys.self)
         let values = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .notificationPreferences)
         preferences = try values.decode([String: PreferencesEntity].self, forKey: .categories)
     }
 
-    public func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: ContainerKeys.self)
         var values = container.nestedContainer(keyedBy: CodingKeys.self, forKey: .notificationPreferences)
         try values.encode(preferences, forKey: .categories)
@@ -36,12 +36,12 @@ public struct UserPreferencesEntity: Codable {
     }
 }
 
-public struct PreferencesEntity: Codable {
+struct PreferencesEntity: Codable {
 
-    public var email: Bool
-    public var inApp: Bool
-    public var mobilePush: Bool
-    public var webPush: Bool
+    var email: Bool
+    var inApp: Bool
+    var mobilePush: Bool
+    var webPush: Bool
 
     enum CodingKeys: String, CodingKey {
         case email
@@ -50,7 +50,7 @@ public struct PreferencesEntity: Codable {
         case webPush = "web_push"
     }
 
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         email = try values.decodeIfPresent(Bool.self, forKey: .email) ?? false
         inApp = try values.decodeIfPresent(Bool.self, forKey: .inApp) ?? false

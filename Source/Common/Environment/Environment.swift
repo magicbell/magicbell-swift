@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Environment {
+struct Environment {
     let apiKey: String
     let apiSecret: String?
     let baseUrl: URL

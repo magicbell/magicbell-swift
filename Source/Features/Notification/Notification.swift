@@ -12,11 +12,12 @@ public struct Notification: Codable {
     public let title: String?
     public let actionURL: String?
     public let content, category, topic: String?
+    public let customAttributes: [String: Any]?
     public let recipient: Recipient?
-    public var seenAt: Date?
+    public internal(set) var seenAt: Date?
     public let sentAt: Date
-    public var readAt: Date?
-    public var archivedAt: Date?
+    public internal(set) var readAt: Date?
+    public internal(set) var archivedAt: Date?
 
     enum ContainerKeys: String, CodingKey {
         case notification
@@ -26,6 +27,7 @@ public struct Notification: Codable {
         case id, title
         case actionURL = "action_url"
         case content, category, topic
+        case customAttributes = "custom_attributes"
         case recipient
         case seenAt = "seen_at"
         case sentAt = "sentAt"
@@ -37,6 +39,7 @@ public struct Notification: Codable {
         case id, title
         case actionURL = "actionUrl"
         case content, category, topic
+        case customAttributes
         case recipient
         case seenAt
         case sentAt
@@ -53,6 +56,7 @@ public struct Notification: Codable {
             content = try valuesContainer.decodeIfPresent(String.self, forKey: .content)
             category = try valuesContainer.decodeIfPresent(String.self, forKey: .category)
             topic = try valuesContainer.decodeIfPresent(String.self, forKey: .topic)
+            customAttributes = try valuesContainer.decodeIfPresent([String: Any].self, forKey: .customAttributes)
             recipient = try valuesContainer.decodeIfPresent(Recipient.self, forKey: .recipient)
             seenAt = try valuesContainer.decodeIfPresent(Date.self, forKey: .seenAt)
             sentAt = try valuesContainer.decode(Date.self, forKey: .sentAt)
@@ -66,6 +70,7 @@ public struct Notification: Codable {
             content = try values.decodeIfPresent(String.self, forKey: .content)
             category = try values.decodeIfPresent(String.self, forKey: .category)
             topic = try values.decodeIfPresent(String.self, forKey: .topic)
+            customAttributes = try values.decodeIfPresent([String: Any].self, forKey: .customAttributes)
             recipient = try values.decodeIfPresent(Recipient.self, forKey: .recipient)
             seenAt = try values.decodeIfPresent(Date.self, forKey: .seenAt)
             sentAt = try values.decode(Date.self, forKey: .sentAt)
@@ -74,13 +79,19 @@ public struct Notification: Codable {
         }
     }
 
-    public init(id: String, title: String? = nil, actionURL: String? = nil, content: String? = nil, category: String? = nil, topic: String? = nil, recipient: Recipient? = nil, seenAt: Date? = nil, sentAt: Date = Date(), readAt: Date? = nil, archivedAt: Date? = nil) {
+    public func encode(to encoder: Encoder) throws {
+        // Do nothing
+    }
+
+    init(id: String, title: String?, actionURL: String?, content: String?, category: String?, topic: String?,
+         customAttributes: [String: Any]? = [:], recipient: Recipient?, seenAt: Date? = nil, sentAt: Date, readAt: Date? = nil, archivedAt: Date? = nil) {
         self.id = id
         self.title = title
         self.actionURL = actionURL
         self.content = content
         self.category = category
         self.topic = topic
+        self.customAttributes = customAttributes
         self.recipient = recipient
         self.seenAt = seenAt
         self.sentAt = sentAt
@@ -90,7 +101,7 @@ public struct Notification: Codable {
 }
 
 public struct Recipient: Codable {
-    let id, email: String?
+    public let id, email: String?
     let externalID, firstName, lastName: String?
 
     enum CodingKeys: String, CodingKey {

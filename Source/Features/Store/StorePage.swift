@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct StorePage: Codable {
+struct StorePage: Codable {
     enum CodingKeys: String, CodingKey {
         case edges
         case pageInfo
@@ -16,9 +16,9 @@ public struct StorePage: Codable {
         case unseenCount
     }
 
-    public let edges: [Edge<Notification>]
-    public let pageInfo: PageInfo
-    public let totalCount: Int
-    public let unreadCount: Int
-    public let unseenCount: Int
+    let edges: [Edge<Notification>]
+    let pageInfo: PageInfo
+    let totalCount: Int
+    let unreadCount: Int
+    let unseenCount: Int
 }

@@ -7,15 +7,15 @@
 
 import Foundation
 
-public class NetworkError: LocalizedError {
+class NetworkError: LocalizedError {
     private static let defaultErrorMessage = "Network error. Custom message not provided."
 
-    public var errorDescription: String? {
+    var errorDescription: String? {
         "\(statusCode) - \(message ?? NetworkError.defaultErrorMessage)"
     }
 
-    public let statusCode: Int
-    public let message: String?
+    let statusCode: Int
+    let message: String?
 
     init(statusCode: Int, message: String?) {
         self.statusCode = statusCode

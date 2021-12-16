@@ -10,7 +10,6 @@
 		4214384C026305E8ACC20C02 /* Pods_MagicBell_MagicBellTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEC408680C35F229D2719682 /* Pods_MagicBell_MagicBellTests.framework */; };
 		593883B027603023001D38FC /* SendPushSubscriptionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883AF27603023001D38FC /* SendPushSubscriptionInteractor.swift */; };
 		593883B2276036BC001D38FC /* DeviceTokenQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883B1276036BC001D38FC /* DeviceTokenQuery.swift */; };
-		593883B427603773001D38FC /* SaveDeviceTokenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883B327603773001D38FC /* SaveDeviceTokenInteractor.swift */; };
 		593883B727603B9B001D38FC /* DeletePushSubscriptionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883B627603B9B001D38FC /* DeletePushSubscriptionInteractor.swift */; };
 		593883BF2761EBA9001D38FC /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883BE2761EBA9001D38FC /* LogLevel.swift */; };
 		593883C22761F18D001D38FC /* GetUserPreferencesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883C12761F18D001D38FC /* GetUserPreferencesInteractor.swift */; };
@@ -46,12 +45,14 @@
 		59827B55275FD7C9009D93D8 /* AblyMessageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59827B54275FD7C9009D93D8 /* AblyMessageProcessor.swift */; };
 		59B2DDA3276959AC0038B0EA /* UserPreferencesDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B2DDA2276959AC0038B0EA /* UserPreferencesDirector.swift */; };
 		59B2DDA72769682C0038B0EA /* PushSubscriptionDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B2DDA62769682C0038B0EA /* PushSubscriptionDirector.swift */; };
+		59B2DDA927696CA70038B0EA /* UserBell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B2DDA827696CA70038B0EA /* UserBell.swift */; };
+		59B2DDAC276AB4490038B0EA /* String+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B2DDAB276AB4490038B0EA /* String+Data.swift */; };
+		59B2DDAE276B5C4C0038B0EA /* CodingKey+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B2DDAD276B5C4C0038B0EA /* CodingKey+JSON.swift */; };
 		59C12ECC2746DBC200311D24 /* PushSubscriptionNetworkDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C12ECB2746DBC200311D24 /* PushSubscriptionNetworkDataSource.swift */; };
 		59C12ECF2746DC7100311D24 /* PushSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C12ECE2746DC7100311D24 /* PushSubscription.swift */; };
 		59C12ED12746E48100311D24 /* PushSubscriptionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C12ED02746E48100311D24 /* PushSubscriptionProvider.swift */; };
 		59C12ED42747131000311D24 /* MappingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C12ED32747131000311D24 /* MappingError.swift */; };
 		59C3CDBC274D039D0043BA77 /* MagicBellError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDBB274D039D0043BA77 /* MagicBellError.swift */; };
-		59C3CDBE274D2BDB0043BA77 /* UserProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDBD274D2BDB0043BA77 /* UserProvider.swift */; };
 		59C3CDC0274D2CC20043BA77 /* GetConfigInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDBF274D2CC20043BA77 /* GetConfigInteractor.swift */; };
 		59C3CDC2274D2F220043BA77 /* EncodableToDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDC1274D2F220043BA77 /* EncodableToDataMapper.swift */; };
 		59C3CDC4274D36360043BA77 /* DeleteConfigInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDC3274D36360043BA77 /* DeleteConfigInteractor.swift */; };
@@ -69,13 +70,7 @@
 		59F4597527597FF7008F3BC8 /* AblyConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597427597FF7008F3BC8 /* AblyConnector.swift */; };
 		59F45979275A434A008F3BC8 /* StoreRealTimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F45978275A434A008F3BC8 /* StoreRealTimeProvider.swift */; };
 		59F4597B275A48AD008F3BC8 /* StoreRealTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597A275A48AD008F3BC8 /* StoreRealTime.swift */; };
-		59F4597D275A50FD008F3BC8 /* UserQueryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597C275A50FD008F3BC8 /* UserQueryProvider.swift */; };
 		79246F9F6CE3D7240B9A33CC /* Pods_MagicBell.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D4ED1A7740032DA6209723F /* Pods_MagicBell.framework */; };
-		D2153EE5274E4679009C2DDC /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2153EE4274E4679009C2DDC /* LoginInteractor.swift */; };
-		D2153EE7274E4683009C2DDC /* LogoutInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2153EE6274E4683009C2DDC /* LogoutInteractor.swift */; };
-		D2153EED274E4F77009C2DDC /* GetUserQueryInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2153EEC274E4F77009C2DDC /* GetUserQueryInteractor.swift */; };
-		D2153EEF274E503E009C2DDC /* StoreUserQueryInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2153EEE274E503E009C2DDC /* StoreUserQueryInteractor.swift */; };
-		D2153EF1274E5169009C2DDC /* DeleteUserQueryInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2153EF0274E5169009C2DDC /* DeleteUserQueryInteractor.swift */; };
 		D2C5A1B02768C25500C20D74 /* StoreDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */; };
 		D2CBA520275121C2002F1E44 /* NotificationFragment.graphql in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA51F275121C2002F1E44 /* NotificationFragment.graphql */; };
 		D2CBA52227512462002F1E44 /* PageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52127512462002F1E44 /* PageInfo.swift */; };
@@ -107,7 +102,6 @@
 		58A4768E881F0F48DA11959A /* Pods-MagicBell.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell.release.xcconfig"; path = "Target Support Files/Pods-MagicBell/Pods-MagicBell.release.xcconfig"; sourceTree = "<group>"; };
 		593883AF27603023001D38FC /* SendPushSubscriptionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendPushSubscriptionInteractor.swift; sourceTree = "<group>"; };
 		593883B1276036BC001D38FC /* DeviceTokenQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTokenQuery.swift; sourceTree = "<group>"; };
-		593883B327603773001D38FC /* SaveDeviceTokenInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveDeviceTokenInteractor.swift; sourceTree = "<group>"; };
 		593883B627603B9B001D38FC /* DeletePushSubscriptionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePushSubscriptionInteractor.swift; sourceTree = "<group>"; };
 		593883BE2761EBA9001D38FC /* LogLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogLevel.swift; sourceTree = "<group>"; };
 		593883C12761F18D001D38FC /* GetUserPreferencesInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserPreferencesInteractor.swift; sourceTree = "<group>"; };
@@ -143,12 +137,14 @@
 		59827B54275FD7C9009D93D8 /* AblyMessageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyMessageProcessor.swift; sourceTree = "<group>"; };
 		59B2DDA2276959AC0038B0EA /* UserPreferencesDirector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferencesDirector.swift; sourceTree = "<group>"; };
 		59B2DDA62769682C0038B0EA /* PushSubscriptionDirector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSubscriptionDirector.swift; sourceTree = "<group>"; };
+		59B2DDA827696CA70038B0EA /* UserBell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBell.swift; sourceTree = "<group>"; };
+		59B2DDAB276AB4490038B0EA /* String+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Data.swift"; sourceTree = "<group>"; };
+		59B2DDAD276B5C4C0038B0EA /* CodingKey+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodingKey+JSON.swift"; sourceTree = "<group>"; };
 		59C12ECB2746DBC200311D24 /* PushSubscriptionNetworkDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSubscriptionNetworkDataSource.swift; sourceTree = "<group>"; };
 		59C12ECE2746DC7100311D24 /* PushSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSubscription.swift; sourceTree = "<group>"; };
 		59C12ED02746E48100311D24 /* PushSubscriptionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSubscriptionProvider.swift; sourceTree = "<group>"; };
 		59C12ED32747131000311D24 /* MappingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappingError.swift; sourceTree = "<group>"; };
 		59C3CDBB274D039D0043BA77 /* MagicBellError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBellError.swift; sourceTree = "<group>"; };
-		59C3CDBD274D2BDB0043BA77 /* UserProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProvider.swift; sourceTree = "<group>"; };
 		59C3CDBF274D2CC20043BA77 /* GetConfigInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetConfigInteractor.swift; sourceTree = "<group>"; };
 		59C3CDC1274D2F220043BA77 /* EncodableToDataMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodableToDataMapper.swift; sourceTree = "<group>"; };
 		59C3CDC3274D36360043BA77 /* DeleteConfigInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteConfigInteractor.swift; sourceTree = "<group>"; };
@@ -167,14 +163,8 @@
 		59F4597427597FF7008F3BC8 /* AblyConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyConnector.swift; sourceTree = "<group>"; };
 		59F45978275A434A008F3BC8 /* StoreRealTimeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRealTimeProvider.swift; sourceTree = "<group>"; };
 		59F4597A275A48AD008F3BC8 /* StoreRealTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRealTime.swift; sourceTree = "<group>"; };
-		59F4597C275A50FD008F3BC8 /* UserQueryProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserQueryProvider.swift; sourceTree = "<group>"; };
 		7D4ED1A7740032DA6209723F /* Pods_MagicBell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MagicBell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81C27FF31812D07F0A77CA5D /* Pods-MagicBell.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell.debug.xcconfig"; path = "Target Support Files/Pods-MagicBell/Pods-MagicBell.debug.xcconfig"; sourceTree = "<group>"; };
-		D2153EE4274E4679009C2DDC /* LoginInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInteractor.swift; sourceTree = "<group>"; };
-		D2153EE6274E4683009C2DDC /* LogoutInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutInteractor.swift; sourceTree = "<group>"; };
-		D2153EEC274E4F77009C2DDC /* GetUserQueryInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserQueryInteractor.swift; sourceTree = "<group>"; };
-		D2153EEE274E503E009C2DDC /* StoreUserQueryInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUserQueryInteractor.swift; sourceTree = "<group>"; };
-		D2153EF0274E5169009C2DDC /* DeleteUserQueryInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteUserQueryInteractor.swift; sourceTree = "<group>"; };
 		D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDirector.swift; sourceTree = "<group>"; };
 		D2CBA51F275121C2002F1E44 /* NotificationFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = NotificationFragment.graphql; sourceTree = "<group>"; };
 		D2CBA52127512462002F1E44 /* PageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageInfo.swift; sourceTree = "<group>"; };
@@ -218,7 +208,6 @@
 			isa = PBXGroup;
 			children = (
 				593883AF27603023001D38FC /* SendPushSubscriptionInteractor.swift */,
-				593883B327603773001D38FC /* SaveDeviceTokenInteractor.swift */,
 				593883B627603B9B001D38FC /* DeletePushSubscriptionInteractor.swift */,
 			);
 			path = Interactor;
@@ -294,7 +283,6 @@
 			children = (
 				59F4597327597FEA008F3BC8 /* StoreRealTime */,
 				59569BA9274F7DE400FF1AA6 /* Store */,
-				59C3CDB8274CD36E0043BA77 /* User */,
 				59799E2F2746583200BFB375 /* Config */,
 				59799E562746609A00BFB375 /* Notification */,
 				59799E5E274660AD00BFB375 /* UserPreferences */,
@@ -306,6 +294,7 @@
 		59799E35274659B900BFB375 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				59B2DDAA276AB43B0038B0EA /* Extension */,
 				593883BD2761EB9E001D38FC /* Logger */,
 				59C12ED2274712F200311D24 /* Error */,
 				59799E3C27465B8800BFB375 /* Network */,
@@ -394,6 +383,15 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
+		59B2DDAA276AB43B0038B0EA /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				59B2DDAB276AB4490038B0EA /* String+Data.swift */,
+				59B2DDAD276B5C4C0038B0EA /* CodingKey+JSON.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		59C12EC82746DB9800311D24 /* PushSubscription */ = {
 			isa = PBXGroup;
 			children = (
@@ -425,16 +423,6 @@
 				59C3CDC5274D4ED40043BA77 /* ErrorEntity.swift */,
 			);
 			path = Error;
-			sourceTree = "<group>";
-		};
-		59C3CDB8274CD36E0043BA77 /* User */ = {
-			isa = PBXGroup;
-			children = (
-				59C3CDBD274D2BDB0043BA77 /* UserProvider.swift */,
-				59F4597C275A50FD008F3BC8 /* UserQueryProvider.swift */,
-				D2153EE3274E465F009C2DDC /* Interactors */,
-			);
-			path = User;
 			sourceTree = "<group>";
 		};
 		59EF99A727446D6900FB2378 = {
@@ -472,6 +460,7 @@
 			isa = PBXGroup;
 			children = (
 				59799E302746587000BFB375 /* MagicBell.swift */,
+				59B2DDA827696CA70038B0EA /* UserBell.swift */,
 				59799E32274658B100BFB375 /* SDKProvider.swift */,
 				59799E35274659B900BFB375 /* Common */,
 				59799E34274659B100BFB375 /* Features */,
@@ -518,18 +507,6 @@
 				E762A2AAD51FE9D565FF0B75 /* Pods-MagicBell-MagicBellTests.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		D2153EE3274E465F009C2DDC /* Interactors */ = {
-			isa = PBXGroup;
-			children = (
-				D2153EEC274E4F77009C2DDC /* GetUserQueryInteractor.swift */,
-				D2153EEE274E503E009C2DDC /* StoreUserQueryInteractor.swift */,
-				D2153EF0274E5169009C2DDC /* DeleteUserQueryInteractor.swift */,
-				D2153EE4274E4679009C2DDC /* LoginInteractor.swift */,
-				D2153EE6274E4683009C2DDC /* LogoutInteractor.swift */,
-			);
-			path = Interactors;
 			sourceTree = "<group>";
 		};
 		D2153EF2274E78B1009C2DDC /* Interactor */ = {
@@ -764,24 +741,23 @@
 				59569BA5274F7B8A00FF1AA6 /* GraphQLRequest.swift in Sources */,
 				59827B55275FD7C9009D93D8 /* AblyMessageProcessor.swift in Sources */,
 				D2CBA520275121C2002F1E44 /* NotificationFragment.graphql in Sources */,
+				59B2DDAE276B5C4C0038B0EA /* CodingKey+JSON.swift in Sources */,
 				59C3CDC0274D2CC20043BA77 /* GetConfigInteractor.swift in Sources */,
 				D2D277262747C9CF00B5F69E /* ActionNotificationNetworkDataSource.swift in Sources */,
 				59C3CDC4274D36360043BA77 /* DeleteConfigInteractor.swift in Sources */,
 				59799E5C2746609A00BFB375 /* NotificationNetworkDataSource.swift in Sources */,
 				59C12ECF2746DC7100311D24 /* PushSubscription.swift in Sources */,
 				59799E4427465C9200BFB375 /* String+HMAC.swift in Sources */,
-				D2153EE7274E4683009C2DDC /* LogoutInteractor.swift in Sources */,
 				59B2DDA72769682C0038B0EA /* PushSubscriptionDirector.swift in Sources */,
-				D2153EED274E4F77009C2DDC /* GetUserQueryInteractor.swift in Sources */,
 				D2CBA52227512462002F1E44 /* PageInfo.swift in Sources */,
 				D2CBA52F275128FA002F1E44 /* StorePredicate.swift in Sources */,
 				59B2DDA3276959AC0038B0EA /* UserPreferencesDirector.swift in Sources */,
 				59F4597527597FF7008F3BC8 /* AblyConnector.swift in Sources */,
 				59799E3F27465BB500BFB375 /* DataToDecodableMapper.swift in Sources */,
+				59B2DDAC276AB4490038B0EA /* String+Data.swift in Sources */,
 				D2CBA529275125B3002F1E44 /* GraphQLRepresentable.swift in Sources */,
 				593883C627620F45001D38FC /* UserPreferencesMapper.swift in Sources */,
 				D2C5A1B02768C25500C20D74 /* StoreDirector.swift in Sources */,
-				59F4597D275A50FD008F3BC8 /* UserQueryProvider.swift in Sources */,
 				59C12ED42747131000311D24 /* MappingError.swift in Sources */,
 				59C12ECC2746DBC200311D24 /* PushSubscriptionNetworkDataSource.swift in Sources */,
 				D2CBA53327513D6A002F1E44 /* GraphQLFragment.swift in Sources */,
@@ -789,7 +765,6 @@
 				59799E4727465F8F00BFB375 /* ConfigProvider.swift in Sources */,
 				59799E65274660AD00BFB375 /* UserPreferencesProvider.swift in Sources */,
 				593883BF2761EBA9001D38FC /* LogLevel.swift in Sources */,
-				59C3CDBE274D2BDB0043BA77 /* UserProvider.swift in Sources */,
 				593883B2276036BC001D38FC /* DeviceTokenQuery.swift in Sources */,
 				59799E67274660AD00BFB375 /* UserPreferencesEntity.swift in Sources */,
 				59F4596E2758C739008F3BC8 /* ActionNotificationInteractor.swift in Sources */,
@@ -801,23 +776,21 @@
 				593883B727603B9B001D38FC /* DeletePushSubscriptionInteractor.swift in Sources */,
 				D2CBA53127513747002F1E44 /* StoreContext.swift in Sources */,
 				59569BB0274F838D00FF1AA6 /* StoreQuery.swift in Sources */,
-				D2153EEF274E503E009C2DDC /* StoreUserQueryInteractor.swift in Sources */,
 				59F4596B2758C39F008F3BC8 /* FetchStorePageInteractor.swift in Sources */,
 				59799E66274660AD00BFB375 /* UserPreferencesNetworkDataSource.swift in Sources */,
 				59799E69274662E900BFB375 /* NotificationProvider.swift in Sources */,
 				59F459722758D0DB008F3BC8 /* GetNotificationInteractor.swift in Sources */,
+				59B2DDA927696CA70038B0EA /* UserBell.swift in Sources */,
 				593883C42761F581001D38FC /* UpdateUserPreferencesInteractor.swift in Sources */,
 				59F45979275A434A008F3BC8 /* StoreRealTimeProvider.swift in Sources */,
 				59799E3B27465A0E00BFB375 /* UserQuery.swift in Sources */,
 				59799E5D2746609A00BFB375 /* Notification.swift in Sources */,
-				D2153EF1274E5169009C2DDC /* DeleteUserQueryInteractor.swift in Sources */,
 				59E92013275400F500D8877A /* NotificationStore.swift in Sources */,
 				D2CBA52427512499002F1E44 /* Edge.swift in Sources */,
 				59C12ED12746E48100311D24 /* PushSubscriptionProvider.swift in Sources */,
 				59799E4027465BB500BFB375 /* HttpClient.swift in Sources */,
 				59569BB52750FD8700FF1AA6 /* GetStorePagesInteractor.swift in Sources */,
 				D2D2772B2747D43200B5F69E /* PushSubscriptionQuery.swift in Sources */,
-				593883B427603773001D38FC /* SaveDeviceTokenInteractor.swift in Sources */,
 				59C3CDBC274D039D0043BA77 /* MagicBellError.swift in Sources */,
 				59799E312746587000BFB375 /* MagicBell.swift in Sources */,
 				59799E38274659D800BFB375 /* Environment.swift in Sources */,
@@ -832,7 +805,6 @@
 				5953192E27561BA8006673E9 /* StorePredicateValidator.swift in Sources */,
 				59F4597B275A48AD008F3BC8 /* StoreRealTime.swift in Sources */,
 				593883B027603023001D38FC /* SendPushSubscriptionInteractor.swift in Sources */,
-				D2153EE5274E4679009C2DDC /* LoginInteractor.swift in Sources */,
 				59799E542746604F00BFB375 /* ConfigNetworkDataSource.swift in Sources */,
 				D2E038282767943F0077FFF3 /* NotificationStoreObserver.swift in Sources */,
 				59C3CDC6274D4ED40043BA77 /* ErrorEntity.swift in Sources */,

@@ -7,9 +7,9 @@
 
 import Foundation
 
-public struct PageInfo: Codable {
-    public let endCursor: String?
-    public let hasNextPage: Bool
-    public let hasPreviousPage: Bool
-    public let startCursor: String?
+struct PageInfo: Codable {
+    let endCursor: String?
+    let hasNextPage: Bool
+    let hasPreviousPage: Bool
+    let startCursor: String?
 }

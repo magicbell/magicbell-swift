@@ -13,16 +13,13 @@ protocol StoreRealTimeComponent {
 
 class DefaultStoreRealTimeModule: StoreRealTimeComponent {
     private let configComponent: ConfigComponent
-    private let userQueryComponent: UserQueryComponent
     private let environment: Environment
     private let logger: Logger
 
     init(configComponent: ConfigComponent,
-         userQueryComponent: UserQueryComponent,
          environment: Environment,
          logger: Logger) {
         self.configComponent = configComponent
-        self.userQueryComponent = userQueryComponent
         self.environment = environment
         self.logger = logger
     }

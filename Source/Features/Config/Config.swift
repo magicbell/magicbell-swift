@@ -7,16 +7,16 @@
 
 import Foundation
 
-public class Config: Codable {
-    public let channel: String
+class Config: Codable {
+    let channel: String
 
-    required public init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: ContainerKeys.self)
         let configContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .websocket)
         channel = try configContainer.decode(String.self, forKey: .channel)
     }
 
-    public func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: ContainerKeys.self)
         var configContainer = container.nestedContainer(keyedBy: CodingKeys.self, forKey: .websocket)
         try configContainer.encode(channel, forKey: .channel)

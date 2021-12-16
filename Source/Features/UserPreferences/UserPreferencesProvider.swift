@@ -17,16 +17,13 @@ class DefaultUserPreferencesModule: UserPreferencesComponent {
     private let logger: Logger
     private let httpClient: HttpClient
     private let executor: Executor
-    private let userQueryComponent: UserQueryComponent
 
     init(
         logger: Logger,
         httpClient: HttpClient,
-        executor: Executor,
-        userQueryComponent: UserQueryComponent
+        executor: Executor
     ) {
         self.logger = logger
-        self.userQueryComponent = userQueryComponent
         self.httpClient = httpClient
         self.executor = executor
     }

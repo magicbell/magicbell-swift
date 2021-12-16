@@ -19,12 +19,16 @@ public protocol StoreDirector {
     /// - Parameters:
     ///    - predicate: Notification store's predicate.
     func disposeWith(predicate: StorePredicate)
-
-    /// Disposes all created stores.
-    func disposeAll()
 }
 
-class RealTimeByPredicateStoreDirector: StoreDirector {
+protocol InternalStoreDirector: StoreDirector {
+
+    /// Logout
+    func logout()
+}
+
+
+class RealTimeByPredicateStoreDirector: InternalStoreDirector {
 
     private var stores: [NotificationStore] = []
 
@@ -34,6 +38,7 @@ class RealTimeByPredicateStoreDirector: StoreDirector {
     private let actionNotificationInteractor: ActionNotificationInteractor
     private let deleteNotificationInteractor: DeleteNotificationInteractor
     private let getConfigInteractor: GetConfigInteractor
+    private let deleteConfigInteractor: DeleteConfigInteractor
 
     private let storeRealTime: StoreRealTime
 
@@ -44,6 +49,7 @@ class RealTimeByPredicateStoreDirector: StoreDirector {
         actionNotificationInteractor: ActionNotificationInteractor,
         deleteNotificationInteractor: DeleteNotificationInteractor,
         getConfigInteractor: GetConfigInteractor,
+        deleteConfigInteractor: DeleteConfigInteractor,
         storeRealTime: StoreRealTime
     ) {
         self.logger = logger
@@ -52,16 +58,14 @@ class RealTimeByPredicateStoreDirector: StoreDirector {
         self.actionNotificationInteractor = actionNotificationInteractor
         self.deleteNotificationInteractor = deleteNotificationInteractor
         self.getConfigInteractor = getConfigInteractor
+        self.deleteConfigInteractor = deleteConfigInteractor
         self.storeRealTime = storeRealTime
 
         startRealTimeConnection()
     }
 
     deinit {
-        disposeAll()
-
-        // Stop listening for events
-        storeRealTime.stopListening()
+        logout()
     }
 
     private func startRealTimeConnection() {
@@ -107,10 +111,12 @@ class RealTimeByPredicateStoreDirector: StoreDirector {
         }
     }
 
-    func disposeAll() {
+    func logout() {
         stores.forEach { store in
             storeRealTime.removeObserver(store)
         }
         stores.removeAll()
+        _ = deleteConfigInteractor.execute()
+        storeRealTime.stopListening()
     }
 }

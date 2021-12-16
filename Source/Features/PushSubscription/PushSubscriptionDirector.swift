@@ -10,18 +10,18 @@ import Harmony
 
 protocol PushSubscriptionDirector {
     /// Sends a push subscription
-    func sendPushSubscription()
+    func sendPushSubscription(_ deviceToken: String)
     
     /// Deletes a push subscription
-    func getDeletePushSubscription()
+    func deletePushSubscription(_ deviceToken: String)
 }
 
 class DefaultPushSubscriptionDirector: PushSubscriptionDirector {
+
     private let logger: Logger
     private let userQuery: UserQuery
     private let sendPushSubscriptionInteractor: SendPushSubscriptionInteractor
     private let deletePushSubscriptionInteractor: DeletePushSubscriptionInteractor
-    
     
     init(
         logger: Logger,
@@ -35,28 +35,28 @@ class DefaultPushSubscriptionDirector: PushSubscriptionDirector {
         self.deletePushSubscriptionInteractor = deletePushSubscriptionInteractor
     }
     
-    func sendPushSubscription() {
+    func sendPushSubscription(_ deviceToken: String) {
         sendPushSubscriptionInteractor
-            .execute(userQuery: userQuery)
+            .execute(deviceToken: deviceToken, userQuery: userQuery)
             .then { pushSubscription in
                 self.logger.info(tag: magicBellTag, "Push subcription is created \(pushSubscription)")
             }.fail { error in
-                switch error {
-                case is CoreError.NotFound:
-                    // Nothing to be done. Token might not exist yet.
-                    break
-                default:
-                    self.logger.info(tag: magicBellTag, "Send device token failed: \(error)")
+                self.logger.info(tag: magicBellTag, "Send device token failed: \(error)")
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(10)) { [weak self] in
+                    self?.sendPushSubscription(deviceToken)
                 }
             }
     }
     
-    func getDeletePushSubscription() {
-        deletePushSubscriptionInteractor.execute(userQuery: userQuery)
+    func deletePushSubscription(_ deviceToken: String) {
+        deletePushSubscriptionInteractor.execute(deviceToken: deviceToken, userQuery: userQuery)
             .then { _ in
                 self.logger.info(tag: magicBellTag, "Device token was unregistered succesfully")
             }.fail { error in
                 self.logger.error(tag: magicBellTag, "Device token couldn't be unregistered: \(error)")
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(10)) { [weak self] in
+                    self?.deletePushSubscription(deviceToken)
+                }
             }
     }
 }

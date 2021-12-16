@@ -16,9 +16,14 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var actionsItem: BadgeBarButtonItem!
+    @IBOutlet weak var magicBellStoreItem: BadgeBarButtonItem!
 
-    private var store = magicBell.store!.with(predicate: StorePredicate())
-    private var unreadStore = magicBell.store!.with(predicate: StorePredicate(read: .unread))
+    private var userBell = magicBell.forUser(email: "javier@mobilejazz.com")
+    private lazy var store = userBell.store.with(predicate: StorePredicate())
+    private lazy var unreadStore = userBell.store.with(predicate: StorePredicate(read: .unread))
+
+    private var magicUserBell = magicBell.forUser(email: "magicbell@mobilejazz.com")
+    private lazy var magicStore = magicUserBell.store.with(predicate: StorePredicate())
 
     var navigationBarColor = UIColor(rgb: 0x6113A3) {
         didSet { applyBarStyle() }
@@ -44,9 +49,21 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
 
         reloadStore()
 
+        magicBell.setDeviceToken(deviceToken: "740f4707 bebcf74f 9b7c25d4 8e335894 5f6aa01d a5ddb387 462c7eaf 61bb78ad".data(using: .utf8)!)
+
         store.addContentObserver(self)
         store.addCountObserver(self)
         unreadStore.addCountObserver(self)
+
+        magicStore.addCountObserver(self)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
+            magicBell.removeUserFor(email: "magicbell@mobilejazz.com")
+            self.magicStore.fetch { result in
+                try! result.get().count
+            }
+        }
+
     }
 
     // swiftlint:disable empty_count
@@ -114,14 +131,10 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
                 guard let email = alert.textFields?.first?.text else {
                     return
                 }
-                magicBell.login(email: email)
+                self.userBell = magicBell.forUser(email: email)
                 self.reloadStore()
             })
             self.present(alert, animated: true, completion: nil)
-        })
-
-        alert.addAction(UIAlertAction(title: "Logout", style: .destructive) { _ in
-            magicBell.logout()
         })
 
         alert.addAction(UIAlertAction(title: "Customize Predicate", style: .default) { _ in
@@ -153,7 +166,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         if store !== unreadStore {
             store.removeCountObserver(self)
         }
-        store = magicBell.store!.with(predicate: predicate)
+        store = userBell.store.with(predicate: predicate)
         store.addContentObserver(self)
         store.addCountObserver(self)
         reloadStore()
@@ -352,6 +365,10 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     }
 
     func store(_ store: NotificationStore, didChangeUnseenCount count: Int) {
-        actionsItem.badgeNumber = count
+        if store === magicStore {
+            magicBellStoreItem.badgeNumber = count
+        } else {
+            actionsItem.badgeNumber = count
+        }
     }
 }

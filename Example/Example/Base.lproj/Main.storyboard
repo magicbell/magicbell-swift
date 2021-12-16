@@ -71,11 +71,14 @@
                                                 <action selector="menuAction:" destination="lZK-lU-qnt" id="yg7-Mb-toj"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="EZt-mq-D8C" customClass="BadgeBarButtonItem" customModule="Example" customModuleProvider="target">
-                                            <connections>
-                                                <action selector="globalAction:" destination="lZK-lU-qnt" id="E1C-ZO-LjS"/>
-                                            </connections>
-                                        </barButtonItem>
+                                        <rightBarButtonItems>
+                                            <barButtonItem title="Item" image="magicbellicon" id="GM4-eK-tpy" customClass="BadgeBarButtonItem" customModule="Example" customModuleProvider="target"/>
+                                            <barButtonItem systemItem="action" id="EZt-mq-D8C" customClass="BadgeBarButtonItem" customModule="Example" customModuleProvider="target">
+                                                <connections>
+                                                    <action selector="globalAction:" destination="lZK-lU-qnt" id="E1C-ZO-LjS"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </rightBarButtonItems>
                                     </navigationItem>
                                 </items>
                                 <connections>
@@ -95,8 +98,10 @@
                             <constraint firstItem="sd2-16-lC1" firstAttribute="leading" secondItem="cIQ-wn-H30" secondAttribute="leading" id="sPG-oW-DrB"/>
                         </constraints>
                     </view>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="actionsItem" destination="EZt-mq-D8C" id="oYL-Za-eS6"/>
+                        <outlet property="magicBellStoreItem" destination="GM4-eK-tpy" id="pSR-bV-lQJ"/>
                         <outlet property="navigationBar" destination="sd2-16-lC1" id="cV2-N7-dHm"/>
                         <outlet property="tableView" destination="6oO-SZ-63H" id="SGG-jg-fy2"/>
                     </connections>
@@ -107,6 +112,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="magicbellicon" width="25" height="25"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

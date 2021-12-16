@@ -9,7 +9,7 @@ import Foundation
 import Harmony
 
 protocol StoreComponent {
-    func storeDirector(with userQuery: UserQuery) -> StoreDirector
+    func storeDirector(with userQuery: UserQuery) -> InternalStoreDirector
 }
 
 class DefaultStoreModule: StoreComponent {
@@ -58,7 +58,7 @@ class DefaultStoreModule: StoreComponent {
         )
     }
 
-    func storeDirector(with userQuery: UserQuery) -> StoreDirector {
+    func storeDirector(with userQuery: UserQuery) -> InternalStoreDirector {
         RealTimeByPredicateStoreDirector(
             logger: logger,
             userQuery: userQuery,
@@ -66,6 +66,7 @@ class DefaultStoreModule: StoreComponent {
             actionNotificationInteractor: notificationComponent.getActionNotificationInteractor(),
             deleteNotificationInteractor: notificationComponent.getDeleteNotificationInteractor(),
             getConfigInteractor: configComponent.getGetConfigInteractor(),
+            deleteConfigInteractor: configComponent.getDeleteConfigInteractor(),
             storeRealTime: realTimeComponent.createStoreRealmTime(userQuery: userQuery)
         )
     }

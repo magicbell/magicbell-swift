@@ -10,11 +10,11 @@ import Harmony
 
 protocol SDKComponent {
     func getLogger() -> Logger
-    func getUserComponent() -> UserComponent
     func getStoreComponent() -> StoreComponent
     func getStoreRealTimeComponent() -> StoreRealTimeComponent
     func getPushSubscriptionComponent() -> PushSubscriptionComponent
     func getUserPreferencesComponent() -> UserPreferencesComponent
+    func getConfigComponent() -> ConfigComponent
 }
 
 class DefaultSDKModule: SDKComponent {
@@ -39,30 +39,16 @@ class DefaultSDKModule: SDKComponent {
         httpClient: httpClient,
         executor: executorComponent.mainExecutor
     )
-
-    private lazy var userQueryComponent = DefaultUserQueryModule(
-        executor: executorComponent.mainExecutor
-    )
-    private lazy var userComponent: UserComponent = DefaultUserComponent(
-        logger: logger,
-        configComponent: configComponent,
-        userQueryComponent: userQueryComponent,
-        storeRealTimeComponent: storeRealTimeComponent,
-        pushSubscriptionComponent: pushSubscriptionComponent,
-        executor: executorComponent.mainExecutor
-    )
     private lazy var userPreferencesComponent = DefaultUserPreferencesModule(
         logger: logger,
         httpClient: httpClient,
-        executor: executorComponent.mainExecutor,
-        userQueryComponent: userQueryComponent
+        executor: executorComponent.mainExecutor
     )
     private lazy var notificationComponent = DefaultNotificationComponent(
         httpClient: httpClient,
         executor: executorComponent.mainExecutor
     )
     private lazy var pushSubscriptionComponent = DefaultPushSubscriptionModule(
-        userQueryComponent: userQueryComponent,
         httpClient: httpClient,
         executor: executorComponent.mainExecutor,
         logger: logger
@@ -77,7 +63,6 @@ class DefaultSDKModule: SDKComponent {
     )
     private lazy var storeRealTimeComponent = DefaultStoreRealTimeModule(
         configComponent: configComponent,
-        userQueryComponent: userQueryComponent,
         environment: environment,
         logger: logger
     )
@@ -86,10 +71,6 @@ class DefaultSDKModule: SDKComponent {
 
     func getLogger() -> Logger {
         return logger
-    }
-
-    func getUserComponent() -> UserComponent {
-        return userComponent
     }
 
     func getStoreComponent() -> StoreComponent {
@@ -107,9 +88,13 @@ class DefaultSDKModule: SDKComponent {
     func getUserPreferencesComponent() -> UserPreferencesComponent {
         return userPreferencesComponent
     }
+
+    func getConfigComponent() -> ConfigComponent {
+        return configComponent
+    }
 }
 
-public protocol ExecutorComponent {
+protocol ExecutorComponent {
     var mainExecutor: DispatchQueueExecutor { get }
 }
 

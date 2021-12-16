@@ -7,11 +7,11 @@
 
 import Harmony
 
-public class EncodableToDataMapper<T>: Mapper<T, Data> where T: Encodable {
+class EncodableToDataMapper<T>: Mapper<T, Data> where T: Encodable {
 
     private let encoder = JSONEncoder()
 
-    public override func map(_ from: T) throws -> Data {
+    override func map(_ from: T) throws -> Data {
         do {
             let value = try encoder.encode(from)
             return value

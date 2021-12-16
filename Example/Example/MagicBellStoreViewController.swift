@@ -49,21 +49,10 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
 
         reloadStore()
 
-        magicBell.setDeviceToken(deviceToken: "740f4707 bebcf74f 9b7c25d4 8e335894 5f6aa01d a5ddb387 462c7eaf 61bb78ad".data(using: .utf8)!)
-
         store.addContentObserver(self)
         store.addCountObserver(self)
         unreadStore.addCountObserver(self)
-
         magicStore.addCountObserver(self)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5)) {
-            magicBell.removeUserFor(email: "magicbell@mobilejazz.com")
-            self.magicStore.fetch { result in
-                try! result.get().count
-            }
-        }
-
     }
 
     // swiftlint:disable empty_count

@@ -8,6 +8,7 @@
 import Foundation
 import Harmony
 
+/// An store director is the class responsible of creating and managing `NotificationStore` objects.
 public protocol StoreDirector {
     /// Returns a notification store for the given predicate.
     /// - Parameters:
@@ -21,8 +22,41 @@ public protocol StoreDirector {
     func disposeWith(predicate: StorePredicate)
 }
 
-protocol InternalStoreDirector: StoreDirector {
+public extension StoreDirector {
+    /// Return the store for all notificaionts
+    /// - Returns: A notification store
+    func forAll() -> NotificationStore {
+        with(predicate: StorePredicate())
+    }
 
+    /// Return the store for unread notificaionts
+    /// - Returns: A notification store
+    func forUnread() -> NotificationStore {
+        with(predicate: StorePredicate(read: .unread))
+    }
+
+    /// Return the store for read notificaionts
+    /// - Returns: A notification store
+    func forRead() -> NotificationStore {
+        with(predicate: StorePredicate(read: .read))
+    }
+
+    /// Return the store for notifications with the given categories
+    /// - Parameter categories: The list of categories
+    /// - Returns: A notification store
+    func forCategories(_ categories: [String]) -> NotificationStore {
+        with(predicate: StorePredicate(categories: categories))
+    }
+
+    /// Return the store for notifications with the given topics
+    /// - Parameter categories: The list of topics
+    /// - Returns: A notification store
+    func forTopics(_ topics: [String]) -> NotificationStore {
+        with(predicate: StorePredicate(topics: topics))
+    }
+}
+
+protocol InternalStoreDirector: StoreDirector {
     /// Logout
     func logout()
 }
@@ -88,7 +122,6 @@ class RealTimeByPredicateStoreDirector: InternalStoreDirector {
         }
 
         let store = NotificationStore(
-            name: UUID().uuidString,
             predicate: predicate,
             userQuery: userQuery,
             fetchStorePageInteractor: fetchStorePageInteractor,

@@ -13,24 +13,24 @@ public protocol UserPreferencesDirector {
     /// Returns the user preferences.
     /// - Parameters:
     ///     - completion: Closure with a `Result`. Success returns the `UserPreferences`.
-    func obtainUserPreferences(completion: @escaping(Result<UserPreferences, Error>) -> Void)
+    func fetch(completion: @escaping(Result<UserPreferences, Error>) -> Void)
 
     /// Updates the user preferences. Update can be partial and only will affect the categories included in the object being sent.
     /// - Parameters:
     ///     - completion: Closure with a `Result`. Success returns the `UserPreferences`.
-    func updateUserPreferences(_ userPreferences: UserPreferences, completion: @escaping(Result<UserPreferences, Error>) -> Void)
+    func update(_ userPreferences: UserPreferences, completion: @escaping(Result<UserPreferences, Error>) -> Void)
 
-    /// Returns the notification preferences for a given category.
+    /// Returns the  preferences for a given category.
     /// - Parameters:
     ///     - completion: Closure with a `Result`. Success returns the `Preferences` for the given category.
-    func obtainNotificationPreferences(for category: String, completion: @escaping(Result<Preferences, Error>) -> Void)
+    func fetchPreferences(for category: String, completion: @escaping(Result<Preferences, Error>) -> Void)
 
-    /// Updates the notification preferences for a given category.
+    /// Updates the  preferences for a given category.
     /// - Parameters:
     ///   - preferences: The notification preferences for a given category.
     ///   - category: The category name.
     ///   - completion: Closure with a `Result`. Success returns the `UserPreferences`.
-    func updateNotificationPreferences(_ preferences: Preferences, for category: String, completion: @escaping(Result<Preferences, Error>) -> Void)
+    func updatePreferences(_ preferences: Preferences, for category: String, completion: @escaping(Result<Preferences, Error>) -> Void)
 }
 
 struct DefaultUserPreferencesDirector: UserPreferencesDirector {
@@ -53,7 +53,7 @@ struct DefaultUserPreferencesDirector: UserPreferencesDirector {
     }
 
 
-    func obtainUserPreferences(completion: @escaping(Result<UserPreferences, Error>) -> Void) {
+    func fetch(completion: @escaping(Result<UserPreferences, Error>) -> Void) {
         getUserPreferencesInteractor.execute(userQuery: userQuery)
             .then { userPreferences in
                 completion(.success(userPreferences))
@@ -62,7 +62,7 @@ struct DefaultUserPreferencesDirector: UserPreferencesDirector {
             }
     }
 
-    func updateUserPreferences(_ userPreferences: UserPreferences, completion: @escaping(Result<UserPreferences, Error>) -> Void) {
+    func update(_ userPreferences: UserPreferences, completion: @escaping(Result<UserPreferences, Error>) -> Void) {
         updateUserPreferencesInteractor.execute(userPreferences, userQuery: userQuery)
             .then { userPreferences in
                 completion(.success(userPreferences))
@@ -72,7 +72,7 @@ struct DefaultUserPreferencesDirector: UserPreferencesDirector {
     }
 
 
-    func obtainNotificationPreferences(for category: String, completion: @escaping(Result<Preferences, Error>) -> Void) {
+    func fetchPreferences(for category: String, completion: @escaping(Result<Preferences, Error>) -> Void) {
         getUserPreferencesInteractor.execute(userQuery: userQuery)
             .map { userPreferences in
                 guard let preferences = userPreferences.preferences[category] else {
@@ -91,7 +91,7 @@ struct DefaultUserPreferencesDirector: UserPreferencesDirector {
     ///   - preferences: The notification preferences for a given category.
     ///   - category: The category name.
     ///   - completion: Closure with a `Result`. Success returns the `UserPreferences`.
-    func updateNotificationPreferences(_ preferences: Preferences, for category: String, completion: @escaping(Result<Preferences, Error>) -> Void) {
+    func updatePreferences(_ preferences: Preferences, for category: String, completion: @escaping(Result<Preferences, Error>) -> Void) {
         let userPreferences = UserPreferences([category: preferences])
         updateUserPreferencesInteractor.execute(userPreferences, userQuery: userQuery)
             .map { userPreferences in

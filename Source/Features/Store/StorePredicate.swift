@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// The notificaiton store predicate
 public struct StorePredicate: Hashable, Equatable {
     public enum Read: Int {
         case read
@@ -32,6 +33,13 @@ public struct StorePredicate: Hashable, Equatable {
     public let categories: [String]
     public let topics: [String]
 
+    /// Predicate default initializer
+    /// - Parameters:
+    ///   - read: The read status. Defaults to `.unspecified`.
+    ///   - seen: The seen status. Defaults to `.unspecified`.
+    ///   - archived: The archived status. Defaults to `.unspecified`.
+    ///   - categories: The list of categories. Defaults to empty array.
+    ///   - topics: The list of topics. Defaults to empty array.
     public init(read: StorePredicate.Read = .unspecified,
                 seen: StorePredicate.Seen = .unspecified,
                 archived: StorePredicate.Archived = .unspecified,
@@ -73,7 +81,7 @@ public struct StorePredicate: Hashable, Equatable {
 }
 
 extension StorePredicate {
-    func matchNotification(_ notification: Notification) -> Bool {
+    func match(_ notification: Notification) -> Bool {
         let validator = StorePredicateValidator(storePredicate: self)
         return validator.validateNotification(notification)
     }

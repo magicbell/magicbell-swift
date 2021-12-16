@@ -7,11 +7,16 @@
 
 import Foundation
 
+///
+/// A MagicBell notification object
+///
 public struct Notification: Codable {
     public let id: String
     public let title: String?
     public let actionURL: String?
-    public let content, category, topic: String?
+    public let content: String?
+    public let category: String?
+    public let topic: String?
     public let customAttributes: [String: Any]?
     public let recipient: Recipient?
     public internal(set) var seenAt: Date?

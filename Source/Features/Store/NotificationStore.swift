@@ -7,6 +7,10 @@
 
 import Harmony
 
+///
+/// The NotificationStore class represents a collection of MagicBell notifications.
+///
+// swiftlint:disable type_body_length
 public class NotificationStore: StoreRealTimeObserver {
 
     private let pageSize = 20
@@ -15,12 +19,13 @@ public class NotificationStore: StoreRealTimeObserver {
     private let actionNotificationInteractor: ActionNotificationInteractor
     private let deleteNotificationInteractor: DeleteNotificationInteractor
 
-    public let name: String
+    /// The predicate of the store
     public let predicate: StorePredicate
 
     private let userQuery: UserQuery
     private var edges: [Edge<Notification>] = []
 
+    /// Total  count of notifications
     public private(set) var totalCount: Int = 0 {
         didSet {
             if oldValue != totalCount {
@@ -28,6 +33,7 @@ public class NotificationStore: StoreRealTimeObserver {
             }
         }
     }
+    /// Total of unread notifications
     public private(set) var unreadCount: Int = 0 {
         didSet {
             if oldValue != unreadCount {
@@ -35,6 +41,7 @@ public class NotificationStore: StoreRealTimeObserver {
             }
         }
     }
+    /// Total of unseen notifications
     public private(set) var unseenCount: Int = 0 {
         didSet {
             if oldValue != unseenCount {
@@ -42,20 +49,18 @@ public class NotificationStore: StoreRealTimeObserver {
             }
         }
     }
+    /// `true` if next page is available, `false` otherwise.
+    public private(set) var hasNextPage = true
 
     private let logger: Logger
-
     private var nextPageCursor: String?
-    public private(set) var hasNextPage = true
     
-    init(name: String,
-         predicate: StorePredicate,
+    init(predicate: StorePredicate,
          userQuery: UserQuery,
          fetchStorePageInteractor: FetchStorePageInteractor,
          actionNotificationInteractor: ActionNotificationInteractor,
          deleteNotificationInteractor: DeleteNotificationInteractor,
          logger: Logger) {
-        self.name = name
         self.predicate = predicate
         self.userQuery = userQuery
         self.fetchStorePageInteractor = fetchStorePageInteractor
@@ -67,12 +72,45 @@ public class NotificationStore: StoreRealTimeObserver {
     private var contentObservers = NSHashTable<AnyObject>.weakObjects()
     private var countObservers = NSHashTable<AnyObject>.weakObjects()
 
+    /// Number of notifications loaded in the store
     public var count: Int {
         return edges.count
     }
 
     public subscript(index: Int) -> Notification {
         return edges[index].node
+    }
+
+    /// ForEach notification
+    /// - Parameter closure: enumeration closure
+    public func forEach(closure: (Notification) -> Void) {
+        edges.forEach { edge in
+            closure(edge.node)
+        }
+    }
+
+    /// Add a content observer. Observers are stored in a HashTable with weak references.
+    /// - Parameter observer: The observer
+    public func addContentObserver(_ observer: NotificationStoreContentDelegate) {
+        contentObservers.add(observer)
+    }
+
+    /// Removes a content observer.
+    /// - Parameter observer: The observer
+    public func removeContentObserver(_ observer: NotificationStoreContentDelegate) {
+        contentObservers.remove(observer)
+    }
+
+    /// Add a count observer. Observers are stored in a HashTable with weak references.
+    /// - Parameter observer: The observer
+    public func addCountObserver(_ observer: NotificationStoreCountDelegate) {
+        countObservers.add(observer)
+    }
+
+    /// Removes a count observer.
+    /// - Parameter observer: The observer
+    public func removeCountObserver(_ observer: NotificationStoreCountDelegate) {
+        countObservers.remove(observer)
     }
 
     /// Clears the store and fetches first page.
@@ -369,7 +407,7 @@ public class NotificationStore: StoreRealTimeObserver {
                 markNotificationAsUnread(&notification, with: self.predicate)
             }
 
-            if predicate.matchNotification(notification) {
+            if predicate.match(notification) {
                 edges[storeIndex].node = notification
                 self.forEachContentObserver { $0.store(self, didChangeNotificationAt: [storeIndex]) }
             } else {
@@ -470,22 +508,6 @@ public class NotificationStore: StoreRealTimeObserver {
                 action(countDelegate)
             }
         }
-    }
-
-    public func addContentObserver(_ observer: NotificationStoreContentDelegate) {
-        contentObservers.add(observer)
-    }
-
-    public func removeContentObserver(_ observer: NotificationStoreContentDelegate) {
-        contentObservers.remove(observer)
-    }
-
-    public func addCountObserver(_ observer: NotificationStoreCountDelegate) {
-        countObservers.add(observer)
-    }
-
-    public func removeCountObserver(_ observer: NotificationStoreCountDelegate) {
-        countObservers.remove(observer)
     }
 
     // MARK: - Counter methods

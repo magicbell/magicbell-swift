@@ -367,9 +367,9 @@
 				59799E5F274660AD00BFB375 /* UserPreferencesProvider.swift */,
 				593883C527620F45001D38FC /* UserPreferencesMapper.swift */,
 				593883C727621037001D38FC /* UserPreferences.swift */,
+				59B2DDA2276959AC0038B0EA /* UserPreferencesDirector.swift */,
 				593883C02761F16A001D38FC /* Interactor */,
 				59799E60274660AD00BFB375 /* Data */,
-				59B2DDA2276959AC0038B0EA /* UserPreferencesDirector.swift */,
 			);
 			path = UserPreferences;
 			sourceTree = "<group>";

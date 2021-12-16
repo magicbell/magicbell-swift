@@ -17,34 +17,26 @@ struct GraphQLFragment: GraphQLRepresentable {
     }
 
     var graphQLValue: String {
-        return """
-fragment notification on NotificationsConnection {
-  edges {
-    cursor
-    node {
-      id
-      title
-      content
-      actionUrl
-      archivedAt
-      category
-      topic
-      customAttributes
-      readAt
-      seenAt
-      sentAt
+        let bundle = Bundle(for: MagicBell.self)
+        guard let url = bundle.url(forResource: filename, withExtension: "graphql") else {
+              fatalError("Missing file \(filename).graphql")
+          }
+          guard let string = try? String(contentsOf: url) else {
+              fatalError("Filed to open \(filename).graphql")
+          }
+          return string
     }
-  }
-  pageInfo {
-    endCursor
-    hasNextPage
-    hasPreviousPage
-    startCursor
-  }
-  totalCount
-  unreadCount
-  unseenCount
-}
-"""
+
+    func recursivePathsForResources(type: String, in directoryPath: String) -> [String] {
+        // Enumerators are recursive
+        let enumerator = FileManager.default.enumerator(atPath: directoryPath)
+        var filePaths: [String] = []
+
+        while let filePath = enumerator?.nextObject() as? String {
+
+                filePaths.append(directoryPath.appending( filePath))
+
+        }
+        return filePaths
     }
 }

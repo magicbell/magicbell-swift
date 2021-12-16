@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		007A227C33D771C884141843 /* Pods_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBDB3DF772661CD8506F2170 /* Pods_ExampleTests.framework */; };
 		599A9207275E702600656E32 /* BadgeBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599A9206275E702600656E32 /* BadgeBarButtonItem.swift */; };
 		59EF9A942744700700FB2378 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF9A932744700700FB2378 /* AppDelegate.swift */; };
 		59EF9A962744700700FB2378 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF9A952744700700FB2378 /* SceneDelegate.swift */; };
@@ -16,9 +15,10 @@
 		59EF9A9D2744700800FB2378 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59EF9A9C2744700800FB2378 /* Assets.xcassets */; };
 		59EF9AA02744700800FB2378 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59EF9A9E2744700800FB2378 /* LaunchScreen.storyboard */; };
 		59EF9AAB2744700800FB2378 /* ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF9AAA2744700800FB2378 /* ExampleTests.swift */; };
+		776965E1A7A2A7F986CF8E7D /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4CE6A3904F01E638DB61BDE /* Pods_Example.framework */; };
+		B4ECFAE2524FCD62708A95D5 /* Pods_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E52D96DF5CDA078A45E8877 /* Pods_ExampleTests.framework */; };
 		D2DC15F62758C68000282C27 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC15F52758C68000282C27 /* UIColorExtensions.swift */; };
 		D2DC15F82758CC0B00282C27 /* MagicBellStoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC15F72758CC0B00282C27 /* MagicBellStoreCell.swift */; };
-		D8DBB8727DA68F61143EC060 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D21A5D5410941A8F7C323FD8 /* Pods_Example.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,12 +52,12 @@
 		59EF9AA62744700800FB2378 /* ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		59EF9AAA2744700800FB2378 /* ExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleTests.swift; sourceTree = "<group>"; };
 		59EF9AB02744700800FB2378 /* ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D21A5D5410941A8F7C323FD8 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E52D96DF5CDA078A45E8877 /* Pods_ExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A4CE6A3904F01E638DB61BDE /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2DC15F52758C68000282C27 /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
 		D2DC15F72758CC0B00282C27 /* MagicBellStoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBellStoreCell.swift; sourceTree = "<group>"; };
 		DF44A9CD695AE99752AF8FFD /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		E2DDE89866B11F9F224480D2 /* Pods-ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleTests.release.xcconfig"; path = "Target Support Files/Pods-ExampleTests/Pods-ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
-		EBDB3DF772661CD8506F2170 /* Pods_ExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEF067DB8F5EA953AD527EC5 /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -66,7 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D8DBB8727DA68F61143EC060 /* Pods_Example.framework in Frameworks */,
+				776965E1A7A2A7F986CF8E7D /* Pods_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,7 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				007A227C33D771C884141843 /* Pods_ExampleTests.framework in Frameworks */,
+				B4ECFAE2524FCD62708A95D5 /* Pods_ExampleTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,8 +91,8 @@
 		28F8D55674C3D1D912D2839D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D21A5D5410941A8F7C323FD8 /* Pods_Example.framework */,
-				EBDB3DF772661CD8506F2170 /* Pods_ExampleTests.framework */,
+				A4CE6A3904F01E638DB61BDE /* Pods_Example.framework */,
+				8E52D96DF5CDA078A45E8877 /* Pods_ExampleTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -167,7 +167,7 @@
 				59EF9A8D2744700700FB2378 /* Frameworks */,
 				59EF9A8E2744700700FB2378 /* Resources */,
 				59EF9ACD27447C0900FB2378 /* Run linter */,
-				0760FF729891ED166652955A /* [CP] Embed Pods Frameworks */,
+				8C086CF3DD2A4AD0E583A3E1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -286,23 +286,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0760FF729891ED166652955A /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Example/Pods-Example-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Example/Pods-Example-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Example/Pods-Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		452108832937336FFD228771 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -364,6 +347,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif [ -x \"${PODS_ROOT}/SwiftLint/swiftlint\" ]; then\n    \"${PODS_ROOT}/SwiftLint/swiftlint\"\nelse\n    >&2 echo \"warning: SwiftLint not installed, please run `pod install --repo-update`.\"\nfi\n";
+		};
+		8C086CF3DD2A4AD0E583A3E1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Example/Pods-Example-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Example/Pods-Example-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Example/Pods-Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 

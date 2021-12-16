@@ -60,7 +60,6 @@
 		59E92013275400F500D8877A /* NotificationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E92012275400F500D8877A /* NotificationStore.swift */; };
 		59EF99BC27446D6900FB2378 /* MagicBell.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59EF99B127446D6900FB2378 /* MagicBell.framework */; };
 		59EF99C127446D6900FB2378 /* MagicBellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF99C027446D6900FB2378 /* MagicBellTests.swift */; };
-		59EF99CC27446DAD00FB2378 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 59EF99CB27446DAD00FB2378 /* Podfile */; };
 		59EF9AC52744710300FB2378 /* MagicBell.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 59EF9AC42744710300FB2378 /* MagicBell.podspec */; };
 		59EF9ACB2744792A00FB2378 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 59EF9ACA2744792A00FB2378 /* LICENSE */; };
 		59F4596B2758C39F008F3BC8 /* FetchStorePageInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4596A2758C39F008F3BC8 /* FetchStorePageInteractor.swift */; };
@@ -153,8 +152,7 @@
 		59EF99B127446D6900FB2378 /* MagicBell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MagicBell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59EF99BB27446D6900FB2378 /* MagicBellTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MagicBellTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		59EF99C027446D6900FB2378 /* MagicBellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBellTests.swift; sourceTree = "<group>"; };
-		59EF99CB27446DAD00FB2378 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		59EF9AC42744710300FB2378 /* MagicBell.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = MagicBell.podspec; sourceTree = "<group>"; };
+		59EF9AC42744710300FB2378 /* MagicBell.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = MagicBell.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		59EF9ACA2744792A00FB2378 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		59F4596A2758C39F008F3BC8 /* FetchStorePageInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStorePageInteractor.swift; sourceTree = "<group>"; };
 		59F4596D2758C739008F3BC8 /* ActionNotificationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionNotificationInteractor.swift; sourceTree = "<group>"; };
@@ -430,7 +428,6 @@
 			children = (
 				59EF9AC9274477CD00FB2378 /* Deployment */,
 				59EF9AC6274471A500FB2378 /* Source */,
-				59EF99CB27446DAD00FB2378 /* Podfile */,
 				59EF99BF27446D6900FB2378 /* Tests */,
 				59EF99B227446D6900FB2378 /* Products */,
 				B6A4AD0160030AF76A38354D /* Pods */,
@@ -637,7 +634,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				59EF9ACB2744792A00FB2378 /* LICENSE in Resources */,
-				59EF99CC27446DAD00FB2378 /* Podfile in Resources */,
 				59EF9AC52744710300FB2378 /* MagicBell.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -975,6 +971,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.magicbell.MagicBell;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1003,6 +1000,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.magicbell.MagicBell;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

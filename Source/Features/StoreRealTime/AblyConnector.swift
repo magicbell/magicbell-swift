@@ -13,31 +13,34 @@ class AblyConnector: StoreRealTime {
     private let tag = "AblyConnector"
     
     private let getConfigInteractor: GetConfigInteractor
-    private let userQueryInteractor: GetUserQueryInteractor
+
     private let environment: Environment
     private let logger: Logger
+    private let userQuery: UserQuery
     
     private(set) var status: StoreRealTimeStatus = .disconnected
     private var ablyClient: ARTRealtime?
+    private var config: Config?
     
     private var observers = NSHashTable<AnyObject>.weakObjects()
     
-    internal init(getConfigInteractor: GetConfigInteractor,
-                  userQueryInteractor: GetUserQueryInteractor,
-                  environment: Environment,
-                  logger: Logger) {
+    init(getConfigInteractor: GetConfigInteractor,
+         userQuery: UserQuery,
+         environment: Environment,
+         logger: Logger) {
         self.getConfigInteractor = getConfigInteractor
-        self.userQueryInteractor = userQueryInteractor
+        self.userQuery = userQuery
         self.environment = environment
         self.logger = logger
     }
     
     private var reconnectionTimer: Timer?
-    
-    func startListening() {
+
+    func startListening(with config: Config) {
+        self.config = config
         if status == .disconnected {
             status = .connecting
-            connect()
+            connect(config)
         }
     }
     
@@ -54,44 +57,30 @@ class AblyConnector: StoreRealTime {
         observers.remove(store)
     }
     
-    private func connect() {
-        do {
-            ablyClient?.connection.close()
-            let userQuery = try userQueryInteractor.execute()
-            getConfigInteractor.execute(forceRefresh: false, userQuery: userQuery)
-                .then { config in
-                    let options = ARTClientOptions()
-                    options.authUrl = URL(string: String(format: "%@/ws/auth", self.environment.baseUrl.absoluteString))
-                    options.authMethod = "POST"
-                    let headers = self.generateAblyHeaders(apiKey: self.environment.apiKey,
-                                                           apiSecret: self.environment.apiSecret,
-                                                           isHMACEnabled: self.environment.isHMACEnabled,
-                                                           externalId: userQuery.externalId,
-                                                           email: userQuery.email)
-                    options.authHeaders = headers
+    private func connect(_ config: Config) {
+        ablyClient?.connection.close()
+        let options = ARTClientOptions()
+        options.authUrl = URL(string: String(format: "%@/ws/auth", self.environment.baseUrl.absoluteString))
+        options.authMethod = "POST"
+        let headers = self.generateAblyHeaders(
+            apiKey: self.environment.apiKey,
+            apiSecret: self.environment.apiSecret,
+            isHMACEnabled: self.environment.isHMACEnabled,
+            externalId: self.userQuery.externalId,
+            email: self.userQuery.email
+        )
+        options.authHeaders = headers
 
-                    // Establish connection
-                    self.ablyClient = ARTRealtime(options: options)
+        // Establish connection
+        self.ablyClient = ARTRealtime(options: options)
 
-                    // Listening connection changes
-                    self.startListenConnectionChanges()
+        // Listening connection changes
+        self.startListenConnectionChanges()
 
-                    // Listening events
-                    self.startListeningMessages(channel: config.channel)
-                }
-                .fail { error in
-                    self.logger.info(tag: self.tag, "User Config couldn't be retrieved. Attempting to fetch config and connect to ably in 30 seconds: \(error)")
-                    self.reconnectionTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: false) { _ in
-                        if self.status != .disconnected {
-                            self.connect()
-                        }
-                    }
-                }
-        } catch {
-            logger.info(tag: tag, "\(error)")
-        }
+        // Listening events
+        self.startListeningMessages(channel: config.channel)
     }
-    
+
     private func disconnect() {
         reconnectionTimer?.invalidate()
         reconnectionTimer = nil
@@ -99,7 +88,7 @@ class AblyConnector: StoreRealTime {
         ablyClient = nil
         observers.removeAllObjects()
     }
-    
+
     private func generateAblyHeaders(
         apiKey: String,
         apiSecret: String?,
@@ -107,7 +96,7 @@ class AblyConnector: StoreRealTime {
         externalId: String?,
         email: String?
     ) -> [String: String] {
-        
+
         var headers = ["X-MAGICBELL-API-KEY": apiKey]
         if let apiSecret = apiSecret,
            isHMACEnabled {
@@ -119,7 +108,7 @@ class AblyConnector: StoreRealTime {
                 headers["X-MAGICBELL-USER-HMAC"] = hmac
             }
         }
-        
+
         if let externalId = externalId {
             headers["X-MAGICBELL-USER-EXTERNAL-ID"] = externalId
         }
@@ -128,7 +117,7 @@ class AblyConnector: StoreRealTime {
         }
         return headers
     }
-    
+
     private func startListenConnectionChanges() {
         // Listen connection events
         self.ablyClient?.connection.on { stateChange in
@@ -146,30 +135,31 @@ class AblyConnector: StoreRealTime {
                 self.status = .connecting
                 self.logger.info(tag: self.tag, "Ably is suspended. Retrying every 30 seconds.")
             case .closed:
-                if self.status != .disconnected {
+                if self.status != .disconnected,
+                    let config = self.config {
                     // As ably connection cannot be stablished, notify stores to reload themselves to keep data in sync
                     self.forEachObserver { $0.notifyReloadStore() }
                     self.status = .connecting
-                    self.connect()
+                    self.connect(config)
                 }
             default:
                 break
             }
         }
     }
-    
+
     private func startListeningMessages(channel: String) {
         let channel = ablyClient?.channels.get(channel)
         channel?.subscribe { message in
             self.processAblyMessage(message)
         }
     }
-    
+
     private func processAblyMessage(_ message: ARTMessage) {
         do {
             let ablyMessageProcessor = AblyMessageProcessor(logger: logger)
             let message = try ablyMessageProcessor.processAblyMessage(message)
-            
+
             switch message {
             case .new(let notificationId):
                 forEachObserver { $0.notifyNewNotification(id: notificationId) }
@@ -188,7 +178,7 @@ class AblyConnector: StoreRealTime {
             logger.info(tag: tag, error.localizedDescription)
         }
     }
-    
+
     private func forEachObserver(block: (StoreRealTimeObserver) -> Void) {
         observers.allObjects.forEach {
             if let storeRealTimeObserver = $0 as? StoreRealTimeObserver {

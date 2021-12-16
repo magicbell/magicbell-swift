@@ -8,12 +8,12 @@
 import Foundation
 import Harmony
 
-public protocol HttpClient {
+protocol HttpClient {
     func prepareURLRequest(path: String, externalId: String?, email: String?) -> URLRequest
     func performRequest(_ urlRequest: URLRequest) -> Future<Data>
 }
 
-public class DefaultHttpClient: HttpClient {
+class DefaultHttpClient: HttpClient {
 
     var urlSession: URLSession
     private let environment: Environment
@@ -23,7 +23,7 @@ public class DefaultHttpClient: HttpClient {
         self.environment = environment
     }
 
-    public func prepareURLRequest(path: String, externalId: String?, email: String?) -> URLRequest {
+    func prepareURLRequest(path: String, externalId: String?, email: String?) -> URLRequest {
         var urlRequest = URLRequest(url: environment.baseUrl.appendingPathComponent(path))
 
         urlRequest.addValue(environment.apiKey, forHTTPHeaderField: "X-MAGICBELL-API-KEY")
@@ -34,10 +34,12 @@ public class DefaultHttpClient: HttpClient {
         }
         addIdAndOrEmailHeader(externalId, email, &urlRequest)
 
+        urlRequest.timeoutInterval = 10
+
         return urlRequest
     }
 
-    public func performRequest(_ urlRequest: URLRequest) -> Future<Data> {
+    func performRequest(_ urlRequest: URLRequest) -> Future<Data> {
         Future { resolver in
             urlSession.dataTask(with: urlRequest) { data, response, error in
                 if let error = error {

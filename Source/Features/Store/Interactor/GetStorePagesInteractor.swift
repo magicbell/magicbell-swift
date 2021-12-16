@@ -7,10 +7,10 @@
 
 import Harmony
 
-public struct GetStorePagesInteractor {
+struct GetStorePagesInteractor {
     private let executor: Executor
     private let getStoreNotificationInteractor: Interactor.GetByQuery<[String: StorePage]>
-
+    
     init(
         executor: Executor,
         getStoreNotificationInteractor: Interactor.GetByQuery<[String: StorePage]>
@@ -18,11 +18,11 @@ public struct GetStorePagesInteractor {
         self.executor = executor
         self.getStoreNotificationInteractor = getStoreNotificationInteractor
     }
-
-    public func execute(storePredicate: StorePredicate,
-                        cursorPredicate: CursorPredicate,
-                        userQuery: UserQuery,
-                        in executor: Executor? = nil) -> Future<StorePage> {
+    
+    func execute(storePredicate: StorePredicate,
+                 cursorPredicate: CursorPredicate,
+                 userQuery: UserQuery,
+                 in executor: Executor? = nil) -> Future<StorePage> {
         execute(
             contexts: [
                 StoreContext("data", storePredicate, cursorPredicate)
@@ -36,8 +36,8 @@ public struct GetStorePagesInteractor {
             return store
         }
     }
-
-    public func execute(
+    
+    func execute(
         contexts: [StoreContext],
         userQuery: UserQuery,
         in executor: Executor? = nil

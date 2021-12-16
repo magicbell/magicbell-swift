@@ -14,8 +14,10 @@ class PushSubscriptionNetworkDataSource: PutDataSource, DeleteDataSource {
     private let httpClient: HttpClient
     private let mapper: Mapper<Data, PushSubscription>
 
-    public init(httpClient: HttpClient,
-                mapper: Mapper<Data, PushSubscription>) {
+    init(
+        httpClient: HttpClient,
+        mapper: Mapper<Data, PushSubscription>
+    ) {
         self.httpClient = httpClient
         self.mapper = mapper
     }
@@ -42,15 +44,17 @@ class PushSubscriptionNetworkDataSource: PutDataSource, DeleteDataSource {
                 .performRequest(urlRequest)
                 .map { try self.mapper.map($0) }
         default:
-            query.fatalError(.put, self)
+            assertionFailure("Should never happen")
+            return Future(CoreError.NotImplemented())
         }
     }
 
     func putAll(_ array: [PushSubscription], in query: Query) -> Future<[PushSubscription]> {
-        query.fatalError(.putAll, self)
+        assertionFailure("Should never happen")
+        return Future(CoreError.NotImplemented())
     }
 
-    public func delete(_ query: Query) -> Future<Void> {
+    func delete(_ query: Query) -> Future<Void> {
         switch query {
         case let deletePushSubscriptionQuery as DeletePushSubscriptionQuery:
             var urlRequest = self.httpClient.prepareURLRequest(
@@ -64,11 +68,13 @@ class PushSubscriptionNetworkDataSource: PutDataSource, DeleteDataSource {
                 .performRequest(urlRequest)
                 .map { _ in Void() }
         default:
-            query.fatalError(.delete, self)
+            assertionFailure("Should never happen")
+            return Future(CoreError.NotImplemented())
         }
     }
 
     func deleteAll(_ query: Query) -> Future<Void> {
-        query.fatalError(.deleteAll, self)
+        assertionFailure("Should never happen")
+        return Future(CoreError.NotImplemented())
     }
 }

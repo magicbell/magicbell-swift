@@ -9,19 +9,14 @@ import UIKit
 import MagicBell
 import UserNotifications
 
+let magicBell = MagicBell(apiKey: "34ed17a8482e44c765d9e163015a8d586f0b3383", logLevel: .debug)
+let magicBellUser = magicBell.forUser(email: "javier@mobilejazz.com")
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-
-        MagicBell.configure(
-            apiKey: "34ed17a8482e44c765d9e163015a8d586f0b3383",
-            apiSecret: "72c5cdbba85d089d7f11ab090cb4c6773cbafaa8",
-            logLevel: .debug
-        )
-
-        MagicBell.login(email: "javier@mobilejazz.com")
 
         return true
     }
@@ -43,6 +38,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         // Storing device token when refreshed
-        MagicBell.setDeviceToken(deviceToken: deviceToken)
+        magicBell.setDeviceToken(deviceToken: deviceToken)
     }
 }

@@ -8,17 +8,17 @@
 import Foundation
 import Harmony
 
-public class DataToDecodableMapper<T>: Mapper<Data, T> where T: Decodable {
+class DataToDecodableMapper<T>: Mapper<Data, T> where T: Decodable {
 
     private var decoder = JSONDecoder()
 
-    public init(iso8601: Bool = false) {
+    init(iso8601: Bool = false) {
         if iso8601 {
             decoder.dateDecodingStrategy = .iso8601
         }
     }
 
-    public override func map(_ from: Data) throws -> T {
+    override func map(_ from: Data) throws -> T {
         do {
             let value = try decoder.decode(T.self, from: from)
             return value

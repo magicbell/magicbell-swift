@@ -9,29 +9,28 @@ import Foundation
 import Harmony
 
 protocol StoreComponent {
-    func getStorePagesInteractor() -> GetStorePagesInteractor
-    func createStore(name: String?, predicate: StorePredicate) -> NotificationStore
+    func storeDirector(with userQuery: UserQuery) -> InternalStoreDirector
 }
 
 class DefaultStoreModule: StoreComponent {
     private let httpClient: HttpClient
     private let mainExecutor: Executor
-    private let userQueryComponent: UserQueryComponent
     private let notificationComponent: NotificationComponent
     private let realTimeComponent: StoreRealTimeComponent
+    private let configComponent: ConfigComponent
     private let logger: Logger
 
     init(httpClient: HttpClient,
          executor: Executor,
-         userQueryComponent: UserQueryComponent,
          notificationComponent: NotificationComponent,
          storeRealTimeComponent: StoreRealTimeComponent,
+         configComponent: ConfigComponent,
          logger: Logger) {
         self.httpClient = httpClient
         self.mainExecutor = executor
-        self.userQueryComponent = userQueryComponent
         self.notificationComponent = notificationComponent
         self.realTimeComponent = storeRealTimeComponent
+        self.configComponent = configComponent
         self.logger = logger
     }
 
@@ -46,26 +45,29 @@ class DefaultStoreModule: StoreComponent {
         )
     }()
 
-    func getStorePagesInteractor() -> GetStorePagesInteractor {
+    private func getStorePagesInteractor() -> GetStorePagesInteractor {
         GetStorePagesInteractor(
             executor: mainExecutor,
             getStoreNotificationInteractor: storeNotificationGraphQLRepository.toGetByQueryInteractor(mainExecutor))
     }
 
-    func createStore(name: String?, predicate: StorePredicate) -> NotificationStore {
-        let fetchStorePageInteractor = FetchStorePageInteractor(
+    private func getFetchStorePageInteractor() -> FetchStorePageInteractor {
+        FetchStorePageInteractor(
             executor: mainExecutor,
-            getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
             getStorePagesInteractor: getStorePagesInteractor()
         )
-        return NotificationStore(
-            name: name ?? UUID().uuidString,
-            predicate: predicate,
-            getUserQueryInteractor: userQueryComponent.getUserQueryInteractor(),
-            fetchStorePageInteractor: fetchStorePageInteractor,
+    }
+
+    func storeDirector(with userQuery: UserQuery) -> InternalStoreDirector {
+        RealTimeByPredicateStoreDirector(
+            logger: logger,
+            userQuery: userQuery,
+            fetchStorePageInteractor: getFetchStorePageInteractor(),
             actionNotificationInteractor: notificationComponent.getActionNotificationInteractor(),
             deleteNotificationInteractor: notificationComponent.getDeleteNotificationInteractor(),
-            logger: logger
+            getConfigInteractor: configComponent.getGetConfigInteractor(),
+            deleteConfigInteractor: configComponent.getDeleteConfigInteractor(),
+            storeRealTime: realTimeComponent.createStoreRealmTime(userQuery: userQuery)
         )
     }
 }

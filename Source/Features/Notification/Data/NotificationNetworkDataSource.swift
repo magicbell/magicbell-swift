@@ -8,19 +8,21 @@
 import Foundation
 import Harmony
 
-public class NotificationNetworkDataSource: GetDataSource {
-    public typealias T = Notification
+class NotificationNetworkDataSource: GetDataSource {
+    typealias T = Notification
 
     private let httpClient: HttpClient
     private let mapper: DataToDecodableMapper<Notification>
 
-    public init(httpClient: HttpClient,
-                mapper: DataToDecodableMapper<Notification>) {
+    init(
+        httpClient: HttpClient,
+        mapper: DataToDecodableMapper<Notification>
+    ) {
         self.httpClient = httpClient
         self.mapper = mapper
     }
-
-    public func get(_ query: Query) -> Future<Notification> {
+    
+    func get(_ query: Query) -> Future<Notification> {
         switch query {
         case let notificationQuery as NotificationQuery:
             let urlRequest = self.httpClient.prepareURLRequest(
@@ -32,11 +34,13 @@ public class NotificationNetworkDataSource: GetDataSource {
                 .performRequest(urlRequest)
                 .map { try self.mapper.map($0) }
         default:
-            query.fatalError(.get, self)
+            assertionFailure("Should never happen")
+            return Future(CoreError.NotImplemented())
         }
     }
 
-    public func getAll(_ query: Query) -> Future<[Notification]> {
-        query.fatalError(.getAll, self)
+    func getAll(_ query: Query) -> Future<[Notification]> {
+        assertionFailure("Should never happen")
+        return Future(CoreError.NotImplemented())
     }
 }

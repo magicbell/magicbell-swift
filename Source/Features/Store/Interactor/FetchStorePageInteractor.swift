@@ -10,20 +10,17 @@ import Harmony
 struct FetchStorePageInteractor {
 
     private let executor: Executor
-    private let getUserQueryInteractor: GetUserQueryInteractor
     private let getStorePagesInteractor: GetStorePagesInteractor
 
-    init(executor: Executor, getUserQueryInteractor: GetUserQueryInteractor, getStorePagesInteractor: GetStorePagesInteractor) {
+    init(executor: Executor, getStorePagesInteractor: GetStorePagesInteractor) {
         self.executor = executor
-        self.getUserQueryInteractor = getUserQueryInteractor
         self.getStorePagesInteractor = getStorePagesInteractor
     }
 
     func execute(storePredicate: StorePredicate,
+                 userQuery: UserQuery,
                  cursorPredicate: CursorPredicate) -> Future<StorePage> {
         return executor.submit { resolver in
-            // Do catch try to avoid
-            let userQuery = try getUserQueryInteractor.execute()
             let storePage = try getStorePagesInteractor.execute(storePredicate: storePredicate,
                                                                 cursorPredicate: cursorPredicate,
                                                                 userQuery: userQuery,

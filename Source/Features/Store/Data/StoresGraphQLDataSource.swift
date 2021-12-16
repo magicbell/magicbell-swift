@@ -9,24 +9,26 @@ import Foundation
 import Harmony
 
 class StoresGraphQLDataSource: GetDataSource {
-    public typealias T = [String: StorePage]
+    typealias T = [String: StorePage]
 
     private let httpClient: HttpClient
     private let mapper: DataToDecodableMapper<GraphQLResponse<StorePage>>
 
-    public init(httpClient: HttpClient,
-                mapper: DataToDecodableMapper<GraphQLResponse<StorePage>>) {
+    init(
+        httpClient: HttpClient,
+        mapper: DataToDecodableMapper<GraphQLResponse<StorePage>>
+    ) {
         self.httpClient = httpClient
         self.mapper = mapper
     }
 
-    public func get(_ query: Query) -> Future<[String: StorePage]> {
+    func get(_ query: Query) -> Future<[String: StorePage]> {
         switch query {
         case let query as StoreQuery:
             var urlRequest = httpClient.prepareURLRequest(
-                    path: "/graphql",
-                    externalId: query.userQuery.externalId,
-                    email: query.userQuery.email
+                path: "/graphql",
+                externalId: query.userQuery.externalId,
+                email: query.userQuery.email
             )
             urlRequest.allHTTPHeaderFields = ["content-type": "application/json"]
             urlRequest.httpMethod = "POST"
@@ -41,16 +43,18 @@ class StoresGraphQLDataSource: GetDataSource {
             }
 
             return self.httpClient
-                    .performRequest(urlRequest)
-                    .map {
-                        try self.mapper.map($0).response
-                    }
+                .performRequest(urlRequest)
+                .map {
+                    try self.mapper.map($0).response
+                }
         default:
-            query.fatalError(.get, self)
+            assertionFailure("Should never happen")
+            return Future(CoreError.NotImplemented())
         }
     }
 
-    public func getAll(_ query: Query) -> Future<[[String: StorePage]]> {
-        query.fatalError(.getAll, self)
+    func getAll(_ query: Query) -> Future<[[String: StorePage]]> {
+        assertionFailure("Should never happen")
+        return Future(CoreError.NotImplemented())
     }
 }

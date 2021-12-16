@@ -11,11 +11,11 @@ import Harmony
 struct DeleteConfigInteractor {
     private let deleteConfigInteractor: Interactor.DeleteAllByQuery
 
-    public init(_ deleteConfigInteractor: Interactor.DeleteAllByQuery) {
+    init(_ deleteConfigInteractor: Interactor.DeleteAllByQuery) {
         self.deleteConfigInteractor = deleteConfigInteractor
     }
 
-    public func execute() -> Future<Void> {
+    func execute() -> Future<Void> {
         return deleteConfigInteractor.execute(AllObjectsQuery(), CacheOperation())
     }
 }

@@ -11,11 +11,11 @@ import Harmony
 struct GetConfigInteractor {
     private let getConfigInteractor: Interactor.GetByQuery<Config>
 
-    public init(_ getConfigInteractor: Interactor.GetByQuery<Config>) {
+    init(_ getConfigInteractor: Interactor.GetByQuery<Config>) {
         self.getConfigInteractor = getConfigInteractor
     }
 
-    public func execute(forceRefresh: Bool, userQuery: UserQuery) -> Future<Config> {
+    func execute(forceRefresh: Bool, userQuery: UserQuery) -> Future<Config> {
         let operation: Harmony.Operation = forceRefresh ? MainSyncOperation() : CacheSyncOperation(fallback: true)
         return getConfigInteractor.execute(userQuery, operation)
     }

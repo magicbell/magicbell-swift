@@ -42,6 +42,7 @@ store.fetch { result in
 - [MagicBell Setup](#magicbell-setup)
 - [Authenticate a User](#authenticate-a-user)
     - [Logout](#logout-a-user)
+    - [Multi-User Support](#multi-user-support)
 - [NotificationStore](#notificationstore)
     - [Obtaining a Notification Store](#obtaining-a-notification-store)
     - [Using a notification store](#using-a-notification-store)

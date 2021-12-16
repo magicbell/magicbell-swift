@@ -41,9 +41,13 @@ store.fetch { result in
 - [Installation](#installation)
 - [MagicBell Setup](#magicbell-setup)
 - [Authenticate a User](#authenticate-a-user)
+    - [Logout](#logout-a-user)
 - [NotificationStore](#notificationstore)
-- [User Preferences](#notification)
-- [Push Notification Support](#apnssuport)
+    - [Obtaining a Notification Store](#obtaining-a-notification-store)
+    - [Using a notification store](#using-a-notification-store)
+    - [Editing Notifications](#editing-notifications)
+- [User Preferences](#user-preferences)
+- [Push Notification Support](#push-notifications)
 
 ## Installation
 
@@ -51,7 +55,7 @@ MagicBell is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'MagicBell'
+pod 'MagicBell', :git => 'https://github.com/magicbell-io/magicbell-ios'
 ```
 
 ## MagicBell Setup
@@ -202,7 +206,7 @@ Obviously, you could inject the `userBell` instance in your own graph and keep t
 
 ## NotificationStore
 
-### 1. Obtaining a Notification Store
+### Obtaining a Notification Store
 
 The `NotificationStore` class represents a collection of [MagicBell](https://magicbell.com)
 notifications.  Specifically, to obtain a notification store you must provide a custom `StorePredicate`, which will define the exact collection of notifications.
@@ -262,7 +266,7 @@ let store =  user.store.forTopics(["topic1", "topic2"])
 For any other combination, use `user.store.with(predicate:)`.
 
 
-### 2. Using a notification store
+### Using a notification store
 
 Find below the list of methods and attributes:
 
@@ -273,7 +277,7 @@ Find below the list of methods and attributes:
 | `unreadCount` | `Int`| The unread counter|
 | `unseenCount` | `Int`| The unseen counter |
 | `hasNextPage` | `Bool`| `true` if a next page can be loaded, `false` otherwise |
-| `count` | `Int` | The nubmer of notifications loaded in the store|
+| `count` | `Int` | The number of notifications loaded in the store|
 
 
 | Method | Return Type | Description |
@@ -390,7 +394,22 @@ MagicBell will provide a Swift Combine-based observation pattern in a future ver
 
 ## User Preferences
 
-To access user preferences, do as follows:
+The user preferences object contains multiple configuration options:
+
+```swift
+public class Preferences {
+    var email: Bool
+    var inApp: Bool
+    var mobilePush: Bool
+    var webPush: Bool
+}
+
+public struct UserPreferences {
+    let preferences: [String: Preferences]
+}
+```
+
+To fetch user preferences, do as follows:
 
 ```swift
 user.userPreferences.fetch { result in
@@ -399,7 +418,7 @@ user.userPreferences.fetch { result in
     }
 }
 ```
-Additionaly, it is possible to access directly a cateogry
+Additionaly, it is possible to fetch directly a cateogry:
 
 ```swift
 user.userPreferences.fetchPreferences(for: "my_category") { result in
@@ -417,7 +436,7 @@ To update user preferences, use one of the two methods supported in the SDK.
 user.userPreferences.update(userPreferences) { result in }
 
 // Updating the list of preferences for a given category
-user.userPreferences.updatePreferences(for: "my_category") { result in }
+user.userPreferences.updatePreferences(categoryPreferences, for: "my_category") { result in }
 ```
 
 ## Push Notifications

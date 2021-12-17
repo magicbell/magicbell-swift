@@ -4,7 +4,9 @@ This is the official [MagicBell](https://magicbell.com) SDK project for iOS. You
 
 The whole SDK library has been built on Swift, and runs starting iOS 12.0 and above.
 
-To run the example project, clone the repo, and run `pod install` from the root directory, open the `MagicBell.xcworkspace`, and run the Example project target.
+To run the example project, clone the repo, and run `pod install` from the `Example` directory, open the `Example/Example.xcworkspace`, and run the Example project target.
+
+To run the MagicBell tests or to apply changes on the MagicBell iOS SDK, clone the repo, run `pod install` from the root directory, and open the `MagicBell.xcworkspace`.
 
 ## Quick Start
 

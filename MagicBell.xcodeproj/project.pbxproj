@@ -17,7 +17,7 @@
 		593883C627620F45001D38FC /* UserPreferencesMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883C527620F45001D38FC /* UserPreferencesMapper.swift */; };
 		593883C827621037001D38FC /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883C727621037001D38FC /* UserPreferences.swift */; };
 		5953192E27561BA8006673E9 /* NotificationValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953192D27561BA8006673E9 /* NotificationValidator.swift */; };
-		595319322756249A006673E9 /* StorePredicateValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595319312756249A006673E9 /* StorePredicateValidatorTests.swift */; };
+		595319322756249A006673E9 /* NotificationValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595319312756249A006673E9 /* NotificationValidatorTests.swift */; };
 		59569B9A274F752100FF1AA6 /* StorePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569B99274F752100FF1AA6 /* StorePage.swift */; };
 		59569BA5274F7B8A00FF1AA6 /* GraphQLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BA4274F7B8A00FF1AA6 /* GraphQLRequest.swift */; };
 		59569BA8274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BA7274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift */; };
@@ -108,7 +108,7 @@
 		593883C527620F45001D38FC /* UserPreferencesMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferencesMapper.swift; sourceTree = "<group>"; };
 		593883C727621037001D38FC /* UserPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferences.swift; sourceTree = "<group>"; };
 		5953192D27561BA8006673E9 /* NotificationValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationValidator.swift; sourceTree = "<group>"; };
-		595319312756249A006673E9 /* StorePredicateValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePredicateValidatorTests.swift; sourceTree = "<group>"; };
+		595319312756249A006673E9 /* NotificationValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationValidatorTests.swift; sourceTree = "<group>"; };
 		59569B99274F752100FF1AA6 /* StorePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePage.swift; sourceTree = "<group>"; };
 		59569BA4274F7B8A00FF1AA6 /* GraphQLRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLRequest.swift; sourceTree = "<group>"; };
 		59569BA7274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoresGraphQLDataSource.swift; sourceTree = "<group>"; };
@@ -448,7 +448,7 @@
 			isa = PBXGroup;
 			children = (
 				59EF99C027446D6900FB2378 /* MagicBellTests.swift */,
-				595319312756249A006673E9 /* StorePredicateValidatorTests.swift */,
+				595319312756249A006673E9 /* NotificationValidatorTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -811,7 +811,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				595319322756249A006673E9 /* StorePredicateValidatorTests.swift in Sources */,
+				595319322756249A006673E9 /* NotificationValidatorTests.swift in Sources */,
 				59EF99C127446D6900FB2378 /* MagicBellTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

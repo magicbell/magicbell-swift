@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.summary          = 'Official MagicBell SDK for iOS.'
 
   s.description      = <<-DESC
-This is the official MagicBell SDK for iOS. You can easily fetch, delete and create notifications.
+This is the official MagicBell SDK for iOS.
                        DESC
 
   s.homepage         = 'https://magicbell.com'

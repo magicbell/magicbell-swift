@@ -9,17 +9,11 @@ PODS:
   - Harmony/Repository (1.1.4):
     - Harmony/Common
     - Harmony/Future
-  - MagicBell (0.1.0):
-    - Ably (= 1.2.7)
-    - Harmony/Repository
   - msgpack (0.4.0)
-  - SwiftLint (0.45.0)
 
 DEPENDENCIES:
   - Ably (= 1.2.7)
   - Harmony/Repository
-  - MagicBell (from `./`)
-  - SwiftLint
 
 SPEC REPOS:
   trunk:
@@ -27,20 +21,13 @@ SPEC REPOS:
     - AblyDeltaCodec
     - Harmony
     - msgpack
-    - SwiftLint
-
-EXTERNAL SOURCES:
-  MagicBell:
-    :path: "./"
 
 SPEC CHECKSUMS:
   Ably: f627c0c2e4489785b74d33d2c1287edeb9c6a7be
   AblyDeltaCodec: 783d017270de70bbbc0a84e4235297b225d33636
   Harmony: c75b73a290fe8399703a90206f4b987ea3c1516c
-  MagicBell: 31e41742ff4cb37c6b9426e0f12f9cf7ff155209
   msgpack: c85f6251873059738472ae136951cec5f30f3251
-  SwiftLint: e5c7f1fba68eccfc51509d5b2ce1699f5502e0c7
 
-PODFILE CHECKSUM: fc7b793682e76ceaaa6cca7249b17724b52c322d
+PODFILE CHECKSUM: 85dcc44ce501578faa093a8f8392057cdd0df447
 
 COCOAPODS: 1.11.2

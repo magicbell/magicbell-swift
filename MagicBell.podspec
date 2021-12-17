@@ -19,7 +19,7 @@ This is the official MagicBell SDK for iOS. You can easily fetch, delete and cre
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'MagicBell' => 'hello@magicbell.com' }
-  s.source           = { :git => 'https://javitb@bitbucket.org/javitb/magicbell-ios.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/magicbell-io/magicbell-ios.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/magicbell_io'
 
   s.ios.deployment_target = '12.0'
@@ -32,8 +32,8 @@ This is the official MagicBell SDK for iOS. You can easily fetch, delete and cre
   s.dependency 'Harmony/Repository'
   s.dependency 'Ably', '1.2.7'
 
-  # s.resource_bundles = {
-  #   'MagicBell' => ['MagicBell/Assets/*.png']
-  # }
+#   s.resource_bundles = {
+#     'MagicBell' => ['Source/**/*.graphql']
+#   }
 
 end

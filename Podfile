@@ -8,22 +8,10 @@ target 'MagicBell' do
 
     # Pods for MagicBell
     pod 'Harmony/Repository'
-    pod 'Ably', '1.2.7', :modular_headers => true
+    pod 'Ably', '1.2.7'
 
 
     target 'MagicBellTests' do
         # Pods for testing
-    end
-end
-
-target 'Example' do
-    project './Example/Example.xcodeproj'
-    workspace './MagicBell.xcworkspace'
-
-    pod 'MagicBell', :path => './'
-    pod 'SwiftLint'
-
-    target 'ExampleTests' do
-        inherit! :search_paths
     end
 end

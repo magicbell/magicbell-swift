@@ -58,41 +58,56 @@ public class MagicBell {
     ///   - A instance of UserBell.
     public func forUser(email: String) -> UserBell {
         let userQuery = UserQuery(email: email)
-
-        let user = createUserBellIfNeeded(userQuery: userQuery)
-        return user
+        return getUser(userQuery)
     }
 
     /// Creates or retrieve an existing userBell.
     /// - Parameters:
-    ///   - userId: The user's identifier
+    ///   - externalId: The user's identifier
     /// - Returns:
     ///   - A instance of UserBell.
-    public func forUser(userId: String) -> UserBell {
-        let userQuery = UserQuery(externalId: userId)
-        if let user = users[userQuery.key] {
-            return user
-        }
-        let user = createUserBellIfNeeded(userQuery: userQuery)
-        return user
+    public func forUser(externalId: String) -> UserBell {
+        let userQuery = UserQuery(externalId: externalId)
+        return getUser(userQuery)
     }
 
     /// Creates or retrieve an existing userBell.
     /// - Parameters:
     ///   - email: The user's email
-    ///   - userId: The user's identifier
+    ///   - externalId: The user's identifier
     /// - Returns:
     ///   - A instance of UserBell.
-    public func forUser(email: String, userId: String) -> UserBell {
-        let userQuery = UserQuery(externalId: userId, email: email)
-        if let user = users[userQuery.key] {
-            return user
-        }
-        let user = createUserBellIfNeeded(userQuery: userQuery)
-        return user
+    public func forUser(email: String, externalId: String) -> UserBell {
+        let userQuery = UserQuery(externalId: externalId, email: email)
+        return getUser(userQuery)
     }
 
-    private func createUserBellIfNeeded(userQuery: UserQuery) -> UserBell {
+    /// Removes a userBell and stops all connections.
+    /// - Parameters:
+    ///   - email: The user's email
+    public func removeUserFor(email: String) {
+        let userQuery = UserQuery(email: email)
+        removeUser(userQuery: userQuery)
+    }
+
+    /// Removes a userBell and stops all connections.
+    /// - Parameters:
+    ///   - externalId: The user's identifier
+    public func removeUserFor(externalId: String) {
+        let userQuery = UserQuery(externalId: externalId)
+        removeUser(userQuery: userQuery)
+    }
+
+    /// Removes a userBell and stops all connections.
+    /// - Parameters:
+    ///   - email: The user's email
+    ///   - externalId: The user's identifier
+    public func removeUserFor(email: String, externalId: String) {
+        let userQuery = UserQuery(externalId: externalId, email: email)
+        removeUser(userQuery: userQuery)
+    }
+
+    private func getUser(_ userQuery: UserQuery) -> UserBell {
         if let user = users[userQuery.key] {
             return user
         }
@@ -109,48 +124,23 @@ public class MagicBell {
         return userBell
     }
 
-    /// Removes a userBell and stops all connections.
-    /// - Parameters:
-    ///   - email: The user's email
-    public func removeUserFor(email: String) {
-        let userQuery = UserQuery(email: email)
-        removeUserIfExists(userQuery: userQuery)
-    }
-
-    /// Removes a userBell and stops all connections.
-    /// - Parameters:
-    ///   - userId: The user's identifier
-    public func removeUserFor(userId: String) {
-        let userQuery = UserQuery(externalId: userId)
-        removeUserIfExists(userQuery: userQuery)
-    }
-
-    /// Removes a userBell and stops all connections.
-    /// - Parameters:
-    ///   - email: The user's email
-    ///   - userId: The user's identifier
-    public func removeUserFor(email: String, userId: String) {
-        let userQuery = UserQuery(externalId: userId, email: email)
-        removeUserIfExists(userQuery: userQuery)
-    }
-
-    private func removeUserIfExists(userQuery: UserQuery) {
+    private func removeUser(userQuery: UserQuery) {
         if let user = users[userQuery.key] {
             user.logout(deviceToken: self.deviceToken)
             users.removeValue(forKey: userQuery.key)
         }
     }
 
-    /// Sets the APN token for the current logged user. This token is revoked when logout is called. Once the user is registered from the notification, `didRegisterForRemoteNotificationsWithDeviceToken` is being called, retrieve the token and call setDeviceToken.
+    /// Sets the APN token for the current logged user. This token is revoked when logout is called.
+    /// Once the user is registered from the notification, `didRegisterForRemoteNotificationsWithDeviceToken` is being called, retrieve the token and call setDeviceToken.
     /// - Parameters:
-    ///     - deviceToken: Data from the `didRegisterForRemoteNotificationsWithDeviceToken` AppDelegate method.
+    ///     - deviceToken: The APN device token
     public func setDeviceToken(deviceToken: Data) {
-        self.deviceToken = String(deviceToken: deviceToken)
+        let token = String(deviceToken: deviceToken)
+        self.deviceToken = token
         // If users are logged, try to send the device token for them
-        if let deviceToken = self.deviceToken {
-            users.values.forEach { userBell in
-                userBell.pushSubscription.sendPushSubscription(deviceToken)
-            }
+        users.values.forEach { userBell in
+            userBell.pushSubscription.sendPushSubscription(token)
         }
     }
 }

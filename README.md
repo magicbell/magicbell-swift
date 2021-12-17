@@ -125,11 +125,11 @@ To obtain the `UserBell` class for a given user, you must use the previously def
 // Identify the user by its email
 let user = magicBell.forUser(email: "john@doe.com")
 
-// Identify the user by its userId
-let user = magicBell.forUser(userId: "123456789")
+// Identify the user by its external id
+let user = magicBell.forUser(externalId: "123456789")
 
-// Identify the user by oth, email and userId
-let user = magicBell.forUser(email: "john@doe.com", userId: "123456789")
+// Identify the user by oth, email and external id
+let user = magicBell.forUser(email: "john@doe.com", externalId: "123456789")
 ```
 
 Note that `MagicBell` will create a `UserBell` instance the first time you access that user, but subsequent calls **will return the same instance**, keeping alive the user loaded notifications stack and real-time updates.
@@ -148,11 +148,11 @@ To stop the MagicBell service in an authenticated user, you must notify the Magi
 // Remove by email
 magicBell.removeUserFor(email: "john@doe.com")
 
-// Remove by user id
-magicBell.removeUserFor(userId: "123456789")
+// Remove by external id
+magicBell.removeUserFor(externalId: "123456789")
 
-// Remove by email and user id
-magicBell.removeUserFor(email: "john@doe.com", userId: "123456789")
+// Remove by email and external id
+magicBell.removeUserFor(email: "john@doe.com", externalId: "123456789")
 ```
 
 By calling this method, MagicBell will delete all notification stores from memory and stop real-time connections. It also will unregister the APN device token from that user.
@@ -161,7 +161,7 @@ Its important to not retain any reference to `NotificationStore` instances from 
 
 ### Multi-User Support
 
-Note MagicBell supports multiple users simultaneously. Just obtain multiple instances of `UserBell` by calling `forUser(:)` with different emails/userIds.
+Note MagicBell supports multiple users simultaneously. Just obtain multiple instances of `UserBell` by calling `forUser(:)` with different emails/externalId.
 
 This is very useful if your app suports multiple logins, and you want to display the status of notifications of all users at the same time.
 
@@ -171,7 +171,7 @@ In order to retrieve notifications you'll need to access the `UserBell` instance
 
 ### A) Extend your user object
 
-This approach is useful if you have a user object accross your app. MagicBell will guarantee the `UserBell` instance for a given email/userId is unique, and you only need to provide access to the instance. For example:
+This approach is useful if you have a user object accross your app. MagicBell will guarantee the `UserBell` instance for a given email/externalId is unique, and you only need to provide access to the instance. For example:
 
 ```swift
 // Your custom user object

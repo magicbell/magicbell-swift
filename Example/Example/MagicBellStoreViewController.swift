@@ -15,15 +15,10 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
 
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var actionsItem: BadgeBarButtonItem!
     @IBOutlet weak var magicBellStoreItem: BadgeBarButtonItem!
 
-    private var userBell = magicBell.forUser(email: "javier@mobilejazz.com")
-    private lazy var store = userBell.store.with(predicate: StorePredicate())
-    private lazy var unreadStore = userBell.store.with(predicate: StorePredicate(read: .unread))
-
-    private var magicUserBell = magicBell.forUser(email: "magicbell@mobilejazz.com")
-    private lazy var magicStore = magicUserBell.store.with(predicate: StorePredicate())
+    private var userBell = magicBell.forUser(email: "magicbell@mobilejazz.com")
+    private lazy var store = userBell.store.forAll()
 
     var navigationBarColor = UIColor(rgb: 0x6113A3) {
         didSet { applyBarStyle() }
@@ -51,8 +46,6 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
 
         store.addContentObserver(self)
         store.addCountObserver(self)
-        unreadStore.addCountObserver(self)
-        magicStore.addCountObserver(self)
     }
 
     // swiftlint:disable empty_count
@@ -61,15 +54,15 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
             store.refresh { result in
                 switch result {
                 case .success:
-                    self.tableView.reloadData()
-                    self.actionsItem.badgeNumber = self.store.unseenCount
+                    // Observers will manage changes
+                    break
                 case .failure(let error):
                     print(error)
                 }
             }
         } else {
             tableView.reloadData()
-            actionsItem.badgeNumber = store.unseenCount
+            magicBellStoreItem.badgeNumber = store.unseenCount
         }
     }
 
@@ -78,7 +71,8 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
             sender.endRefreshing()
             switch result {
             case .success:
-                self.tableView.reloadData()
+                // Observers will manage changes
+                break
             case .failure(let error):
                 print(error)
             }
@@ -121,7 +115,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
                     return
                 }
                 self.userBell = magicBell.forUser(email: email)
-                self.reloadStore()
+                self.configureStore(predicate: StorePredicate())
             })
             self.present(alert, animated: true, completion: nil)
         })
@@ -130,16 +124,16 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
             let alert = UIAlertController(title: "Customize Predicate", message: nil, preferredStyle: .actionSheet)
 
             alert.addAction(UIAlertAction(title: "All Notifications", style: .default) { _ in
-                self.assignDelegateFor(predicate: StorePredicate())
+                self.configureStore(predicate: StorePredicate())
             })
             alert.addAction(UIAlertAction(title: "Only Read", style: .default) { _ in
-                self.assignDelegateFor(predicate: StorePredicate(read: .read))
+                self.configureStore(predicate: StorePredicate(read: .read))
             })
             alert.addAction(UIAlertAction(title: "Only Unread", style: .default) { _ in
-                self.assignDelegateFor(predicate: StorePredicate(read: .unread))
+                self.configureStore(predicate: StorePredicate(read: .unread))
             })
             alert.addAction(UIAlertAction(title: "By Category", style: .default) { _ in
-                self.assignDelegateFor(predicate: StorePredicate(categories: ["order_created"]))
+                self.configureStore(predicate: StorePredicate(categories: ["order_created"]))
             })
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
@@ -150,11 +144,10 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         present(alert, animated: true, completion: nil)
     }
 
-    private func assignDelegateFor(predicate: StorePredicate) {
+    private func configureStore(predicate: StorePredicate) {
         store.removeContentObserver(self)
-        if store !== unreadStore {
-            store.removeCountObserver(self)
-        }
+        store.removeCountObserver(self)
+
         store = userBell.store.with(predicate: predicate)
         store.addContentObserver(self)
         store.addCountObserver(self)
@@ -243,7 +236,6 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
                         self.tableView.reloadRows(at: [indexPath], with: .none)
                     }
                 }
-                self.tableView.reloadRows(at: [indexPath], with: .none)
             })
         } else {
             alert.addAction(UIAlertAction(title: "Unarchive", style: .default) { _ in
@@ -252,25 +244,34 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
                         self.tableView.reloadRows(at: [indexPath], with: .none)
                     }
                 }
-                self.tableView.reloadRows(at: [indexPath], with: .none)
             })
         }
 
         if notification.readAt == nil {
-
             alert.addAction(UIAlertAction(title: "Mark Read", style: .default) { _ in
                 self.store.markAsRead(notification) { error in
                     if error == nil {
-                        self.tableView.reloadRows(at: [indexPath], with: .none)
+                        if let cell = self.tableView.cellForRow(at: indexPath) {
+                            if notification.readAt == nil {
+                                cell.accessoryView = self.unreadBadgeView()
+                            } else {
+                                cell.accessoryView = nil
+                            }
+                        }
                     }
                 }
-                self.tableView.reloadRows(at: [indexPath], with: .none)
             })
         } else {
             alert.addAction(UIAlertAction(title: "Mark Unread", style: .default) { _ in
                 self.store.markAsUnread(notification) { error in
                     if error == nil {
-                        self.tableView.reloadRows(at: [indexPath], with: .none)
+                        if let cell = self.tableView.cellForRow(at: indexPath) {
+                            if notification.readAt == nil {
+                                cell.accessoryView = self.unreadBadgeView()
+                            } else {
+                                cell.accessoryView = nil
+                            }
+                        }
                     }
                 }
             })
@@ -279,10 +280,8 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive) { _ in
-            self.store.delete(notification) { error in
-                if error == nil {
-                    self.tableView.deleteRows(at: [indexPath], with: .none)
-                }
+            self.store.delete(notification) { _ in
+                // Nothing to be done here. If deletion is successful, observer will notify the deletion
             }
         })
 
@@ -299,11 +298,8 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
                 self.isLoadingNextPage = false
                 switch result {
                 case .success(let notifications):
-                    self.tableView.insertRows(at: notifications.enumerated().map { id, _ in
-                        IndexPath(row: self.store.count - notifications.count + id, section: 0)
-                    }, with: .fade)
-
-                    // self.tableView.reloadData()
+                    // Observers will manage changes
+                    break
                 case .failure(let error):
                     print(error)
                 }
@@ -320,7 +316,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     func store(_ store: NotificationStore, didChangeNotificationAt indexes: [Int]) {
         self.tableView.reloadRows(at: indexes.map { idx in
             IndexPath(row: idx, section: 0)
-        }, with: .fade)
+        }, with: .none)
     }
 
     func store(_ store: NotificationStore, didDeleteNotificationAt indexes: [Int]) {
@@ -338,26 +334,14 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     // MARK: NotificationStoreCountDelegate
 
     func store(_ store: NotificationStore, didChangeTotalCount count: Int) {
-        if store === unreadStore {
-            print("New unread message for unread invisible store. TotalCount: \(count)")
-        } else {
-            title = "Notifications - \(count)"
-        }
+        title = "Notifications - \(count)"
     }
 
     func store(_ store: NotificationStore, didChangeUnreadCount count: Int) {
-        if store === unreadStore {
-            print("New unread message for unread invisible store. UnreadCount: \(count)")
-        } else {
-            print("Unread notification - \(count)")
-        }
+        print("Unread notification - \(count)")
     }
 
     func store(_ store: NotificationStore, didChangeUnseenCount count: Int) {
-        if store === magicStore {
-            magicBellStoreItem.badgeNumber = count
-        } else {
-            actionsItem.badgeNumber = count
-        }
+        magicBellStoreItem.badgeNumber = count
     }
 }

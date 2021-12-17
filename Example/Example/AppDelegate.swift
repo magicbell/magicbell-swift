@@ -10,7 +10,6 @@ import MagicBell
 import UserNotifications
 
 let magicBell = MagicBell(apiKey: "34ed17a8482e44c765d9e163015a8d586f0b3383", logLevel: .debug)
-let magicBellUser = magicBell.forUser(email: "javier@mobilejazz.com")
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

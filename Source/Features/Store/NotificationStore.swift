@@ -26,29 +26,12 @@ public class NotificationStore: StoreRealTimeObserver {
     private var edges: [Edge<Notification>] = []
 
     /// Total  count of notifications
-    public private(set) var totalCount: Int = 0 {
-        didSet {
-            if oldValue != totalCount {
-                forEachCountObserver { $0.store(self, didChangeTotalCount: totalCount) }
-            }
-        }
-    }
+    public private(set) var totalCount: Int = 0
     /// Total of unread notifications
-    public private(set) var unreadCount: Int = 0 {
-        didSet {
-            if oldValue != unreadCount {
-                forEachCountObserver { $0.store(self, didChangeUnreadCount: unreadCount) }
-            }
-        }
-    }
+    public private(set) var unreadCount: Int = 0
     /// Total of unseen notifications
-    public private(set) var unseenCount: Int = 0 {
-        didSet {
-            if oldValue != unseenCount {
-                forEachCountObserver { $0.store(self, didChangeUnseenCount: unseenCount) }
-            }
-        }
-    }
+    public private(set) var unseenCount: Int = 0
+
     /// `true` if next page is available, `false` otherwise.
     public private(set) var hasNextPage = true
 
@@ -71,6 +54,30 @@ public class NotificationStore: StoreRealTimeObserver {
 
     private var contentObservers = NSHashTable<AnyObject>.weakObjects()
     private var countObservers = NSHashTable<AnyObject>.weakObjects()
+
+    private func setTotalCount(_ value: Int, notifyObservers: Bool = false) {
+        let oldValue = totalCount
+        totalCount = value
+        if oldValue != totalCount && notifyObservers {
+            forEachCountObserver { $0.store(self, didChangeTotalCount: totalCount) }
+        }
+    }
+
+    private func setUnreadCount(_ value: Int, notifyObservers: Bool = false) {
+        let oldValue = unreadCount
+        unreadCount = value
+        if oldValue != unreadCount && notifyObservers {
+            forEachCountObserver { $0.store(self, didChangeUnreadCount: unreadCount) }
+        }
+    }
+
+    private func setUnseenCount(_ value: Int, notifyObservers: Bool = false) {
+        let oldValue = unseenCount
+        unseenCount = value
+        if oldValue != unseenCount && notifyObservers {
+            forEachCountObserver { $0.store(self, didChangeUnseenCount: unseenCount) }
+        }
+    }
 
     /// Number of notifications loaded in the store
     public var count: Int {
@@ -120,7 +127,7 @@ public class NotificationStore: StoreRealTimeObserver {
         let cursorPredicate = CursorPredicate(size: pageSize)
         fetchStorePageInteractor.execute(storePredicate: predicate, userQuery: userQuery, cursorPredicate: cursorPredicate)
             .then { storePage in
-                self.clear()
+                self.clear(notifyChanges: false)
                 self.configurePagination(storePage)
                 self.configureCount(storePage)
                 let newEdges = storePage.edges
@@ -128,6 +135,7 @@ public class NotificationStore: StoreRealTimeObserver {
                 let notifications = newEdges.map { notificationEdge in
                     notificationEdge.node
                 }
+                self.forEachContentObserver { $0.didReloadStore(self) }
                 completion(.success(notifications))
             }.fail { error in
                 completion(.failure(error))
@@ -154,12 +162,15 @@ public class NotificationStore: StoreRealTimeObserver {
                 self.configurePagination(storePage)
                 self.configureCount(storePage)
 
+                let oldCount = self.edges.count
                 let newEdges = storePage.edges
                 self.edges.append(contentsOf: newEdges)
                 let notifications = newEdges.map { notificationEdge in
                     notificationEdge.node
                 }
                 completion(.success(notifications))
+                let indexes = (oldCount..<self.edges.count).map { $0 }
+                self.forEachContentObserver { $0.store(self, didInsertNotificationsAt: indexes) }
             }.fail { error in
                 completion(.failure(error))
             }
@@ -187,6 +198,7 @@ public class NotificationStore: StoreRealTimeObserver {
     }
 
     /// Deletes a notification from the store.
+    /// Calling this method triggers the observers to get notified upon deletion.
     /// - Parameters:
     ///    - notification: Notification will be removed.
     ///    - completion: Closure with a `Error`. Success if error is nil.
@@ -197,6 +209,7 @@ public class NotificationStore: StoreRealTimeObserver {
                 if let notificationIndex = self.edges.firstIndex(where: { $0.node.id == notification.id }) {
                     self.updateCountersWhenDelete(notification: self.edges[notificationIndex].node, predicate: self.predicate)
                     self.edges.remove(at: notificationIndex)
+                    self.forEachContentObserver { $0.store(self, didDeleteNotificationAt: [notificationIndex]) }
                     completion(nil)
                 }
             }
@@ -286,13 +299,18 @@ public class NotificationStore: StoreRealTimeObserver {
 
     // MARK: - Private Methods
 
-    func clear() {
+    func clear(notifyChanges: Bool) {
+        let notificationCount = count
         edges = []
-        totalCount = 0
-        unreadCount = 0
-        unseenCount = 0
+        setTotalCount(0, notifyObservers: notifyChanges)
+        setUnreadCount(0, notifyObservers: notifyChanges)
+        setUnseenCount(0, notifyObservers: notifyChanges)
         nextPageCursor = nil
         hasNextPage = true
+
+        if notifyChanges {
+            forEachContentObserver { $0.store(self, didDeleteNotificationAt: (0..<notificationCount).map { $0 } )}
+        }
     }
 
     private func recursiveNewElements(
@@ -361,9 +379,9 @@ public class NotificationStore: StoreRealTimeObserver {
     }
 
     private func configureCount(_ page: StorePage) {
-        totalCount = page.totalCount
-        unreadCount = page.unreadCount
-        unseenCount = page.unseenCount
+        setTotalCount(page.totalCount, notifyObservers: true)
+        setUnreadCount(page.unreadCount, notifyObservers: true)
+        setUnseenCount(page.unseenCount, notifyObservers: true)
     }
 
     private func refreshAndNotifyObservers() {
@@ -431,8 +449,7 @@ public class NotificationStore: StoreRealTimeObserver {
         case .read, .unspecified:
             refreshAndNotifyObservers()
         case .unread:
-            clear()
-            self.forEachContentObserver { $0.didReloadStore(self) }
+            clear(notifyChanges: true)
         }
     }
 
@@ -441,8 +458,7 @@ public class NotificationStore: StoreRealTimeObserver {
         case .seen, .unspecified:
             refreshAndNotifyObservers()
         case .unseen:
-            clear()
-            self.forEachContentObserver { $0.didReloadStore(self) }
+            clear(notifyChanges: true)
         }
     }
 
@@ -480,15 +496,16 @@ public class NotificationStore: StoreRealTimeObserver {
             // When a predicate is read, unread count is always 0
             switch self.predicate.read {
             case .read:
-                totalCount -= 1
-                unreadCount = 0
+                setTotalCount(totalCount - 1, notifyObservers: true)
+                setUnreadCount(0, notifyObservers: true)
             case .unread:
-                totalCount += 1
-                unreadCount += 1
+                setTotalCount(totalCount + 1, notifyObservers: true)
+                setUnreadCount(unreadCount + 1, notifyObservers: true)
             case .unspecified:
-                unreadCount += 1
+                setUnreadCount(unreadCount + 1, notifyObservers: true)
             }
         }
+
         notification.readAt = nil
     }
 
@@ -513,18 +530,19 @@ public class NotificationStore: StoreRealTimeObserver {
     // MARK: - Counter methods
 
     private func updateCountersWhenDelete(notification: Notification, predicate: StorePredicate) {
-        self.totalCount -= 1
+        setTotalCount(totalCount - 1, notifyObservers: true)
+
         decreaseUnreadCountIfUnreadPredicate(predicate)
         decreaseUnseenCountIfNotificationWasUnread(notification)
     }
     private func decreaseUnreadCountIfUnreadPredicate(_ predicate: StorePredicate) {
         if predicate.read == .unread {
-            self.unreadCount -= 1
+            setUnreadCount(unreadCount - 1, notifyObservers: true)
         }
     }
     private func decreaseUnseenCountIfNotificationWasUnread(_ notification: Notification) {
         if notification.readAt == nil {
-            self.unseenCount -= 1
+            setUnseenCount(unseenCount - 1, notifyObservers: true)
         }
     }
 }

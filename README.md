@@ -294,7 +294,7 @@ There are two methods to load notifications:
 - `store.fetch`: Use this method to load the first & follwoing pages in the list of notifications. The completion block returns an array with the newly loaded notifications.
 - `store.refresh`: Use this method to reload from the beginning the first page of the list of notifications. The completion block returns an array with the loaded notifications.
 
-Note by calling these methods, `NotificationStore` will not notify the content observers (read about observers [here](3.-observing-notification-store-changes))
+Note by calling these methods, `NotificationStore` will notify the content observers with the newly added notifications (read about observers [here](3.-observing-notification-store-changes))
 
 ```swift
 // Obtaining a new notification store (first time)

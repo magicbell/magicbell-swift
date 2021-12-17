@@ -7,24 +7,23 @@
 
 import Foundation
 
-struct StorePredicateValidator {
-    let storePredicate: StorePredicate
+struct NotificationValidator {
+    let predicate: StorePredicate
 
-    func validateNotification(_ notification: Notification) -> Bool {
+    func validate(_ notification: Notification) -> Bool {
         return validateRead(notification) &&
         validateSeen(notification) &&
         validateArchive(notification) &&
         validateCategory(notification) &&
-        validateTopic(notification) &&
-        validateInApp(notification)
+        validateTopic(notification)
     }
 
     func validateRead(_ notification: Notification) -> Bool {
-        if storePredicate.read == .read && notification.readAt != nil {
+        if predicate.read == .read && notification.readAt != nil {
             return true
-        } else if storePredicate.read == .unread && notification.readAt == nil {
+        } else if predicate.read == .unread && notification.readAt == nil {
             return true
-        } else if storePredicate.read == .unspecified {
+        } else if predicate.read == .unspecified {
             return true
         } else {
             return false
@@ -32,11 +31,11 @@ struct StorePredicateValidator {
     }
 
     func validateSeen(_ notification: Notification) -> Bool {
-        if storePredicate.seen == .seen && notification.seenAt != nil {
+        if predicate.seen == .seen && notification.seenAt != nil {
             return true
-        } else if storePredicate.seen == .unseen && notification.seenAt == nil {
+        } else if predicate.seen == .unseen && notification.seenAt == nil {
             return true
-        } else if storePredicate.seen == .unspecified {
+        } else if predicate.seen == .unspecified {
             return true
         } else {
             return false
@@ -44,11 +43,11 @@ struct StorePredicateValidator {
     }
 
     func validateArchive(_ notification: Notification) -> Bool {
-        if storePredicate.archived == .archived && notification.archivedAt != nil {
+        if predicate.archived == .archived && notification.archivedAt != nil {
             return true
-        } else if storePredicate.archived == .unarchived && notification.archivedAt == nil {
+        } else if predicate.archived == .unarchived && notification.archivedAt == nil {
             return true
-        } else if storePredicate.archived == .unspecified {
+        } else if predicate.archived == .unspecified {
             return true
         } else {
             return false
@@ -56,27 +55,22 @@ struct StorePredicateValidator {
     }
 
     func validateCategory(_ notification: Notification) -> Bool {
-        if storePredicate.categories.isEmpty {
+        if predicate.categories.isEmpty {
             return true
         } else if let category = notification.category {
-            return storePredicate.categories.contains(category)
+            return predicate.categories.contains(category)
         } else {
             return false
         }
     }
 
     func validateTopic(_ notification: Notification) -> Bool {
-        if storePredicate.topics.isEmpty {
+        if predicate.topics.isEmpty {
             return true
         } else if let topic = notification.topic {
-            return storePredicate.topics.contains(topic)
+            return predicate.topics.contains(topic)
         } else {
             return false
         }
-    }
-
-    func validateInApp(_ notification: Notification) -> Bool {
-        // TODO: What is the validation?
-        true
     }
 }

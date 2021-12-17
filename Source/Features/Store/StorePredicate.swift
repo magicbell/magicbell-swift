@@ -82,7 +82,7 @@ public struct StorePredicate: Hashable, Equatable {
 
 extension StorePredicate {
     func match(_ notification: Notification) -> Bool {
-        let validator = StorePredicateValidator(storePredicate: self)
-        return validator.validateNotification(notification)
+        let validator = NotificationValidator(predicate: self)
+        return validator.validate(notification)
     }
 }

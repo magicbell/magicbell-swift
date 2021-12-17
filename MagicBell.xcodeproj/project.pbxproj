@@ -16,7 +16,7 @@
 		593883C42761F581001D38FC /* UpdateUserPreferencesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883C32761F581001D38FC /* UpdateUserPreferencesInteractor.swift */; };
 		593883C627620F45001D38FC /* UserPreferencesMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883C527620F45001D38FC /* UserPreferencesMapper.swift */; };
 		593883C827621037001D38FC /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883C727621037001D38FC /* UserPreferences.swift */; };
-		5953192E27561BA8006673E9 /* StorePredicateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953192D27561BA8006673E9 /* StorePredicateValidator.swift */; };
+		5953192E27561BA8006673E9 /* NotificationValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953192D27561BA8006673E9 /* NotificationValidator.swift */; };
 		595319322756249A006673E9 /* StorePredicateValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595319312756249A006673E9 /* StorePredicateValidatorTests.swift */; };
 		59569B9A274F752100FF1AA6 /* StorePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569B99274F752100FF1AA6 /* StorePage.swift */; };
 		59569BA5274F7B8A00FF1AA6 /* GraphQLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BA4274F7B8A00FF1AA6 /* GraphQLRequest.swift */; };
@@ -107,7 +107,7 @@
 		593883C32761F581001D38FC /* UpdateUserPreferencesInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserPreferencesInteractor.swift; sourceTree = "<group>"; };
 		593883C527620F45001D38FC /* UserPreferencesMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferencesMapper.swift; sourceTree = "<group>"; };
 		593883C727621037001D38FC /* UserPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferences.swift; sourceTree = "<group>"; };
-		5953192D27561BA8006673E9 /* StorePredicateValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePredicateValidator.swift; sourceTree = "<group>"; };
+		5953192D27561BA8006673E9 /* NotificationValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationValidator.swift; sourceTree = "<group>"; };
 		595319312756249A006673E9 /* StorePredicateValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePredicateValidatorTests.swift; sourceTree = "<group>"; };
 		59569B99274F752100FF1AA6 /* StorePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePage.swift; sourceTree = "<group>"; };
 		59569BA4274F7B8A00FF1AA6 /* GraphQLRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLRequest.swift; sourceTree = "<group>"; };
@@ -234,7 +234,7 @@
 				59569BAD274F82F100FF1AA6 /* StoreProvider.swift */,
 				59569B99274F752100FF1AA6 /* StorePage.swift */,
 				D2CBA52E275128FA002F1E44 /* StorePredicate.swift */,
-				5953192D27561BA8006673E9 /* StorePredicateValidator.swift */,
+				5953192D27561BA8006673E9 /* NotificationValidator.swift */,
 				D2CBA53027513747002F1E44 /* StoreContext.swift */,
 				59E92012275400F500D8877A /* NotificationStore.swift */,
 				D2E038272767943F0077FFF3 /* NotificationStoreObserver.swift */,
@@ -798,7 +798,7 @@
 				59569B9A274F752100FF1AA6 /* StorePage.swift in Sources */,
 				59799E33274658B100BFB375 /* SDKProvider.swift in Sources */,
 				593883C22761F18D001D38FC /* GetUserPreferencesInteractor.swift in Sources */,
-				5953192E27561BA8006673E9 /* StorePredicateValidator.swift in Sources */,
+				5953192E27561BA8006673E9 /* NotificationValidator.swift in Sources */,
 				59F4597B275A48AD008F3BC8 /* StoreRealTime.swift in Sources */,
 				593883B027603023001D38FC /* SendPushSubscriptionInteractor.swift in Sources */,
 				59799E542746604F00BFB375 /* ConfigNetworkDataSource.swift in Sources */,

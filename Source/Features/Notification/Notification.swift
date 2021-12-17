@@ -88,8 +88,8 @@ public struct Notification: Codable {
         // Do nothing
     }
 
-    init(id: String, title: String?, actionURL: String?, content: String?, category: String?, topic: String?,
-         customAttributes: [String: Any]? = [:], recipient: Recipient?, seenAt: Date? = nil, sentAt: Date, readAt: Date? = nil, archivedAt: Date? = nil) {
+    init(id: String, title: String? = nil, actionURL: String? = nil, content: String? = nil, category: String? = nil, topic: String? = nil,
+         customAttributes: [String: Any]? = [:], recipient: Recipient? = nil, seenAt: Date? = nil, sentAt: Date, readAt: Date? = nil, archivedAt: Date? = nil) {
         self.id = id
         self.title = title
         self.actionURL = actionURL

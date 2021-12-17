@@ -20,6 +20,20 @@
                ReferencedContainer = "container:MagicBell.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "59EF99BA27446D6900FB2378"
+               BuildableName = "MagicBellTests.xctest"
+               BlueprintName = "MagicBellTests"
+               ReferencedContainer = "container:MagicBell.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -28,6 +42,16 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "59EF99BA27446D6900FB2378"
+               BuildableName = "MagicBellTests.xctest"
+               BlueprintName = "MagicBellTests"
+               ReferencedContainer = "container:MagicBell.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

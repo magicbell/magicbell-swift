@@ -7,8 +7,9 @@
 
 import XCTest
 @testable import MagicBell
+import struct MagicBell.Notification
 
-class StorePredicateValidatorTests: XCTestCase {
+class NotificationValidatorTests: XCTestCase {
 
     override func setUpWithError() throws {
     }
@@ -16,203 +17,185 @@ class StorePredicateValidatorTests: XCTestCase {
     override func tearDownWithError() throws {
     }
 
-
-    func test_ValidatePredicate_WithRead_ShouldBeTrue() throws {
-        let storePredicateValidatorRead = StorePredicateValidator(storePredicate: StorePredicate(read: .read))
-        let notification = Notification(
-            id: "Testing",
-            title: nil,
+    private func notification(
+        read: Bool = false,
+        seen: Bool = false,
+        archived: Bool = false,
+        category: String? = nil,
+        topic: String? = nil
+    ) -> Notification {
+        Notification(
+            id: "123456789",
+            title: "Testing",
             actionURL: nil,
-            content: nil,
-            category: nil,
-            topic: nil,
+            content: "Lorem ipsum sir dolor amet",
+            category: category,
+            topic: topic,
             customAttributes: nil,
             recipient: nil,
-            seenAt: nil,
+            seenAt: seen ? Date() : nil,
             sentAt: Date(),
-            readAt: Date(),
-            archivedAt: nil
+            readAt: read ? Date() : nil,
+            archivedAt: archived ? Date() : nil
         )
-        XCTAssertTrue(storePredicateValidatorRead.validateRead(notification))
     }
 
-    func test_ValidatePredicate_WithUnspecified_ShouldBeTrue() throws {
-        let storePredicateValidatorRead = StorePredicateValidator(storePredicate: StorePredicate(read: .unspecified))
-        let notification = Notification(
-            id: "Testing",
-            title: nil,
-            actionURL: nil,
-            content: nil,
-            category: nil,
-            topic: nil,
-            customAttributes: nil,
-            recipient: nil,
-            seenAt: nil,
-            sentAt: Date(),
-            readAt: Date(),
-            archivedAt: nil
-        )
+    func allNotifications(
+        read: Bool? = nil,
+        seen: Bool? = nil,
+        archived: Bool? = nil,
+        category: String? = nil,
+        topic: String? = nil
+    ) -> [Notification] {
+        let readValues: [Bool] = {
+            if let read = read {
+                return [read]
+            } else {
+                return [true, false]
+            }
+        }()
+        let seenValues: [Bool] = {
+            if let seen = seen {
+                return [seen]
+            } else {
+                return [true, false]
+            }
+        }()
+        let archivedValues: [Bool] = {
+            if let archived = archived {
+                return [archived]
+            } else {
+                return [true, false]
+            }
+        }()
+        let categoryValues: [String] = {
+            if let category = category {
+                return [category]
+            } else {
+                return ["nil", "category"]
+            }
+        }()
+        let topicValues: [String] = {
+            if let topic = topic {
+                return [topic]
+            } else {
+                return ["nil", "topic"]
+            }
+        }()
 
-        XCTAssertTrue(storePredicateValidatorRead.validateRead(notification))
+        var notifications: [Notification] = []
+        for read in readValues {
+            for seen in seenValues {
+                for archived in archivedValues {
+                    for category in categoryValues {
+                        for topic in topicValues {
+                            notifications.append(
+                                notification(
+                                    read: read,
+                                    seen: seen,
+                                    archived: archived,
+                                    category: category == "nil" ? nil : category,
+                                    topic: topic == "nil" ? nil : topic
+                                )
+                            )
+                        }
+                    }
+                }
+            }
+        }
+        return notifications
     }
 
-    func test_ValidatePredicate_WithUnread_ShouldBeTrue() throws {
-        let storePredicateValidatorRead = StorePredicateValidator(storePredicate: StorePredicate(read: .unread))
-        let notification = Notification(
-            id: "Testing",
-            title: nil,
-            actionURL: nil,
-            content: nil,
-            category: nil,
-            topic: nil,
-            customAttributes: nil,
-            recipient: nil,
-            seenAt: nil,
-            sentAt: Date(),
-            readAt: nil,
-            archivedAt: nil
-        )
-
-        XCTAssertTrue(storePredicateValidatorRead.validateRead(notification))
+    func test_predicate_all() throws {
+        let predicate = StorePredicate()
+        for notification in allNotifications() {
+            XCTAssertTrue(predicate.match(notification))
+        }
     }
 
-    func test_ValidatePredicate_WithUnread_ShouldBeFalse() throws {
-        let storePredicateValidatorRead = StorePredicateValidator(storePredicate: StorePredicate(read: .unread))
-        let notification = Notification(
-            id: "Testing",
-            title: nil,
-            actionURL: nil,
-            content: nil,
-            category: nil,
-            topic: nil,
-            customAttributes: nil,
-            recipient: nil,
-            seenAt: nil,
-            sentAt: Date(),
-            readAt: Date(),
-            archivedAt: nil
-        )
-
-        XCTAssertFalse(storePredicateValidatorRead.validateRead(notification))
+    func test_predicate_read() throws {
+        let predicate = StorePredicate(read: .read)
+        for notification in allNotifications(read: true) {
+            XCTAssertTrue(predicate.match(notification))
+        }
+        for notification in allNotifications(read: false) {
+            XCTAssertFalse(predicate.match(notification))
+        }
     }
 
-    func test_ValidateSeenPredicate_WithSeenDate_Shoul() throws {
-        let storePredicateValidatorRead = StorePredicateValidator(storePredicate: StorePredicate(seen: .seen))
-        let notification = Notification(
-            id: "Testing",
-            title: nil,
-            actionURL: nil,
-            content: nil,
-            category: nil,
-            topic: nil,
-            customAttributes: nil,
-            recipient: nil,
-            seenAt: Date(),
-            sentAt: Date(),
-            readAt: nil,
-            archivedAt: nil
-        )
-
-        XCTAssertTrue(storePredicateValidatorRead.validateSeen(notification))
+    func test_predicate_unread() throws {
+        let predicate = StorePredicate(read: .unread)
+        for notification in allNotifications(read: false) {
+            XCTAssertTrue(predicate.match(notification))
+        }
+        for notification in allNotifications(read: true) {
+            XCTAssertFalse(predicate.match(notification))
+        }
     }
 
-    func test_should_validate_seen_predicate_unspecified() throws {
-        let storePredicateValidatorRead = StorePredicateValidator(storePredicate: StorePredicate(seen: .unspecified))
-        let notification = Notification(
-            id: "Testing",
-            title: nil,
-            actionURL: nil,
-            content: nil,
-            category: nil,
-            topic: nil,
-            customAttributes: nil,
-            recipient: nil,
-            seenAt: Date(),
-            sentAt: Date(),
-            readAt: nil,
-            archivedAt: nil
-        )
-
-        XCTAssertTrue(storePredicateValidatorRead.validateSeen(notification))
+    func test_predicate_seen() throws {
+        let predicate = StorePredicate(seen: .seen)
+        for notification in allNotifications(seen: true) {
+            XCTAssertTrue(predicate.match(notification))
+        }
+        for notification in allNotifications(seen: false) {
+            XCTAssertFalse(predicate.match(notification))
+        }
     }
 
-    func test_should_validate_seen_unseen() throws {
-        let storePredicateValidatorRead = StorePredicateValidator(storePredicate: StorePredicate(seen: .unseen))
-        let notification = Notification(
-            id: "Testing",
-            title: nil,
-            actionURL: nil,
-            content: nil,
-            category: nil,
-            topic: nil,
-            customAttributes: nil,
-            recipient: nil,
-            seenAt: nil,
-            sentAt: Date(),
-            readAt: nil,
-            archivedAt: nil
-        )
-
-        XCTAssertTrue(storePredicateValidatorRead.validateSeen(notification))
+    func test_predicate_unseen() throws {
+        let predicate = StorePredicate(seen: .unseen)
+        for notification in allNotifications(seen: false) {
+            XCTAssertTrue(predicate.match(notification))
+        }
+        for notification in allNotifications(seen: true) {
+            XCTAssertFalse(predicate.match(notification))
+        }
     }
 
-    func test_should_validate_archive_predicate() throws {
-        let storePredicateValidatorRead = StorePredicateValidator(storePredicate: StorePredicate(archived: .archived))
-        let notification = Notification(
-            id: "Testing",
-            title: nil,
-            actionURL: nil,
-            content: nil,
-            category: nil,
-            topic: nil,
-            customAttributes: nil,
-            recipient: nil,
-            seenAt: nil,
-            sentAt: Date(),
-            readAt: nil,
-            archivedAt: Date()
-        )
-
-        XCTAssertTrue(storePredicateValidatorRead.validateArchive(notification))
+    func test_predicate_archived() throws {
+        let predicate = StorePredicate(archived: .archived)
+        for notification in allNotifications(archived: true) {
+            XCTAssertTrue(predicate.match(notification))
+        }
+        for notification in allNotifications(archived: false) {
+            XCTAssertFalse(predicate.match(notification))
+        }
     }
 
-    func test_should_validate_category_predicate() throws {
-        let storePredicateValidatorRead = StorePredicateValidator(storePredicate: StorePredicate(categories: ["Test"]))
-        let notification = Notification(
-            id: "Testing",
-            title: nil,
-            actionURL: nil,
-            content: nil,
-            category: "Test",
-            topic: nil,
-            customAttributes: nil,
-            recipient: nil,
-            seenAt: nil,
-            sentAt: Date(),
-            readAt: nil,
-            archivedAt: nil
-        )
-
-        XCTAssertTrue(storePredicateValidatorRead.validateCategory(notification))
+    func test_predicate_unarchived() throws {
+        let predicate = StorePredicate(archived: .unarchived)
+        for notification in allNotifications(archived: false) {
+            XCTAssertTrue(predicate.match(notification))
+        }
+        for notification in allNotifications(archived: true) {
+            XCTAssertFalse(predicate.match(notification))
+        }
     }
 
-    func test_should_validate_topic_predicate() throws {
-        let storePredicateValidatorRead = StorePredicateValidator(storePredicate: StorePredicate(topics: ["Test"]))
-        let notification = Notification(
-            id: "Testing",
-            title: nil,
-            actionURL: nil,
-            content: nil,
-            category: nil,
-            topic: "Test",
-            customAttributes: nil,
-            recipient: nil,
-            seenAt: nil,
-            sentAt: Date(),
-            readAt: nil,
-            archivedAt: nil
-        )
+    func test_predicate_category() throws {
+        let predicate = StorePredicate(categories: ["the-category"])
+        for notification in allNotifications(category: "the-category") {
+            XCTAssertTrue(predicate.match(notification))
+        }
+        for notification in allNotifications(category: "not-the-category") {
+            XCTAssertFalse(predicate.match(notification))
+        }
+        for notification in allNotifications(category: "nil") {
+            XCTAssertFalse(predicate.match(notification))
+        }
+    }
 
-        XCTAssertTrue(storePredicateValidatorRead.validateTopic(notification))
+    func test_predicate_topic() throws {
+        let predicate = StorePredicate(topics: ["the-topic"])
+        for notification in allNotifications(topic: "the-topic") {
+            XCTAssertTrue(predicate.match(notification))
+        }
+        for notification in allNotifications(topic: "not-the-topic") {
+            XCTAssertFalse(predicate.match(notification))
+        }
+        for notification in allNotifications(topic: "nil") {
+            XCTAssertFalse(predicate.match(notification))
+        }
     }
 }

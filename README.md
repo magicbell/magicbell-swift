@@ -46,9 +46,10 @@ store.fetch { result in
     - [Logout](#logout-a-user)
     - [Multi-User Support](#multi-user-support)
 - [NotificationStore](#notificationstore)
-    - [Obtaining a Notification Store](#obtaining-a-notification-store)
-    - [Using a notification store](#using-a-notification-store)
-    - [Editing Notifications](#editing-notifications)
+    - [Obtaining a NotificationStore](#obtaining-a-notification-store)
+    - [Using a NotificationStore](#using-a-notification-store)
+    - [Editing notifications](#editing-notifications)
+    - [Observing NotificationStore changes](#observing-notification-store-changes)
 - [User Preferences](#user-preferences)
 - [Push Notification Support](#push-notifications)
 
@@ -296,7 +297,7 @@ There are two methods to load notifications:
 - `store.fetch`: Use this method to load the first & follwoing pages in the list of notifications. The completion block returns an array with the newly loaded notifications.
 - `store.refresh`: Use this method to reload from the beginning the first page of the list of notifications. The completion block returns an array with the loaded notifications.
 
-Note by calling these methods, `NotificationStore` will notify the content observers with the newly added notifications (read about observers [here](3.-observing-notification-store-changes))
+Note by calling these methods, `NotificationStore` will notify the content observers with the newly added notifications (read about observers [here](#observing-notification-store-changes))
 
 ```swift
 // Obtaining a new notification store (first time)
@@ -361,7 +362,7 @@ For example, as a result of marking a notification read, if your store specifies
 
 Therefore, when notification changes are detected, notification stores are updated automatically and observers of the notification stores are notified accordingly.
 
-### 3. Observing notification store changes
+### Observing notification store changes
 
 `NotificationStore` objects are automatically updated when new notifications arrive, or a notification is modified (marked read, archived, etc.)
 

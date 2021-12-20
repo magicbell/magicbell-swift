@@ -29,7 +29,7 @@ This is the official MagicBell SDK for iOS.
   s.source_files = 'Source/**/*.swift'
   s.resources = 'Source/**/*.graphql'
 
-  s.dependency 'Harmony/Repository'
+  s.dependency 'Harmony/Repository', '1.1.5'
   s.dependency 'Ably', '1.2.7'
 
 #   s.resource_bundles = {

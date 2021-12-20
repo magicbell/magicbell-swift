@@ -52,7 +52,7 @@ class DefaultStoreModule: StoreComponent {
     }
 
     private func getFetchStorePageInteractor() -> FetchStorePageInteractor {
-        FetchStorePageInteractor(
+        DefaultFetchStorePageInteractor(
             executor: mainExecutor,
             getStorePagesInteractor: getStorePagesInteractor()
         )

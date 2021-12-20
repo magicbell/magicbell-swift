@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4214384C026305E8ACC20C02 /* Pods_MagicBell_MagicBellTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEC408680C35F229D2719682 /* Pods_MagicBell_MagicBellTests.framework */; };
+		387D35958BBC33D1C052C175 /* Pods_MagicBellTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A379074F237717D240E436EA /* Pods_MagicBellTests.framework */; };
 		593883B027603023001D38FC /* SendPushSubscriptionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883AF27603023001D38FC /* SendPushSubscriptionInteractor.swift */; };
 		593883B2276036BC001D38FC /* DeviceTokenQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883B1276036BC001D38FC /* DeviceTokenQuery.swift */; };
 		593883B727603B9B001D38FC /* DeletePushSubscriptionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883B627603B9B001D38FC /* DeletePushSubscriptionInteractor.swift */; };
@@ -43,6 +43,7 @@
 		59799E69274662E900BFB375 /* NotificationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E68274662E900BFB375 /* NotificationProvider.swift */; };
 		59799E6B274671A100BFB375 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E6A274671A100BFB375 /* NetworkError.swift */; };
 		59827B55275FD7C9009D93D8 /* AblyMessageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59827B54275FD7C9009D93D8 /* AblyMessageProcessor.swift */; };
+		5997F8E6277099CB00DED4E4 /* MockFetchStorePageInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CFBD4E2770956000F1843C /* MockFetchStorePageInteractor.swift */; };
 		59B2DDA3276959AC0038B0EA /* UserPreferencesDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B2DDA2276959AC0038B0EA /* UserPreferencesDirector.swift */; };
 		59B2DDA72769682C0038B0EA /* PushSubscriptionDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B2DDA62769682C0038B0EA /* PushSubscriptionDirector.swift */; };
 		59B2DDA927696CA70038B0EA /* UserBell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B2DDA827696CA70038B0EA /* UserBell.swift */; };
@@ -97,6 +98,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		06CF3B3F76FF3A7C6CBC6D67 /* Pods-MagicBellTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBellTests.debug.xcconfig"; path = "Target Support Files/Pods-MagicBellTests/Pods-MagicBellTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4E54DA462E941D835159B3EF /* Pods-MagicBell-MagicBellTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell-MagicBellTests.debug.xcconfig"; path = "Target Support Files/Pods-MagicBell-MagicBellTests/Pods-MagicBell-MagicBellTests.debug.xcconfig"; sourceTree = "<group>"; };
 		58A4768E881F0F48DA11959A /* Pods-MagicBell.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell.release.xcconfig"; path = "Target Support Files/Pods-MagicBell/Pods-MagicBell.release.xcconfig"; sourceTree = "<group>"; };
 		593883AF27603023001D38FC /* SendPushSubscriptionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendPushSubscriptionInteractor.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 		59C3CDC1274D2F220043BA77 /* EncodableToDataMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodableToDataMapper.swift; sourceTree = "<group>"; };
 		59C3CDC3274D36360043BA77 /* DeleteConfigInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteConfigInteractor.swift; sourceTree = "<group>"; };
 		59C3CDC5274D4ED40043BA77 /* ErrorEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorEntity.swift; sourceTree = "<group>"; };
+		59CFBD4E2770956000F1843C /* MockFetchStorePageInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFetchStorePageInteractor.swift; sourceTree = "<group>"; };
 		59E92012275400F500D8877A /* NotificationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStore.swift; sourceTree = "<group>"; };
 		59EF99B127446D6900FB2378 /* MagicBell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MagicBell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59EF99BB27446D6900FB2378 /* MagicBellTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MagicBellTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -163,6 +166,8 @@
 		59F4597A275A48AD008F3BC8 /* StoreRealTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRealTime.swift; sourceTree = "<group>"; };
 		7D4ED1A7740032DA6209723F /* Pods_MagicBell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MagicBell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81C27FF31812D07F0A77CA5D /* Pods-MagicBell.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell.debug.xcconfig"; path = "Target Support Files/Pods-MagicBell/Pods-MagicBell.debug.xcconfig"; sourceTree = "<group>"; };
+		A379074F237717D240E436EA /* Pods_MagicBellTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MagicBellTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B720483D88E20A2C85C6689F /* Pods-MagicBellTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBellTests.release.xcconfig"; path = "Target Support Files/Pods-MagicBellTests/Pods-MagicBellTests.release.xcconfig"; sourceTree = "<group>"; };
 		D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDirector.swift; sourceTree = "<group>"; };
 		D2CBA51F275121C2002F1E44 /* NotificationFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = NotificationFragment.graphql; sourceTree = "<group>"; };
 		D2CBA52127512462002F1E44 /* PageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageInfo.swift; sourceTree = "<group>"; };
@@ -178,7 +183,6 @@
 		D2D2772A2747D43200B5F69E /* PushSubscriptionQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSubscriptionQuery.swift; sourceTree = "<group>"; };
 		D2E038272767943F0077FFF3 /* NotificationStoreObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStoreObserver.swift; sourceTree = "<group>"; };
 		E762A2AAD51FE9D565FF0B75 /* Pods-MagicBell-MagicBellTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell-MagicBellTests.release.xcconfig"; path = "Target Support Files/Pods-MagicBell-MagicBellTests/Pods-MagicBell-MagicBellTests.release.xcconfig"; sourceTree = "<group>"; };
-		FEC408680C35F229D2719682 /* Pods_MagicBell_MagicBellTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MagicBell_MagicBellTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,7 +199,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				59EF99BC27446D6900FB2378 /* MagicBell.framework in Frameworks */,
-				4214384C026305E8ACC20C02 /* Pods_MagicBell_MagicBellTests.framework in Frameworks */,
+				387D35958BBC33D1C052C175 /* Pods_MagicBellTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,6 +427,31 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
+		59CFBD4B277093DA00F1843C /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				59CFBD4C277093E200F1843C /* Store */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		59CFBD4C277093E200F1843C /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				59CFBD4D2770954D00F1843C /* Mock */,
+				595319312756249A006673E9 /* NotificationValidatorTests.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		59CFBD4D2770954D00F1843C /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				59CFBD4E2770956000F1843C /* MockFetchStorePageInteractor.swift */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
 		59EF99A727446D6900FB2378 = {
 			isa = PBXGroup;
 			children = (
@@ -447,8 +476,8 @@
 		59EF99BF27446D6900FB2378 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				59CFBD4B277093DA00F1843C /* Features */,
 				59EF99C027446D6900FB2378 /* MagicBellTests.swift */,
-				595319312756249A006673E9 /* NotificationValidatorTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -502,6 +531,8 @@
 				58A4768E881F0F48DA11959A /* Pods-MagicBell.release.xcconfig */,
 				4E54DA462E941D835159B3EF /* Pods-MagicBell-MagicBellTests.debug.xcconfig */,
 				E762A2AAD51FE9D565FF0B75 /* Pods-MagicBell-MagicBellTests.release.xcconfig */,
+				06CF3B3F76FF3A7C6CBC6D67 /* Pods-MagicBellTests.debug.xcconfig */,
+				B720483D88E20A2C85C6689F /* Pods-MagicBellTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -533,7 +564,7 @@
 			isa = PBXGroup;
 			children = (
 				7D4ED1A7740032DA6209723F /* Pods_MagicBell.framework */,
-				FEC408680C35F229D2719682 /* Pods_MagicBell_MagicBellTests.framework */,
+				A379074F237717D240E436EA /* Pods_MagicBellTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -654,15 +685,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MagicBell-MagicBellTests/Pods-MagicBell-MagicBellTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-MagicBellTests/Pods-MagicBellTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MagicBell-MagicBellTests/Pods-MagicBell-MagicBellTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-MagicBellTests/Pods-MagicBellTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MagicBell-MagicBellTests/Pods-MagicBell-MagicBellTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MagicBellTests/Pods-MagicBellTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		57A1166646854D13A921303B /* [CP] Check Pods Manifest.lock */ = {
@@ -680,7 +711,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MagicBell-MagicBellTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-MagicBellTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -811,6 +842,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5997F8E6277099CB00DED4E4 /* MockFetchStorePageInteractor.swift in Sources */,
 				595319322756249A006673E9 /* NotificationValidatorTests.swift in Sources */,
 				59EF99C127446D6900FB2378 /* MagicBellTests.swift in Sources */,
 			);
@@ -1009,9 +1041,8 @@
 		};
 		59EF99C927446D6900FB2378 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4E54DA462E941D835159B3EF /* Pods-MagicBell-MagicBellTests.debug.xcconfig */;
+			baseConfigurationReference = 06CF3B3F76FF3A7C6CBC6D67 /* Pods-MagicBellTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1031,9 +1062,8 @@
 		};
 		59EF99CA27446D6900FB2378 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E762A2AAD51FE9D565FF0B75 /* Pods-MagicBell-MagicBellTests.release.xcconfig */;
+			baseConfigurationReference = B720483D88E20A2C85C6689F /* Pods-MagicBellTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;

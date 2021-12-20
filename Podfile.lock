@@ -10,10 +10,12 @@ PODS:
     - Harmony/Common
     - Harmony/Future
   - msgpack (0.4.0)
+  - SwiftLint (0.45.1)
 
 DEPENDENCIES:
   - Ably (= 1.2.7)
   - Harmony/Repository
+  - SwiftLint
 
 SPEC REPOS:
   trunk:
@@ -21,13 +23,15 @@ SPEC REPOS:
     - AblyDeltaCodec
     - Harmony
     - msgpack
+    - SwiftLint
 
 SPEC CHECKSUMS:
   Ably: f627c0c2e4489785b74d33d2c1287edeb9c6a7be
   AblyDeltaCodec: 783d017270de70bbbc0a84e4235297b225d33636
   Harmony: c75b73a290fe8399703a90206f4b987ea3c1516c
   msgpack: c85f6251873059738472ae136951cec5f30f3251
+  SwiftLint: 06ac37e4d38c7068e0935bb30cda95f093bec761
 
-PODFILE CHECKSUM: 85dcc44ce501578faa093a8f8392057cdd0df447
+PODFILE CHECKSUM: 93e05860f8f92954ab2ba4833ffb3314c5c93a21
 
 COCOAPODS: 1.11.2

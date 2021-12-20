@@ -9,6 +9,7 @@ target 'MagicBell' do
     # Pods for MagicBell
     pod 'Harmony/Repository'
     pod 'Ably', '1.2.7'
+    pod 'SwiftLint'
 
 
     target 'MagicBellTests' do

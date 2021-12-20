@@ -169,7 +169,7 @@ public class NotificationStore: StoreRealTimeObserver {
                     notificationEdge.node
                 }
                 completion(.success(notifications))
-                let indexes = (oldCount..<self.edges.count).map { $0 }
+                let indexes = Array(oldCount..<self.edges.count)
                 self.forEachContentObserver { $0.store(self, didInsertNotificationsAt: indexes) }
             }.fail { error in
                 completion(.failure(error))
@@ -309,7 +309,7 @@ public class NotificationStore: StoreRealTimeObserver {
         hasNextPage = true
 
         if notifyChanges {
-            forEachContentObserver { $0.store(self, didDeleteNotificationAt: (0..<notificationCount).map { $0 } )}
+            forEachContentObserver { $0.store(self, didDeleteNotificationAt: Array(0..<notificationCount)) }
         }
     }
 

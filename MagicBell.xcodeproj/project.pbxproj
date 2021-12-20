@@ -45,6 +45,7 @@
 		59827B55275FD7C9009D93D8 /* AblyMessageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59827B54275FD7C9009D93D8 /* AblyMessageProcessor.swift */; };
 		5997F8E6277099CB00DED4E4 /* FetchStorePageMockInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CFBD4E2770956000F1843C /* FetchStorePageMockInteractor.swift */; };
 		5997F8E927709A8D00DED4E4 /* ActionNotificationMockInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5997F8E827709A8D00DED4E4 /* ActionNotificationMockInteractor.swift */; };
+		5997F8EB27709E6A00DED4E4 /* DeleteNotificationMockInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5997F8EA27709E6A00DED4E4 /* DeleteNotificationMockInteractor.swift */; };
 		59B2DDA3276959AC0038B0EA /* UserPreferencesDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B2DDA2276959AC0038B0EA /* UserPreferencesDirector.swift */; };
 		59B2DDA72769682C0038B0EA /* PushSubscriptionDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B2DDA62769682C0038B0EA /* PushSubscriptionDirector.swift */; };
 		59B2DDA927696CA70038B0EA /* UserBell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B2DDA827696CA70038B0EA /* UserBell.swift */; };
@@ -138,6 +139,7 @@
 		59799E6A274671A100BFB375 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		59827B54275FD7C9009D93D8 /* AblyMessageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyMessageProcessor.swift; sourceTree = "<group>"; };
 		5997F8E827709A8D00DED4E4 /* ActionNotificationMockInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionNotificationMockInteractor.swift; sourceTree = "<group>"; };
+		5997F8EA27709E6A00DED4E4 /* DeleteNotificationMockInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteNotificationMockInteractor.swift; sourceTree = "<group>"; };
 		59B2DDA2276959AC0038B0EA /* UserPreferencesDirector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferencesDirector.swift; sourceTree = "<group>"; };
 		59B2DDA62769682C0038B0EA /* PushSubscriptionDirector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSubscriptionDirector.swift; sourceTree = "<group>"; };
 		59B2DDA827696CA70038B0EA /* UserBell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBell.swift; sourceTree = "<group>"; };
@@ -451,6 +453,7 @@
 			children = (
 				59CFBD4E2770956000F1843C /* FetchStorePageMockInteractor.swift */,
 				5997F8E827709A8D00DED4E4 /* ActionNotificationMockInteractor.swift */,
+				5997F8EA27709E6A00DED4E4 /* DeleteNotificationMockInteractor.swift */,
 			);
 			path = Mock;
 			sourceTree = "<group>";
@@ -846,6 +849,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5997F8E6277099CB00DED4E4 /* FetchStorePageMockInteractor.swift in Sources */,
+				5997F8EB27709E6A00DED4E4 /* DeleteNotificationMockInteractor.swift in Sources */,
 				5997F8E927709A8D00DED4E4 /* ActionNotificationMockInteractor.swift in Sources */,
 				595319322756249A006673E9 /* NotificationValidatorTests.swift in Sources */,
 				59EF99C127446D6900FB2378 /* MagicBellTests.swift in Sources */,

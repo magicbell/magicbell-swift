@@ -11,6 +11,7 @@ import Harmony
 /// The NotificationStore class represents a collection of MagicBell notifications.
 ///
 // swiftlint:disable type_body_length
+// swiftlint:disable file_length
 public class NotificationStore: StoreRealTimeObserver {
 
     private let pageSize = 20

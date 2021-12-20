@@ -361,7 +361,7 @@ public class NotificationStore: StoreRealTimeObserver {
         completion: @escaping (Error?) -> Void
     ) {
         actionNotificationInteractor
-            .execute(action: action, userQuery: userQuery)
+            .execute(action: action, userQuery: userQuery, notificationId: nil)
             .then { _ in
                 for i in self.edges.indices {
                     modificationsBlock(&self.edges[i].node)

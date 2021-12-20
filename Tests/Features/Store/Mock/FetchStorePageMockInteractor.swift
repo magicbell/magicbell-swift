@@ -1,15 +1,14 @@
 //
-//  MockFetchStorePageInteractor.swift
+//  FetchStorePageMockInteractor.swift
 //  MagicBell
 //
 //  Created by Javi on 20/12/21.
 //
 
-import Foundation
 @testable import MagicBell
 @testable import Harmony
 
-class MockFetchStorePageInteractor: FetchStorePageInteractor {
+class FetchStorePageMockInteractor: FetchStorePageInteractor {
 
     private let expectedResult: Result<StorePage, Error>
 

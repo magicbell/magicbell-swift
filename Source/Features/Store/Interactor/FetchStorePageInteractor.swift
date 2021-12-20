@@ -15,7 +15,7 @@ protocol FetchStorePageInteractor {
     ) -> Future<StorePage>
 }
 
-struct DefaultFetchStorePageInteractor: FetchStorePageInteractor {
+struct FetchStorePageDefaultInteractor: FetchStorePageInteractor {
 
     private let executor: Executor
     private let getStorePagesInteractor: GetStorePagesInteractor

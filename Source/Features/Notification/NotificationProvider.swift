@@ -33,7 +33,7 @@ class DefaultNotificationComponent: NotificationComponent {
     }
 
     func getActionNotificationInteractor() -> ActionNotificationInteractor {
-        ActionNotificationInteractor(
+        ActionNotificationDefaultInteractor(
             executor: executor,
             actionInteractor: actionNotificationNetworkDataSource.toPutRepository().toPutByQueryInteractor(executor)
         )

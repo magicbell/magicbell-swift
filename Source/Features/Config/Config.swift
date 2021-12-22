@@ -22,6 +22,10 @@ class Config: Codable {
         try configContainer.encode(channel, forKey: .channel)
     }
 
+    init(channel: String) {
+        self.channel = channel
+    }
+
     enum ContainerKeys: String, CodingKey {
         case websocket = "ws"
     }

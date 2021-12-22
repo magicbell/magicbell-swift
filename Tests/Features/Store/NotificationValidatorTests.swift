@@ -12,29 +12,6 @@ import Nimble
 
 class NotificationValidatorTests: XCTestCase {
 
-    private func notification(
-        read: Bool = false,
-        seen: Bool = false,
-        archived: Bool = false,
-        category: String? = nil,
-        topic: String? = nil
-    ) -> Notification {
-        Notification(
-            id: "123456789",
-            title: "Testing",
-            actionURL: nil,
-            content: "Lorem ipsum sir dolor amet",
-            category: category,
-            topic: topic,
-            customAttributes: nil,
-            recipient: nil,
-            seenAt: seen ? Date() : nil,
-            sentAt: Date(),
-            readAt: read ? Date() : nil,
-            archivedAt: archived ? Date() : nil
-        )
-    }
-
     func allNotifications(
         read: Bool? = nil,
         seen: Bool? = nil,
@@ -46,7 +23,12 @@ class NotificationValidatorTests: XCTestCase {
             if let read = read {
                 return [read]
             } else {
-                return [true, false]
+                // If seen is false it cannot be read
+                if let seen = seen, seen == false {
+                    return [false]
+                } else {
+                    return [true, false]
+                }
             }
         }()
         let seenValues: [Bool] = {
@@ -85,7 +67,7 @@ class NotificationValidatorTests: XCTestCase {
                     for category in categoryValues {
                         for topic in topicValues {
                             notifications.append(
-                                notification(
+                                Notification.create(
                                     read: read,
                                     seen: seen,
                                     archived: archived,
@@ -161,7 +143,7 @@ class NotificationValidatorTests: XCTestCase {
     func test_predicate_unarchived() throws {
         let predicate = StorePredicate(archived: .unarchived)
         for notification in allNotifications(archived: false) {
-           expect(predicate.match(notification)) == true
+            expect(predicate.match(notification)) == true
         }
         for notification in allNotifications(archived: true) {
             expect(predicate.match(notification)) == false

@@ -9,9 +9,9 @@
 @testable import Harmony
 
 class FetchStorePageMockInteractor: FetchStorePageInteractor {
-
-    private let expectedResult: Result<StorePage, Error>
-
+    
+    var expectedResult: Result<StorePage, Error>
+    
     internal init(expectedResult: Result<StorePage, Error>) {
         self.expectedResult = expectedResult
     }
@@ -20,14 +20,14 @@ class FetchStorePageMockInteractor: FetchStorePageInteractor {
     var executeCounter: Int {
         executeParamsSpy.count
     }
-
-
+    
     func execute(storePredicate: StorePredicate, userQuery: UserQuery, cursorPredicate: CursorPredicate) -> Future<StorePage> {
         executeParamsSpy.append(MethodParams.Execute(storePredicate: storePredicate, userQuery: userQuery, cursorPredicate: cursorPredicate))
         return TestUtils.result(expectedResult: expectedResult)
     }
-
+    
     class MethodParams {
+
         struct Execute {
             let storePredicate: StorePredicate
             let userQuery: UserQuery

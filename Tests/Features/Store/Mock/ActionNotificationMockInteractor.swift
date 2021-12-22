@@ -27,7 +27,6 @@ class ActionNotificationMockInteractor: ActionNotificationInteractor {
     }
 
     class MethodParams {
-
         struct Execute {
             let action: NotificationActionQuery.Action
             let userQuery: UserQuery

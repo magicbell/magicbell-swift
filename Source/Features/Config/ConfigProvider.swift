@@ -38,10 +38,10 @@ class DefaultConfigModule: ConfigComponent {
     }()
 
     func getGetConfigInteractor() -> GetConfigInteractor {
-        GetConfigInteractor(userConfigRepository.toGetByQueryInteractor(executor))
+        GetConfigDefaultInteractor(userConfigRepository.toGetByQueryInteractor(executor))
     }
 
     func getDeleteConfigInteractor() -> DeleteConfigInteractor {
-        DeleteConfigInteractor(userConfigRepository.toDeleteAllByQueryInteractor(executor))
+        DeleteConfigDefaultInteractor(userConfigRepository.toDeleteAllByQueryInteractor(executor))
     }
 }

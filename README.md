@@ -59,8 +59,10 @@ MagicBell is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'MagicBell', :git => 'https://github.com/magicbell-io/magicbell-ios'
+pod 'MagicBell'
 ```
+
+MagicBell uses [`Ably`](https://github.com/ably/ably-cocoa) as dependency, which requires to use `use_frameworks!` in your Podfile.
 
 ## MagicBell Setup
 

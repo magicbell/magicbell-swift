@@ -12,8 +12,7 @@ import Harmony
 ///
 // swiftlint:disable type_body_length
 // swiftlint:disable file_length
-public class NotificationStore: StoreRealTimeObserver {
-
+public class NotificationStore: Collection, StoreRealTimeObserver {
     private let pageSize = 20
 
     private let fetchStorePageInteractor: FetchStorePageInteractor
@@ -89,13 +88,16 @@ public class NotificationStore: StoreRealTimeObserver {
         return edges[index].node
     }
 
-    /// ForEach notification
-    /// - Parameter closure: enumeration closure
-    public func forEach(closure: (Notification) -> Void) {
-        edges.forEach { edge in
-            closure(edge.node)
-        }
+    // MARK: - Collection
+
+    public var startIndex: Int { return edges.startIndex }
+    public var endIndex: Int { return edges.endIndex }
+
+    public func index(after i: Int) -> Int {
+        return edges.index(after: i)
     }
+
+    // MARK: - Public Methods
 
     /// Add a content observer. Observers are stored in a HashTable with weak references.
     /// - Parameter observer: The observer

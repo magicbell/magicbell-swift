@@ -17,7 +17,7 @@ This is the official MagicBell SDK for iOS.
 
   s.homepage         = 'https://magicbell.com'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
-  s.license          = { :file => 'LICENSE' }
+  s.license          = { :type => 'SEE LICENSE', :file => 'LICENSE' }
   s.author           = { 'MagicBell' => 'hello@magicbell.com' }
   s.source           = { :git => 'https://github.com/magicbell-io/magicbell-ios.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/magicbell_io'

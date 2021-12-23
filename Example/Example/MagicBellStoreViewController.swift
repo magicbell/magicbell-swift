@@ -17,7 +17,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var magicBellStoreItem: BadgeBarButtonItem!
 
-    private var userBell = magicBell.forUser(email: "magicbell@mobilejazz.com")
+    private var userBell = magicBell.forUser(email: "john@doe.com")
     private lazy var store = userBell.store.forAll()
 
     private var observer: AnyObject?

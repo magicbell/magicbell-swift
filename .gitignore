@@ -56,6 +56,8 @@ playground.xcworkspace
 # Note: if you ignore the Pods directory, make sure to uncomment
 # `pod install` in .travis.yml
 Pods/
+Podfile.lock
+*.xcworkspace
 
 .idea
 

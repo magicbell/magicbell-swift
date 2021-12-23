@@ -10,7 +10,7 @@ jobs:
     working_directory: /Users/distiller/project
     environment:
       FL_OUTPUT_DIR: output
-      FASTLANE_LANE: test
+      FASTLANE_LANE: tests
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout

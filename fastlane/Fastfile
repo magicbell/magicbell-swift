@@ -11,7 +11,7 @@
 #
 
 # Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
+update_fastlane
 
 default_platform(:ios)
 
@@ -19,8 +19,13 @@ platform :ios do
   before_all do
     setup_circle_ci
   end
-  desc "Description of what the lane does"
+
+  desc "Running MagicBell Tests in iPhone 13 Simulator"
   lane :tests do
-    run_tests(scheme: "MagicBellTests")
+    run_tests(
+      workspace: "MagicBell.xcworkspace",
+      scheme: "MagicBellTests",
+      devices: ["iPhone 13"]
+      )
   end
 end

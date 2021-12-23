@@ -7,7 +7,7 @@
 
 @testable import MagicBell
 
-class ContentObserverMock: NotificationStoreContentDelegate {
+class ContentObserverMock: NotificationStoreContentObserver {
 
     private(set) var reloadStoreSpy:[MethodParams.ReloadStore] = []
     var reloadStoreCounter: Int {

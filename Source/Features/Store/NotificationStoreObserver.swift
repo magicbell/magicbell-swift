@@ -8,7 +8,7 @@
 import Foundation
 
 /// The store content delegate observer
-public protocol NotificationStoreContentDelegate: AnyObject {
+public protocol NotificationStoreContentObserver: AnyObject {
     /// Notifies the store did fully reload.
     func didReloadStore(_ store: NotificationStore)
     /// Notifies the store did insert new notifications at certain indexes.
@@ -20,7 +20,7 @@ public protocol NotificationStoreContentDelegate: AnyObject {
 }
 
 /// The store count delegate observer
-public protocol NotificationStoreCountDelegate: AnyObject {
+public protocol NotificationStoreCountObserver: AnyObject {
     /// Notifies the store did change the total count value
     func store(_ store: NotificationStore, didChangeTotalCount count: Int)
     /// Notifies the store did change the unread count value

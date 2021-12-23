@@ -402,7 +402,7 @@ To observe changes on a notification store, your observers must implement the fo
 
 ```swift 
 // Get notified when the list of notifications of a notification store changes
-public protocol NotificationStoreContentDelegate: AnyObject {
+public protocol NotificationStoreContentObserver: AnyObject {
     func didReloadStore(_ store: NotificationStore)
     func store(_ store: NotificationStore, didInsertNotificationsAt indexes: [Int])
     func store(_ store: NotificationStore, didChangeNotificationAt indexes: [Int])
@@ -410,7 +410,7 @@ public protocol NotificationStoreContentDelegate: AnyObject {
 }
 
 // Get notified when the counters of a notification store change
-public protocol NotificationStoreCountDelegate: AnyObject {
+public protocol NotificationStoreCountObserver: AnyObject {
     func store(_ store: NotificationStore, didChangeTotalCount count: Int)
     func store(_ store: NotificationStore, didChangeUnreadCount count: Int)
     func store(_ store: NotificationStore, didChangeUnseenCount count: Int)

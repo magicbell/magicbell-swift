@@ -8,8 +8,8 @@
 import UIKit
 import MagicBell
 
-class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, UITableViewDelegate, UITableViewDataSource,
-                                    NotificationStoreContentDelegate, NotificationStoreCountDelegate {
+// swiftlint:disable line_length
+class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, UITableViewDelegate, UITableViewDataSource, NotificationStoreContentObserver, NotificationStoreCountObserver {
 
     private var isLoadingNextPage = false
 

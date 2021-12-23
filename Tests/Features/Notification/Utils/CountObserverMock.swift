@@ -7,7 +7,7 @@
 
 @testable import MagicBell
 
-class CountObserverMock: NotificationStoreCountDelegate {
+class CountObserverMock: NotificationStoreCountObserver {
 
     private(set) var totalCountSpy:[MethodParams.TotalCount] = []
     var totalCountCounter: Int {

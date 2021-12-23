@@ -101,25 +101,25 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
 
     /// Add a content observer. Observers are stored in a HashTable with weak references.
     /// - Parameter observer: The observer
-    public func addContentObserver(_ observer: NotificationStoreContentDelegate) {
+    public func addContentObserver(_ observer: NotificationStoreContentObserver) {
         contentObservers.add(observer)
     }
 
     /// Removes a content observer.
     /// - Parameter observer: The observer
-    public func removeContentObserver(_ observer: NotificationStoreContentDelegate) {
+    public func removeContentObserver(_ observer: NotificationStoreContentObserver) {
         contentObservers.remove(observer)
     }
 
     /// Add a count observer. Observers are stored in a HashTable with weak references.
     /// - Parameter observer: The observer
-    public func addCountObserver(_ observer: NotificationStoreCountDelegate) {
+    public func addCountObserver(_ observer: NotificationStoreCountObserver) {
         countObservers.add(observer)
     }
 
     /// Removes a count observer.
     /// - Parameter observer: The observer
-    public func removeCountObserver(_ observer: NotificationStoreCountDelegate) {
+    public func removeCountObserver(_ observer: NotificationStoreCountObserver) {
         countObservers.remove(observer)
     }
 
@@ -462,17 +462,17 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
 
     // MARK: - Notification store observer methods
 
-    private func forEachContentObserver(action: (NotificationStoreContentDelegate) -> Void) {
+    private func forEachContentObserver(action: (NotificationStoreContentObserver) -> Void) {
         contentObservers.allObjects.forEach {
-            if let contentDelegate = $0 as? NotificationStoreContentDelegate {
+            if let contentDelegate = $0 as? NotificationStoreContentObserver {
                 action(contentDelegate)
             }
         }
     }
 
-    private func forEachCountObserver(action: (NotificationStoreCountDelegate) -> Void) {
+    private func forEachCountObserver(action: (NotificationStoreCountObserver) -> Void) {
         countObservers.allObjects.forEach {
-            if let countDelegate = $0 as? NotificationStoreCountDelegate {
+            if let countDelegate = $0 as? NotificationStoreCountObserver {
                 action(countDelegate)
             }
         }

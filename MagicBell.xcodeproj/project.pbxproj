@@ -83,6 +83,7 @@
 		59F4597527597FF7008F3BC8 /* AblyConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597427597FF7008F3BC8 /* AblyConnector.swift */; };
 		59F45979275A434A008F3BC8 /* StoreRealTimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F45978275A434A008F3BC8 /* StoreRealTimeProvider.swift */; };
 		59F4597B275A48AD008F3BC8 /* StoreRealTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597A275A48AD008F3BC8 /* StoreRealTime.swift */; };
+		D29D249227747DA000726ABD /* NotificationStorePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29D249127747DA000726ABD /* NotificationStorePublisher.swift */; };
 		D2C5A1B02768C25500C20D74 /* StoreDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */; };
 		D2CBA520275121C2002F1E44 /* NotificationFragment.graphql in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA51F275121C2002F1E44 /* NotificationFragment.graphql */; };
 		D2CBA52227512462002F1E44 /* PageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52127512462002F1E44 /* PageInfo.swift */; };
@@ -194,6 +195,7 @@
 		ABB7243C7FF8DC84984872CE /* Pods-MagicBell.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell.debug.xcconfig"; path = "Target Support Files/Pods-MagicBell/Pods-MagicBell.debug.xcconfig"; sourceTree = "<group>"; };
 		BEF00D4AE80A84D3CD340024 /* Pods-MagicBell.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell.release.xcconfig"; path = "Target Support Files/Pods-MagicBell/Pods-MagicBell.release.xcconfig"; sourceTree = "<group>"; };
 		C57D17EBCECA19506429AC0F /* Pods-MagicBellTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBellTests.release.xcconfig"; path = "Target Support Files/Pods-MagicBellTests/Pods-MagicBellTests.release.xcconfig"; sourceTree = "<group>"; };
+		D29D249127747DA000726ABD /* NotificationStorePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStorePublisher.swift; sourceTree = "<group>"; };
 		D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDirector.swift; sourceTree = "<group>"; };
 		D2CBA51F275121C2002F1E44 /* NotificationFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = NotificationFragment.graphql; sourceTree = "<group>"; };
 		D2CBA52127512462002F1E44 /* PageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageInfo.swift; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 				5953192D27561BA8006673E9 /* NotificationValidator.swift */,
 				D2CBA53027513747002F1E44 /* StoreContext.swift */,
 				59E92012275400F500D8877A /* NotificationStore.swift */,
+				D29D249127747DA000726ABD /* NotificationStorePublisher.swift */,
 				D2E038272767943F0077FFF3 /* NotificationStoreObserver.swift */,
 				D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */,
 				59569BB32750FCFB00FF1AA6 /* Interactor */,
@@ -951,6 +954,7 @@
 				59F4597B275A48AD008F3BC8 /* StoreRealTime.swift in Sources */,
 				593883B027603023001D38FC /* SendPushSubscriptionInteractor.swift in Sources */,
 				59799E542746604F00BFB375 /* ConfigNetworkDataSource.swift in Sources */,
+				D29D249227747DA000726ABD /* NotificationStorePublisher.swift in Sources */,
 				D2E038282767943F0077FFF3 /* NotificationStoreObserver.swift in Sources */,
 				59C3CDC6274D4ED40043BA77 /* ErrorEntity.swift in Sources */,
 			);

@@ -11,7 +11,7 @@ PODS:
     - Harmony/Future
   - MagicBell (0.1.0):
     - Ably (= 1.2.7)
-    - Harmony/Repository
+    - Harmony/Repository (= 1.1.5)
   - msgpack (0.4.0)
   - SwiftLint (0.45.1)
 
@@ -35,10 +35,10 @@ SPEC CHECKSUMS:
   Ably: f627c0c2e4489785b74d33d2c1287edeb9c6a7be
   AblyDeltaCodec: 783d017270de70bbbc0a84e4235297b225d33636
   Harmony: ecb9f9dca0d5c5cac452891e0a06c068c6d2c8d7
-  MagicBell: b5de9b15a8d9fd688031a496ef5f8f4f764d3f30
+  MagicBell: 9094ab147a31649c65482b3d1058b737eefe5511
   msgpack: c85f6251873059738472ae136951cec5f30f3251
   SwiftLint: 06ac37e4d38c7068e0935bb30cda95f093bec761
 
-PODFILE CHECKSUM: 92891fc022847c5cb10390a1d4ffd61131976ee7
+PODFILE CHECKSUM: d328242d929fb293f5b4dee8a2cabb1f1d476d99
 
 COCOAPODS: 1.11.2

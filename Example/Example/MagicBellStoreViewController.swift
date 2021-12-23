@@ -20,6 +20,8 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     private var userBell = magicBell.forUser(email: "magicbell@mobilejazz.com")
     private lazy var store = userBell.store.forAll()
 
+    private var observer: AnyObject?
+
     var navigationBarColor = UIColor(rgb: 0x6113A3) {
         didSet { applyBarStyle() }
     }
@@ -151,6 +153,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         store = userBell.store.with(predicate: predicate)
         store.addContentObserver(self)
         store.addCountObserver(self)
+
         reloadStore()
     }
 

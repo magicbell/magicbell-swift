@@ -82,6 +82,26 @@ class NotificationStoreTests: XCTestCase {
         }
     }
 
+    func test_store_allNotifications_shouldReturnAllNotifications() {
+        // GIVEN
+        let predicate = StorePredicate()
+        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
+        let store = createNotificationStore(
+            predicate: predicate,
+            fetchStoreExpectedResult: .success(storePage)
+        )
+
+        // WHEN
+        let expectation = expectation(description: "FetchNotifications")
+        store.fetch { _ in expectation.fulfill() }
+        waitForExpectations(timeout: 1, handler: nil)
+
+        // THEN
+        expect(self.fetchStorePageInteractor.executeCounter).to(equal(1))
+        expect(store.count).to(equal(defaultEdgeArraySize))
+        expect(storePage.edges.map { $0.node.id }).to(equal(store.allNotifications().map { $0.id }))
+    }
+
     func test_fetch_withDefaultStorePredicateAndError_shouldReturnError() {
         // GIVEN
         let predicate = StorePredicate()

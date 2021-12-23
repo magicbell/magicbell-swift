@@ -33,7 +33,7 @@ class DefaultNotificationComponent: NotificationComponent {
     }
 
     func getActionNotificationInteractor() -> ActionNotificationInteractor {
-        ActionNotificationInteractor(
+        ActionNotificationDefaultInteractor(
             executor: executor,
             actionInteractor: actionNotificationNetworkDataSource.toPutRepository().toPutByQueryInteractor(executor)
         )
@@ -50,7 +50,7 @@ class DefaultNotificationComponent: NotificationComponent {
 
     func getDeleteNotificationInteractor() -> DeleteNotificationInteractor {
         let deleteNotificationInteractor = actionNotificationNetworkDataSource.toDeleteRepository().toDeleteByQueryInteractor(executor)
-        return DeleteNotificationInteractor(
+        return DeleteNotificationDefaultInteractor(
             executor: executor,
             deleteInteractor: deleteNotificationInteractor
         )

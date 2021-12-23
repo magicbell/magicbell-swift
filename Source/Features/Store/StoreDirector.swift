@@ -73,7 +73,6 @@ class RealTimeByPredicateStoreDirector: InternalStoreDirector {
     private let deleteNotificationInteractor: DeleteNotificationInteractor
     private let getConfigInteractor: GetConfigInteractor
     private let deleteConfigInteractor: DeleteConfigInteractor
-
     private let storeRealTime: StoreRealTime
 
     init(

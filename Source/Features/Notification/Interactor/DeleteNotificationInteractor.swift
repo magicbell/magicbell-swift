@@ -7,7 +7,11 @@
 
 import Harmony
 
-struct DeleteNotificationInteractor {
+protocol DeleteNotificationInteractor {
+    func execute(notificationId: String, userQuery: UserQuery) -> Future <Void>
+}
+
+struct DeleteNotificationDefaultInteractor: DeleteNotificationInteractor {
 
     private let executor: Executor
     private let deleteInteractor: Interactor.DeleteByQuery

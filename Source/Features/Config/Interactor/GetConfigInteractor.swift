@@ -8,7 +8,11 @@
 import Foundation
 import Harmony
 
-struct GetConfigInteractor {
+protocol GetConfigInteractor {
+    func execute(forceRefresh: Bool, userQuery: UserQuery) -> Future<Config>
+}
+
+struct GetConfigDefaultInteractor: GetConfigInteractor {
     private let getConfigInteractor: Interactor.GetByQuery<Config>
 
     init(_ getConfigInteractor: Interactor.GetByQuery<Config>) {

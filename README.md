@@ -329,9 +329,41 @@ store.refresh { result in
     }
 }
 ```
+
+### Accessing Loaded Notifications
+
+`NotificationStore` inherits from `Collection`, making it an iterable collection to access its elements (as it was an array). Therefore, notifications can be accessed as expected:
+
+```swift
+// Option 1
+for i in 0..<store.count {
+    let notification = store[i]
+    print("notification: \(notification)")
+}
+// Option 2
+store.forEach { notification in
+    print("notification: \(notification)")
+}
+// Option 3
+for notification in store {
+    print("notification: \(notification)")
+}
+
+// Enumeration is also available
+
+// Option 4
+store.enumerated().forEach { idx, notification in
+    print("notification[\(idx)] = \(notification)")
+}
+// Option 5
+for (idx, notification) in store.enumerated() {
+    print("notification[\(idx)] = \(notification)")
+}
+```
+
 ### Editing Notifications
 
-`NotificationStore` has also methods to manipulate `Notification` objects.
+`NotificationStore` is the class containing methods to manipulate `Notification` objects.
 
 ```swift
 // Delete notification

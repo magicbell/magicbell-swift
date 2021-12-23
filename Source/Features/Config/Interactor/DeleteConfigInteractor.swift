@@ -8,7 +8,11 @@
 import Foundation
 import Harmony
 
-struct DeleteConfigInteractor {
+protocol DeleteConfigInteractor {
+    func execute() -> Future<Void>
+}
+
+struct DeleteConfigDefaultInteractor: DeleteConfigInteractor {
     private let deleteConfigInteractor: Interactor.DeleteAllByQuery
 
     init(_ deleteConfigInteractor: Interactor.DeleteAllByQuery) {

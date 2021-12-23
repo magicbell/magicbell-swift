@@ -7,11 +7,13 @@ target 'MagicBell' do
     workspace './MagicBell.xcworkspace'
 
     # Pods for MagicBell
-    pod 'Harmony/Repository'
+    pod 'Harmony/Repository', '1.1.5'
     pod 'Ably', '1.2.7'
+    pod 'SwiftLint'
 
+end
 
-    target 'MagicBellTests' do
-        # Pods for testing
-    end
+target 'MagicBellTests' do
+    pod 'Nimble'
+    pod 'Harmony/Testing', '1.1.5'
 end

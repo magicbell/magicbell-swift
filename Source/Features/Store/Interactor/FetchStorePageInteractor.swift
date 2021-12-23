@@ -7,7 +7,15 @@
 
 import Harmony
 
-struct FetchStorePageInteractor {
+protocol FetchStorePageInteractor {
+    func execute(
+        storePredicate: StorePredicate,
+        userQuery: UserQuery,
+        cursorPredicate: CursorPredicate
+    ) -> Future<StorePage>
+}
+
+struct FetchStorePageDefaultInteractor: FetchStorePageInteractor {
 
     private let executor: Executor
     private let getStorePagesInteractor: GetStorePagesInteractor

@@ -7,8 +7,15 @@
 
 import Harmony
 
-struct ActionNotificationInteractor {
+protocol ActionNotificationInteractor {
+    func execute(
+        action: NotificationActionQuery.Action,
+        userQuery: UserQuery,
+        notificationId: String?
+    ) -> Future<Void>
+}
 
+struct ActionNotificationDefaultInteractor: ActionNotificationInteractor {
     private let executor: Executor
     private let actionInteractor: Interactor.PutByQuery<Void>
 

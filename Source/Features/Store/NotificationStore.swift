@@ -11,8 +11,8 @@ import Harmony
 /// The NotificationStore class represents a collection of MagicBell notifications.
 ///
 // swiftlint:disable type_body_length
-public class NotificationStore: StoreRealTimeObserver {
-
+// swiftlint:disable file_length
+public class NotificationStore: Collection, StoreRealTimeObserver {
     private let pageSize = 20
 
     private let fetchStorePageInteractor: FetchStorePageInteractor
@@ -88,13 +88,16 @@ public class NotificationStore: StoreRealTimeObserver {
         return edges[index].node
     }
 
-    /// ForEach notification
-    /// - Parameter closure: enumeration closure
-    public func forEach(closure: (Notification) -> Void) {
-        edges.forEach { edge in
-            closure(edge.node)
-        }
+    // MARK: - Collection
+
+    public var startIndex: Int { return edges.startIndex }
+    public var endIndex: Int { return edges.endIndex }
+
+    public func index(after i: Int) -> Int {
+        return edges.index(after: i)
     }
+
+    // MARK: - Public Methods
 
     /// Add a content observer. Observers are stored in a HashTable with weak references.
     /// - Parameter observer: The observer
@@ -169,32 +172,11 @@ public class NotificationStore: StoreRealTimeObserver {
                     notificationEdge.node
                 }
                 completion(.success(notifications))
-                let indexes = (oldCount..<self.edges.count).map { $0 }
+                let indexes = Array(oldCount..<self.edges.count)
                 self.forEachContentObserver { $0.store(self, didInsertNotificationsAt: indexes) }
             }.fail { error in
                 completion(.failure(error))
             }
-    }
-
-    /// Returns an array of notifications that are newer from the last fetched time. It returns all the notifications, doesn't have pagination.
-    /// - Parameters:
-    ///    - completion: Closure with a `Result<[Notification], Error>`
-    public func fetchAllPrev(completion: @escaping (Result<[Notification], Error>) -> Void) {
-        if let newestCursor = edges.first?.cursor {
-            recursiveNewElements(cursor: newestCursor, notifications: []) { result in
-                switch result {
-                case .success(let edges):
-                    self.edges.insert(contentsOf: edges, at: 0)
-                    completion(.success(edges.map {
-                        $0.node
-                    }))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
-        } else {
-            completion(.failure(MagicBellError("Cannot load new elements without initial fetch.")))
-        }
     }
 
     /// Deletes a notification from the store.
@@ -212,6 +194,8 @@ public class NotificationStore: StoreRealTimeObserver {
                     self.forEachContentObserver { $0.store(self, didDeleteNotificationAt: [notificationIndex]) }
                     completion(nil)
                 }
+            }.fail { error in
+                completion(error)
             }
     }
 
@@ -273,12 +257,8 @@ public class NotificationStore: StoreRealTimeObserver {
     public func markAllRead(completion: @escaping (Error?) -> Void) {
         executeAllNotificationsAction(
             action: .markAllAsRead,
-            modificationsBlock: {
-                if $0.readAt == nil {
-                    let now = Date()
-                    $0.readAt = now
-                    $0.seenAt = now
-                }
+            modificationsBlock: { notification in
+                self.markNotificationAsRead(&notification, with: self.predicate)
             },
             completion: completion)
     }
@@ -292,6 +272,7 @@ public class NotificationStore: StoreRealTimeObserver {
             modificationsBlock: {
                 if $0.seenAt == nil {
                     $0.seenAt = Date()
+                    self.setUnseenCount(self.unseenCount - 1, notifyObservers: true)
                 }
             },
             completion: completion)
@@ -309,30 +290,8 @@ public class NotificationStore: StoreRealTimeObserver {
         hasNextPage = true
 
         if notifyChanges {
-            forEachContentObserver { $0.store(self, didDeleteNotificationAt: (0..<notificationCount).map { $0 } )}
+            forEachContentObserver { $0.store(self, didDeleteNotificationAt: Array(0..<notificationCount)) }
         }
-    }
-
-    private func recursiveNewElements(
-        cursor: String,
-        notifications: [Edge<Notification>],
-        completion: @escaping (Result<[Edge<Notification>], Error>) -> Void
-    ) {
-        let cursorPredicate = CursorPredicate(cursor: .previous(cursor), size: pageSize)
-        fetchStorePageInteractor
-            .execute(storePredicate: predicate, userQuery: userQuery, cursorPredicate: cursorPredicate)
-            .then { storePage in
-                self.configureCount(storePage)
-                var tempNotification = notifications
-                tempNotification.insert(contentsOf: storePage.edges, at: 0)
-                if storePage.pageInfo.hasPreviousPage, let cursor = storePage.pageInfo.startCursor {
-                    self.recursiveNewElements(cursor: cursor, notifications: tempNotification, completion: completion)
-                } else {
-                    completion(.success(tempNotification))
-                }
-            }.fail { error in
-                completion(.failure(error))
-            }
     }
 
     private func executeNotificationAction(
@@ -361,7 +320,7 @@ public class NotificationStore: StoreRealTimeObserver {
         completion: @escaping (Error?) -> Void
     ) {
         actionNotificationInteractor
-            .execute(action: action, userQuery: userQuery)
+            .execute(action: action, userQuery: userQuery, notificationId: nil)
             .then { _ in
                 for i in self.edges.indices {
                     modificationsBlock(&self.edges[i].node)
@@ -385,15 +344,7 @@ public class NotificationStore: StoreRealTimeObserver {
     }
 
     private func refreshAndNotifyObservers() {
-        refresh { result in
-            switch result {
-            case .success:
-                self.forEachContentObserver { $0.didReloadStore(self) }
-            case .failure:
-                // Do nothing. If error, we just not notify observers as nothing could be refreshed.
-                break
-            }
-        }
+        refresh { _ in }
     }
 
     // MARK: - Observer methods
@@ -470,16 +421,16 @@ public class NotificationStore: StoreRealTimeObserver {
 
     private func markNotificationAsRead( _ notification: inout Notification, with predicate: StorePredicate) {
         if notification.seenAt == nil {
-            unseenCount -= 1
+            setUnseenCount(unseenCount - 1, notifyObservers: true)
         }
 
         if notification.readAt == nil {
-            unreadCount -= 1
+            setUnreadCount(unreadCount - 1, notifyObservers: true)
             switch self.predicate.read {
             case .read:
-                totalCount += 1
+                setTotalCount(totalCount + 1, notifyObservers: true)
             case .unread:
-                totalCount -= 1
+                setTotalCount(totalCount - 1, notifyObservers: true)
             case .unspecified:
                 // Do nothing
                 break
@@ -532,16 +483,20 @@ public class NotificationStore: StoreRealTimeObserver {
     private func updateCountersWhenDelete(notification: Notification, predicate: StorePredicate) {
         setTotalCount(totalCount - 1, notifyObservers: true)
 
-        decreaseUnreadCountIfUnreadPredicate(predicate)
-        decreaseUnseenCountIfNotificationWasUnread(notification)
+        decreaseUnreadCountIfUnreadPredicate(predicate, notification)
+        decreaseUnseenCountIfNotificationWasUnseen(notification)
     }
-    private func decreaseUnreadCountIfUnreadPredicate(_ predicate: StorePredicate) {
+    private func decreaseUnreadCountIfUnreadPredicate(_ predicate: StorePredicate, _ notification: Notification) {
         if predicate.read == .unread {
             setUnreadCount(unreadCount - 1, notifyObservers: true)
+        } else if predicate.read == .unspecified {
+            if notification.readAt == nil {
+                setUnreadCount(unreadCount - 1, notifyObservers: true)
+            }
         }
     }
-    private func decreaseUnseenCountIfNotificationWasUnread(_ notification: Notification) {
-        if notification.readAt == nil {
+    private func decreaseUnseenCountIfNotificationWasUnseen(_ notification: Notification) {
+        if notification.seenAt == nil {
             setUnseenCount(unseenCount - 1, notifyObservers: true)
         }
     }

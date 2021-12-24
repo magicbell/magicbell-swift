@@ -513,7 +513,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
 
     private var publisherInstance: AnyObject?
     @available(iOS 13.0, *)
-    public func publisher() -> NotificationStorePublisher {
+    public func publishera() -> NotificationStorePublisher {
         if let publisher = publisherInstance as? NotificationStorePublisher {
             return publisher
         }

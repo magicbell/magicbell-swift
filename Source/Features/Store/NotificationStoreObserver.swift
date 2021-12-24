@@ -23,6 +23,8 @@ public protocol NotificationStoreContentObserver: AnyObject {
     func store(_ store: NotificationStore, didChangeNotificationAt indexes: [Int])
     /// Notifies the store did delete notifications at certain indexes.
     func store(_ store: NotificationStore, didDeleteNotificationAt indexes: [Int])
+    /// Notifies if the store has more pages to load
+    func store(_ store: NotificationStore, didChangeHasNextPage hasNextPage: Bool)
 }
 
 /// The store count delegate observer

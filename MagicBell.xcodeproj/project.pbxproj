@@ -84,7 +84,7 @@
 		59F45979275A434A008F3BC8 /* StoreRealTimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F45978275A434A008F3BC8 /* StoreRealTimeProvider.swift */; };
 		59F4597B275A48AD008F3BC8 /* StoreRealTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597A275A48AD008F3BC8 /* StoreRealTime.swift */; };
 		A35AC36EDBB4FDD24D651217 /* Pods_MagicBell.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91586C8D98B8EC30EF57ACC7 /* Pods_MagicBell.framework */; };
-        D29D249227747DA000726ABD /* NotificationStorePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29D249127747DA000726ABD /* NotificationStorePublisher.swift */; };
+		D29D249227747DA000726ABD /* NotificationStorePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29D249127747DA000726ABD /* NotificationStorePublisher.swift */; };
 		D2C5A1B02768C25500C20D74 /* StoreDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */; };
 		D2CBA520275121C2002F1E44 /* NotificationFragment.graphql in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA51F275121C2002F1E44 /* NotificationFragment.graphql */; };
 		D2CBA52227512462002F1E44 /* PageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52127512462002F1E44 /* PageInfo.swift */; };
@@ -195,8 +195,8 @@
 		59F4597A275A48AD008F3BC8 /* StoreRealTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRealTime.swift; sourceTree = "<group>"; };
 		91586C8D98B8EC30EF57ACC7 /* Pods_MagicBell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MagicBell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A80221B71732E7C663FCB505 /* Pods-MagicBell.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell.debug.xcconfig"; path = "Target Support Files/Pods-MagicBell/Pods-MagicBell.debug.xcconfig"; sourceTree = "<group>"; };
-        D29D249127747DA000726ABD /* NotificationStorePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStorePublisher.swift; sourceTree = "<group>"; };
-        D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDirector.swift; sourceTree = "<group>"; };
+		D29D249127747DA000726ABD /* NotificationStorePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStorePublisher.swift; sourceTree = "<group>"; };
+		D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDirector.swift; sourceTree = "<group>"; };
 		D2CBA51F275121C2002F1E44 /* NotificationFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = NotificationFragment.graphql; sourceTree = "<group>"; };
 		D2CBA52127512462002F1E44 /* PageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageInfo.swift; sourceTree = "<group>"; };
 		D2CBA52327512499002F1E44 /* Edge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Edge.swift; sourceTree = "<group>"; };
@@ -1182,6 +1182,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1203,6 +1204,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -8,57 +8,78 @@
 import Foundation
 import Combine
 
+public extension NotificationStore {
+//    @available(iOS 13.0, *)
+//    public func markAsRead(_ notification: Notification) -> Future<Void> {
+//        return // Whatever
+//    }
+}
+
+// TODO:
+// 1. Send HasNextPage observer udpates in Notification Store
+// 2. Update Example project with HasNextPage observer (so it builds)
+// 3. Implement extension on Notificaiton Store
+// 4. Move the extension in a separate file "NotificationStoreCombine.swift"
+// 5. Unit Test it!
+
 @available(iOS 13.0, *)
 /// Combine Publisher of the different attributes a NotificationStore has.
 /// Access a publisher via a notification store: `store.publisher()`
 public class NotificationStorePublisher: NotificationStoreCountObserver, NotificationStoreContentObserver {
 
     init(store: NotificationStore) {
-        totalCountPublisher = CurrentValueSubject<Int, Never>(store.totalCount)
-        unreadCountPublisher = CurrentValueSubject<Int, Never>(store.unreadCount)
-        unseenCountPublisher = CurrentValueSubject<Int, Never>(store.unseenCount)
-        notificationsPublisher = CurrentValueSubject<[Notification], Never>(store.allNotifications())
+        totalCount = CurrentValueSubject<Int, Never>(store.totalCount)
+        unreadCount = CurrentValueSubject<Int, Never>(store.unreadCount)
+        unseenCount = CurrentValueSubject<Int, Never>(store.unseenCount)
+        hasNextPage = CurrentValueSubject<Bool, Never>(store.hasNextPage)
+        notifications = CurrentValueSubject<[Notification], Never>(store.allNotifications())
 
         store.addCountObserver(self)
         store.addContentObserver(self)
     }
 
     /// The total count publisher
-    public let totalCountPublisher: CurrentValueSubject<Int, Never>
+    public let totalCount: CurrentValueSubject<Int, Never>
     /// The unread count publisher
-    public let unreadCountPublisher: CurrentValueSubject<Int, Never>
+    public let unreadCount: CurrentValueSubject<Int, Never>
     /// The unseen count publisher
-    public let unseenCountPublisher: CurrentValueSubject<Int, Never>
+    public let unseenCount: CurrentValueSubject<Int, Never>
+    /// A boolean indicating if there is more content to load
+    public let hasNextPage: CurrentValueSubject<Bool, Never>
     /// The list of notifications publisher
-    public let notificationsPublisher: CurrentValueSubject<[Notification], Never>
+    public let notifications: CurrentValueSubject<[Notification], Never>
 
     public func store(_ store: NotificationStore, didChangeTotalCount count: Int) {
-        totalCountPublisher.send(count)
+        totalCount.send(count)
     }
 
     public func store(_ store: NotificationStore, didChangeUnreadCount count: Int) {
-        unreadCountPublisher.send(count)
+        unreadCount.send(count)
     }
 
     public func store(_ store: NotificationStore, didChangeUnseenCount count: Int) {
-        unseenCountPublisher.send(count)
+        unseenCount.send(count)
     }
 
     public func didReloadStore(_ store: NotificationStore) {
-        totalCountPublisher.send(store.totalCount)
-        unreadCountPublisher.send(store.unreadCount)
-        unseenCountPublisher.send(store.unseenCount)
+        totalCount.send(store.totalCount)
+        unreadCount.send(store.unreadCount)
+        unseenCount.send(store.unseenCount)
     }
 
     public func store(_ store: NotificationStore, didInsertNotificationsAt indexes: [Int]) {
-        notificationsPublisher.send(store.allNotifications())
+        notifications.send(store.allNotifications())
     }
 
     public func store(_ store: NotificationStore, didChangeNotificationAt indexes: [Int]) {
-        notificationsPublisher.send(store.allNotifications())
+        notifications.send(store.allNotifications())
     }
 
     public func store(_ store: NotificationStore, didDeleteNotificationAt indexes: [Int]) {
-        notificationsPublisher.send(store.allNotifications())
+        notifications.send(store.allNotifications())
+    }
+
+    public func store(_ store: NotificationStore, didChangeHasNextPage hasNextPage: Bool) {
+        self.hasNextPage.send(hasNextPage)
     }
 }

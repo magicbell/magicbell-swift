@@ -8,18 +8,6 @@
 import Foundation
 import Combine
 
-public extension NotificationStore {
-//    @available(iOS 13.0, *)
-//    public func markAsRead(_ notification: Notification) -> Future<Void> {
-//        return // Whatever
-//    }
-}
-
-// TODO:
-// 3. Implement extension on Notificaiton Store
-// 4. Move the extension in a separate file "NotificationStoreCombine.swift"
-// 5. Unit Test it!
-
 @available(iOS 13.0, *)
 /// Combine Publisher of the different attributes a NotificationStore has.
 /// Access a publisher via a notification store: `store.publisher()`

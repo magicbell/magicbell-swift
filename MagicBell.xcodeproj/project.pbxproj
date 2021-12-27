@@ -71,6 +71,8 @@
 		59C3CDC2274D2F220043BA77 /* EncodableToDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDC1274D2F220043BA77 /* EncodableToDataMapper.swift */; };
 		59C3CDC4274D36360043BA77 /* DeleteConfigInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDC3274D36360043BA77 /* DeleteConfigInteractor.swift */; };
 		59C3CDC6274D4ED40043BA77 /* ErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDC5274D4ED40043BA77 /* ErrorEntity.swift */; };
+		59CA80BC277A19A50024673C /* NotificationStoreCombine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CA80BB277A19A50024673C /* NotificationStoreCombine.swift */; };
+		59CA80BF277A2E650024673C /* NotificationStoreCombineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CA80BD277A2E310024673C /* NotificationStoreCombineTests.swift */; };
 		59E92013275400F500D8877A /* NotificationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E92012275400F500D8877A /* NotificationStore.swift */; };
 		59EF99BC27446D6900FB2378 /* MagicBell.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59EF99B127446D6900FB2378 /* MagicBell.framework */; };
 		59EF99C127446D6900FB2378 /* MagicBellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF99C027446D6900FB2378 /* MagicBellTests.swift */; };
@@ -179,6 +181,8 @@
 		59C3CDC1274D2F220043BA77 /* EncodableToDataMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodableToDataMapper.swift; sourceTree = "<group>"; };
 		59C3CDC3274D36360043BA77 /* DeleteConfigInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteConfigInteractor.swift; sourceTree = "<group>"; };
 		59C3CDC5274D4ED40043BA77 /* ErrorEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorEntity.swift; sourceTree = "<group>"; };
+		59CA80BB277A19A50024673C /* NotificationStoreCombine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStoreCombine.swift; sourceTree = "<group>"; };
+		59CA80BD277A2E310024673C /* NotificationStoreCombineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStoreCombineTests.swift; sourceTree = "<group>"; };
 		59CFBD4E2770956000F1843C /* FetchStorePageMockInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStorePageMockInteractor.swift; sourceTree = "<group>"; };
 		59E92012275400F500D8877A /* NotificationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStore.swift; sourceTree = "<group>"; };
 		59EF99B127446D6900FB2378 /* MagicBell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MagicBell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -270,6 +274,7 @@
 				D2CBA53027513747002F1E44 /* StoreContext.swift */,
 				59E92012275400F500D8877A /* NotificationStore.swift */,
 				D29D249127747DA000726ABD /* NotificationStorePublisher.swift */,
+				59CA80BB277A19A50024673C /* NotificationStoreCombine.swift */,
 				D2E038272767943F0077FFF3 /* NotificationStoreObserver.swift */,
 				D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */,
 				59569BB32750FCFB00FF1AA6 /* Interactor */,
@@ -560,6 +565,7 @@
 				595319312756249A006673E9 /* NotificationValidatorTests.swift */,
 				5997F8F12770A88600DED4E4 /* NotificationStoreTests.swift */,
 				5988BBD92771D0C2009F4205 /* NotificationStoreRealTimeTests.swift */,
+				59CA80BD277A2E310024673C /* NotificationStoreCombineTests.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -896,6 +902,7 @@
 				59799E5C2746609A00BFB375 /* NotificationNetworkDataSource.swift in Sources */,
 				59C12ECF2746DC7100311D24 /* PushSubscription.swift in Sources */,
 				59799E4427465C9200BFB375 /* String+HMAC.swift in Sources */,
+				59CA80BC277A19A50024673C /* NotificationStoreCombine.swift in Sources */,
 				59B2DDA72769682C0038B0EA /* PushSubscriptionDirector.swift in Sources */,
 				D2CBA52227512462002F1E44 /* PageInfo.swift in Sources */,
 				D2CBA52F275128FA002F1E44 /* StorePredicate.swift in Sources */,
@@ -980,6 +987,7 @@
 				595319322756249A006673E9 /* NotificationValidatorTests.swift in Sources */,
 				59EF99C127446D6900FB2378 /* MagicBellTests.swift in Sources */,
 				595AC4C827710C7A00A3DCA2 /* NotificationEdgeMotherObject.swift in Sources */,
+				59CA80BF277A2E650024673C /* NotificationStoreCombineTests.swift in Sources */,
 				5988BBE02771F061009F4205 /* CountObserverMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

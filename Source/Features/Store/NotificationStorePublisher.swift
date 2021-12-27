@@ -16,8 +16,6 @@ public extension NotificationStore {
 }
 
 // TODO:
-// 1. Send HasNextPage observer udpates in Notification Store
-// 2. Update Example project with HasNextPage observer (so it builds)
 // 3. Implement extension on Notificaiton Store
 // 4. Move the extension in a separate file "NotificationStoreCombine.swift"
 // 5. Unit Test it!

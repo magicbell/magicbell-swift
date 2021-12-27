@@ -300,7 +300,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
                 print("Load completed")
                 self.isLoadingNextPage = false
                 switch result {
-                case .success(let notifications):
+                case .success:
                     // Observers will manage changes
                     break
                 case .failure(let error):
@@ -332,6 +332,14 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         self.tableView.insertRows(at: indexes.map { idx in
             IndexPath(row: idx, section: 0)
         }, with: .fade)
+    }
+
+    func store(_ store: NotificationStore, didChangeHasNextPage hasNextPage: Bool) {
+        if hasNextPage {
+            print("There's more content available")
+        } else {
+            print("There's no more content available")
+        }
     }
 
     // MARK: NotificationStoreCountDelegate

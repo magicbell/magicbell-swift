@@ -85,6 +85,11 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
         }
     }
 
+    private func setHasNextPage(_ value: Bool) {
+        hasNextPage = value
+        forEachContentObserver { $0.store(self, didChangeHasNextPage: hasNextPage) }
+    }
+
     /// Number of notifications loaded in the store
     public var count: Int {
         return edges.count
@@ -297,7 +302,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
         setUnreadCount(0, notifyObservers: notifyChanges)
         setUnseenCount(0, notifyObservers: notifyChanges)
         nextPageCursor = nil
-        hasNextPage = true
+        setHasNextPage(true)
 
         if notifyChanges {
             forEachContentObserver { $0.store(self, didDeleteNotificationAt: Array(0..<notificationCount)) }
@@ -344,7 +349,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     private func configurePagination(_ page: StorePage) {
         let pageInfo = page.pageInfo
         nextPageCursor = pageInfo.endCursor
-        hasNextPage = pageInfo.hasNextPage
+        setHasNextPage(pageInfo.hasNextPage)
     }
 
     private func configureCount(_ page: StorePage) {

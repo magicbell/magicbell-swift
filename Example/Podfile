@@ -8,8 +8,6 @@ target 'Example' do
 
     pod 'MagicBell', :path => '../'
     pod 'SwiftLint'
-
-    target 'ExampleTests' do
-        inherit! :search_paths
-    end
 end
+
+

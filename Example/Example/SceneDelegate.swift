@@ -6,6 +6,16 @@
 //
 
 import UIKit
+import SwiftUI
+import MagicBell
+
+enum Style {
+    case uiKit
+    case swiftUI
+}
+
+// Change style to determine how to run the app
+let style: Style = .swiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -18,6 +28,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are
         // new (see `application:configurationForConnectingSceneSession` instead).
 //        guard let _ = (scene as? UIWindowScene) else { return }
+
+        guard let scene = scene as? UIWindowScene else {
+            return
+        }
+
+        window = UIWindow(windowScene: scene)
+
+        switch style {
+        case .uiKit:
+            window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+        case .swiftUI:
+            window?.rootViewController = UIHostingController(rootView: NavigationView {
+                MagicBellView(store: magicBell.forUser(email: "john@doe.com").store.forAll())
+            })
+        }
+
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

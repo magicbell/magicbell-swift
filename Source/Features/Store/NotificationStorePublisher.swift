@@ -51,6 +51,7 @@ public class NotificationStorePublisher: NotificationStoreCountObserver, Notific
         totalCount.send(store.totalCount)
         unreadCount.send(store.unreadCount)
         unseenCount.send(store.unseenCount)
+        notifications.send(store.allNotifications())
     }
 
     public func store(_ store: NotificationStore, didInsertNotificationsAt indexes: [Int]) {

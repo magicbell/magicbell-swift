@@ -111,6 +111,23 @@ public struct Notification: Codable {
     }
 }
 
+public extension Notification {
+    /// True if read, false otherwise.
+    var isRead: Bool {
+        return readAt != nil
+    }
+
+    /// True if seen, false otherwise.
+    var isSeen: Bool {
+        return seenAt != nil
+    }
+
+    /// True if archived, false otherwise.
+    var isArchived: Bool {
+        return archivedAt != nil
+    }
+}
+
 public struct Recipient: Codable {
     public let id, email: String?
     let externalID, firstName, lastName: String?

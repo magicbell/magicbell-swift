@@ -22,12 +22,6 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
 
     private var observer: AnyObject?
 
-    var navigationBarColor = UIColor(rgb: 0x6113A3) {
-        didSet { applyBarStyle() }
-    }
-    var navigationBarTitleColor = UIColor.white {
-        didSet { applyBarStyle() }
-    }
     override var title: String? {
         didSet { navigationBar.topItem?.title = title }
     }
@@ -38,7 +32,6 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         self.title = "Notifications"
 
         navigationBar.topItem?.title = self.title
-        applyBarStyle()
 
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshAction(sender:)), for: .valueChanged)
@@ -83,25 +76,6 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
-    }
-
-    private func applyBarStyle() {
-        navigationBar.tintColor = navigationBarTitleColor
-        if #available(iOS 15, *) {
-            let appearance = UINavigationBarAppearance()
-            appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = navigationBarColor
-            appearance.titleTextAttributes = [
-                NSAttributedString.Key.foregroundColor: navigationBarTitleColor // nav text color
-            ]
-            navigationBar?.standardAppearance = appearance
-            navigationBar?.scrollEdgeAppearance = UINavigationBar.appearance().standardAppearance
-        } else {
-            navigationBar?.barTintColor = navigationBarColor
-            navigationBar?.titleTextAttributes = [
-                NSAttributedString.Key.foregroundColor: navigationBarTitleColor  // nav text color
-            ]
-        }
     }
 
     @IBAction func menuAction(_ sender: Any) {
@@ -218,7 +192,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 6, height: 6))
         view.clipsToBounds = true
         view.layer.cornerRadius = 3
-        view.backgroundColor = navigationBarColor
+        view.backgroundColor = .magicBell
         view.isUserInteractionEnabled = false
         return view
     }

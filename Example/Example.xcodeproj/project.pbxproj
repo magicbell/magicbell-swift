@@ -15,9 +15,11 @@
 		59EF9A9B2744700700FB2378 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59EF9A992744700700FB2378 /* Main.storyboard */; };
 		59EF9A9D2744700800FB2378 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59EF9A9C2744700800FB2378 /* Assets.xcassets */; };
 		59EF9AA02744700800FB2378 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59EF9A9E2744700800FB2378 /* LaunchScreen.storyboard */; };
-		D2A484F1277B2906001D1AA9 /* MagicBellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2A484F0277B2906001D1AA9 /* MagicBellView.swift */; };
 		D2DC15F62758C68000282C27 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC15F52758C68000282C27 /* UIColorExtensions.swift */; };
 		D2DC15F82758CC0B00282C27 /* MagicBellStoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC15F72758CC0B00282C27 /* MagicBellStoreCell.swift */; };
+		D2E4B088277B5EA500E9E98F /* MagicBellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E4B087277B5E8A00E9E98F /* MagicBellView.swift */; };
+		D2E4B08B277B5EDF00E9E98F /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E4B08A277B5EDF00E9E98F /* Appearance.swift */; };
+		D2E4B08D277B619F00E9E98F /* UIHostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E4B08C277B619F00E9E98F /* UIHostingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,9 +35,11 @@
 		59EF9A9F2744700800FB2378 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		59EF9AA12744700800FB2378 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		911386F4690B2C7C97254425 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
-		D2A484F0277B2906001D1AA9 /* MagicBellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MagicBellView.swift; path = "../../../../../../../Library/Mobile Documents/com~apple~CloudDocs/MagicBellView.swift"; sourceTree = "<group>"; };
 		D2DC15F52758C68000282C27 /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
 		D2DC15F72758CC0B00282C27 /* MagicBellStoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBellStoreCell.swift; sourceTree = "<group>"; };
+		D2E4B087277B5E8A00E9E98F /* MagicBellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBellView.swift; sourceTree = "<group>"; };
+		D2E4B08A277B5EDF00E9E98F /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
+		D2E4B08C277B619F00E9E98F /* UIHostingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHostingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,17 +85,43 @@
 			children = (
 				59EF9A932744700700FB2378 /* AppDelegate.swift */,
 				59EF9A952744700700FB2378 /* SceneDelegate.swift */,
-				599A9206275E702600656E32 /* BadgeBarButtonItem.swift */,
-				59EF9A972744700700FB2378 /* MagicBellStoreViewController.swift */,
-				D2A484F0277B2906001D1AA9 /* MagicBellView.swift */,
-				D2DC15F72758CC0B00282C27 /* MagicBellStoreCell.swift */,
-				D2DC15F52758C68000282C27 /* UIColorExtensions.swift */,
+				D2E4B089277B5ED100E9E98F /* Helpers */,
+				D2E4B086277B5E8600E9E98F /* SwiftUI */,
+				D2E4B085277B5E7A00E9E98F /* UIKit */,
 				59EF9A992744700700FB2378 /* Main.storyboard */,
 				59EF9A9C2744700800FB2378 /* Assets.xcassets */,
 				59EF9A9E2744700800FB2378 /* LaunchScreen.storyboard */,
 				59EF9AA12744700800FB2378 /* Info.plist */,
 			);
 			path = Example;
+			sourceTree = "<group>";
+		};
+		D2E4B085277B5E7A00E9E98F /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				599A9206275E702600656E32 /* BadgeBarButtonItem.swift */,
+				59EF9A972744700700FB2378 /* MagicBellStoreViewController.swift */,
+				D2DC15F72758CC0B00282C27 /* MagicBellStoreCell.swift */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		D2E4B086277B5E8600E9E98F /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				D2E4B087277B5E8A00E9E98F /* MagicBellView.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		D2E4B089277B5ED100E9E98F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				D2DC15F52758C68000282C27 /* UIColorExtensions.swift */,
+				D2E4B08A277B5EDF00E9E98F /* Appearance.swift */,
+				D2E4B08C277B619F00E9E98F /* UIHostingViewController.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		F84B8EAC783F4CA306D44813 /* Pods */ = {
@@ -240,9 +270,11 @@
 				59EF9A982744700700FB2378 /* MagicBellStoreViewController.swift in Sources */,
 				D2DC15F82758CC0B00282C27 /* MagicBellStoreCell.swift in Sources */,
 				59EF9A942744700700FB2378 /* AppDelegate.swift in Sources */,
-				D2A484F1277B2906001D1AA9 /* MagicBellView.swift in Sources */,
+				D2E4B08B277B5EDF00E9E98F /* Appearance.swift in Sources */,
+				D2E4B088277B5EA500E9E98F /* MagicBellView.swift in Sources */,
 				59EF9A962744700700FB2378 /* SceneDelegate.swift in Sources */,
 				599A9207275E702600656E32 /* BadgeBarButtonItem.swift in Sources */,
+				D2E4B08D277B619F00E9E98F /* UIHostingViewController.swift in Sources */,
 				D2DC15F62758C68000282C27 /* UIColorExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -402,6 +434,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -431,6 +464,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

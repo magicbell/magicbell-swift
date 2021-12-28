@@ -29,6 +29,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // new (see `application:configurationForConnectingSceneSession` instead).
 //        guard let _ = (scene as? UIWindowScene) else { return }
 
+        Appearance.apply()
+
         guard let scene = scene as? UIWindowScene else {
             return
         }
@@ -39,7 +41,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         case .uiKit:
             window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
         case .swiftUI:
-            window?.rootViewController = UIHostingController(rootView: NavigationView {
+            window?.rootViewController = HostingController(rootView: NavigationView {
                 MagicBellView(store: magicBell.forUser(email: "john@doe.com").store.forAll())
             })
         }

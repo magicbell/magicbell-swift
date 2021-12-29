@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MagicBell'
-  s.version          = '1.0.0-alpha.1'
+  s.version          = '1.0.0-alpha.2'
   s.summary          = 'Official MagicBell SDK for iOS.'
 
   s.description      = <<-DESC
@@ -17,7 +17,7 @@ This is the official MagicBell SDK for iOS.
 
   s.homepage         = 'https://magicbell.com'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
-  s.license          = { :type => 'SEE LICENSE', :file => 'LICENSE' }
+  s.license          = { :type => 'Custom', :file => 'LICENSE' }
   s.author           = { 'MagicBell' => 'hello@magicbell.com' }
   s.source           = { :git => 'https://github.com/magicbell-io/magicbell-ios.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/magicbell_io'
@@ -31,9 +31,5 @@ This is the official MagicBell SDK for iOS.
 
   s.dependency 'Harmony/Repository', '1.1.5'
   s.dependency 'Ably', '1.2.7'
-
-#   s.resource_bundles = {
-#     'MagicBell' => ['Source/**/*.graphql']
-#   }
 
 end

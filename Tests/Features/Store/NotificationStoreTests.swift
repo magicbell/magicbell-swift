@@ -105,7 +105,7 @@ class NotificationStoreTests: XCTestCase {
         // THEN
         expect(self.fetchStorePageInteractor.executeCounter).to(equal(1))
         expect(store.count).to(equal(defaultEdgeArraySize))
-        expect(storePage.edges.map { $0.node.id }).to(equal(store.allNotifications().map { $0.id }))
+        expect(storePage.edges.map { $0.node.id }).to(equal(store.notifications().map { $0.id }))
     }
 
     func test_fetch_withDefaultStorePredicateAndError_shouldReturnError() {

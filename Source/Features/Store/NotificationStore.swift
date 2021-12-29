@@ -99,7 +99,8 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
         return edges[index].node
     }
 
-    public func allNotifications() -> [Notification] {
+    /// Returns an array containing all notifications
+    public func notifications() -> [Notification] {
         return edges.map { $0.node }
     }
 
@@ -501,6 +502,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
         decreaseUnreadCountIfUnreadPredicate(predicate, notification)
         decreaseUnseenCountIfNotificationWasUnseen(notification)
     }
+    
     private func decreaseUnreadCountIfUnreadPredicate(_ predicate: StorePredicate, _ notification: Notification) {
         if predicate.read == .unread {
             setUnreadCount(unreadCount - 1, notifyObservers: true)
@@ -510,20 +512,10 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
             }
         }
     }
+
     private func decreaseUnseenCountIfNotificationWasUnseen(_ notification: Notification) {
         if notification.seenAt == nil {
             setUnseenCount(unseenCount - 1, notifyObservers: true)
         }
-    }
-
-    private var publisherInstance: AnyObject?
-    @available(iOS 13.0, *)
-    public func publishera() -> NotificationStorePublisher {
-        if let publisher = publisherInstance as? NotificationStorePublisher {
-            return publisher
-        }
-        let publisher = NotificationStorePublisher(store: self)
-        self.publisherInstance = publisher
-        return publisher
     }
 }

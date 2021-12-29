@@ -11,11 +11,13 @@ import struct MagicBell.Notification
 
 struct MagicBellView: View {
     let store: NotificationStore
-    @ObservedObject var rxStore: NotificationStorePublisher
+
+    @ObservedObject
+    private var rxStore: NotificationStorePublisher
 
     init(store: NotificationStore) {
         self.store = store
-        rxStore = store.publishera()
+        self.rxStore = NotificationStorePublisher(store)
     }
 
     enum SheetType {

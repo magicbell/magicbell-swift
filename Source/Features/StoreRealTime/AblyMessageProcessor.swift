@@ -34,7 +34,6 @@ struct AblyMessageProcessor {
     }
 
     func processAblyMessage(_ message: ARTMessage) throws -> Message {
-        print(message)
         if let event = message.name,
            let eventData = message.data as? [String: String?] {
             let eventParts = event.split(separator: "/", maxSplits: 1)

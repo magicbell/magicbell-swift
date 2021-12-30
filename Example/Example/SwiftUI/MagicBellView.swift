@@ -153,7 +153,7 @@ struct MagicBellView: View {
                         _ = store.archive(notification)
                     }
                 },
-                .default(Text("Delete")) {
+                .destructive(Text("Delete")) {
                     _ = store.delete(notification)
                 },
                 .cancel()

@@ -16,6 +16,7 @@ enum Style {
 
 // Change style to determine how to run the app
 let style: Style = .uiKit
+// let style: Style = .swiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -27,16 +28,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are
         // new (see `application:configurationForConnectingSceneSession` instead).
-//        guard let _ = (scene as? UIWindowScene) else { return }
-
-        Appearance.apply()
 
         guard let scene = scene as? UIWindowScene else {
             return
         }
 
+        Appearance.apply()
+
         window = UIWindow(windowScene: scene)
 
+        // Defining the user to test
         let userBell = magicBell.forUser(email: "john@doe.com")
 
         switch style {
@@ -48,8 +49,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             viewController.userBell = userBell
             window?.rootViewController = viewController
         case .swiftUI:
+            let store = userBell.store.forAll()
             window?.rootViewController = HostingController(rootView: NavigationView {
-                MagicBellView(store: userBell.store.forAll())
+                MagicBellView(store: store)
             })
         }
 

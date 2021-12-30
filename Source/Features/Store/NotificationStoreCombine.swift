@@ -24,12 +24,7 @@ public extension NotificationStore {
     func refresh() -> Future<[Notification], Error> {
         return Future { promise in
             self.refresh { result in
-                switch result {
-                case .success(let notifications):
-                    promise(.success(notifications))
-                case .failure(let error):
-                    promise(.failure(error))
-                }
+                promise(result)
             }
         }
     }
@@ -42,12 +37,7 @@ public extension NotificationStore {
     func fetch() -> Future<[Notification], Error> {
         return Future { promise in
             self.fetch { result in
-                switch result {
-                case .success(let notifications):
-                    promise(.success(notifications))
-                case .failure(let error):
-                    promise(.failure(error))
-                }
+                promise(result)
             }
         }
     }
@@ -65,7 +55,7 @@ public extension NotificationStore {
                 if let error = error {
                     promise(.failure(error))
                 } else {
-                    promise(.success(()))
+                    promise(.success(Void()))
                 }
             }
         }
@@ -80,12 +70,7 @@ public extension NotificationStore {
     func markAsRead(_ notification: Notification) -> Future<Notification, Error> {
         return Future { promise in
             self.markAsRead(notification) { result in
-                switch result {
-                case .success(let notification):
-                    promise(.success((notification)))
-                case .failure(let error):
-                    promise(.failure(error))
-                }
+                promise(result)
             }
         }
     }
@@ -99,12 +84,7 @@ public extension NotificationStore {
     func markAsUnread(_ notification: Notification) -> Future<Notification, Error> {
         return Future { promise in
             self.markAsUnread(notification) { result in
-                switch result {
-                case .success(let notification):
-                    promise(.success((notification)))
-                case .failure(let error):
-                    promise(.failure(error))
-                }
+                promise(result)
             }
         }
     }
@@ -118,12 +98,7 @@ public extension NotificationStore {
     func archive(_ notification: Notification) -> Future<Notification, Error> {
         return Future { promise in
             self.archive(notification) { result in
-                switch result {
-                case .success(let notification):
-                    promise(.success((notification)))
-                case .failure(let error):
-                    promise(.failure(error))
-                }
+                promise(result)
             }
         }
     }
@@ -137,12 +112,7 @@ public extension NotificationStore {
     func unarchive(_ notification: Notification) -> Future<Notification, Error> {
         return Future { promise in
             self.unarchive(notification) { result in
-                switch result {
-                case .success(let notification):
-                    promise(.success((notification)))
-                case .failure(let error):
-                    promise(.failure(error))
-                }
+                promise(result)
             }
         }
     }
@@ -157,7 +127,7 @@ public extension NotificationStore {
                 if let error = error {
                     promise(.failure(error))
                 } else {
-                    promise(.success(()))
+                    promise(.success(Void()))
                 }
             }
         }
@@ -173,7 +143,7 @@ public extension NotificationStore {
                 if let error = error {
                     promise(.failure(error))
                 } else {
-                    promise(.success(()))
+                    promise(.success(Void()))
                 }
             }
         }

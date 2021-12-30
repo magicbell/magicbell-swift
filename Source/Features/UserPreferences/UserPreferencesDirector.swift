@@ -47,12 +47,7 @@ public extension UserPreferencesDirector {
     func fetch() -> Combine.Future<UserPreferences, Error> {
         return Future { promise in
             self.fetch { result in
-                switch result {
-                case .success(let preferences):
-                    promise(.success(preferences))
-                case .failure(let error):
-                    promise(.failure(error))
-                }
+                promise(result)
             }
         }
     }
@@ -64,12 +59,7 @@ public extension UserPreferencesDirector {
     func update(_ userPreferences: UserPreferences) -> Combine.Future<UserPreferences, Error> {
         return Future { promise in
             self.update(userPreferences) { result in
-                switch result {
-                case .success(let preferences):
-                    promise(.success(preferences))
-                case .failure(let error):
-                    promise(.failure(error))
-                }
+                promise(result)
             }
         }
     }
@@ -80,12 +70,7 @@ public extension UserPreferencesDirector {
     func fetchPreferences(for category: String) -> Combine.Future<Preferences, Error> {
         return Future { promise in
             self.fetchPreferences(for: category) { result in
-                switch result {
-                case .success(let preferences):
-                    promise(.success(preferences))
-                case .failure(let error):
-                    promise(.failure(error))
-                }
+                promise(result)
             }
         }
     }
@@ -100,12 +85,7 @@ public extension UserPreferencesDirector {
     func updatePreferences(_ preferences: Preferences, for category: String) -> Combine.Future<Preferences, Error> {
         return Future { promise in
             self.updatePreferences(preferences, for: category) { result in
-                switch result {
-                case .success(let preferences):
-                    promise(.success(preferences))
-                case .failure(let error):
-                    promise(.failure(error))
-                }
+                promise(result)
             }
         }
     }

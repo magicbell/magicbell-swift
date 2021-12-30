@@ -127,7 +127,6 @@ class AblyConnector: StoreRealTime {
     private func startListenConnectionChanges() {
         // Listen connection events
         self.ablyClient?.connection.on { stateChange in
-            print(stateChange)
             let stateChange = stateChange
             switch stateChange.current {
             case .initialized, .connecting:

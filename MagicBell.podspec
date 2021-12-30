@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MagicBell'
-  s.version          = '1.0.0-alpha.2'
+  s.version          = '1.0.0-alpha.3'
   s.summary          = 'Official MagicBell SDK for iOS.'
 
   s.description      = <<-DESC

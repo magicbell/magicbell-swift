@@ -95,7 +95,7 @@ let magicBell = MagicBell(
 | `apiKey` | - | Your MagicBell's API key. |
 | `apiSecret` | `nil` | Your MagicBell's API Secret. |
 | `enableHMAC` | `false` | Set to `true` if you want HMAC enabled. Note the `apiSecret` is required if set to `true`.
-| `baseURL` | `https://api.magicbell.io` | MagicBell host. Only customize if running a private instance of MagicBell. |
+| `baseURL` | `https://api.magicbell.com` | MagicBell host. Only customize if running a private instance of MagicBell. |
 | `logLevel` | `.none` | Enables MagicBell logs if set to `.debug`.|
 
 

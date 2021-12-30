@@ -21,6 +21,9 @@ let magicBellTag = "MagicBell"
 ///
 public class MagicBell {
 
+    /// The MagicBell SDK version
+    public static let version = "1.0.0-alpha.3"
+
     /// MagicBell's default API URL. Defaults to https://api.magicbell.com.
     public static let defaultBaseUrl: URL = {
         // swiftlint:disable force_unwrapping

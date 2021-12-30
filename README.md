@@ -55,12 +55,15 @@ store.fetch { result in
 
 ## Installation
 
-MagicBell is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+Currently, MagicBell is only available through [CocoaPods](https://cocoapods.org). However, as it is still in alpha version it is not yet discoverable via a `pod search` or the Cocoapods website.
+
+To install it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'MagicBell'
+pod 'MagicBell', '>=0'
 ```
+
+**Note**
 
 MagicBell uses [`Ably`](https://github.com/ably/ably-cocoa) as dependency, which requires to use `use_frameworks!` in your Podfile.
 
@@ -127,13 +130,13 @@ To obtain the `UserBell` class for a given user, you must use the previously def
 
 ```swift
 // Identify the user by its email
-let user = magicBell.forUser(email: "john@doe.com")
+let userBell = magicBell.forUser(email: "john@doe.com")
 
 // Identify the user by its external id
-let user = magicBell.forUser(externalId: "123456789")
+let userBell = magicBell.forUser(externalId: "123456789")
 
 // Identify the user by oth, email and external id
-let user = magicBell.forUser(email: "john@doe.com", externalId: "123456789")
+let userBell = magicBell.forUser(email: "john@doe.com", externalId: "123456789")
 ```
 
 Note that `MagicBell` will create a `UserBell` instance the first time you access that user, but subsequent calls **will return the same instance**, keeping alive the user loaded notifications stack and real-time updates.
@@ -226,19 +229,19 @@ To create a `StorePredicate`, you must provide which type of notifications you w
 | - | - | - |
 | `read` | `.read`, `.unread`, `.unspecified` | `.unspecified` |
 | `seen` | `.seen`, `.unseen`, `.unspecified` | `.unspecified` |
-| `archived` | `.archived`, `.unarchived`, `.unspecified` | `.unspecified` |
+| `archived` | `.archived`, `.unarchived` | `.unarchived` |
 | `categories` | `[String]` | `[]` |
 | `topics` | `[String]` | `[]` |
 
 For example, we could fetch unread notifications that belong to category `"important"`.
 
 ```swift
-let store = user.store.with(predicate: StorePredicate(read: .unread, categories: ["important"]))
+let store = userBell.store.with(predicate: StorePredicate(read: .unread, categories: ["important"]))
 ```
 To obtain all notifications, just use the default `StorePredicate`:
 
 ```swift
-let store = user.store.with(predicate: StorePredicate())
+let store = userBell.store.with(predicate: StorePredicate())
 ```
 
 **Important**
@@ -496,38 +499,38 @@ class Notifications: View {
 The user preferences object contains multiple configuration options:
 
 ```swift
-public class Preferences {
+class Preferences {
     var email: Bool
     var inApp: Bool
     var mobilePush: Bool
     var webPush: Bool
 }
 
-public struct UserPreferences {
+struct UserPreferences {
     let preferences: [String: Preferences]
 }
 ```
 
-To fetch user preferences, do as follows:
+To fetch user preferences, use the `fetch` method as follows:
 
 ```swift
-user.userPreferences.fetch { result in
+userBell.userPreferences.fetch { result in
     if let userPreferences = try? result.get() {
         print("User Preferences: \(userPreferences)")
     }
 }
 ```
-Additionaly, it is possible to fetch directly a cateogry:
+Additionaly, it is possible to fetch directly a cateogry using the `fetchPreferences(for:)` method:
 
 ```swift
-user.userPreferences.fetchPreferences(for: "my_category") { result in
+userBell.userPreferences.fetchPreferences(for: "my_category") { result in
     if let category = try? result.get() {
         print("Category: \(category)")
     }
 }
 ```
 
-To update user preferences, use one of the two methods supported in the SDK.
+To update user preferences, use either `update` or `updatePreferences(:for:)`.
 
 ```swift
 // Updating the whole list of preferences at once.

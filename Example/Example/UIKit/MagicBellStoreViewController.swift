@@ -135,20 +135,24 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
         alert.addAction(UIAlertAction(title: "Mark All Read", style: .default) { _ in
-            self.store.markAllRead { error in
-                if error != nil {
-                    print("Action not completed")
+            self.store.markAllRead { result in
+                switch result {
+                case .success:
+                    self.tableView.reloadData()
+                case .failure(let error):
+                    print("Action not completed \(error.localizedDescription)")
                 }
-                self.tableView.reloadData()
             }
         })
 
         alert.addAction(UIAlertAction(title: "Mark All Seen", style: .default) { _ in
-            self.store.markAllSeen { error in
-                if error != nil {
-                    print("Action not completed")
+            self.store.markAllSeen { result in
+                switch result {
+                case .success:
+                    self.tableView.reloadData()
+                case .failure(let error):
+                    print("Action not completed \(error.localizedDescription)")
                 }
-                self.tableView.reloadData()
             }
         })
 
@@ -208,17 +212,23 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
 
         if notification.archivedAt == nil {
             alert.addAction(UIAlertAction(title: "Archive", style: .default) { _ in
-                self.store.archive(notification) { error in
-                    if error == nil {
+                self.store.archive(notification) { result in
+                    switch result {
+                    case .success:
                         self.tableView.reloadRows(at: [indexPath], with: .none)
+                    case .failure(let error):
+                        print("Action not completed \(error.localizedDescription)")
                     }
                 }
             })
         } else {
             alert.addAction(UIAlertAction(title: "Unarchive", style: .default) { _ in
-                self.store.unarchive(notification) { error in
-                    if error == nil {
+                self.store.unarchive(notification) { result in
+                    switch result {
+                    case .success:
                         self.tableView.reloadRows(at: [indexPath], with: .none)
+                    case .failure(let error):
+                        print("Action not completed \(error.localizedDescription)")
                     }
                 }
             })
@@ -226,8 +236,9 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
 
         if notification.readAt == nil {
             alert.addAction(UIAlertAction(title: "Mark Read", style: .default) { _ in
-                self.store.markAsRead(notification) { error in
-                    if error == nil {
+                self.store.markAsRead(notification) { result in
+                    switch result {
+                    case .success:
                         if let cell = self.tableView.cellForRow(at: indexPath) {
                             if notification.readAt == nil {
                                 cell.accessoryView = self.unreadBadgeView()
@@ -235,13 +246,16 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
                                 cell.accessoryView = nil
                             }
                         }
+                    case .failure(let error):
+                        print("Action not completed \(error.localizedDescription)")
                     }
                 }
             })
         } else {
             alert.addAction(UIAlertAction(title: "Mark Unread", style: .default) { _ in
-                self.store.markAsUnread(notification) { error in
-                    if error == nil {
+                self.store.markAsUnread(notification) { result in
+                    switch result {
+                    case .success:
                         if let cell = self.tableView.cellForRow(at: indexPath) {
                             if notification.readAt == nil {
                                 cell.accessoryView = self.unreadBadgeView()
@@ -249,6 +263,8 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
                                 cell.accessoryView = nil
                             }
                         }
+                    case .failure(let error):
+                        print("Action not completed \(error.localizedDescription)")
                     }
                 }
             })

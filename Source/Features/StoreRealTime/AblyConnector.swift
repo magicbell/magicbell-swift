@@ -175,6 +175,8 @@ class AblyConnector: StoreRealTime {
                 forEachObserver { $0.notifyNotificationChange(id: notificationId, change: .unread) }
             case .delete(let notificationId):
                 forEachObserver { $0.notifyDeleteNotification(id: notificationId) }
+            case .archived(let notificationId):
+                forEachObserver { $0.notifyNotificationChange(id: notificationId, change: .archive) }
             case .readAll:
                 forEachObserver { $0.notifyAllNotificationRead() }
             case .seenAll:

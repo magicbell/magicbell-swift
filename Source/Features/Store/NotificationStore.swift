@@ -190,7 +190,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     /// - Parameters:
     ///    - notification: Notification will be removed.
     ///    - completion: Closure with a `Error`. Success if error is nil.
-    public func delete(_ notification: Notification, completion: @escaping (Error?) -> Void) {
+    public func delete(_ notification: Notification, completion: @escaping (Result<Void, Error>) -> Void) {
         deleteNotificationInteractor
             .execute(notificationId: notification.id, userQuery: userQuery)
             .then { _ in
@@ -198,10 +198,10 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
                     self.updateCountersWhenDelete(notification: self.edges[notificationIndex].node, predicate: self.predicate)
                     self.edges.remove(at: notificationIndex)
                     self.forEachContentObserver { $0.store(self, didDeleteNotificationAt: [notificationIndex]) }
-                    completion(nil)
+                    completion(.success(()))
                 }
             }.fail { error in
-                completion(error)
+                completion(.failure(error))
             }
     }
 
@@ -209,7 +209,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     /// - Parameters:
     ///    - notification: Notification will be marked as read and seen.
     ///    - completion: Closure with a `Error`. Success if error is nil.
-    public func markAsRead(_ notification: Notification, completion: @escaping (Error?) -> Void) {
+    public func markAsRead(_ notification: Notification, completion: @escaping (Result<Notification, Error>) -> Void) {
         executeNotificationAction(
             notification: notification,
             action: .markAsRead,
@@ -223,7 +223,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     /// - Parameters:
     ///    - notification: Notification will be marked as unread.
     ///    - completion: Closure with a `Error`. Success if error is nil.
-    public func markAsUnread(_ notification: Notification, completion: @escaping (Error?) -> Void) {
+    public func markAsUnread(_ notification: Notification, completion: @escaping (Result<Notification, Error>) -> Void) {
         executeNotificationAction(
             notification: notification,
             action: .markAsUnread,
@@ -237,7 +237,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     /// - Parameters:
     ///    - notification: Notification will be marked as archived.
     ///    - completion: Closure with a `Error`. Success if error is nil.
-    public func archive(_ notification: Notification, completion: @escaping (Error?) -> Void) {
+    public func archive(_ notification: Notification, completion: @escaping (Result<Notification, Error>) -> Void) {
         executeNotificationAction(
             notification: notification,
             action: .archive,
@@ -249,7 +249,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     /// - Parameters:
     ///    - notification: Notification will be marked as unarchived.
     ///    - completion: Closure with a `Error`. Success if error is nil.
-    public func unarchive(_ notification: Notification, completion: @escaping (Error?) -> Void) {
+    public func unarchive(_ notification: Notification, completion: @escaping (Result<Notification, Error>) -> Void) {
         executeNotificationAction(
             notification: notification,
             action: .unarchive,
@@ -260,7 +260,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     /// Marks all notifications as read.
     /// - Parameters:
     ///    - completion: Closure with a `Error`. Success if error is nil.
-    public func markAllRead(completion: @escaping (Error?) -> Void) {
+    public func markAllRead(completion: @escaping (Result<Void, Error>) -> Void) {
         executeAllNotificationsAction(
             action: .markAllAsRead,
             modificationsBlock: { notification in
@@ -272,7 +272,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     /// Marks all notifications as seen.
     /// - Parameters:
     ///    - completion: Closure with a `Error`. Success if error is nil.
-    public func markAllSeen(completion: @escaping (Error?) -> Void) {
+    public func markAllSeen(completion: @escaping (Result<Void, Error>) -> Void) {
         executeAllNotificationsAction(
             action: .markAllAsSeen,
             modificationsBlock: {
@@ -304,26 +304,26 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
         notification: Notification,
         action: NotificationActionQuery.Action,
         modificationsBlock: @escaping (inout Notification) -> Void,
-        completion: @escaping (Error?) -> Void
+        completion: @escaping (Result<Notification, Error>) -> Void
     ) {
         actionNotificationInteractor
             .execute(action: action, userQuery: userQuery, notificationId: notification.id)
             .then { _ in
                 if let notificationIndex = self.edges.firstIndex(where: { $0.node.id == notification.id }) {
                     modificationsBlock(&self.edges[notificationIndex].node)
-                    completion(nil)
+                    completion(.success(self.edges[notificationIndex].node))
                 } else {
-                    completion(MagicBellError("Notification not found in store"))
+                    completion(.failure(MagicBellError("Notification not found in store")))
                 }
             }.fail { error in
-                completion(error)
+                completion(.failure(error))
             }
     }
 
     private func executeAllNotificationsAction(
         action: NotificationActionQuery.Action,
         modificationsBlock: @escaping (inout Notification) -> Void,
-        completion: @escaping (Error?) -> Void
+        completion: @escaping (Result<Void, Error>) -> Void
     ) {
         actionNotificationInteractor
             .execute(action: action, userQuery: userQuery, notificationId: nil)
@@ -331,9 +331,9 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
                 for i in self.edges.indices {
                     modificationsBlock(&self.edges[i].node)
                 }
-                completion(nil)
+                completion(.success(()))
             }.fail { error in
-                completion(error)
+                completion(.failure(error))
             }
     }
 

@@ -819,8 +819,6 @@ class NotificationStoreRealTimeTests: XCTestCase {
         fetchStorePageInteractor.expectedResult = Result.success(givenPageStore(predicate: predicate, size: 15, forceNotificationProperty: .read))
         storeRealTime.processMessage(event: .readAllNotification)
 
-        //TODO: Change all readAll and seenAll and validate the content if it's different.
-
         // THEN
         expect(countObserver.totalCountCounter).to(equal(2))
         expect(countObserver.unreadCountCounter).to(equal(1))
@@ -896,5 +894,28 @@ class NotificationStoreRealTimeTests: XCTestCase {
 
         // THEN
         expect(contentObserver.didInsertCounter).to(equal(0))
+    }
+
+    func test_notifyArchiveNotification_withDefaultStorePredicateAndExists_shouldDoNothing() {
+        // GIVEN
+        let predicate = StorePredicate()
+        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unarchived)
+        let store = createStoreDirector(
+            predicate: predicate,
+            fetchStoreExpectedResult: .success(storePage)
+        )
+
+        // WHEN
+        let expectation = expectation(description: "FetchNotifications")
+        store.fetch { _ in expectation.fulfill() }
+        waitForExpectations(timeout: 1, handler: nil)
+        let initialCounter = InitialNotificationStoreCounts(store)
+        let chosenIndex = anyIndexForDefaultEdgeArraySize
+        storeRealTime.processMessage(event: .archiveNotification(id: String(chosenIndex)))
+
+        // THEN
+        expect(self.fetchStorePageInteractor.executeCounter).to(equal(1))
+        expect(store.count).to(equal(defaultEdgeArraySize - 1))
+        expect(store.totalCount).to(equal(initialCounter.totalCount - 1))
     }
 }

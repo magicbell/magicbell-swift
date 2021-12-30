@@ -30,7 +30,6 @@ public struct StorePredicate: Hashable, Equatable {
     public enum Archived: Int {
         case archived
         case unarchived
-        case unspecified
     }
 
     public let read: Read
@@ -48,7 +47,7 @@ public struct StorePredicate: Hashable, Equatable {
     ///   - topics: The list of topics. Defaults to empty array.
     public init(read: StorePredicate.Read = .unspecified,
                 seen: StorePredicate.Seen = .unspecified,
-                archived: StorePredicate.Archived = .unspecified,
+                archived: StorePredicate.Archived = .unarchived,
                 categories: [String] = [],
                 topics: [String] = []) {
         self.read = read

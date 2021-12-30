@@ -85,6 +85,14 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
         }
     }
 
+    private func setHasNextPage(_ value: Bool) {
+        let oldValue = hasNextPage
+        hasNextPage = value
+        if oldValue != hasNextPage {
+            forEachContentObserver { $0.store(self, didChangeHasNextPage: hasNextPage) }
+        }
+    }
+
     /// Number of notifications loaded in the store
     public var count: Int {
         return edges.count
@@ -92,6 +100,11 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
 
     public subscript(index: Int) -> Notification {
         return edges[index].node
+    }
+
+    /// Returns an array containing all notifications
+    public func notifications() -> [Notification] {
+        return edges.map { $0.node }
     }
 
     // MARK: - Collection
@@ -132,7 +145,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     /// Clears the store and fetches first page.
     /// - Parameters:
     ///    - completion: Closure with a `Result<[Notification], Error>`
-    public func refresh(completion: @escaping (Result<[Notification], Error>) -> Void) {
+    public func refresh(completion: @escaping (Result<[Notification], Error>) -> Void = { _ in }) {
         let cursorPredicate = CursorPredicate(size: pageSize)
         fetchStorePageInteractor.execute(storePredicate: predicate, userQuery: userQuery, cursorPredicate: cursorPredicate)
             .then { storePage in
@@ -151,10 +164,11 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
             }
     }
 
-    /// Returns an array of notifications for the next pages. It can be called multiple times to obtain all pages.
+    /// Fetches the next page of notificatinos. It can be called multiple times to obtain all pages.
+    /// This method will notify the observers if changes are made into the store.
     /// - Parameters:
     ///    - completion: Closure with a `Result<[Notification], Error>`
-    public func fetch(completion: @escaping (Result<[Notification], Error>) -> Void) {
+    public func fetch(completion: @escaping (Result<[Notification], Error>) -> Void = { _ in }) {
         guard hasNextPage else {
             completion(.success([]))
             return
@@ -185,10 +199,10 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
             }
     }
 
-    /// Deletes a notification from the store.
+    /// Deletes a notification.
     /// Calling this method triggers the observers to get notified upon deletion.
     /// - Parameters:
-    ///    - notification: Notification will be removed.
+    ///    - notification: The notification
     ///    - completion: Closure with a `Error`. Success if error is nil.
     public func delete(_ notification: Notification, completion: @escaping (Error?) -> Void) {
         deleteNotificationInteractor
@@ -207,9 +221,9 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
 
     /// Marks a notification as read.
     /// - Parameters:
-    ///    - notification: Notification will be marked as read and seen.
+    ///    - notification: The notification
     ///    - completion: Closure with a `Error`. Success if error is nil.
-    public func markAsRead(_ notification: Notification, completion: @escaping (Error?) -> Void) {
+    public func markAsRead(_ notification: Notification, completion: @escaping (Result<Notification, Error>) -> Void) {
         executeNotificationAction(
             notification: notification,
             action: .markAsRead,
@@ -221,9 +235,9 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
 
     /// Marks a notification as unread.
     /// - Parameters:
-    ///    - notification: Notification will be marked as unread.
+    ///    - notification: The notification
     ///    - completion: Closure with a `Error`. Success if error is nil.
-    public func markAsUnread(_ notification: Notification, completion: @escaping (Error?) -> Void) {
+    public func markAsUnread(_ notification: Notification, completion: @escaping (Result<Notification, Error>) -> Void) {
         executeNotificationAction(
             notification: notification,
             action: .markAsUnread,
@@ -237,11 +251,13 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     /// - Parameters:
     ///    - notification: Notification will be marked as archived.
     ///    - completion: Closure with a `Error`. Success if error is nil.
-    public func archive(_ notification: Notification, completion: @escaping (Error?) -> Void) {
+    public func archive(_ notification: Notification, completion: @escaping (Result<Notification, Error>) -> Void) {
         executeNotificationAction(
             notification: notification,
             action: .archive,
-            modificationsBlock: { $0.archivedAt = Date() },
+            modificationsBlock: { notification in
+                self.archiveNotification(&notification, with: self.predicate)
+            },
             completion: completion)
     }
 
@@ -249,7 +265,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     /// - Parameters:
     ///    - notification: Notification will be marked as unarchived.
     ///    - completion: Closure with a `Error`. Success if error is nil.
-    public func unarchive(_ notification: Notification, completion: @escaping (Error?) -> Void) {
+    public func unarchive(_ notification: Notification, completion: @escaping (Result<Notification, Error>) -> Void) {
         executeNotificationAction(
             notification: notification,
             action: .unarchive,
@@ -293,7 +309,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
         setUnreadCount(0, notifyObservers: notifyChanges)
         setUnseenCount(0, notifyObservers: notifyChanges)
         nextPageCursor = nil
-        hasNextPage = true
+        setHasNextPage(true)
 
         if notifyChanges {
             forEachContentObserver { $0.store(self, didDeleteNotificationAt: Array(0..<notificationCount)) }
@@ -304,19 +320,19 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
         notification: Notification,
         action: NotificationActionQuery.Action,
         modificationsBlock: @escaping (inout Notification) -> Void,
-        completion: @escaping (Error?) -> Void
+        completion: @escaping (Result<Notification, Error>) -> Void
     ) {
         actionNotificationInteractor
             .execute(action: action, userQuery: userQuery, notificationId: notification.id)
             .then { _ in
                 if let notificationIndex = self.edges.firstIndex(where: { $0.node.id == notification.id }) {
                     modificationsBlock(&self.edges[notificationIndex].node)
-                    completion(nil)
+                    completion(.success(self.edges[notificationIndex].node))
                 } else {
-                    completion(MagicBellError("Notification not found in store"))
+                    completion(.failure(MagicBellError("Notification not found in store")))
                 }
             }.fail { error in
-                completion(error)
+                completion(.failure(error))
             }
     }
 
@@ -340,7 +356,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     private func configurePagination(_ page: StorePage) {
         let pageInfo = page.pageInfo
         nextPageCursor = pageInfo.endCursor
-        hasNextPage = pageInfo.hasNextPage
+        setHasNextPage(pageInfo.hasNextPage)
     }
 
     private func configureCount(_ page: StorePage) {
@@ -380,6 +396,8 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
                 markNotificationAsRead(&notification, with: self.predicate)
             case .unread:
                 markNotificationAsUnread(&notification, with: self.predicate)
+            case .archive:
+                archiveNotification(&notification, with: self.predicate)
             }
 
             if predicate.match(notification) {
@@ -466,6 +484,28 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
         notification.readAt = nil
     }
 
+    private func archiveNotification(_ notification: inout Notification, with predicate: StorePredicate) {
+        guard notification.archivedAt == nil else { return }
+        
+        if notification.seenAt == nil {
+            setUnseenCount(unseenCount - 1, notifyObservers: true)
+        }
+
+        if notification.readAt == nil {
+            setUnreadCount(unreadCount - 1, notifyObservers: true)
+        }
+
+        if notification.archivedAt == nil {
+            switch predicate.archived {
+            case .archived:
+                break
+            case .unarchived:
+                setTotalCount(totalCount - 1, notifyObservers: true)
+            }
+        }
+        notification.archivedAt = Date()
+    }
+
     // MARK: - Notification store observer methods
 
     private func forEachContentObserver(action: (NotificationStoreContentObserver) -> Void) {
@@ -492,6 +532,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
         decreaseUnreadCountIfUnreadPredicate(predicate, notification)
         decreaseUnseenCountIfNotificationWasUnseen(notification)
     }
+    
     private func decreaseUnreadCountIfUnreadPredicate(_ predicate: StorePredicate, _ notification: Notification) {
         if predicate.read == .unread {
             setUnreadCount(unreadCount - 1, notifyObservers: true)
@@ -501,6 +542,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
             }
         }
     }
+
     private func decreaseUnseenCountIfNotificationWasUnseen(_ notification: Notification) {
         if notification.seenAt == nil {
             setUnseenCount(unseenCount - 1, notifyObservers: true)

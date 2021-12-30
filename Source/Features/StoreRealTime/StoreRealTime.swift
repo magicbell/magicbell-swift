@@ -36,4 +36,5 @@ protocol StoreRealTimeObserver: AnyObject {
 enum StoreRealTimeNotificationChange {
     case read
     case unread
+    case archive
 }

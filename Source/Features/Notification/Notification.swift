@@ -18,7 +18,7 @@ import Foundation
 ///
 public struct Notification: Codable {
     public let id: String
-    public let title: String?
+    public let title: String
     public let actionURL: String?
     public let content: String?
     public let category: String?
@@ -62,7 +62,7 @@ public struct Notification: Codable {
         if let container = try? decoder.container(keyedBy: ContainerKeys.self),
            let valuesContainer = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: .notification) {
             id = try valuesContainer.decode(String.self, forKey: .id)
-            title = try valuesContainer.decodeIfPresent(String.self, forKey: .title)
+            title = try valuesContainer.decode(String.self, forKey: .title)
             actionURL = try valuesContainer.decodeIfPresent(String.self, forKey: .actionURL)
             content = try valuesContainer.decodeIfPresent(String.self, forKey: .content)
             category = try valuesContainer.decodeIfPresent(String.self, forKey: .category)
@@ -76,7 +76,7 @@ public struct Notification: Codable {
         } else {
             let values = try decoder.container(keyedBy: CodingKeysGraphQL.self)
             id = try values.decode(String.self, forKey: .id)
-            title = try values.decodeIfPresent(String.self, forKey: .title)
+            title = try values.decode(String.self, forKey: .title)
             actionURL = try values.decodeIfPresent(String.self, forKey: .actionURL)
             content = try values.decodeIfPresent(String.self, forKey: .content)
             category = try values.decodeIfPresent(String.self, forKey: .category)
@@ -94,7 +94,7 @@ public struct Notification: Codable {
         // Do nothing
     }
 
-    init(id: String, title: String? = nil, actionURL: String? = nil, content: String? = nil, category: String? = nil, topic: String? = nil,
+    init(id: String, title: String, actionURL: String? = nil, content: String? = nil, category: String? = nil, topic: String? = nil,
          customAttributes: [String: Any]? = [:], recipient: Recipient? = nil, seenAt: Date? = nil, sentAt: Date, readAt: Date? = nil, archivedAt: Date? = nil) {
         self.id = id
         self.title = title
@@ -108,6 +108,23 @@ public struct Notification: Codable {
         self.sentAt = sentAt
         self.readAt = readAt
         self.archivedAt = archivedAt
+    }
+}
+
+public extension Notification {
+    /// True if read, false otherwise.
+    var isRead: Bool {
+        return readAt != nil
+    }
+
+    /// True if seen, false otherwise.
+    var isSeen: Bool {
+        return seenAt != nil
+    }
+
+    /// True if archived, false otherwise.
+    var isArchived: Bool {
+        return archivedAt != nil
     }
 }
 

@@ -53,8 +53,6 @@ struct NotificationValidator {
             return true
         } else if predicate.archived == .unarchived && notification.archivedAt == nil {
             return true
-        } else if predicate.archived == .unspecified {
-            return true
         } else {
             return false
         }

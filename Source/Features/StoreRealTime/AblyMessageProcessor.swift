@@ -28,6 +28,7 @@ struct AblyMessageProcessor {
         case read(notificationId: String)
         case unread(notificationId: String)
         case delete(notificationId: String)
+        case archived(notificationId: String)
         case readAll
         case seenAll
     }
@@ -52,16 +53,15 @@ struct AblyMessageProcessor {
         if let notificationId = notificationId {
             switch eventName {
             case "new":
-                    return .new(notificationId: notificationId)
-
+                return .new(notificationId: notificationId)
             case "read":
-                    return .read(notificationId: notificationId)
-
+                return .read(notificationId: notificationId)
             case "unread":
-                    return .unread(notificationId: notificationId)
-
+                return .unread(notificationId: notificationId)
             case "delete":
-                    return .delete(notificationId: notificationId)
+                return .delete(notificationId: notificationId)
+            case "archived":
+                return .archived(notificationId: notificationId)
             default:
                 throw MagicBellError("Ably event cannot be handled")
             }

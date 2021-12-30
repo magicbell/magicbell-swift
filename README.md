@@ -55,12 +55,15 @@ store.fetch { result in
 
 ## Installation
 
-MagicBell is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+Currently, MagicBell is only available through [CocoaPods](https://cocoapods.org). However, as it is still in alpha version it is not yet discoverable via a `pod search` or the Cocoapods website.
+
+To install it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'MagicBell'
+pod 'MagicBell', '>=0'
 ```
+
+**Note**
 
 MagicBell uses [`Ably`](https://github.com/ably/ably-cocoa) as dependency, which requires to use `use_frameworks!` in your Podfile.
 
@@ -92,7 +95,7 @@ let magicBell = MagicBell(
 | `apiKey` | - | Your MagicBell's API key. |
 | `apiSecret` | `nil` | Your MagicBell's API Secret. |
 | `enableHMAC` | `false` | Set to `true` if you want HMAC enabled. Note the `apiSecret` is required if set to `true`.
-| `baseURL` | `https://api.magicbell.io` | MagicBell host. Only customize if running a private instance of MagicBell. |
+| `baseURL` | `https://api.magicbell.com` | MagicBell host. Only customize if running a private instance of MagicBell. |
 | `logLevel` | `.none` | Enables MagicBell logs if set to `.debug`.|
 
 
@@ -105,7 +108,6 @@ Therefore, you can instantiate it in the `AppDelegate.swift` or `App.swift` file
 ```swift
 import UIKit
 import MagicBell
-import UserNotifications
 
 let magicBell = MagicBell(apiKey: "YOUR_API_KEY")
 
@@ -128,13 +130,13 @@ To obtain the `UserBell` class for a given user, you must use the previously def
 
 ```swift
 // Identify the user by its email
-let user = magicBell.forUser(email: "john@doe.com")
+let userBell = magicBell.forUser(email: "john@doe.com")
 
 // Identify the user by its external id
-let user = magicBell.forUser(externalId: "123456789")
+let userBell = magicBell.forUser(externalId: "123456789")
 
 // Identify the user by oth, email and external id
-let user = magicBell.forUser(email: "john@doe.com", externalId: "123456789")
+let userBell = magicBell.forUser(email: "john@doe.com", externalId: "123456789")
 ```
 
 Note that `MagicBell` will create a `UserBell` instance the first time you access that user, but subsequent calls **will return the same instance**, keeping alive the user loaded notifications stack and real-time updates.
@@ -227,19 +229,19 @@ To create a `StorePredicate`, you must provide which type of notifications you w
 | - | - | - |
 | `read` | `.read`, `.unread`, `.unspecified` | `.unspecified` |
 | `seen` | `.seen`, `.unseen`, `.unspecified` | `.unspecified` |
-| `archived` | `.archived`, `.unarchived`, `.unspecified` | `.unspecified` |
+| `archived` | `.archived`, `.unarchived` | `.unarchived` |
 | `categories` | `[String]` | `[]` |
 | `topics` | `[String]` | `[]` |
 
 For example, we could fetch unread notifications that belong to category `"important"`.
 
 ```swift
-let store = user.store.with(predicate: StorePredicate(read: .unread, categories: ["important"]))
+let store = userBell.store.with(predicate: StorePredicate(read: .unread, categories: ["important"]))
 ```
 To obtain all notifications, just use the default `StorePredicate`:
 
 ```swift
-let store = user.store.with(predicate: StorePredicate())
+let store = userBell.store.with(predicate: StorePredicate())
 ```
 
 **Important**
@@ -274,7 +276,7 @@ For any other combination, use `user.store.with(predicate:)`.
 
 ### Using a notification store
 
-Find below the list of methods and attributes:
+Find below the list of methods and attributes to manipulate the state of the store.
 
 | Attributes | Type | Description |
 | - | - | - |
@@ -285,19 +287,20 @@ Find below the list of methods and attributes:
 | `hasNextPage` | `Bool`| `true` if a next page can be loaded, `false` otherwise |
 | `count` | `Int` | The number of notifications loaded in the store|
 
+| Method | Description |
+| - | - |
+| `subscript(index:)` | Subscript to access the notifications: `store[index]` |
+| `refresh` |  Clears the list of notifications and refreshes the first page. |
+| `fetch` | Fetches the next page of notifications. |
 
-| Method | Return Type | Description |
-| - | - | - |
-| `subscript(index:)` | `Notification` | Subscript to access the notifications: `store[index]` |
-| `refresh` | `Result<[Notification], Error>` | Clears the list of notifications and refreshes the first page |
-| `fetch` | `Result<[Notification], Error>` | Fetches the next page of notifications |
+There are two implementations of `fetch` and `refresh`: one using completion blocks (returning a `Result` object) and another one returning a Combine `Future` (available starting iOS 13).
 
 ### Loading Notifications
 
 There are two methods to load notifications:
 
-- `store.fetch`: Use this method to load the first & follwoing pages in the list of notifications. The completion block returns an array with the newly loaded notifications.
-- `store.refresh`: Use this method to reload from the beginning the first page of the list of notifications. The completion block returns an array with the loaded notifications.
+- `store.fetch`: Use this method to load the first & follwoing pages in the list of notifications. The completion block / Future returns an array with the newly loaded notifications.
+- `store.refresh`: Use this method to reload from the beginning the first page of the list of notifications. The completion block / Future returns an array with the loaded notifications.
 
 Note by calling these methods, `NotificationStore` will notify the content observers with the newly added notifications (read about observers [here](#observing-notification-store-changes))
 
@@ -361,42 +364,62 @@ store.enumerated().forEach { idx, notification in
 for (idx, notification) in store.enumerated() {
     print("notification[\(idx)] = \(notification)")
 }
+
+// Obtaning an Array of Notifications
+
+// Option 6
+let notifications = store.notifications()
 ```
 
 ### Editing Notifications
 
-`NotificationStore` is the class containing methods to manipulate `Notification` objects.
+`NotificationStore` is the class containing methods to manipulate `Notification` objects:
 
+| Method | Description |
+| - | - |
+| `delete`| Deletes a notification. |
+| `delete` | Deletes a notification. |
+| `markAsRead` | Marks a notification as read. |
+| `markAsUnread` | Marks a notification as unread. |
+| `archive` | Archives a notification. |
+| `unarchive` | Unarchives a notification. |
+| `markAllRead` | Mark all notificaitons as read (from all stores). |
+| `markAllUnseen` | Mark all notificaitons as seen (from all stores). |
+
+There are two implementations for each method: one using completion blocks (returning a `Result` object) and another one returning a Combine `Future` (available starting iOS 13).
+
+Some examples:
 ```swift
 // Delete notification
-public func delete(_ notification: Notification, completion: @escaping (Error?) -> Void)
-// Mark notification as read
-public func markAsRead(_ notification: Notification, completion: @escaping (Error?) -> Void)
-// Mark notification as unread
-public func markAsUnread(_ notification: Notification, completion: @escaping (Error?) -> Void)
-// Archive notification
-public func archive(_ notification: Notification, completion: @escaping (Error?) -> Void)
-// Unarchive notification
-public func unarchive(_ notification: Notification, completion: @escaping (Error?) -> Void)
+store.delete(notification) { result in 
+    switch result {
+    case .success:
+        print("Notification deleted")
+    case .failure(error):
+        print("Failed: \(error)")
+    }
+}
+
+// read a notification
+store.markAsRead(notification)
+    .sink { error in
+        print("Failed: \(error)")
+    } receiveValue: { notification in
+        print("Notification marked as read")
+    }
 ```
 
-Additionaly, find methods to apply changes to all notifications (belonging to any given store):
-```swift
-// Mark all notificaitons as read
-public func markAllRead(completion: @escaping (Error?) -> Void)
-// Mark all notifications as seen
-public func markAllSeen(completion: @escaping (Error?) -> Void)
-```
+**Note**
 
-**Important**
-
-When editing a notification with methods above, changes will be applied localy on the store, and using the real-time syncronization system stores implement, will cascade and apply to any given store. 
+When editing a notification with the methods above, changes will be applied localy on the store, and using the real-time syncronization system implemented in NotificationStore, changes will cascade and apply to all stores. It's important that the internet connection is active and workign in order for this synchronization to happen. 
 
 For example, as a result of marking a notification read, if your store specifies in its predicate `read: .unread`, the notification must be removed from the list of notifications of that store. 
 
 Therefore, when notification changes are detected, notification stores are updated automatically and observers of the notification stores are notified accordingly.
 
 ### Observing notification store changes
+
+#### Classic Observer Approach
 
 `NotificationStore` objects are automatically updated when new notifications arrive, or a notification is modified (marked read, archived, etc.)
 
@@ -409,6 +432,7 @@ public protocol NotificationStoreContentObserver: AnyObject {
     func store(_ store: NotificationStore, didInsertNotificationsAt indexes: [Int])
     func store(_ store: NotificationStore, didChangeNotificationAt indexes: [Int])
     func store(_ store: NotificationStore, didDeleteNotificationAt indexes: [Int])
+    func store(_ store: NotificationStore, didChangeHasNextPage hasNextPage: Bool)
 }
 
 // Get notified when the counters of a notification store change
@@ -428,45 +452,85 @@ let observer = myObserverClassInstance
 store.addContentObserver(observer)
 store.addCountObserver(observer)
 ```
-MagicBell will provide a Swift Combine-based observation pattern in a future version of the SDK.
+
+#### Reactive Approach (iOS 13)
+
+Use the class `NotificationStorePublisher` to create an `ObservableObject` capable of publishing changes on the main attributes of a `NotificaitonStore`.
+
+This object must be created and retained by the user whenever it is needed. 
+
+| Attribute | Type | Description |
+| - | - | - | 
+| `totalCount` | `@Published Int`| The total count |
+| `unreadCount` | `@Published Int`| The unread count |
+| `unseenCount` | `@Published Int`| The unseen count |
+| `hasNextPage` | `@Published Bool`| Bool indicating if there is more content to fetch. |
+| `notifications` | `@Published [Notification]`| The array of notifications. |
+
+A typical usage would be in a `View` of SwiftUI, acting as a view model that can be directly referenced from the view:
+
+```swift
+import SwiftUI
+import MagicBell
+
+class Notifications: View {
+    let store: NotificationStore
+    @ObservedObject var bell: NotificationStorePublisher
+
+    init(store: NotificationStore) {
+        self.store = store
+        self.bell = NotificationStorePublisher(store)
+    }
+
+    var body: some View {
+        List(bell.notifications, id: \.id) { notification in
+            VStack(alignment: .leading) {
+                Text(notification.title)
+                Text(notification.content ?? "-")
+            }
+        }
+        .navigationBarTitle("Notifications - \(bell.totalCount)")
+    }
+}
+```
 
 ## User Preferences
 
 The user preferences object contains multiple configuration options:
 
 ```swift
-public class Preferences {
+class Preferences {
     var email: Bool
     var inApp: Bool
     var mobilePush: Bool
     var webPush: Bool
 }
 
-public struct UserPreferences {
+struct UserPreferences {
     let preferences: [String: Preferences]
 }
 ```
 
-To fetch user preferences, do as follows:
+To fetch user preferences, use the `fetch` method as follows:
 
 ```swift
-user.userPreferences.fetch { result in
+userBell.userPreferences.fetch { result in
     if let userPreferences = try? result.get() {
         print("User Preferences: \(userPreferences)")
     }
 }
 ```
-Additionaly, it is possible to fetch directly a cateogry:
+Additionaly, it is possible to fetch directly a cateogry using the `fetchPreferences(for:)` method:
 
 ```swift
-user.userPreferences.fetchPreferences(for: "my_category") { result in
+userBell.userPreferences.fetchPreferences(for: "my_category") { result in
     if let category = try? result.get() {
         print("Category: \(category)")
     }
 }
 ```
 
-To update user preferences, use one of the two methods supported in the SDK.
+To update user preferences, use either `update` or `updatePreferences(:for:)`.
 
 ```swift
 // Updating the whole list of preferences at once.

@@ -484,6 +484,8 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     }
 
     private func archiveNotification(_ notification: inout Notification, with predicate: StorePredicate) {
+        guard notification.archivedAt == nil else { return }
+        
         if notification.seenAt == nil {
             setUnseenCount(unseenCount - 1, notifyObservers: true)
         }

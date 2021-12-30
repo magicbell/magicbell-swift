@@ -15,7 +15,7 @@ enum Style {
 }
 
 // Change style to determine how to run the app
-let style: Style = .swiftUI
+let style: Style = .uiKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -37,12 +37,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: scene)
 
+        let userBell = magicBell.forUser(email: "javier@mobilejazz.com")// john@doe.com")
+
         switch style {
         case .uiKit:
-            window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            guard let viewController = storyboard.instantiateInitialViewController() as? MagicBellStoreViewController else {
+                fatalError("Invalid Storyboard")
+            }
+            viewController.userBell = userBell
+            window?.rootViewController = viewController
         case .swiftUI:
             window?.rootViewController = HostingController(rootView: NavigationView {
-                MagicBellView(store: magicBell.forUser(email: "john@doe.com").store.forAll())
+                MagicBellView(store: userBell.store.forAll())
             })
         }
 

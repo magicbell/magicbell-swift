@@ -17,8 +17,15 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var magicBellStoreItem: BadgeBarButtonItem!
 
-    private var userBell = magicBell.forUser(email: "john@doe.com")
-    private lazy var store = userBell.store.forAll()
+    // swiftlint:disable implicitly_unwrapped_optional
+    var userBell: UserBell! 
+
+    private lazy var store: NotificationStore = {
+        let store = userBell.store.forAll()
+        store.addContentObserver(self)
+        store.addCountObserver(self)
+        return store
+    }()
 
     private var observer: AnyObject?
 
@@ -36,12 +43,14 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshAction(sender:)), for: .valueChanged)
         tableView.addSubview(refreshControl)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
 
         reloadStore()
-
-        store.addContentObserver(self)
-        store.addCountObserver(self)
     }
+
 
     // swiftlint:disable empty_count
     private func reloadStore() {
@@ -80,8 +89,8 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
 
     @IBAction func menuAction(_ sender: Any) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Login", style: .default) { _ in
-            let alert = UIAlertController(title: "Login", message: "Insert user's email", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Change User", style: .default) { _ in
+            let alert = UIAlertController(title: "Change User", message: "Insert user's email", preferredStyle: .alert)
             alert.addTextField { textField in
                 textField.placeholder = "john@doe.com"
             }

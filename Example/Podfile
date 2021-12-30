@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '12.0'
+platform :ios, '13.0'
 use_frameworks!
 
 target 'Example' do
@@ -8,8 +8,6 @@ target 'Example' do
 
     pod 'MagicBell', :path => '../'
     pod 'SwiftLint'
-
-    target 'ExampleTests' do
-        inherit! :search_paths
-    end
 end
+
+

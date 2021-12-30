@@ -31,6 +31,10 @@ class ContentObserverMock: NotificationStoreContentObserver {
     var didDeleteCounter: Int {
         didDeleteSpy.count
     }
+    private(set) var didChangeHasNextPageSpy:[MethodParams.DidChangeHasNextPage] = []
+    var didChangeHasNextPageCounter: Int {
+        didChangeHasNextPageSpy.count
+    }
 
     func didReloadStore(_ store: NotificationStore) {
         reloadStoreSpy.append(MethodParams.ReloadStore())
@@ -46,6 +50,10 @@ class ContentObserverMock: NotificationStoreContentObserver {
 
     func store(_ store: NotificationStore, didDeleteNotificationAt indexes: [Int]) {
         didDeleteSpy.append(MethodParams.DidDelete(indexes: indexes))
+    }
+
+    func store(_ store: NotificationStore, didChangeHasNextPage hasNextPage: Bool) {
+        didChangeHasNextPageSpy.append(MethodParams.DidChangeHasNextPage(hasNextPage: hasNextPage))
     }
 
     class MethodParams {
@@ -64,6 +72,10 @@ class ContentObserverMock: NotificationStoreContentObserver {
 
         struct DidDelete {
             let indexes: [Int]
+        }
+
+        struct DidChangeHasNextPage {
+            let hasNextPage: Bool
         }
     }
 }

@@ -17,15 +17,18 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var magicBellStoreItem: BadgeBarButtonItem!
 
-    private var userBell = magicBell.forUser(email: "john@doe.com")
-    private lazy var store = userBell.store.forAll()
+    // swiftlint:disable implicitly_unwrapped_optional
+    var userBell: UserBell! 
 
-    var navigationBarColor = UIColor(rgb: 0x6113A3) {
-        didSet { applyBarStyle() }
-    }
-    var navigationBarTitleColor = UIColor.white {
-        didSet { applyBarStyle() }
-    }
+    private lazy var store: NotificationStore = {
+        let store = userBell.store.forAll()
+        store.addContentObserver(self)
+        store.addCountObserver(self)
+        return store
+    }()
+
+    private var observer: AnyObject?
+
     override var title: String? {
         didSet { navigationBar.topItem?.title = title }
     }
@@ -36,17 +39,18 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         self.title = "Notifications"
 
         navigationBar.topItem?.title = self.title
-        applyBarStyle()
 
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshAction(sender:)), for: .valueChanged)
         tableView.addSubview(refreshControl)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
 
         reloadStore()
-
-        store.addContentObserver(self)
-        store.addCountObserver(self)
     }
+
 
     // swiftlint:disable empty_count
     private func reloadStore() {
@@ -83,29 +87,10 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         .lightContent
     }
 
-    private func applyBarStyle() {
-        navigationBar.tintColor = navigationBarTitleColor
-        if #available(iOS 15, *) {
-            let appearance = UINavigationBarAppearance()
-            appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = navigationBarColor
-            appearance.titleTextAttributes = [
-                NSAttributedString.Key.foregroundColor: navigationBarTitleColor // nav text color
-            ]
-            navigationBar?.standardAppearance = appearance
-            navigationBar?.scrollEdgeAppearance = UINavigationBar.appearance().standardAppearance
-        } else {
-            navigationBar?.barTintColor = navigationBarColor
-            navigationBar?.titleTextAttributes = [
-                NSAttributedString.Key.foregroundColor: navigationBarTitleColor  // nav text color
-            ]
-        }
-    }
-
     @IBAction func menuAction(_ sender: Any) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Login", style: .default) { _ in
-            let alert = UIAlertController(title: "Login", message: "Insert user's email", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Change User", style: .default) { _ in
+            let alert = UIAlertController(title: "Change User", message: "Insert user's email", preferredStyle: .alert)
             alert.addTextField { textField in
                 textField.placeholder = "john@doe.com"
             }
@@ -151,6 +136,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         store = userBell.store.with(predicate: predicate)
         store.addContentObserver(self)
         store.addCountObserver(self)
+
         reloadStore()
     }
 
@@ -215,7 +201,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 6, height: 6))
         view.clipsToBounds = true
         view.layer.cornerRadius = 3
-        view.backgroundColor = navigationBarColor
+        view.backgroundColor = .magicBell
         view.isUserInteractionEnabled = false
         return view
     }
@@ -229,28 +215,35 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
 
         let alert = UIAlertController(title: "Notification Title", message: nil, preferredStyle: .actionSheet)
 
-        if notification.archivedAt == nil {
+        if !notification.isArchived {
             alert.addAction(UIAlertAction(title: "Archive", style: .default) { _ in
-                self.store.archive(notification) { error in
-                    if error == nil {
+                self.store.archive(notification) { result in
+                    switch result {
+                    case .success:
                         self.tableView.reloadRows(at: [indexPath], with: .none)
+                    case .failure(let error):
+                        print("Action not completed \(error.localizedDescription)")
                     }
                 }
             })
         } else {
             alert.addAction(UIAlertAction(title: "Unarchive", style: .default) { _ in
-                self.store.unarchive(notification) { error in
-                    if error == nil {
+                self.store.unarchive(notification) { result in
+                    switch result {
+                    case .success:
                         self.tableView.reloadRows(at: [indexPath], with: .none)
+                    case .failure(let error):
+                        print("Action not completed \(error.localizedDescription)")
                     }
                 }
             })
         }
 
-        if notification.readAt == nil {
+        if !notification.isRead {
             alert.addAction(UIAlertAction(title: "Mark Read", style: .default) { _ in
-                self.store.markAsRead(notification) { error in
-                    if error == nil {
+                self.store.markAsRead(notification) { result in
+                    switch result {
+                    case .success:
                         if let cell = self.tableView.cellForRow(at: indexPath) {
                             if notification.readAt == nil {
                                 cell.accessoryView = self.unreadBadgeView()
@@ -258,13 +251,16 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
                                 cell.accessoryView = nil
                             }
                         }
+                    case .failure(let error):
+                        print("Action not completed \(error.localizedDescription)")
                     }
                 }
             })
         } else {
             alert.addAction(UIAlertAction(title: "Mark Unread", style: .default) { _ in
-                self.store.markAsUnread(notification) { error in
-                    if error == nil {
+                self.store.markAsUnread(notification) { result in
+                    switch result {
+                    case .success:
                         if let cell = self.tableView.cellForRow(at: indexPath) {
                             if notification.readAt == nil {
                                 cell.accessoryView = self.unreadBadgeView()
@@ -272,6 +268,8 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
                                 cell.accessoryView = nil
                             }
                         }
+                    case .failure(let error):
+                        print("Action not completed \(error.localizedDescription)")
                     }
                 }
             })
@@ -297,7 +295,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
                 print("Load completed")
                 self.isLoadingNextPage = false
                 switch result {
-                case .success(let notifications):
+                case .success:
                     // Observers will manage changes
                     break
                 case .failure(let error):
@@ -329,6 +327,14 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         self.tableView.insertRows(at: indexes.map { idx in
             IndexPath(row: idx, section: 0)
         }, with: .fade)
+    }
+
+    func store(_ store: NotificationStore, didChangeHasNextPage hasNextPage: Bool) {
+        if hasNextPage {
+            print("There's more content available")
+        } else {
+            print("There's no more content available")
+        }
     }
 
     // MARK: NotificationStoreCountDelegate

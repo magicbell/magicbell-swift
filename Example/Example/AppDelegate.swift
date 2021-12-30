@@ -9,7 +9,11 @@ import UIKit
 import MagicBell
 import UserNotifications
 
-let magicBell = MagicBell(apiKey: "34ed17a8482e44c765d9e163015a8d586f0b3383", logLevel: .debug)
+// Application available instance of MagicBell
+let magicBell = MagicBell(
+    apiKey: "34ed17a8482e44c765d9e163015a8d586f0b3383",
+    logLevel: .debug
+)
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

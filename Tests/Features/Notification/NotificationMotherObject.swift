@@ -62,8 +62,6 @@ extension Notification {
             archived = true
         case .unarchived:
             archived = false
-        case .unspecified:
-            archived = randomBool()
         }
 
         switch forceProperty {

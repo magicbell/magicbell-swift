@@ -16,6 +16,9 @@ import Combine
 
 public extension NotificationStore {
 
+    /// Clears the store and fetches first page.
+    /// This method will notify the observers if changes are made into the store.
+    /// - Returns: A future with the array of notifications or an error
     @available(iOS 13.0, *)
     @discardableResult
     func refresh() -> Future<[Notification], Error> {
@@ -31,6 +34,9 @@ public extension NotificationStore {
         }
     }
 
+    /// Fetches the next page of notificatinos. It can be called multiple times to obtain all pages.
+    /// This method will notify the observers if changes are made into the store.
+    /// - Returns: A future with the array of notifications for the next page or an error
     @available(iOS 13.0, *)
     @discardableResult
     func fetch() -> Future<[Notification], Error> {
@@ -46,6 +52,11 @@ public extension NotificationStore {
         }
     }
 
+    /// Deletes a notification.
+    /// Calling this method triggers the observers to get notified upon deletion.
+    /// - Parameters:
+    ///    - notification: The Notification to be removed.
+    /// - Returns: A future with an empty content if succes or an error
     @available(iOS 13.0, *)
     @discardableResult
     func delete(_ notification: Notification) -> Future<Void, Error> {
@@ -60,6 +71,10 @@ public extension NotificationStore {
         }
     }
 
+    /// Marks a notification as read.
+    /// - Parameters:
+    ///    - notification: The notification
+    /// - Returns: A future with the updated notification or an error
     @available(iOS 13.0, *)
     @discardableResult
     func markAsRead(_ notification: Notification) -> Future<Notification, Error> {
@@ -75,6 +90,10 @@ public extension NotificationStore {
         }
     }
 
+    /// Marks a notification as unread.
+    /// - Parameters:
+    ///    - notification: The notification
+    /// - Returns: A future with the updated notification or an error
     @available(iOS 13.0, *)
     @discardableResult
     func markAsUnread(_ notification: Notification) -> Future<Notification, Error> {
@@ -90,6 +109,10 @@ public extension NotificationStore {
         }
     }
 
+    /// Archives the notification.
+    /// - Parameters:
+    ///    - notification: The notification
+    /// - Returns: A future with the updated notification or an error
     @available(iOS 13.0, *)
     @discardableResult
     func archive(_ notification: Notification) -> Future<Notification, Error> {
@@ -105,6 +128,10 @@ public extension NotificationStore {
         }
     }
 
+    /// Unarchives a notification.
+    /// - Parameters:
+    ///    - notification: The notification
+    /// - Returns: A future with the updated notification or an error
     @available(iOS 13.0, *)
     @discardableResult
     func unarchive(_ notification: Notification) -> Future<Notification, Error> {
@@ -120,6 +147,8 @@ public extension NotificationStore {
         }
     }
 
+    /// Marks all notifications as read.
+    /// - Returns: A future with an empty content if succes or an error
     @available(iOS 13.0, *)
     @discardableResult
     func markAllRead() -> Future<Void, Error> {
@@ -134,6 +163,8 @@ public extension NotificationStore {
         }
     }
 
+    /// Marks all notifications as seen.
+    /// - Returns: A future with an empty content if succes or an error
     @available(iOS 13.0, *)
     @discardableResult
     func markAllSeen() -> Future<Void, Error> {

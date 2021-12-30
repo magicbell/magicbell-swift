@@ -13,10 +13,11 @@
 
 import Foundation
 import Harmony
+import Combine
 
 public protocol UserPreferencesDirector {
 
-    /// Returns the user preferences.
+    /// Fetches the user preferences.
     /// - Parameters:
     ///     - completion: Closure with a `Result`. Success returns the `UserPreferences`.
     func fetch(completion: @escaping(Result<UserPreferences, Error>) -> Void)
@@ -26,17 +27,88 @@ public protocol UserPreferencesDirector {
     ///     - completion: Closure with a `Result`. Success returns the `UserPreferences`.
     func update(_ userPreferences: UserPreferences, completion: @escaping(Result<UserPreferences, Error>) -> Void)
 
-    /// Returns the  preferences for a given category.
+    /// Fetches the preferences for a given category.
     /// - Parameters:
     ///     - completion: Closure with a `Result`. Success returns the `Preferences` for the given category.
     func fetchPreferences(for category: String, completion: @escaping(Result<Preferences, Error>) -> Void)
 
-    /// Updates the  preferences for a given category.
+    /// Updates the preferences for a given category.
     /// - Parameters:
     ///   - preferences: The notification preferences for a given category.
     ///   - category: The category name.
     ///   - completion: Closure with a `Result`. Success returns the `UserPreferences`.
     func updatePreferences(_ preferences: Preferences, for category: String, completion: @escaping(Result<Preferences, Error>) -> Void)
+}
+
+public extension UserPreferencesDirector {
+    /// Fetches the user preferences.
+    /// - Returns: A future with the user preferences or an error
+    @available(iOS 13.0, *)
+    func fetch() -> Combine.Future<UserPreferences, Error> {
+        return Future { promise in
+            self.fetch { result in
+                switch result {
+                case .success(let preferences):
+                    promise(.success(preferences))
+                case .failure(let error):
+                    promise(.failure(error))
+                }
+            }
+        }
+    }
+
+    /// Updates the user preferences. Update can be partial and only will affect the categories included in the object being sent.
+    /// - Returns: A future with the user preferences or an error
+    @available(iOS 13.0, *)
+    @discardableResult
+    func update(_ userPreferences: UserPreferences) -> Combine.Future<UserPreferences, Error> {
+        return Future { promise in
+            self.update(userPreferences) { result in
+                switch result {
+                case .success(let preferences):
+                    promise(.success(preferences))
+                case .failure(let error):
+                    promise(.failure(error))
+                }
+            }
+        }
+    }
+
+    /// Fetches the preferences for a given category.
+    /// - Returns: A future with the preferences or an error
+    @available(iOS 13.0, *)
+    func fetchPreferences(for category: String) -> Combine.Future<Preferences, Error> {
+        return Future { promise in
+            self.fetchPreferences(for: category) { result in
+                switch result {
+                case .success(let preferences):
+                    promise(.success(preferences))
+                case .failure(let error):
+                    promise(.failure(error))
+                }
+            }
+        }
+    }
+
+    /// Updates the preferences for a given category.
+    /// - Parameters:
+    ///   - preferences: The notification preferences for a given category.
+    ///   - category: The category name.
+    /// - Returns: A future with the preferences or an error
+    @available(iOS 13.0, *)
+    @discardableResult
+    func updatePreferences(_ preferences: Preferences, for category: String) -> Combine.Future<Preferences, Error> {
+        return Future { promise in
+            self.updatePreferences(preferences, for: category) { result in
+                switch result {
+                case .success(let preferences):
+                    promise(.success(preferences))
+                case .failure(let error):
+                    promise(.failure(error))
+                }
+            }
+        }
+    }
 }
 
 struct DefaultUserPreferencesDirector: UserPreferencesDirector {

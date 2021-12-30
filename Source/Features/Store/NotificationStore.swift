@@ -164,7 +164,8 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
             }
     }
 
-    /// Returns an array of notifications for the next pages. It can be called multiple times to obtain all pages.
+    /// Fetches the next page of notificatinos. It can be called multiple times to obtain all pages.
+    /// This method will notify the observers if changes are made into the store.
     /// - Parameters:
     ///    - completion: Closure with a `Result<[Notification], Error>`
     public func fetch(completion: @escaping (Result<[Notification], Error>) -> Void = { _ in }) {
@@ -198,10 +199,10 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
             }
     }
 
-    /// Deletes a notification from the store.
+    /// Deletes a notification.
     /// Calling this method triggers the observers to get notified upon deletion.
     /// - Parameters:
-    ///    - notification: Notification will be removed.
+    ///    - notification: The notification
     ///    - completion: Closure with a `Error`. Success if error is nil.
     public func delete(_ notification: Notification, completion: @escaping (Error?) -> Void) {
         deleteNotificationInteractor
@@ -220,7 +221,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
 
     /// Marks a notification as read.
     /// - Parameters:
-    ///    - notification: Notification will be marked as read and seen.
+    ///    - notification: The notification
     ///    - completion: Closure with a `Error`. Success if error is nil.
     public func markAsRead(_ notification: Notification, completion: @escaping (Result<Notification, Error>) -> Void) {
         executeNotificationAction(
@@ -234,7 +235,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
 
     /// Marks a notification as unread.
     /// - Parameters:
-    ///    - notification: Notification will be marked as unread.
+    ///    - notification: The notification
     ///    - completion: Closure with a `Error`. Success if error is nil.
     public func markAsUnread(_ notification: Notification, completion: @escaping (Result<Notification, Error>) -> Void) {
         executeNotificationAction(

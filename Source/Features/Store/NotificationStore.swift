@@ -86,8 +86,11 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     }
 
     private func setHasNextPage(_ value: Bool) {
+        let oldValue = hasNextPage
         hasNextPage = value
-        forEachContentObserver { $0.store(self, didChangeHasNextPage: hasNextPage) }
+        if oldValue != hasNextPage {
+            forEachContentObserver { $0.store(self, didChangeHasNextPage: hasNextPage) }
+        }
     }
 
     /// Number of notifications loaded in the store

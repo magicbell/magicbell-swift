@@ -44,19 +44,127 @@ class NotificationStoreCombineTests: XCTestCase {
         return notificationStore
     }
 
+    func test_fetchFuture_withDefaultStore_shouldReturnAllNotification() {
+        // GIVEN
+        let predicate = StorePredicate()
+        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
+        let store = createNotificationStore(
+            predicate: predicate,
+            fetchStoreExpectedResult: .success(storePage)
+        )
+
+        // WHEN
+        let expectation = expectation(description: "FetchNotifications")
+        _ = store.fetch().sink { _ in
+            expectation.fulfill()
+        } receiveValue: { notifications in
+            expect(storePage.edges.map { $0.node.id }).to(equal(notifications.map { $0.id }))
+        }
+        waitForExpectations(timeout: 1, handler: nil)
+
+        // THEN
+        expect(self.fetchStorePageInteractor.executeCounter).to(equal(1))
+        expect(store.count).to(equal(defaultEdgeArraySize))
+        expect(storePage.edges.map { $0.node.id }).to(equal(store.notifications().map { $0.id }))
+    }
+
+    func test_fetchFuture_withDefaultStorePredicateAndError_shouldReturnError() {
+        // GIVEN
+        let predicate = StorePredicate()
+        let store = createNotificationStore(
+            predicate: predicate,
+            fetchStoreExpectedResult: .failure(MagicBellError("Error"))
+        )
+
+        // WHEN
+        let expectation = expectation(description: "FetchNotifications")
+        var errorExpected: Error?
+        _ = store.fetch().sink { completion in
+            expectation.fulfill()
+            switch completion {
+            case .failure(let error):
+                errorExpected = error
+            case .finished:
+                break
+            }
+        } receiveValue: { _ in
+
+        }
+        waitForExpectations(timeout: 1, handler: nil)
+
+        // THEN
+        expect(self.fetchStorePageInteractor.executeCounter).to(equal(1))
+        expect(store.count).to(equal(0))
+        expect(errorExpected).toNot(beNil())
+    }
+
+    func test_refreshFuture_withDefaultStore_shouldReturnAllNotification() {
+        // GIVEN
+        let predicate = StorePredicate()
+        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
+        let store = createNotificationStore(
+            predicate: predicate,
+            fetchStoreExpectedResult: .success(storePage)
+        )
+
+        // WHEN
+        let expectation = expectation(description: "FetchNotifications")
+        _ = store.fetch().sink { _ in
+            expectation.fulfill()
+        } receiveValue: { notifications in
+            expect(storePage.edges.map { $0.node.id }).to(equal(notifications.map { $0.id }))
+        }
+        waitForExpectations(timeout: 1, handler: nil)
+
+        // THEN
+        expect(self.fetchStorePageInteractor.executeCounter).to(equal(1))
+        expect(store.count).to(equal(defaultEdgeArraySize))
+        expect(storePage.edges.map { $0.node.id }).to(equal(store.notifications().map { $0.id }))
+    }
+
+    func test_refreshFuture_withDefaultStorePredicateAndError_shouldReturnError() {
+        // GIVEN
+        let predicate = StorePredicate()
+        let store = createNotificationStore(
+            predicate: predicate,
+            fetchStoreExpectedResult: .failure(MagicBellError("Error"))
+        )
+
+        // WHEN
+        let expectation = expectation(description: "RefreshNotifications")
+        var errorExpected: Error?
+        _ = store.refresh().sink { completion in
+            expectation.fulfill()
+            switch completion {
+            case .failure(let error):
+                errorExpected = error
+            case .finished:
+                break
+            }
+        } receiveValue: { _ in
+
+        }
+        waitForExpectations(timeout: 1, handler: nil)
+
+        // THEN
+        expect(self.fetchStorePageInteractor.executeCounter).to(equal(1))
+        expect(store.count).to(equal(0))
+        expect(errorExpected).toNot(beNil())
+    }
+
     func test_deleteNotificationFuture_withDefaultStorePredicate_shouldCallDeleteNotificationInteractor() {
         // GIVEN
         let predicate = StorePredicate()
         let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .read)
         let store = createNotificationStore(
-                predicate: predicate,
-                fetchStoreExpectedResult: .success(storePage)
+            predicate: predicate,
+            fetchStoreExpectedResult: .success(storePage)
         )
 
         // WHEN
-        let expectation = XCTestExpectation(description: "FetchNotifications")
-        store.fetch { _ in expectation.fulfill() }
-        wait(for: [expectation], timeout: 1)
+        let expectation = expectation(description: "FetchNotifications")
+        _ = store.fetch().sink { _ in expectation.fulfill() } receiveValue: { _ in }
+        waitForExpectations(timeout: 1, handler: nil)
         let removeIndex = anyIndexForDefaultEdgeArraySize
         let removedNotification = store[removeIndex]
         let expectationDelete = XCTestExpectation(description: "DeleteNotifications")
@@ -74,15 +182,15 @@ class NotificationStoreCombineTests: XCTestCase {
         let predicate = StorePredicate()
         let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .read)
         let store = createNotificationStore(
-                predicate: predicate,
-                fetchStoreExpectedResult: .success(storePage),
-                deleteStoreExpectedResult: .failure(MagicBellError("Error"))
+            predicate: predicate,
+            fetchStoreExpectedResult: .success(storePage),
+            deleteStoreExpectedResult: .failure(MagicBellError("Error"))
         )
 
         // WHEN
-        let expectation = XCTestExpectation(description: "FetchNotifications")
-        store.fetch { _ in expectation.fulfill() }
-        wait(for: [expectation], timeout: 1)
+        let expectation = expectation(description: "FetchNotifications")
+        _ = store.fetch().sink { _ in expectation.fulfill() } receiveValue: { _ in }
+        waitForExpectations(timeout: 1, handler: nil)
         let removeIndex = anyIndexForDefaultEdgeArraySize
         let removedNotification = store[removeIndex]
         let expectationDelete = XCTestExpectation(description: "DeleteNotifications")
@@ -115,9 +223,9 @@ class NotificationStoreCombineTests: XCTestCase {
         )
 
         // WHEN
-        let expectation = XCTestExpectation(description: "FetchNotification")
-        store.fetch { _ in expectation.fulfill() }
-        wait(for: [expectation], timeout: 1)
+        let expectation = expectation(description: "FetchNotifications")
+        _ = store.fetch().sink { _ in expectation.fulfill() } receiveValue: { _ in }
+        waitForExpectations(timeout: 1, handler: nil)
         let chosenIndex = anyIndexForDefaultEdgeArraySize
         let markReadNotification = store[chosenIndex]
         let expectationMarkAsRead = XCTestExpectation(description: "MarkAsRead")
@@ -142,9 +250,9 @@ class NotificationStoreCombineTests: XCTestCase {
         )
 
         // WHEN
-        let expectation = XCTestExpectation(description: "FetchNotification")
-        store.fetch { _ in expectation.fulfill() }
-        wait(for: [expectation], timeout: 1)
+        let expectation = expectation(description: "FetchNotifications")
+        _ = store.fetch().sink { _ in expectation.fulfill() } receiveValue: { _ in }
+        waitForExpectations(timeout: 1, handler: nil)
         let chosenIndex = anyIndexForDefaultEdgeArraySize
         let markReadNotification = store[chosenIndex]
         let expectationMarkAsRead = XCTestExpectation(description: "MarkAsRead")
@@ -173,18 +281,18 @@ class NotificationStoreCombineTests: XCTestCase {
         let predicate = StorePredicate()
         let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
         let store = createNotificationStore(
-                predicate: predicate,
-                fetchStoreExpectedResult: .success(storePage)
+            predicate: predicate,
+            fetchStoreExpectedResult: .success(storePage)
         )
 
         // WHEN
-        let expectation = XCTestExpectation(description: "FetchNotification")
-        store.fetch { _ in expectation.fulfill() }
-        wait(for: [expectation], timeout: 1)
+        let expectation = expectation(description: "FetchNotifications")
+        _ = store.fetch().sink { _ in expectation.fulfill() } receiveValue: { _ in }
+        waitForExpectations(timeout: 1, handler: nil)
         let chosenIndex = anyIndexForDefaultEdgeArraySize
         let markUnreadNotification = store[chosenIndex]
         let expectationMarkAsUnread = XCTestExpectation(description: "MarkAsUnread")
-        store.markAsUnread(store[chosenIndex]) { _ in  expectationMarkAsUnread.fulfill()}
+        _ = store.markAsUnread(store[chosenIndex]).sink { _ in expectationMarkAsUnread.fulfill() } receiveValue: { _ in  }
         wait(for: [expectationMarkAsUnread], timeout: 1)
 
         // THEN
@@ -199,18 +307,18 @@ class NotificationStoreCombineTests: XCTestCase {
         let predicate = StorePredicate()
         let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
         let store = createNotificationStore(
-                predicate: predicate,
-                fetchStoreExpectedResult: .success(storePage)
+            predicate: predicate,
+            fetchStoreExpectedResult: .success(storePage)
         )
 
         // WHEN
-        let expectation = XCTestExpectation(description: "FetchNotification")
-        store.fetch { _ in expectation.fulfill() }
-        wait(for: [expectation], timeout: 1)
+        let expectation = expectation(description: "FetchNotifications")
+        _ = store.fetch().sink { _ in expectation.fulfill() } receiveValue: { _ in }
+        waitForExpectations(timeout: 1, handler: nil)
         let chosenIndex = anyIndexForDefaultEdgeArraySize
         let archiveNotification = store[chosenIndex]
         let expectationArchive = XCTestExpectation(description: "Archive")
-        _ = store.archive(store[chosenIndex]).sink(receiveCompletion: { _ in expectationArchive.fulfill() }, receiveValue: {  })
+        _ = store.archive(store[chosenIndex]).sink(receiveCompletion: { _ in expectationArchive.fulfill() }, receiveValue: { _ in })
         wait(for: [expectationArchive], timeout: 1)
 
         // THEN
@@ -225,18 +333,18 @@ class NotificationStoreCombineTests: XCTestCase {
         let predicate = StorePredicate()
         let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
         let store = createNotificationStore(
-                predicate: predicate,
-                fetchStoreExpectedResult: .success(storePage)
+            predicate: predicate,
+            fetchStoreExpectedResult: .success(storePage)
         )
 
         // WHEN
-        let expectation = XCTestExpectation(description: "FetchNotification")
-        store.fetch { _ in expectation.fulfill() }
-        wait(for: [expectation], timeout: 1)
+        let expectation = expectation(description: "FetchNotifications")
+        _ = store.fetch().sink { _ in expectation.fulfill() } receiveValue: { _ in }
+        waitForExpectations(timeout: 1, handler: nil)
         let chosenIndex = anyIndexForDefaultEdgeArraySize
         let unarchiveNotification = store[chosenIndex]
         let expectationArchive = XCTestExpectation(description: "Unarchive")
-        _ = store.unarchive(store[chosenIndex]).sink(receiveCompletion: { _ in expectationArchive.fulfill() }, receiveValue: {  })
+        _ = store.unarchive(store[chosenIndex]).sink(receiveCompletion: { _ in expectationArchive.fulfill() }, receiveValue: { _ in  })
         wait(for: [expectationArchive], timeout: 1)
 
         // THEN
@@ -256,9 +364,9 @@ class NotificationStoreCombineTests: XCTestCase {
         )
 
         // WHEN
-        let expectation = XCTestExpectation(description: "FetchNotification")
-        store.fetch { _ in expectation.fulfill() }
-        wait(for: [expectation], timeout: 1)
+        let expectation = expectation(description: "FetchNotifications")
+        _ = store.fetch().sink { _ in expectation.fulfill() } receiveValue: { _ in }
+        waitForExpectations(timeout: 1, handler: nil)
         let expectationMarkAllRead = XCTestExpectation(description: "MarkAllRead")
         _ = store.markAllRead().sink(receiveCompletion: { _ in expectationMarkAllRead.fulfill() }, receiveValue: {  })
         wait(for: [expectationMarkAllRead], timeout: 1)
@@ -280,9 +388,9 @@ class NotificationStoreCombineTests: XCTestCase {
         )
 
         // WHEN
-        let expectation = XCTestExpectation(description: "FetchNotification")
-        store.fetch { _ in expectation.fulfill() }
-        wait(for: [expectation], timeout: 1)
+        let expectation = expectation(description: "FetchNotifications")
+        _ = store.fetch().sink { _ in expectation.fulfill() } receiveValue: { _ in }
+        waitForExpectations(timeout: 1, handler: nil)
         let expectationMarkAllSeen = XCTestExpectation(description: "MarkAllSeen")
         _ = store.markAllSeen().sink(receiveCompletion: { _ in expectationMarkAllSeen.fulfill() }, receiveValue: {  })
         wait(for: [expectationMarkAllSeen], timeout: 1)

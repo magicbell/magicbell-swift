@@ -158,24 +158,20 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
         alert.addAction(UIAlertAction(title: "Mark All Read", style: .default) { _ in
-            self.store.markAllRead { result in
-                switch result {
-                case .success:
-                    self.tableView.reloadData()
-                case .failure(let error):
-                    print("Action not completed \(error.localizedDescription)")
+            self.store.markAllRead { error in
+                if error != nil {
+                    print("Action not completed")
                 }
+                self.tableView.reloadData()
             }
         })
 
         alert.addAction(UIAlertAction(title: "Mark All Seen", style: .default) { _ in
-            self.store.markAllSeen { result in
-                switch result {
-                case .success:
-                    self.tableView.reloadData()
-                case .failure(let error):
-                    print("Action not completed \(error.localizedDescription)")
+            self.store.markAllSeen { error in
+                if error != nil {
+                    print("Action not completed")
                 }
+                self.tableView.reloadData()
             }
         })
 

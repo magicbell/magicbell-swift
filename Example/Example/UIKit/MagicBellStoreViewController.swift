@@ -206,7 +206,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
 
         let alert = UIAlertController(title: "Notification Title", message: nil, preferredStyle: .actionSheet)
 
-        if notification.archivedAt == nil {
+        if !notification.isArchived {
             alert.addAction(UIAlertAction(title: "Archive", style: .default) { _ in
                 self.store.archive(notification) { result in
                     switch result {
@@ -230,7 +230,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
             })
         }
 
-        if notification.readAt == nil {
+        if !notification.isRead {
             alert.addAction(UIAlertAction(title: "Mark Read", style: .default) { _ in
                 self.store.markAsRead(notification) { result in
                     switch result {

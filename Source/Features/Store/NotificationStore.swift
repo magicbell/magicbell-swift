@@ -145,7 +145,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     /// Clears the store and fetches first page.
     /// - Parameters:
     ///    - completion: Closure with a `Result<[Notification], Error>`
-    public func refresh(completion: @escaping (Result<[Notification], Error>) -> Void) {
+    public func refresh(completion: @escaping (Result<[Notification], Error>) -> Void = { _ in }) {
         let cursorPredicate = CursorPredicate(size: pageSize)
         fetchStorePageInteractor.execute(storePredicate: predicate, userQuery: userQuery, cursorPredicate: cursorPredicate)
             .then { storePage in
@@ -167,7 +167,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     /// Returns an array of notifications for the next pages. It can be called multiple times to obtain all pages.
     /// - Parameters:
     ///    - completion: Closure with a `Result<[Notification], Error>`
-    public func fetch(completion: @escaping (Result<[Notification], Error>) -> Void) {
+    public func fetch(completion: @escaping (Result<[Notification], Error>) -> Void = { _ in }) {
         guard hasNextPage else {
             completion(.success([]))
             return

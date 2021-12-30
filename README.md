@@ -105,7 +105,6 @@ Therefore, you can instantiate it in the `AppDelegate.swift` or `App.swift` file
 ```swift
 import UIKit
 import MagicBell
-import UserNotifications
 
 let magicBell = MagicBell(apiKey: "YOUR_API_KEY")
 
@@ -274,7 +273,7 @@ For any other combination, use `user.store.with(predicate:)`.
 
 ### Using a notification store
 
-Find below the list of methods and attributes:
+Find below the list of methods and attributes to manipulate the state of the store.
 
 | Attributes | Type | Description |
 | - | - | - |
@@ -285,19 +284,20 @@ Find below the list of methods and attributes:
 | `hasNextPage` | `Bool`| `true` if a next page can be loaded, `false` otherwise |
 | `count` | `Int` | The number of notifications loaded in the store|
 
+| Method | Description |
+| - | - |
+| `subscript(index:)` | Subscript to access the notifications: `store[index]` |
+| `refresh` |  Clears the list of notifications and refreshes the first page. |
+| `fetch` | Fetches the next page of notifications. |
 
-| Method | Return Type | Description |
-| - | - | - |
-| `subscript(index:)` | `Notification` | Subscript to access the notifications: `store[index]` |
-| `refresh` | `Result<[Notification], Error>` | Clears the list of notifications and refreshes the first page |
-| `fetch` | `Result<[Notification], Error>` | Fetches the next page of notifications |
+There are two implementations of `fetch` and `refresh`: one using completion blocks (returning a `Result` object) and another one returning a Combine `Future` (available starting iOS 13).
 
 ### Loading Notifications
 
 There are two methods to load notifications:
 
-- `store.fetch`: Use this method to load the first & follwoing pages in the list of notifications. The completion block returns an array with the newly loaded notifications.
-- `store.refresh`: Use this method to reload from the beginning the first page of the list of notifications. The completion block returns an array with the loaded notifications.
+- `store.fetch`: Use this method to load the first & follwoing pages in the list of notifications. The completion block / Future returns an array with the newly loaded notifications.
+- `store.refresh`: Use this method to reload from the beginning the first page of the list of notifications. The completion block / Future returns an array with the loaded notifications.
 
 Note by calling these methods, `NotificationStore` will notify the content observers with the newly added notifications (read about observers [here](#observing-notification-store-changes))
 
@@ -361,42 +361,62 @@ store.enumerated().forEach { idx, notification in
 for (idx, notification) in store.enumerated() {
     print("notification[\(idx)] = \(notification)")
 }
+
+// Obtaning an Array of Notifications
+
+// Option 6
+let notifications = store.notifications()
 ```
 
 ### Editing Notifications
 
-`NotificationStore` is the class containing methods to manipulate `Notification` objects.
+`NotificationStore` is the class containing methods to manipulate `Notification` objects:
 
+| Method | Description |
+| - | - |
+| `delete`| Deletes a notification. |
+| `delete` | Deletes a notification. |
+| `markAsRead` | Marks a notification as read. |
+| `markAsUnread` | Marks a notification as unread. |
+| `archive` | Archives a notification. |
+| `unarchive` | Unarchives a notification. |
+| `markAllRead` | Mark all notificaitons as read (from all stores). |
+| `markAllUnseen` | Mark all notificaitons as seen (from all stores). |
+
+There are two implementations for each method: one using completion blocks (returning a `Result` object) and another one returning a Combine `Future` (available starting iOS 13).
+
+Some examples:
 ```swift
 // Delete notification
-public func delete(_ notification: Notification, completion: @escaping (Error?) -> Void)
-// Mark notification as read
-public func markAsRead(_ notification: Notification, completion: @escaping (Error?) -> Void)
-// Mark notification as unread
-public func markAsUnread(_ notification: Notification, completion: @escaping (Error?) -> Void)
-// Archive notification
-public func archive(_ notification: Notification, completion: @escaping (Error?) -> Void)
-// Unarchive notification
-public func unarchive(_ notification: Notification, completion: @escaping (Error?) -> Void)
+store.delete(notification) { result in 
+    switch result {
+    case .success:
+        print("Notification deleted")
+    case .failure(error):
+        print("Failed: \(error)")
+    }
+}
+
+// read a notification
+store.markAsRead(notification)
+    .sink { error in
+        print("Failed: \(error)")
+    } receiveValue: { notification in
+        print("Notification marked as read")
+    }
 ```
 
-Additionaly, find methods to apply changes to all notifications (belonging to any given store):
-```swift
-// Mark all notificaitons as read
-public func markAllRead(completion: @escaping (Error?) -> Void)
-// Mark all notifications as seen
-public func markAllSeen(completion: @escaping (Error?) -> Void)
-```
+**Note**
 
-**Important**
-
-When editing a notification with methods above, changes will be applied localy on the store, and using the real-time syncronization system stores implement, will cascade and apply to any given store. 
+When editing a notification with the methods above, changes will be applied localy on the store, and using the real-time syncronization system implemented in NotificationStore, changes will cascade and apply to all stores. It's important that the internet connection is active and workign in order for this synchronization to happen. 
 
 For example, as a result of marking a notification read, if your store specifies in its predicate `read: .unread`, the notification must be removed from the list of notifications of that store. 
 
 Therefore, when notification changes are detected, notification stores are updated automatically and observers of the notification stores are notified accordingly.
 
 ### Observing notification store changes
+
+#### Classic Observer Approach
 
 `NotificationStore` objects are automatically updated when new notifications arrive, or a notification is modified (marked read, archived, etc.)
 
@@ -409,6 +429,7 @@ public protocol NotificationStoreContentObserver: AnyObject {
     func store(_ store: NotificationStore, didInsertNotificationsAt indexes: [Int])
     func store(_ store: NotificationStore, didChangeNotificationAt indexes: [Int])
     func store(_ store: NotificationStore, didDeleteNotificationAt indexes: [Int])
+    func store(_ store: NotificationStore, didChangeHasNextPage hasNextPage: Bool)
 }
 
 // Get notified when the counters of a notification store change
@@ -428,7 +449,47 @@ let observer = myObserverClassInstance
 store.addContentObserver(observer)
 store.addCountObserver(observer)
 ```
-MagicBell will provide a Swift Combine-based observation pattern in a future version of the SDK.
+
+#### Reactive Approach (iOS 13)
+
+Use the class `NotificationStorePublisher` to create an `ObservableObject` capable of publishing changes on the main attributes of a `NotificaitonStore`.
+
+This object must be created and retained by the user whenever it is needed. 
+
+| Attribute | Type | Description |
+| - | - | - | 
+| `totalCount` | `@Published Int`| The total count |
+| `unreadCount` | `@Published Int`| The unread count |
+| `unseenCount` | `@Published Int`| The unseen count |
+| `hasNextPage` | `@Published Bool`| Bool indicating if there is more content to fetch. |
+| `notifications` | `@Published [Notification]`| The array of notifications. |
+
+A typical usage would be in a `View` of SwiftUI, acting as a view model that can be directly referenced from the view:
+
+```swift
+import SwiftUI
+import MagicBell
+
+class Notifications: View {
+    let store: NotificationStore
+    @ObservedObject var bell: NotificationStorePublisher
+
+    init(store: NotificationStore) {
+        self.store = store
+        self.bell = NotificationStorePublisher(store)
+    }
+
+    var body: some View {
+        List(bell.notifications, id: \.id) { notification in
+            VStack(alignment: .leading) {
+                Text(notification.title)
+                Text(notification.content ?? "-")
+            }
+        }
+        .navigationBarTitle("Notifications - \(bell.totalCount)")
+    }
+}
+```
 
 ## User Preferences
 

@@ -21,6 +21,7 @@ class StoreRealTimeMock: StoreRealTime {
         case deleteNotification(id: String)
         case readNotification(id: String)
         case unreadNotification(id: String)
+        case archiveNotification(id: String)
         case readAllNotification
         case seenAllNotification
         case reloadStore
@@ -53,6 +54,8 @@ class StoreRealTimeMock: StoreRealTime {
                 observer.notifyNotificationChange(id: id, change: .read)
             case .unreadNotification(let id):
                 observer.notifyNotificationChange(id: id, change: .unread)
+            case .archiveNotification(let id):
+                observer.notifyNotificationChange(id: id, change: .archive)
             case .readAllNotification:
                 observer.notifyAllNotificationRead()
             case .seenAllNotification:

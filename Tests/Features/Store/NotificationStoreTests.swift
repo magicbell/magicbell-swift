@@ -386,9 +386,9 @@ class NotificationStoreTests: XCTestCase {
         var errorExpected: Error?
         store.delete(store[removeIndex]) { result in
             switch result {
-            case .none:
+            case .success:
                 break
-            case .some(let error):
+            case .failure(let error):
                 errorExpected = error
             }
             expectationDelete.fulfill()
@@ -664,9 +664,9 @@ class NotificationStoreTests: XCTestCase {
         var errorExpected: Error?
         store.markAsRead(store[chosenIndex]) { result in
             switch result {
-            case .none:
+            case .success:
                 break
-            case .some(let error):
+            case .failure(let error):
                 errorExpected = error
             }
 
@@ -1150,9 +1150,9 @@ class NotificationStoreTests: XCTestCase {
         var expectedError: Error?
         store.markAllRead { result in
             switch result {
-            case .none:
+            case .success:
                 break
-            case .some(let error):
+            case .failure(let error):
                 expectedError = error
             }
             expectationMarkAllRead.fulfill()

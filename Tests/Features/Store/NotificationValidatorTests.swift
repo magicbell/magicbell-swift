@@ -21,7 +21,7 @@ class NotificationValidatorTests: XCTestCase {
     func allNotifications(
         read: Bool? = nil,
         seen: Bool? = nil,
-        archived: Bool? = nil,
+        archived: Bool = false,
         category: String? = nil,
         topic: String? = nil
     ) -> [Notification] {
@@ -44,13 +44,9 @@ class NotificationValidatorTests: XCTestCase {
                 return [true, false]
             }
         }()
-        let archivedValues: [Bool] = {
-            if let archived = archived {
-                return [archived]
-            } else {
-                return [true, false]
-            }
-        }()
+
+        let archivedValues: [Bool] = [archived]
+
         let categoryValues: [String] = {
             if let category = category {
                 return [category]

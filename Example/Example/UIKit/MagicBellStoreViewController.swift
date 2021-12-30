@@ -117,6 +117,9 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
             alert.addAction(UIAlertAction(title: "Only Unread", style: .default) { _ in
                 self.configureStore(predicate: StorePredicate(read: .unread))
             })
+            alert.addAction(UIAlertAction(title: "Archived", style: .default) { _ in
+                self.configureStore(predicate: StorePredicate(archived: .archived))
+            })
             alert.addAction(UIAlertAction(title: "By Category", style: .default) { _ in
                 self.configureStore(predicate: StorePredicate(categories: ["order_created"]))
             })

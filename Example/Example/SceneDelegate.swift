@@ -37,7 +37,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: scene)
 
-        let userBell = magicBell.forUser(email: "javier@mobilejazz.com")// john@doe.com")
+        let userBell = magicBell.forUser(email: "john@doe.com")
 
         switch style {
         case .uiKit:

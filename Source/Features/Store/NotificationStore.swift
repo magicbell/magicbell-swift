@@ -241,7 +241,8 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
         executeNotificationAction(
             notification: notification,
             action: .archive,
-            modificationsBlock: { $0.archivedAt = Date() },
+            modificationsBlock: { notification in
+                self.archiveNotification(&notification, with: self.predicate) },
             completion: completion)
     }
 
@@ -380,6 +381,8 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
                 markNotificationAsRead(&notification, with: self.predicate)
             case .unread:
                 markNotificationAsUnread(&notification, with: self.predicate)
+            case .archive:
+                archiveNotification(&notification, with: self.predicate)
             }
 
             if predicate.match(notification) {
@@ -464,6 +467,26 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
         }
 
         notification.readAt = nil
+    }
+
+    private func archiveNotification(_ notification: inout Notification, with predicate: StorePredicate) {
+        if notification.seenAt == nil {
+            setUnseenCount(unseenCount - 1, notifyObservers: true)
+        }
+
+        if notification.readAt == nil {
+            setUnreadCount(unreadCount - 1, notifyObservers: true)
+        }
+
+        if notification.archivedAt == nil {
+            switch predicate.archived {
+            case .archived:
+                break
+            case .unarchived:
+                setTotalCount(totalCount - 1, notifyObservers: true)
+            }
+        }
+        notification.archivedAt = Date()
     }
 
     // MARK: - Notification store observer methods

@@ -37,11 +37,9 @@ extension StorePredicate: GraphQLRepresentable {
 
         switch archived {
         case .archived:
-            string.append("archive: true")
+            string.append("archived: true")
         case .unarchived:
-            string.append("archive: false")
-        case .unspecified:
-            break
+            string.append("archived: false")
         }
 
         if !categories.isEmpty {

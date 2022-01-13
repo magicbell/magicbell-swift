@@ -9,14 +9,10 @@
 Pod::Spec.new do |s|
   s.name             = 'MagicBell'
   s.version          = '1.0.0-alpha.3'
-  s.summary          = 'Official MagicBell SDK for iOS.'
-
-  s.description      = <<-DESC
-This is the official MagicBell SDK for iOS.
-                       DESC
+  s.summary          = 'Official MagicBell SDK for Swift'
+  s.description      = 'Official MagicBell SDK for Swift. The notification inbox for your product.'
 
   s.homepage         = 'https://magicbell.com'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'Custom', :file => 'LICENSE' }
   s.author           = { 'MagicBell' => 'hello@magicbell.com' }
   s.source           = { :git => 'https://github.com/magicbell-io/magicbell-ios.git', :tag => s.version.to_s }
@@ -31,5 +27,4 @@ This is the official MagicBell SDK for iOS.
 
   s.dependency 'Harmony/Repository', '1.1.5'
   s.dependency 'Ably', '1.2.7'
-
 end

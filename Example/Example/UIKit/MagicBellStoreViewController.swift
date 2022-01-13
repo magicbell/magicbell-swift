@@ -18,7 +18,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     @IBOutlet weak var magicBellStoreItem: BadgeBarButtonItem!
 
     // swiftlint:disable implicitly_unwrapped_optional
-    var userBell: UserBell! 
+    var userBell: MBUser!
 
     private lazy var store: NotificationStore = {
         let store = userBell.store.forAll()

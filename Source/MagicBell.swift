@@ -32,7 +32,7 @@ public class MagicBell {
 
     private let sdkProvider: SDKComponent
 
-    private var users: [String: UserBell] = [:]
+    private var users: [String: MBUser] = [:]
     private var deviceToken: String?
     
     /// Main initialization method.
@@ -60,38 +60,38 @@ public class MagicBell {
         )
     }
 
-    /// Creates or retrieve an existing userBell.
+    /// Creates or retrieve an existing MagicBell user.
     /// - Parameters:
     ///   - email: The user's email
     /// - Returns:
-    ///   - A instance of UserBell.
-    public func forUser(email: String) -> UserBell {
+    ///   - A instance of MBUser.
+    public func forUser(email: String) -> MBUser {
         let userQuery = UserQuery(email: email)
         return getUser(userQuery)
     }
 
-    /// Creates or retrieve an existing userBell.
+    /// Creates or retrieve an existing MagicBell user.
     /// - Parameters:
     ///   - externalId: The user's identifier
     /// - Returns:
-    ///   - A instance of UserBell.
-    public func forUser(externalId: String) -> UserBell {
+    ///   - A instance of MBUser.
+    public func forUser(externalId: String) -> MBUser {
         let userQuery = UserQuery(externalId: externalId)
         return getUser(userQuery)
     }
 
-    /// Creates or retrieve an existing userBell.
+    /// Creates or retrieve an existing MagicBell user.
     /// - Parameters:
     ///   - email: The user's email
     ///   - externalId: The user's identifier
     /// - Returns:
-    ///   - A instance of UserBell.
-    public func forUser(email: String, externalId: String) -> UserBell {
+    ///   - A instance of MBUser.
+    public func forUser(email: String, externalId: String) -> MBUser {
         let userQuery = UserQuery(externalId: externalId, email: email)
         return getUser(userQuery)
     }
 
-    /// Removes a userBell and stops all connections.
+    /// Removes a MagicBell user and stops all connections.
     /// - Parameters:
     ///   - email: The user's email
     public func removeUserFor(email: String) {
@@ -99,7 +99,7 @@ public class MagicBell {
         removeUser(userQuery: userQuery)
     }
 
-    /// Removes a userBell and stops all connections.
+    /// Removes a MagicBell user and stops all connections.
     /// - Parameters:
     ///   - externalId: The user's identifier
     public func removeUserFor(externalId: String) {
@@ -107,7 +107,7 @@ public class MagicBell {
         removeUser(userQuery: userQuery)
     }
 
-    /// Removes a userBell and stops all connections.
+    /// Removes a MagicBell user and stops all connections.
     /// - Parameters:
     ///   - email: The user's email
     ///   - externalId: The user's identifier
@@ -116,21 +116,21 @@ public class MagicBell {
         removeUser(userQuery: userQuery)
     }
 
-    private func getUser(_ userQuery: UserQuery) -> UserBell {
+    private func getUser(_ userQuery: UserQuery) -> MBUser {
         if let user = users[userQuery.key] {
             return user
         }
-        let userBell = UserBell(
+        let mbUser = MBUser(
             userQuery: userQuery,
             store: sdkProvider.getStoreComponent().storeDirector(with: userQuery),
             userPreferences: sdkProvider.getUserPreferencesComponent().userPreferencesDirector(with: userQuery),
             pushSubscription: sdkProvider.getPushSubscriptionComponent().pushSubscriptionDirector(with: userQuery)
         )
-        users[userQuery.key] = userBell
+        users[userQuery.key] = mbUser
         if let deviceToken = self.deviceToken {
-            userBell.pushSubscription.sendPushSubscription(deviceToken)
+            mbUser.pushSubscription.sendPushSubscription(deviceToken)
         }
-        return userBell
+        return mbUser
     }
 
     private func removeUser(userQuery: UserQuery) {
@@ -148,8 +148,8 @@ public class MagicBell {
         let token = String(deviceToken: deviceToken)
         self.deviceToken = token
         // If users are logged, try to send the device token for them
-        users.values.forEach { userBell in
-            userBell.pushSubscription.sendPushSubscription(token)
+        users.values.forEach { user in
+            user.pushSubscription.sendPushSubscription(token)
         }
     }
 }

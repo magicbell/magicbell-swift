@@ -19,7 +19,7 @@ let magicBellTag = "MagicBell"
 ///
 /// Public MagicBell SDK interface.
 ///
-public class MagicBell {
+public class MagicBellClient {
 
     /// The MagicBell SDK version
     public static let version = "1.0.0-alpha.3"
@@ -34,7 +34,7 @@ public class MagicBell {
 
     private var users: [String: MBUser] = [:]
     private var deviceToken: String?
-    
+
     /// Main initialization method.
     /// - Parameters:
     ///   - apiKey: The Api Key of your account
@@ -46,7 +46,7 @@ public class MagicBell {
         apiKey: String,
         apiSecret: String? = nil,
         enableHMAC: Bool = false,
-        baseUrl: URL = MagicBell.defaultBaseUrl,
+        baseUrl: URL = MagicBellClient.defaultBaseUrl,
         logLevel: LogLevel = .none
     ) {
         sdkProvider = DefaultSDKModule(

@@ -23,7 +23,7 @@ struct GraphQLFragment: GraphQLRepresentable {
     }
 
     var graphQLValue: String {
-        let bundle = Bundle(for: MagicBell.self)
+        let bundle = Bundle(for: MagicBellClient.self)
         guard let url = bundle.url(forResource: filename, withExtension: "graphql") else {
             fatalError("Missing file \(filename).graphql")
         }

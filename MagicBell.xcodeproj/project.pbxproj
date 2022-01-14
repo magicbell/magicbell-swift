@@ -28,7 +28,7 @@
 		595AC4C827710C7A00A3DCA2 /* NotificationEdgeMotherObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595AC4C627710C7000A3DCA2 /* NotificationEdgeMotherObject.swift */; };
 		595AC4CE27710EF000A3DCA2 /* PageInfoMotherObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595AC4CC27710DCD00A3DCA2 /* PageInfoMotherObject.swift */; };
 		595AC4D627715D9D00A3DCA2 /* InitialNotificationStoreCounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595AC4D327715D8D00A3DCA2 /* InitialNotificationStoreCounts.swift */; };
-		59799E312746587000BFB375 /* MagicBell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E302746587000BFB375 /* MagicBell.swift */; };
+		59799E312746587000BFB375 /* MagicBellClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E302746587000BFB375 /* MagicBellClient.swift */; };
 		59799E33274658B100BFB375 /* SDKProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E32274658B100BFB375 /* SDKProvider.swift */; };
 		59799E38274659D800BFB375 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E37274659D800BFB375 /* Environment.swift */; };
 		59799E3B27465A0E00BFB375 /* UserQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E3A27465A0E00BFB375 /* UserQuery.swift */; };
@@ -139,7 +139,7 @@
 		595AC4C627710C7000A3DCA2 /* NotificationEdgeMotherObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationEdgeMotherObject.swift; sourceTree = "<group>"; };
 		595AC4CC27710DCD00A3DCA2 /* PageInfoMotherObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageInfoMotherObject.swift; sourceTree = "<group>"; };
 		595AC4D327715D8D00A3DCA2 /* InitialNotificationStoreCounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialNotificationStoreCounts.swift; sourceTree = "<group>"; };
-		59799E302746587000BFB375 /* MagicBell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBell.swift; sourceTree = "<group>"; };
+		59799E302746587000BFB375 /* MagicBellClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBellClient.swift; sourceTree = "<group>"; };
 		59799E32274658B100BFB375 /* SDKProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKProvider.swift; sourceTree = "<group>"; };
 		59799E37274659D800BFB375 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		59799E3A27465A0E00BFB375 /* UserQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserQuery.swift; sourceTree = "<group>"; };
@@ -614,7 +614,7 @@
 		59EF9AC6274471A500FB2378 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				59799E302746587000BFB375 /* MagicBell.swift */,
+				59799E302746587000BFB375 /* MagicBellClient.swift */,
 				D27CF1B927906FDD00897BCB /* MBUser.swift */,
 				59799E32274658B100BFB375 /* SDKProvider.swift */,
 				59799E35274659B900BFB375 /* Common */,
@@ -946,7 +946,7 @@
 				59569BB52750FD8700FF1AA6 /* GetStorePagesInteractor.swift in Sources */,
 				D2D2772B2747D43200B5F69E /* PushSubscriptionQuery.swift in Sources */,
 				59C3CDBC274D039D0043BA77 /* MagicBellError.swift in Sources */,
-				59799E312746587000BFB375 /* MagicBell.swift in Sources */,
+				59799E312746587000BFB375 /* MagicBellClient.swift in Sources */,
 				59799E38274659D800BFB375 /* Environment.swift in Sources */,
 				D27CF1BA27906FDD00897BCB /* MBUser.swift in Sources */,
 				59C3CDC2274D2F220043BA77 /* EncodableToDataMapper.swift in Sources */,

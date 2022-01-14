@@ -361,7 +361,7 @@ For example, use this predicate to fetch unread notifications of the `"important
 
 ```swift
 let predicate = StorePredicate(read: .unread, categories: ["important"])
-let store = userBell.store.with(predicate: predicate)
+let store = user.store.with(predicate: predicate)
 ```
 
 Notification stores are singletons. Creating a store with the same predicate twice will yield the same

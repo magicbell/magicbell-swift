@@ -32,7 +32,7 @@ public class MagicBellClient {
 
     private let sdkProvider: SDKComponent
 
-    private var users: [String: MBUser] = [:]
+    private var users: [String: User] = [:]
     private var deviceToken: String?
 
     /// Main initialization method.
@@ -65,7 +65,7 @@ public class MagicBellClient {
     ///   - email: The user's email
     /// - Returns:
     ///   - A instance of MBUser.
-    public func forUser(email: String) -> MBUser {
+    public func forUser(email: String) -> User {
         let userQuery = UserQuery(email: email)
         return getUser(userQuery)
     }
@@ -75,7 +75,7 @@ public class MagicBellClient {
     ///   - externalId: The user's identifier
     /// - Returns:
     ///   - A instance of MBUser.
-    public func forUser(externalId: String) -> MBUser {
+    public func forUser(externalId: String) -> User {
         let userQuery = UserQuery(externalId: externalId)
         return getUser(userQuery)
     }
@@ -86,7 +86,7 @@ public class MagicBellClient {
     ///   - externalId: The user's identifier
     /// - Returns:
     ///   - A instance of MBUser.
-    public func forUser(email: String, externalId: String) -> MBUser {
+    public func forUser(email: String, externalId: String) -> User {
         let userQuery = UserQuery(externalId: externalId, email: email)
         return getUser(userQuery)
     }
@@ -116,11 +116,11 @@ public class MagicBellClient {
         removeUser(userQuery: userQuery)
     }
 
-    private func getUser(_ userQuery: UserQuery) -> MBUser {
+    private func getUser(_ userQuery: UserQuery) -> User {
         if let user = users[userQuery.key] {
             return user
         }
-        let mbUser = MBUser(
+        let mbUser = User(
             userQuery: userQuery,
             store: sdkProvider.getStoreComponent().storeDirector(with: userQuery),
             userPreferences: sdkProvider.getUserPreferencesComponent().userPreferencesDirector(with: userQuery),

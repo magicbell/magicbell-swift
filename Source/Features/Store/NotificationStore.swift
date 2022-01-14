@@ -31,19 +31,19 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     private let userQuery: UserQuery
     private var edges: [Edge<Notification>] = []
 
-    /// Total  count of notifications
+    /// Total number of notifications
     public private(set) var totalCount: Int = 0
-    /// Total of unread notifications
+    /// Total number of unread notifications
     public private(set) var unreadCount: Int = 0
-    /// Total of unseen notifications
+    /// Total number of unseen notifications
     public private(set) var unseenCount: Int = 0
 
-    /// `true` if next page is available, `false` otherwise.
+    /// Whether there are more items or not when paginating forwards
     public private(set) var hasNextPage = true
 
     private let logger: Logger
     private var nextPageCursor: String?
-    
+
     init(predicate: StorePredicate,
          userQuery: UserQuery,
          fetchStorePageInteractor: FetchStorePageInteractor,

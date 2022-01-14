@@ -283,14 +283,14 @@ let firstOrderNotifications = user.store.forTopics(["order:001"])
 
 These are the attributes of a notification store:
 
-| Attributes    | Type             | Description                                      |
-| ------------- | ---------------- | ------------------------------------------------ |
-| `totalCount`  | `Int`            | The total number of notifications                |
-| `unreadCount` | `Int`            | The number of unread notifications               |
-| `unseenCount` | `Int`            | The number of unseen notifications               |
-| `hasNextPage` | `Bool`           | Whether there is a next page to fetch or not     |
-| `count`       | `Int`            | The current number of notifications in the store |
-| `predicate`   | `StorePredicate` | The predicate used to filter notifications       |
+| Attributes    | Type             | Description                                                  |
+| ------------- | ---------------- | ------------------------------------------------------------ |
+| `totalCount`  | `Int`            | The total number of notifications                            |
+| `unreadCount` | `Int`            | The number of unread notifications                           |
+| `unseenCount` | `Int`            | The number of unseen notifications                           |
+| `hasNextPage` | `Bool`           | Whether there are more items or not when paginating forwards |
+| `count`       | `Int`            | The current number of notifications in the store             |
+| `predicate`   | `StorePredicate` | The predicate used to filter notifications                   |
 
 And these are the available methods:
 

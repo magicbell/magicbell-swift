@@ -35,13 +35,13 @@ public class MagicBellClient {
     private var users: [String: User] = [:]
     private var deviceToken: String?
 
-    /// Main initialization method.
+    /// Init of `MagicBellClient`.
     /// - Parameters:
-    ///   - apiKey: The Api Key of your account
-    ///   - apiSecret: The api secret of your account
-    ///   - enableHMAC: Enables HMAC authentication. Default to `false`. If set to `true`, HMAC will be only enabled if api secret is provided.
-    ///   - baseUrl: The base url of the api server. Default to `MagicBell.defaultBaseUrl`.
-    ///   - logLevel: The log level accepts none or debug. Default to none.
+    ///   - apiKey: The API Key of your MagicBell project
+    ///   - apiSecret: The API secret of your MagicBell project
+    ///   - enableHMAC: Use HMAC authentication. Defaults to `false`. If set to `true`, HMAC will be only enabled if the API secret is set.
+    ///   - baseUrl: URL of the API server. Defaults to `MagicBell.defaultBaseUrl`.
+    ///   - logLevel: The log level, it accepts `.none` or `.debug`. Defaults to `.none`.
     public init(
         apiKey: String,
         apiSecret: String? = nil,
@@ -60,38 +60,38 @@ public class MagicBellClient {
         )
     }
 
-    /// Creates or retrieve an existing MagicBell user.
+    /// Create or retrieve an existing MagicBell user.
     /// - Parameters:
     ///   - email: The user's email
     /// - Returns:
-    ///   - A instance of MBUser.
+    ///   - An instance of `User`.
     public func forUser(email: String) -> User {
         let userQuery = UserQuery(email: email)
         return getUser(userQuery)
     }
 
-    /// Creates or retrieve an existing MagicBell user.
+    /// Create or retrieve an existing MagicBell user.
     /// - Parameters:
-    ///   - externalId: The user's identifier
+    ///   - externalId: The user's external ID
     /// - Returns:
-    ///   - A instance of MBUser.
+    ///   - An instance of `User`.
     public func forUser(externalId: String) -> User {
         let userQuery = UserQuery(externalId: externalId)
         return getUser(userQuery)
     }
 
-    /// Creates or retrieve an existing MagicBell user.
+    /// Create or retrieve an existing MagicBell user.
     /// - Parameters:
     ///   - email: The user's email
-    ///   - externalId: The user's identifier
+    ///   - externalId: The user's external ID
     /// - Returns:
-    ///   - A instance of MBUser.
+    ///   - An instance of `User`.
     public func forUser(email: String, externalId: String) -> User {
         let userQuery = UserQuery(externalId: externalId, email: email)
         return getUser(userQuery)
     }
 
-    /// Removes a MagicBell user and stops all connections.
+    /// Remove a MagicBell user. All connections are stopped.
     /// - Parameters:
     ///   - email: The user's email
     public func removeUserFor(email: String) {
@@ -99,18 +99,18 @@ public class MagicBellClient {
         removeUser(userQuery: userQuery)
     }
 
-    /// Removes a MagicBell user and stops all connections.
+    /// Remove a MagicBell user. All connections are stopped.
     /// - Parameters:
-    ///   - externalId: The user's identifier
+    ///   - externalId: The user's external ID
     public func removeUserFor(externalId: String) {
         let userQuery = UserQuery(externalId: externalId)
         removeUser(userQuery: userQuery)
     }
 
-    /// Removes a MagicBell user and stops all connections.
+    /// Remove a MagicBell user. All connections are stopped.
     /// - Parameters:
     ///   - email: The user's email
-    ///   - externalId: The user's identifier
+    ///   - externalId: The user's external ID
     public func removeUserFor(email: String, externalId: String) {
         let userQuery = UserQuery(externalId: externalId, email: email)
         removeUser(userQuery: userQuery)
@@ -120,17 +120,19 @@ public class MagicBellClient {
         if let user = users[userQuery.key] {
             return user
         }
-        let mbUser = User(
+
+        let newUser = User(
             userQuery: userQuery,
             store: sdkProvider.getStoreComponent().storeDirector(with: userQuery),
             userPreferences: sdkProvider.getUserPreferencesComponent().userPreferencesDirector(with: userQuery),
             pushSubscription: sdkProvider.getPushSubscriptionComponent().pushSubscriptionDirector(with: userQuery)
         )
-        users[userQuery.key] = mbUser
+        users[userQuery.key] = newUser
         if let deviceToken = self.deviceToken {
-            mbUser.pushSubscription.sendPushSubscription(deviceToken)
+            newUser.pushSubscription.sendPushSubscription(deviceToken)
         }
-        return mbUser
+
+        return newUser
     }
 
     private func removeUser(userQuery: UserQuery) {
@@ -140,14 +142,15 @@ public class MagicBellClient {
         }
     }
 
-    /// Sets the APN token for the current logged user. This token is revoked when logout is called.
-    /// Once the user is registered from the notification, `didRegisterForRemoteNotificationsWithDeviceToken` is being called, retrieve the token and call setDeviceToken.
+    /// Set the APN device token for the current logged in user. This token is revoked on logout.
+    /// Call this method with the device token once the user registers for push notifications, and `didRegisterForRemoteNotificationsWithDeviceToken` is called.
     /// - Parameters:
     ///     - deviceToken: The APN device token
     public func setDeviceToken(deviceToken: Data) {
         let token = String(deviceToken: deviceToken)
         self.deviceToken = token
-        // If users are logged, try to send the device token for them
+
+        // If users are logged in, send the device token to the MagicBell server
         users.values.forEach { user in
             user.pushSubscription.sendPushSubscription(token)
         }

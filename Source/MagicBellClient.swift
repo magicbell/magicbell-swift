@@ -39,7 +39,8 @@ public class MagicBellClient {
     /// - Parameters:
     ///   - apiKey: The API Key of your MagicBell project
     ///   - apiSecret: The API secret of your MagicBell project
-    ///   - enableHMAC: Use HMAC authentication. Defaults to `false`. If set to `true`, HMAC will be only enabled if the API secret is set.
+    ///   - enableHMAC: Use HMAC authentication. Defaults to `false`. If set to `true`, HMAC will be only enabled if the
+    ///   API secret is set.
     ///   - baseUrl: URL of the API server. Defaults to `MagicBell.defaultBaseUrl`.
     ///   - logLevel: The log level, it accepts `.none` or `.debug`. Defaults to `.none`.
     public init(
@@ -143,7 +144,8 @@ public class MagicBellClient {
     }
 
     /// Set the APN device token for the current logged in user. This token is revoked on logout.
-    /// Call this method with the device token once the user registers for push notifications, and `didRegisterForRemoteNotificationsWithDeviceToken` is called.
+    /// Call this method with the device token once the user registers for push notifications, and
+    /// `didRegisterForRemoteNotificationsWithDeviceToken` is called.
     /// - Parameters:
     ///     - deviceToken: The APN device token
     public func setDeviceToken(deviceToken: Data) {

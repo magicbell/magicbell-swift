@@ -111,20 +111,17 @@ let client = MagicBellClient(
 | Param        | Default Value | Description                                                                                  |
 | ------------ | ------------- | -------------------------------------------------------------------------------------------- |
 | `apiKey`     | -             | Your MagicBell's API key                                                                     |
-| `apiSecret`  | `nil`         | Your MagicBell's API secret                                                                  |
+| `apiSecret`  | `nil`         | Your MagicBell's API secret.                                                                  |
 | `enableHMAC` | `false`       | Set it to `true` if you want HMAC enabled. Note the `apiSecret` is required if set to `true` |
 | `logLevel`   | `.none`       | Set it to `.debug` to enable logs                                                            |
 
-Though the API key is meant to be published, you should not distribute the API secret. Rather, enable HAMC in your
-project and generate the user secret on your backend before distributing your app.
+Though the API key is meant to be published, you should not distribute the API secret. Rather, enable HAMC in your project and generate the user secret on your backend before distributing your app.
 
 ### Integrating into your app
 
-You should create the client instance as early as possible in your application and ensure that only one instance is used
-across your application.
+You should create the client instance as early as possible in your application and ensure that only one instance is used across your application.
 
-To achieve it, extend `MagicBell` and set the instance in your application's delegate (at either the `AppDelegate.swift`
-or `App.swift` files):
+To achieve it, extend `MagicBell` and set the instance in your application's delegate (at either the `AppDelegate.swift` or `App.swift` files):
 
 ```swift
 import MagicBell
@@ -146,8 +143,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 ## User
 
-Requests to the MagicBell API require that you **identify the MagicBell user**. This can be done by calling the
-`forUser(...)` method on the `MagicBellClient` instance with the user's email or external ID:
+Requests to the MagicBell API require that you **identify the MagicBell user**. This can be done by calling the `forUser(...)` method on the `MagicBellClient` instance with the user's email or external ID:
 
 ```swift
 // Identify the user by its email
@@ -230,7 +226,7 @@ struct User {
 
 extension User {
     /// Returns the logged in MagicBell user
-    func magicbell() -> MagicBell.User {
+    func magicBell() -> MagicBell.User {
         return magicBell.forUser(email: email)
     }
 }
@@ -243,11 +239,11 @@ This is how you can define a nullable global variable that will represent your M
 ```swift
 import MagicBell
 
-let magicbell = MagicBellClient(apiKey: "[MAGICBELL_API_KEY]")
-var magicbellUser: User? = nil
+let magicBell = MagicBellClient(apiKey: "[MAGICBELL_API_KEY]")
+var magicBellUser: MagicBell.User? = nil
 ```
 
-As soon as you perform a login, assign a value to this variable. Keep in mind, you will have to check the `magicbellUser`
+As soon as you perform a login, assign a value to this variable. Keep in mind, you will have to check the `magicBellUser`
 variable was actually set before accesing it in your code.
 
 #### Use your own dependency injection graph
@@ -364,11 +360,9 @@ let predicate = StorePredicate(read: .unread, categories: ["important"])
 let store = user.store.with(predicate: predicate)
 ```
 
-Notification stores are singletons. Creating a store with the same predicate twice will yield the same
-instance.
+Notification stores are singletons. Creating a store with the same predicate twice will yield the same instance.
 
-**Note**: Once a store is fetched, it will be kept alive in memory so it can be updated in real-time. You can
-force the removal of a store using the `.dispose` method.
+**Note**: Once a store is fetched, it will be kept alive in memory so it can be updated in real-time. You can force the removal of a store using the `.dispose` method.
 
 ```swift
 let predicate = StorePredicate()
@@ -463,7 +457,7 @@ To observe changes on a notification store, your observers must implement the fo
 
 ```swift
 // Get notified when the list of notifications of a notification store changes
-public protocol NotificationStoreContentObserver: AnyObject {
+protocol NotificationStoreContentObserver: AnyObject {
     func didReloadStore(_ store: NotificationStore)
     func store(_ store: NotificationStore, didInsertNotificationsAt indexes: [Int])
     func store(_ store: NotificationStore, didChangeNotificationAt indexes: [Int])
@@ -472,7 +466,7 @@ public protocol NotificationStoreContentObserver: AnyObject {
 }
 
 // Get notified when the counters of a notification store change
-public protocol NotificationStoreCountObserver: AnyObject {
+protocol NotificationStoreCountObserver: AnyObject {
     func store(_ store: NotificationStore, didChangeTotalCount count: Int)
     func store(_ store: NotificationStore, didChangeUnreadCount count: Int)
     func store(_ store: NotificationStore, didChangeUnseenCount count: Int)
@@ -598,5 +592,4 @@ Whe a user is disconnected (`MagicBell.removeUserFor`), the device token is auto
 
 ## Contributing
 
-We welcome contributions of any kind. To do so, clone the repo, run `pod install` from the root directory, and open the
-`MagicBell.xcworkspace`.
+We welcome contributions of any kind. To do so, clone the repo, run `pod install` from the root directory, and open the `MagicBell.xcworkspace`.

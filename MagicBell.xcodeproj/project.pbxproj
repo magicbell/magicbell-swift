@@ -199,6 +199,7 @@
 		91586C8D98B8EC30EF57ACC7 /* Pods_MagicBell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MagicBell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A80221B71732E7C663FCB505 /* Pods-MagicBell.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell.debug.xcconfig"; path = "Target Support Files/Pods-MagicBell/Pods-MagicBell.debug.xcconfig"; sourceTree = "<group>"; };
 		D27CF1B927906FDD00897BCB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		D28CEE9627956FCB001242C2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D29D249127747DA000726ABD /* NotificationStorePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStorePublisher.swift; sourceTree = "<group>"; };
 		D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDirector.swift; sourceTree = "<group>"; };
 		D2CBA51F275121C2002F1E44 /* NotificationFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = NotificationFragment.graphql; sourceTree = "<group>"; };
@@ -628,6 +629,7 @@
 			children = (
 				59EF9AC42744710300FB2378 /* MagicBell.podspec */,
 				59EF9ACA2744792A00FB2378 /* LICENSE */,
+				D28CEE9627956FCB001242C2 /* README.md */,
 			);
 			name = Deployment;
 			sourceTree = "<group>";

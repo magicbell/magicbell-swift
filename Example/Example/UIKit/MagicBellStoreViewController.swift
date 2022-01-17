@@ -8,8 +8,13 @@
 import UIKit
 import MagicBell
 
-// swiftlint:disable line_length
-class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, UITableViewDelegate, UITableViewDataSource, NotificationStoreContentObserver, NotificationStoreCountObserver {
+// swiftlint:disable type_body_length
+class MagicBellStoreViewController: UIViewController,
+    UINavigationBarDelegate,
+    UITableViewDelegate,
+    UITableViewDataSource,
+    NotificationStoreContentObserver,
+    NotificationStoreCountObserver {
 
     private var isLoadingNextPage = false
 
@@ -18,7 +23,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     @IBOutlet weak var magicBellStoreItem: BadgeBarButtonItem!
 
     // swiftlint:disable implicitly_unwrapped_optional
-    var user: User!
+    var user: MagicBell.User!
 
     private lazy var store: NotificationStore = {
         let store = user.store.forAll()
@@ -47,10 +52,8 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         reloadStore()
     }
-
 
     // swiftlint:disable empty_count
     private func reloadStore() {

@@ -111,7 +111,7 @@ let client = MagicBellClient(
 | Param        | Default Value | Description                                                                                  |
 | ------------ | ------------- | -------------------------------------------------------------------------------------------- |
 | `apiKey`     | -             | Your MagicBell's API key                                                                     |
-| `apiSecret`  | `nil`         | Your MagicBell's API secret.                                                                  |
+| `apiSecret`  | `nil`         | Your MagicBell's API secret                                                                  |
 | `enableHMAC` | `false`       | Set it to `true` if you want HMAC enabled. Note the `apiSecret` is required if set to `true` |
 | `logLevel`   | `.none`       | Set it to `.debug` to enable logs                                                            |
 

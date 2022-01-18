@@ -10,7 +10,7 @@ import MagicBell
 import UserNotifications
 
 // Application available instance of MagicBell
-let magicBell = MagicBell(
+let magicBell = MagicBellClient(
     apiKey: "34ed17a8482e44c765d9e163015a8d586f0b3383",
     logLevel: .debug
 )

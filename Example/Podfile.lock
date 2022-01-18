@@ -9,7 +9,7 @@ PODS:
   - Harmony/Repository (1.1.5):
     - Harmony/Common
     - Harmony/Future
-  - MagicBell (1.0.0-alpha.2):
+  - MagicBell (1.0.0-alpha.3):
     - Ably (= 1.2.7)
     - Harmony/Repository (= 1.1.5)
   - msgpack (0.4.0)
@@ -35,7 +35,7 @@ SPEC CHECKSUMS:
   Ably: f627c0c2e4489785b74d33d2c1287edeb9c6a7be
   AblyDeltaCodec: 783d017270de70bbbc0a84e4235297b225d33636
   Harmony: ecb9f9dca0d5c5cac452891e0a06c068c6d2c8d7
-  MagicBell: a08cecbaa235d2d54a4aa8c6a19e0d4617eeded0
+  MagicBell: 383e496bfe5309573d907b5713528eccc08729ed
   msgpack: c85f6251873059738472ae136951cec5f30f3251
   SwiftLint: 06ac37e4d38c7068e0935bb30cda95f093bec761
 

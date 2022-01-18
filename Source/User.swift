@@ -15,7 +15,7 @@ import Foundation
 
 /// The MagicBell authenticated user.
 /// Entry point to access notifications and manipulate other user-based resources.
-public class UserBell {
+public class User {
     private let userQuery: UserQuery
     private var internalStoreDirector: InternalStoreDirector
     /// The user preferences director.

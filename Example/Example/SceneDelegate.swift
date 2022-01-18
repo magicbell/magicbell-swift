@@ -38,7 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
 
         // Defining the user to test
-        let userBell = magicBell.forUser(email: "john@doe.com")
+        let user = magicBell.forUser(email: "richard@example.com")
 
         switch style {
         case .uiKit:
@@ -46,10 +46,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             guard let viewController = storyboard.instantiateInitialViewController() as? MagicBellStoreViewController else {
                 fatalError("Invalid Storyboard")
             }
-            viewController.userBell = userBell
+            viewController.user = user
             window?.rootViewController = viewController
         case .swiftUI:
-            let store = userBell.store.forAll()
+            let store = user.store.forAll()
             window?.rootViewController = HostingController(rootView: NavigationView {
                 MagicBellView(store: store)
             })

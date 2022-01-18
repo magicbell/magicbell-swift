@@ -8,8 +8,13 @@
 import UIKit
 import MagicBell
 
-// swiftlint:disable line_length
-class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, UITableViewDelegate, UITableViewDataSource, NotificationStoreContentObserver, NotificationStoreCountObserver {
+// swiftlint:disable type_body_length
+class MagicBellStoreViewController: UIViewController,
+    UINavigationBarDelegate,
+    UITableViewDelegate,
+    UITableViewDataSource,
+    NotificationStoreContentObserver,
+    NotificationStoreCountObserver {
 
     private var isLoadingNextPage = false
 
@@ -18,10 +23,10 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
     @IBOutlet weak var magicBellStoreItem: BadgeBarButtonItem!
 
     // swiftlint:disable implicitly_unwrapped_optional
-    var userBell: UserBell! 
+    var user: MagicBell.User!
 
     private lazy var store: NotificationStore = {
-        let store = userBell.store.forAll()
+        let store = user.store.forAll()
         store.addContentObserver(self)
         store.addCountObserver(self)
         return store
@@ -47,10 +52,8 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         reloadStore()
     }
-
 
     // swiftlint:disable empty_count
     private func reloadStore() {
@@ -99,7 +102,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
                 guard let email = alert.textFields?.first?.text else {
                     return
                 }
-                self.userBell = magicBell.forUser(email: email)
+                self.user = magicBell.forUser(email: email)
                 self.configureStore(predicate: StorePredicate())
             })
             self.present(alert, animated: true, completion: nil)
@@ -136,7 +139,7 @@ class MagicBellStoreViewController: UIViewController, UINavigationBarDelegate, U
         store.removeContentObserver(self)
         store.removeCountObserver(self)
 
-        store = userBell.store.with(predicate: predicate)
+        store = user.store.with(predicate: predicate)
         store.addContentObserver(self)
         store.addCountObserver(self)
 

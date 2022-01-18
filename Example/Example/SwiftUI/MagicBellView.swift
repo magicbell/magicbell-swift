@@ -7,7 +7,6 @@
 
 import SwiftUI
 import MagicBell
-import struct MagicBell.Notification
 
 struct MagicBellView: View {
     let store: NotificationStore
@@ -22,7 +21,7 @@ struct MagicBellView: View {
 
     enum SheetType {
         case none
-        case notification(Notification)
+        case notification(MagicBell.Notification)
         case globalActions
     }
 
@@ -135,7 +134,7 @@ struct MagicBellView: View {
         )
     }
 
-    private func actionSheetFor(_ notification: Notification) -> ActionSheet {
+    private func actionSheetFor(_ notification: MagicBell.Notification) -> ActionSheet {
         ActionSheet(
             title: Text(notification.title),
             buttons: [

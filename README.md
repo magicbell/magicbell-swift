@@ -26,7 +26,7 @@ import MagicBell
 let client = MagicBellClient(apiKey: "[MAGICBELL_API_KEY]")
 
 // Set the MagicBell user
-let user = client.forUser(email: "john@doe.com")
+let user = client.forUser(email: "richard@example.com")
 
 // Create a store of notifications
 let store = user.store.forAll()
@@ -115,45 +115,34 @@ let client = MagicBellClient(
 | `enableHMAC` | `false`       | Set it to `true` if you want HMAC enabled. Note the `apiSecret` is required if set to `true` |
 | `logLevel`   | `.none`       | Set it to `.debug` to enable logs                                                            |
 
-Though the API key is meant to be published, you should not distribute the API secret. Rather, enable HAMC in your project and generate the user secret on your backend before distributing your app.
+Though the API key is meant to be published, you should not distribute the API secret. Rather, enable HAMC in your
+project and generate the user secret on your backend before distributing your app.
 
 ### Integrating into your app
 
-You should create the client instance as early as possible in your application and ensure that only one instance is used across your application.
-
-To achieve it, extend `MagicBell` and set the instance in your application's delegate (at either the `AppDelegate.swift` or `App.swift` files):
+You should create the client instance as early as possible in your application and ensure that only one instance is used
+across your application.
 
 ```swift
 import MagicBell
 
-extension MagicBell {
-    static var shared: MagicBellClient!
-}
-```
-
-```swift
-import UIKit
-import MagicBell
-
-@main
-class AppDelegate: UIResponder, UIApplicationDelegate {
-    MagicBell.shared = MagicBellClient(apiKey: "[MAGICBELL_API_KEY]")
-}
+let magicbell = MagicBellClient(apiKey: "[MAGICBELL_API_KEY]")
 ```
 
 ## User
 
-Requests to the MagicBell API require that you **identify the MagicBell user**. This can be done by calling the `forUser(...)` method on the `MagicBellClient` instance with the user's email or external ID:
+Requests to the MagicBell API require that you **identify the MagicBell user**. This can be done by calling the
+`forUser(...)` method on the `MagicBellClient` instance with the user's email or external ID:
 
 ```swift
 // Identify the user by its email
-let user = magicBell.forUser(email: "richard@example.com")
+let user = magicbell.forUser(email: "richard@example.com")
 
 // Identify the user by its external id
-let user = magicBell.forUser(externalId: "001")
+let user = magicbell.forUser(externalId: "001")
 
 // Identify the user by both, email and external id
-let user = magicBell.forUser(email: "richard@example.com", externalId: "001")
+let user = magicbell.forUser(email: "richard@example.com", externalId: "001")
 ```
 
 You can connect as [many users as you need](#multi-user-support).
@@ -162,8 +151,8 @@ You can connect as [many users as you need](#multi-user-support).
 yield the same user:
 
 ```swift
-let userOne = magicBell.forUser(email: "mary@example.com")
-let userTwo = magicBell.forUser(email: "mary@example.com")
+let userOne = magicbell.forUser(email: "mary@example.com")
+let userTwo = magicbell.forUser(email: "mary@example.com")
 
 assert(userOne === userTwo, "Both users reference to the same instance")
 ```
@@ -176,9 +165,9 @@ same time. The MagicBell SDK allows you to that.
 You can call the `forUser(:)` method with the email or external ID of your logged in users as many times as you need.
 
 ```swift
-let userOne = magicBell.forUser(email: "richard@example.com")
-let userTwo = magicBell.forUser(email: "mary@example.com")
-let userThree = magicBell.forUser(externalId: "001")
+let userOne = magicbell.forUser(email: "richard@example.com")
+let userTwo = magicbell.forUser(email: "mary@example.com")
+let userThree = magicbell.forUser(externalId: "001")
 ```
 
 ### Logout a User
@@ -193,13 +182,13 @@ This can be achieved with the `removeUserFor` method of the `MagicBell` client i
 
 ```swift
 // Remove by email
-magicBell.removeUserFor(email: "john@doe.com")
+magicbell.removeUserFor(email: "richard@example.com")
 
 // Remove by external id
-magicBell.removeUserFor(externalId: "123456789")
+magicbell.removeUserFor(externalId: "001")
 
 // Remove by email and external id
-magicBell.removeUserFor(email: "john@doe.com", externalId: "123456789")
+magicbell.removeUserFor(email: "richard@example.com", externalId: "001")
 ```
 
 ### Integrating into your app
@@ -227,7 +216,7 @@ struct User {
 extension User {
     /// Returns the logged in MagicBell user
     func magicBell() -> MagicBell.User {
-        return magicBell.forUser(email: email)
+        return magicbell.forUser(email: email)
     }
 }
 ```
@@ -239,12 +228,12 @@ This is how you can define a nullable global variable that will represent your M
 ```swift
 import MagicBell
 
-let magicBell = MagicBellClient(apiKey: "[MAGICBELL_API_KEY]")
-var magicBellUser: MagicBell.User? = nil
+let magicbell = MagicBellClient(apiKey: "[MAGICBELL_API_KEY]")
+var magicbellUser: MagicBell.User? = nil
 ```
 
-As soon as you perform a login, assign a value to this variable. Keep in mind, you will have to check the `magicBellUser`
-variable was actually set before accesing it in your code.
+As soon as you perform a login, assign a value to this variable. Keep in mind, you will have to check the
+`magicbellUser` variable was actually set before accesing it in your code.
 
 #### Use your own dependency injection graph
 
@@ -362,7 +351,8 @@ let store = user.store.with(predicate: predicate)
 
 Notification stores are singletons. Creating a store with the same predicate twice will yield the same instance.
 
-**Note**: Once a store is fetched, it will be kept alive in memory so it can be updated in real-time. You can force the removal of a store using the `.dispose` method.
+**Note**: Once a store is fetched, it will be kept alive in memory so it can be updated in real-time. You can force the
+removal of a store using the `.dispose` method.
 
 ```swift
 let predicate = StorePredicate()
@@ -373,8 +363,8 @@ This is automatically done for you when you [remove a user instance](#logout-a-u
 
 ### Observing changes
 
-When either `fetch` or `refresh` is called, the store will notify the content observers with the newly
-added notifications (read about observers [here](#observing-notification-store-changes)).
+When either `fetch` or `refresh` is called, the store will notify the content observers with the newly added
+notifications (read about observers [here](#observing-notification-store-changes)).
 
 ```swift
 // Obtaining a new notification store (first time)
@@ -592,4 +582,5 @@ Whe a user is disconnected (`MagicBell.removeUserFor`), the device token is auto
 
 ## Contributing
 
-We welcome contributions of any kind. To do so, clone the repo, run `pod install` from the root directory, and open the `MagicBell.xcworkspace`.
+We welcome contributions of any kind. To do so, clone the repo, run `pod install` from the root directory, and open the
+`MagicBell.xcworkspace`.

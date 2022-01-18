@@ -91,7 +91,7 @@ and run `pod install`.
 ## The MagicBell Client
 
 The first step is to create a `MagicBellClient` instance. It will manage users and other functionality for you. The API
-key for your MagicBell project is required.
+key for your MagicBell project is required to initialize it.
 
 ```swift
 let client = MagicBellClient(apiKey: "[MAGICBELL_API_KEY]")
@@ -115,7 +115,7 @@ let client = MagicBellClient(
 | `enableHMAC` | `false`       | Set it to `true` if you want HMAC enabled. Note the `apiSecret` is required if set to `true` |
 | `logLevel`   | `.none`       | Set it to `.debug` to enable logs                                                            |
 
-Though the API key is meant to be published, you should not distribute the API secret. Rather, enable HAMC in your
+Though the API key is meant to be published, you should not distribute the API secret. Rather, enable HMAC in your
 project and generate the user secret on your backend before distributing your app.
 
 ### Integrating into your app
@@ -576,9 +576,10 @@ func application(_ application: UIApplication, didRegisterForRemoteNotifications
 ```
 
 MagicBell will keep that device token stored temporarly in memory and send it as soon as new users are declared via
-`MagicBell.forUser`.
+`MagicBellClient.forUser`.
 
-Whe a user is disconnected (`MagicBell.removeUserFor`), the device token is automatically unregistered for that user.
+Whe a user is disconnected (`MagicBellClient.removeUserFor`), the device token is automatically unregistered for that
+user.
 
 ## Contributing
 

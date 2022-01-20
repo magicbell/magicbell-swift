@@ -94,13 +94,13 @@ The first step is to create a `MagicBellClient` instance. It will manage users a
 key for your MagicBell project is required to initialize it.
 
 ```swift
-let client = MagicBellClient(apiKey: "[MAGICBELL_API_KEY]")
+let magicbell = MagicBellClient(apiKey: "[MAGICBELL_API_KEY]")
 ```
 
 You can provide additional options when initializing a client:
 
 ```swift
-let client = MagicBellClient(
+let magicbell = MagicBellClient(
     apiKey: "[MAGICBELL_API_KEY]"
     apiSecret: "[MAGICBELL_API_SECRET]",
     enableHMAC: true,
@@ -126,7 +126,18 @@ across your application.
 ```swift
 import MagicBell
 
+// Store the instance at a place of your convenience
 let magicbell = MagicBellClient(apiKey: "[MAGICBELL_API_KEY]")
+```
+
+Optionally, you could assign the unique instance as a static shared instance inside the `MagicBellClient`.
+
+```swift
+import MagicBell
+
+extension MagicBellClient {
+    static var shared = MagicBellClient(apiKey: "[MAGICBELL_API_KEY]")
+}
 ```
 
 ## User

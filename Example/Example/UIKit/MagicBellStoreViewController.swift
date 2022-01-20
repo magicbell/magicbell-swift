@@ -102,7 +102,7 @@ class MagicBellStoreViewController: UIViewController,
                 guard let email = alert.textFields?.first?.text else {
                     return
                 }
-                self.user = magicBell.forUser(email: email)
+                self.user = MagicBellClient.shared.forUser(email: email)
                 self.configureStore(predicate: StorePredicate())
             })
             self.present(alert, animated: true, completion: nil)
@@ -115,13 +115,13 @@ class MagicBellStoreViewController: UIViewController,
                 self.configureStore(predicate: StorePredicate())
             })
             alert.addAction(UIAlertAction(title: "Only Read", style: .default) { _ in
-                self.configureStore(predicate: StorePredicate(read: .read))
+                self.configureStore(predicate: StorePredicate(read: true))
             })
             alert.addAction(UIAlertAction(title: "Only Unread", style: .default) { _ in
-                self.configureStore(predicate: StorePredicate(read: .unread))
+                self.configureStore(predicate: StorePredicate(read: false))
             })
             alert.addAction(UIAlertAction(title: "Archived", style: .default) { _ in
-                self.configureStore(predicate: StorePredicate(archived: .archived))
+                self.configureStore(predicate: StorePredicate(archived: true))
             })
             alert.addAction(UIAlertAction(title: "By Category", style: .default) { _ in
                 self.configureStore(predicate: StorePredicate(categories: ["order_created"]))

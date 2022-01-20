@@ -336,16 +336,16 @@ These are the available options:
 
 | Param        | Options                            | Default        | Description                    |
 | ------------ | ---------------------------------- | -------------- | ------------------------------ |
-| `read`       | `.read`, `.unread`, `.unspecified` | `.unspecified` | Filter by the `read` state     |
-| `seen`       | `.seen`, `.unseen`, `.unspecified` | `.unspecified` | Filter by the `seen` state     |
-| `archived`   | `.archived`, `.unarchived`         | `.unarchived`  | Filter by the `archived` state |
+| `read`       | `true`, `false`, `nil` | `nil` | Filter by the `read` state (`nil` means unspecified)    |
+| `seen`       | `true`, `false`, `nil` | `nil` | Filter by the `seen` state (`nil` means unspecified)    |
+| `archived`   | `true`, `false`         | `false`  | Filter by the `archived` state |
 | `categories` | `[String]`                         | `[]`           | Filter by catregories          |
 | `topics`     | `[String]`                         | `[]`           | Filter by topics               |
 
 For example, use this predicate to fetch unread notifications of the `"important"` category:
 
 ```swift
-let predicate = StorePredicate(read: .unread, categories: ["important"])
+let predicate = StorePredicate(read: false, categories: ["important"])
 let store = user.store.with(predicate: predicate)
 ```
 
@@ -356,7 +356,7 @@ removal of a store using the `.dispose` method.
 
 ```swift
 let predicate = StorePredicate()
-user.store.dispose(with: StorePredicate)
+user.store.dispose(with: predicate)
 ```
 
 This is automatically done for you when you [remove a user instance](#logout-a-user).

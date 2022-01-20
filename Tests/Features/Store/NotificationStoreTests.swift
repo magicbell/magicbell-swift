@@ -537,7 +537,7 @@ class NotificationStoreTests: XCTestCase {
 
     func test_deleteNotification_withReadStorePredicate_shouldRemoveNotification() {
         // GIVEN
-        let predicate = StorePredicate(read: .read)
+        let predicate = StorePredicate(read: true)
         let storePage = StorePage.create(
             edges: anyNotificationEdgeArray(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .none),
             pageInfo: anyPageInfo()
@@ -562,7 +562,7 @@ class NotificationStoreTests: XCTestCase {
 
     func test_deleteNotification_withUnreadStorePredicate_shouldRemoveNotification() {
         // GIVEN
-        let predicate = StorePredicate(read: .unread)
+        let predicate = StorePredicate(read: false)
         let storePage = StorePage.create(
             edges: anyNotificationEdgeArray(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unread),
             pageInfo: anyPageInfo()
@@ -587,7 +587,7 @@ class NotificationStoreTests: XCTestCase {
 
     func test_deleteNotification_withUnreadStorePredicateWithUnseenNotifications_shouldRemoveNotificationAndUpdateUnseeCount() {
         // GIVEN
-        let predicate = StorePredicate(read: .unread)
+        let predicate = StorePredicate(read: false)
         let storePage = StorePage.create(
             edges: anyNotificationEdgeArray(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unseen),
             pageInfo: anyPageInfo()
@@ -613,7 +613,7 @@ class NotificationStoreTests: XCTestCase {
 
     func test_deleteNotification_withUnreadStorePredicateWithSeenNotifications_shouldRemoveNotificationAndSameUnseenCount() {
         // GIVEN
-        let predicate = StorePredicate(read: .unread)
+        let predicate = StorePredicate(read: false)
         let storePage = StorePage.create(
             edges: anyNotificationEdgeArray(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .seen),
             pageInfo: anyPageInfo()
@@ -831,7 +831,7 @@ class NotificationStoreTests: XCTestCase {
 
     func test_markNotificationAsRead_withUnreadStorePredicate_shouldMarkAsReadNotification() {
         // GIVEN
-        let predicate = StorePredicate(read: .unread)
+        let predicate = StorePredicate(read: false)
         let storePage = StorePage.create(
             edges: anyNotificationEdgeArray(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unread),
             pageInfo: anyPageInfo()
@@ -856,7 +856,7 @@ class NotificationStoreTests: XCTestCase {
 
     func test_markNotificationAsRead_withUnreadStorePredicateAndUnseenNotification_shouldMarkAsReadNotificationAndUpdateUnseenCount() {
         // GIVEN
-        let predicate = StorePredicate(read: .unread)
+        let predicate = StorePredicate(read: false)
         let storePage = StorePage.create(
             edges: anyNotificationEdgeArray(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unseen),
             pageInfo: anyPageInfo()
@@ -881,7 +881,7 @@ class NotificationStoreTests: XCTestCase {
 
     func test_markNotificationAsRead_withUnreadStorePredicateAndSeenNotification_shouldMarkAsReadNotificationAndSameUnseenCount() {
         // GIVEN
-        let predicate = StorePredicate(read: .unread)
+        let predicate = StorePredicate(read: false)
         let storePage = StorePage.create(
             edges: anyNotificationEdgeArray(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .seen),
             pageInfo: anyPageInfo()
@@ -982,7 +982,7 @@ class NotificationStoreTests: XCTestCase {
 
     func test_markNotificationAsUnread_withReadStorePredicate_shouldRemoveNotification() {
         // GIVEN
-        let predicate = StorePredicate(read: .read)
+        let predicate = StorePredicate(read: true)
         let storePage = StorePage.create(
             edges: anyNotificationEdgeArray(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .read),
             pageInfo: anyPageInfo()
@@ -1008,7 +1008,7 @@ class NotificationStoreTests: XCTestCase {
 
     func test_markNotificationAsUnread_withUnreadStorePredicate_shouldDoNothing() {
         // GIVEN
-        let predicate = StorePredicate(read: .unread)
+        let predicate = StorePredicate(read: true)
         let storePage = StorePage.create(
             edges: anyNotificationEdgeArray(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unread),
             pageInfo: anyPageInfo()
@@ -1218,7 +1218,7 @@ class NotificationStoreTests: XCTestCase {
 
     func test_markAllNotificationAsRead_withUnreadStorePredicate_shouldClearNotifications() {
         // GIVEN
-        let predicate = StorePredicate(read: .unread)
+        let predicate = StorePredicate(read: false)
         let storePage = StorePage.create(
             edges: anyNotificationEdgeArray(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unread),
             pageInfo: anyPageInfo()
@@ -1246,7 +1246,7 @@ class NotificationStoreTests: XCTestCase {
 
     func test_markAllNotificationAsRead_withReadStorePredicate_shouldBeAllTheSame() {
         // GIVEN
-        let predicate = StorePredicate(read: .read)
+        let predicate = StorePredicate(read: true)
         let storePage = StorePage.create(
             edges: anyNotificationEdgeArray(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .read),
             pageInfo: anyPageInfo()
@@ -1325,7 +1325,7 @@ class NotificationStoreTests: XCTestCase {
 
     func test_markAllNotificationAsSeen_withUnreadStorePredicate_shouldMarkAllNotificationWithSeenDate() {
         // GIVEN
-        let predicate = StorePredicate(read: .unread)
+        let predicate = StorePredicate(read: false)
         let storePage = StorePage.create(
             edges: anyNotificationEdgeArray(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unread),
             pageInfo: anyPageInfo()
@@ -1349,7 +1349,7 @@ class NotificationStoreTests: XCTestCase {
 
     func test_markAllNotificationAsSeen_withReadStorePredicate_shouldMarkAllNotificationWithSeenDate() {
         // GIVEN
-        let predicate = StorePredicate(read: .read)
+        let predicate = StorePredicate(read: true)
         let storePage = StorePage.create(
             edges: anyNotificationEdgeArray(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .read),
             pageInfo: anyPageInfo()

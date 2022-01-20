@@ -9,11 +9,13 @@ import UIKit
 import MagicBell
 import UserNotifications
 
-// Application available instance of MagicBell
-let magicBell = MagicBellClient(
-    apiKey: "34ed17a8482e44c765d9e163015a8d586f0b3383",
-    logLevel: .debug
-)
+extension MagicBellClient {
+    /// Application global instance of MagicBellClient
+    static var shared = MagicBellClient(
+        apiKey: "34ed17a8482e44c765d9e163015a8d586f0b3383",
+        logLevel: .debug
+    )
+}
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -41,6 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         // Storing device token when refreshed
-        magicBell.setDeviceToken(deviceToken: deviceToken)
+        MagicBellClient.shared.setDeviceToken(deviceToken: deviceToken)
     }
 }

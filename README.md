@@ -535,7 +535,7 @@ struct UserPreferences {
 To fetch user preferences, use the `fetch` method as follows:
 
 ```swift
-user.userPreferences.fetch { result in
+user.preferences.fetch { result in
     if let preferences = try? result.get() {
         print("User Preferences: \(preferences)")
     }
@@ -545,7 +545,7 @@ user.userPreferences.fetch { result in
 It is also possible to fetch preference for a category using the `fetchPreferences(for:)` method:
 
 ```swift
-user.userPreferences.fetchPreferences(for: "new_comment") { result in
+user.preferences.fetchPreferences(for: "new_comment") { result in
     if let category = try? result.get() {
         print("Category: \(category)")
     }
@@ -556,11 +556,11 @@ To update the preferences, use either `update` or `updatePreferences(:for:)`.
 
 ```swift
 // Updating all preferences at once.
-user.userPreferences.update(preferences) { result in }
+user.preferences.update(preferences) { result in }
 
 // Updating the list of preferences for a category
 // Only preference for the included categories will be changed
-user.userPreferences.updatePreferences(categoryPreferences, for: "new_comment") { result in }
+user.preferences.updatePreferences(categoryPreferences, for: "new_comment") { result in }
 ```
 
 ## Push Notifications

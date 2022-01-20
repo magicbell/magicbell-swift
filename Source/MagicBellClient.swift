@@ -125,7 +125,7 @@ public class MagicBellClient {
         let newUser = User(
             userQuery: userQuery,
             store: sdkProvider.getStoreComponent().storeDirector(with: userQuery),
-            userPreferences: sdkProvider.getUserPreferencesComponent().userPreferencesDirector(with: userQuery),
+            preferences: sdkProvider.getUserPreferencesComponent().userPreferencesDirector(with: userQuery),
             pushSubscription: sdkProvider.getPushSubscriptionComponent().pushSubscriptionDirector(with: userQuery)
         )
         users[userQuery.key] = newUser

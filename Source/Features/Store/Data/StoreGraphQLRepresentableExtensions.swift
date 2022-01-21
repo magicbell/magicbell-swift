@@ -19,7 +19,7 @@ extension StorePredicate: GraphQLRepresentable {
 
         if read == true {
             string.append("read: true")
-        } else if read == false  {
+        } else if read == false {
             string.append("read: false")
         }
 

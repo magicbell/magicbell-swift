@@ -50,20 +50,20 @@ public extension UIColor {
     }
 
     convenience init?(rgb string: String) {
-        var value: UInt32 = 0
+        var value: UInt64 = 0
         let scanner = Scanner(string: string)
-        if scanner.scanHexInt32(&value) {
-            self.init(rgb: value)
+        if scanner.scanHexInt64(&value) {
+            self.init(rgb: UInt32(value))
         } else {
             return nil
         }
     }
 
     convenience init?(rgba string: String) {
-        var value: UInt32 = 0
+        var value: UInt64 = 0
         let scanner = Scanner(string: string)
-        if scanner.scanHexInt32(&value) {
-            self.init(rgba: value)
+        if scanner.scanHexInt64(&value) {
+            self.init(rgba: UInt32(value))
         } else {
             return nil
         }
@@ -167,12 +167,14 @@ public extension UIColor {
                     colorTransform(components[2]),
                     components[3]
                 ]
+                // swiftlint:disable force_unwrapping
                 return UIColor(cgColor: CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: newComponents)!)
             } else if count == 2 {
                 let newComponents: [CGFloat] = [
                     colorTransform(components[0]),
                     components[1]
                 ]
+                // swiftlint:disable force_unwrapping
                 return UIColor(cgColor: CGColor(colorSpace: CGColorSpaceCreateDeviceGray(), components: newComponents)!)
             }
         }
@@ -194,12 +196,14 @@ public extension UIColor {
                     colorTransform(components[2]),
                     components[3]
                 ]
+                // swiftlint:disable force_unwrapping
                 return UIColor(cgColor: CGColor(colorSpace: CGColorSpaceCreateDeviceRGB(), components: newComponents)!)
             } else if count == 2 {
                 let newComponents: [CGFloat] = [
                     colorTransform(components[0]),
                     components[1]
                 ]
+                // swiftlint:disable force_unwrapping
                 return UIColor(cgColor: CGColor(colorSpace: CGColorSpaceCreateDeviceGray(), components: newComponents)!)
             }
         }

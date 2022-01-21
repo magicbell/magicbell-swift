@@ -25,7 +25,7 @@ public class MagicBellClient {
     public static let version = "1.0.0-alpha.3"
 
     /// MagicBell's default API URL. Defaults to https://api.magicbell.com.
-    private static let defaultBaseUrl: URL = {
+    public static let defaultBaseUrl: URL = {
         // swiftlint:disable force_unwrapping
         return URL(string: "https://api.magicbell.com")!
     }()
@@ -37,11 +37,11 @@ public class MagicBellClient {
 
     /// Init of `MagicBellClient`.
     /// - Parameters:
-    ///   - apiKey: The API Key of your MagicBell project
-    ///   - apiSecret: The API secret of your MagicBell project
+    ///   - apiKey: The API Key of your MagicBell project.
+    ///   - apiSecret: The API secret of your MagicBell project. Defaults to `nil`.
     ///   - enableHMAC: Use HMAC authentication. Defaults to `false`. If set to `true`, HMAC will be only enabled if the
     ///   API secret is set.
-    ///   - baseUrl: URL of the API server. Defaults to `MagicBell.defaultBaseUrl`.
+    ///   - baseUrl: URL of the API server. Defaults to `MagicBellClient.defaultBaseUrl`.
     ///   - logLevel: The log level, it accepts `.none` or `.debug`. Defaults to `.none`.
     public init(
         apiKey: String,

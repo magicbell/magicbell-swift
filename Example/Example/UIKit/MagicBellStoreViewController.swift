@@ -214,6 +214,7 @@ class MagicBellStoreViewController: UIViewController,
 
     // MARK: UITableViewDelegate
 
+    // swiftlint:disable cyclomatic_complexity
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 

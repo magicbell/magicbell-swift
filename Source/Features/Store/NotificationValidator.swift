@@ -25,11 +25,11 @@ struct NotificationValidator {
     }
 
     func validateRead(_ notification: Notification) -> Bool {
-        if predicate.read == .read && notification.readAt != nil {
+        if predicate.read == true && notification.readAt != nil {
             return true
-        } else if predicate.read == .unread && notification.readAt == nil {
+        } else if predicate.read == false && notification.readAt == nil {
             return true
-        } else if predicate.read == .unspecified {
+        } else if predicate.read == nil {
             return true
         } else {
             return false
@@ -37,11 +37,11 @@ struct NotificationValidator {
     }
 
     func validateSeen(_ notification: Notification) -> Bool {
-        if predicate.seen == .seen && notification.seenAt != nil {
+        if predicate.seen == true && notification.seenAt != nil {
             return true
-        } else if predicate.seen == .unseen && notification.seenAt == nil {
+        } else if predicate.seen == false && notification.seenAt == nil {
             return true
-        } else if predicate.seen == .unspecified {
+        } else if predicate.seen == nil {
             return true
         } else {
             return false
@@ -49,9 +49,9 @@ struct NotificationValidator {
     }
 
     func validateArchive(_ notification: Notification) -> Bool {
-        if predicate.archived == .archived && notification.archivedAt != nil {
+        if predicate.archived == true && notification.archivedAt != nil {
             return true
-        } else if predicate.archived == .unarchived && notification.archivedAt == nil {
+        } else if predicate.archived == false && notification.archivedAt == nil {
             return true
         } else {
             return false

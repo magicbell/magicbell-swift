@@ -15,39 +15,22 @@ import Foundation
 
 /// The notificaiton store predicate
 public struct StorePredicate: Hashable, Equatable {
-    public enum Read: Int {
-        case read
-        case unread
-        case unspecified
-    }
-
-    public enum Seen: Int {
-        case seen
-        case unseen
-        case unspecified
-    }
-
-    public enum Archived: Int {
-        case archived
-        case unarchived
-    }
-
-    public let read: Read
-    public let seen: Seen
-    public let archived: Archived
+    public let read: Bool?
+    public let seen: Bool?
+    public let archived: Bool
     public let categories: [String]
     public let topics: [String]
 
     /// Predicate default initializer
     /// - Parameters:
-    ///   - read: The read status. Defaults to `.unspecified`.
-    ///   - seen: The seen status. Defaults to `.unspecified`.
-    ///   - archived: The archived status. Defaults to `.unspecified`.
+    ///   - read: The read status. Defaults to `nil` (not specified).
+    ///   - seen: The seen status. Defaults to `nil` (not specified).
+    ///   - archived: The archived status. Defaults to `false` (unarchived).
     ///   - categories: The list of categories. Defaults to empty array.
     ///   - topics: The list of topics. Defaults to empty array.
-    public init(read: StorePredicate.Read = .unspecified,
-                seen: StorePredicate.Seen = .unspecified,
-                archived: StorePredicate.Archived = .unarchived,
+    public init(read: Bool? = nil,
+                seen: Bool? = nil,
+                archived: Bool = false,
                 categories: [String] = [],
                 topics: [String] = []) {
         self.read = read

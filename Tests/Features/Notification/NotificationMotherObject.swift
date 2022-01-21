@@ -37,30 +37,27 @@ extension Notification {
                                    forceProperty: ForceProperty) -> Notification {
 
         var read: Bool
-        switch predicate.read {
-        case .read:
+        if predicate.read == true {
             read = true
-        case .unread:
+        } else if predicate.read == false {
             read = false
-        case .unspecified:
+        } else {
             read = randomBool()
         }
 
         var seen: Bool
-        switch predicate.seen {
-        case .seen:
+        if predicate.seen == true {
             seen = true
-        case .unseen:
+        } else if predicate.seen == false {
             seen = false
-        case .unspecified:
+        } else {
             seen = randomBool()
         }
 
         var archived: Bool
-        switch predicate.archived {
-        case .archived:
+        if predicate.archived {
             archived = true
-        case .unarchived:
+        } else {
             archived = false
         }
 

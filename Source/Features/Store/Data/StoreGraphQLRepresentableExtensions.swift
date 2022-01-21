@@ -17,28 +17,21 @@ extension StorePredicate: GraphQLRepresentable {
     var graphQLValue: String {
         var string: [String] = []
 
-        switch read {
-        case .read:
+        if read == true {
             string.append("read: true")
-        case .unread:
+        } else if read == false  {
             string.append("read: false")
-        case .unspecified:
-            break
         }
 
-        switch seen {
-        case .seen:
+        if seen == true {
             string.append("seen: true")
-        case .unseen:
+        } else if seen == false {
             string.append("seen: false")
-        case .unspecified:
-            break
         }
 
-        switch archived {
-        case .archived:
+        if archived {
             string.append("archived: true")
-        case .unarchived:
+        } else {
             string.append("archived: false")
         }
 

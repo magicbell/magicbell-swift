@@ -93,7 +93,7 @@ class NotificationValidatorTests: XCTestCase {
     }
 
     func test_predicate_read() throws {
-        let predicate = StorePredicate(read: .read)
+        let predicate = StorePredicate(read: true)
         for notification in allNotifications(read: true) {
             expect(predicate.match(notification)) == true
         }
@@ -103,7 +103,7 @@ class NotificationValidatorTests: XCTestCase {
     }
 
     func test_predicate_unread() throws {
-        let predicate = StorePredicate(read: .unread)
+        let predicate = StorePredicate(read: false)
         for notification in allNotifications(read: false) {
             expect(predicate.match(notification)) == true
         }
@@ -113,7 +113,7 @@ class NotificationValidatorTests: XCTestCase {
     }
 
     func test_predicate_seen() throws {
-        let predicate = StorePredicate(seen: .seen)
+        let predicate = StorePredicate(seen: true)
         for notification in allNotifications(seen: true) {
             expect(predicate.match(notification)) == true
         }
@@ -123,7 +123,7 @@ class NotificationValidatorTests: XCTestCase {
     }
 
     func test_predicate_unseen() throws {
-        let predicate = StorePredicate(seen: .unseen)
+        let predicate = StorePredicate(seen: false)
         for notification in allNotifications(seen: false) {
             expect(predicate.match(notification)) == true
         }
@@ -133,7 +133,7 @@ class NotificationValidatorTests: XCTestCase {
     }
 
     func test_predicate_archived() throws {
-        let predicate = StorePredicate(archived: .archived)
+        let predicate = StorePredicate(archived: true)
         for notification in allNotifications(archived: true) {
             expect(predicate.match(notification)) == true
         }
@@ -143,7 +143,7 @@ class NotificationValidatorTests: XCTestCase {
     }
 
     func test_predicate_unarchived() throws {
-        let predicate = StorePredicate(archived: .unarchived)
+        let predicate = StorePredicate(archived: false)
         for notification in allNotifications(archived: false) {
             expect(predicate.match(notification)) == true
         }

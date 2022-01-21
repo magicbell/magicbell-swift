@@ -420,20 +420,18 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     }
 
     func notifyAllNotificationRead() {
-        switch predicate.read {
-        case .read, .unspecified:
-            refreshAndNotifyObservers()
-        case .unread:
+        if let read = predicate.read, read == false {
             clear(notifyChanges: true)
+        } else {
+            refreshAndNotifyObservers()
         }
     }
 
     func notifyAllNotificationSeen() {
-        switch predicate.seen {
-        case .seen, .unspecified:
-            refreshAndNotifyObservers()
-        case .unseen:
+        if let seen = predicate.seen, seen == false {
             clear(notifyChanges: true)
+        } else {
+            refreshAndNotifyObservers()
         }
     }
 
@@ -450,14 +448,12 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
 
         if notification.readAt == nil {
             setUnreadCount(unreadCount - 1, notifyObservers: true)
-            switch self.predicate.read {
-            case .read:
-                setTotalCount(totalCount + 1, notifyObservers: true)
-            case .unread:
-                setTotalCount(totalCount - 1, notifyObservers: true)
-            case .unspecified:
-                // Do nothing
-                break
+            if let read = predicate.read {
+                if read {
+                    setTotalCount(totalCount + 1, notifyObservers: true)
+                } else {
+                    setTotalCount(totalCount - 1, notifyObservers: true)
+                }
             }
         }
 
@@ -469,14 +465,15 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     private func markNotificationAsUnread(_ notification: inout Notification, with predicate: StorePredicate) {
         if notification.readAt != nil {
             // When a predicate is read, unread count is always 0
-            switch self.predicate.read {
-            case .read:
-                setTotalCount(totalCount - 1, notifyObservers: true)
-                setUnreadCount(0, notifyObservers: true)
-            case .unread:
-                setTotalCount(totalCount + 1, notifyObservers: true)
-                setUnreadCount(unreadCount + 1, notifyObservers: true)
-            case .unspecified:
+            if let read = predicate.read {
+                if read {
+                    setTotalCount(totalCount - 1, notifyObservers: true)
+                    setUnreadCount(0, notifyObservers: true)
+                } else {
+                    setTotalCount(totalCount + 1, notifyObservers: true)
+                    setUnreadCount(unreadCount + 1, notifyObservers: true)
+                }
+            } else {
                 setUnreadCount(unreadCount + 1, notifyObservers: true)
             }
         }
@@ -496,10 +493,9 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
         }
 
         if notification.archivedAt == nil {
-            switch predicate.archived {
-            case .archived:
-                break
-            case .unarchived:
+            if predicate.archived {
+                // Nothing to do
+            } else {
                 setTotalCount(totalCount - 1, notifyObservers: true)
             }
         }
@@ -534,9 +530,9 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     }
     
     private func decreaseUnreadCountIfUnreadPredicate(_ predicate: StorePredicate, _ notification: Notification) {
-        if predicate.read == .unread {
+        if predicate.read == false {
             setUnreadCount(unreadCount - 1, notifyObservers: true)
-        } else if predicate.read == .unspecified {
+        } else if predicate.read == nil {
             if notification.readAt == nil {
                 setUnreadCount(unreadCount - 1, notifyObservers: true)
             }

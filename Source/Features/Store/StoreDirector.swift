@@ -38,13 +38,13 @@ public extension StoreDirector {
     /// Return the store for unread notificaionts
     /// - Returns: A notification store
     func forUnread() -> NotificationStore {
-        with(predicate: StorePredicate(read: .unread))
+        with(predicate: StorePredicate(read: false))
     }
 
     /// Return the store for read notificaionts
     /// - Returns: A notification store
     func forRead() -> NotificationStore {
-        with(predicate: StorePredicate(read: .read))
+        with(predicate: StorePredicate(read: true))
     }
 
     /// Return the store for notifications with the given categories

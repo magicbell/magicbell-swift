@@ -37,11 +37,11 @@ public class MagicBellClient {
 
     /// Init of `MagicBellClient`.
     /// - Parameters:
-    ///   - apiKey: The API Key of your MagicBell project
-    ///   - apiSecret: The API secret of your MagicBell project
+    ///   - apiKey: The API Key of your MagicBell project.
+    ///   - apiSecret: The API secret of your MagicBell project. Defaults to `nil`.
     ///   - enableHMAC: Use HMAC authentication. Defaults to `false`. If set to `true`, HMAC will be only enabled if the
     ///   API secret is set.
-    ///   - baseUrl: URL of the API server. Defaults to `MagicBell.defaultBaseUrl`.
+    ///   - baseUrl: URL of the API server. Defaults to `MagicBellClient.defaultBaseUrl`.
     ///   - logLevel: The log level, it accepts `.none` or `.debug`. Defaults to `.none`.
     public init(
         apiKey: String,
@@ -125,7 +125,7 @@ public class MagicBellClient {
         let newUser = User(
             userQuery: userQuery,
             store: sdkProvider.getStoreComponent().storeDirector(with: userQuery),
-            userPreferences: sdkProvider.getUserPreferencesComponent().userPreferencesDirector(with: userQuery),
+            preferences: sdkProvider.getUserPreferencesComponent().userPreferencesDirector(with: userQuery),
             pushSubscription: sdkProvider.getPushSubscriptionComponent().pushSubscriptionDirector(with: userQuery)
         )
         users[userQuery.key] = newUser

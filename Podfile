@@ -10,7 +10,6 @@ target 'MagicBell' do
     pod 'Harmony/Repository', '1.1.5'
     pod 'Ably', '1.2.7'
     pod 'SwiftLint'
-
 end
 
 target 'MagicBellTests' do

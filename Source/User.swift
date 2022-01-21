@@ -19,7 +19,7 @@ public class User {
     private let userQuery: UserQuery
     private var internalStoreDirector: InternalStoreDirector
     /// The user preferences director.
-    public private(set) var userPreferences: UserPreferencesDirector
+    public private(set) var preferences: UserPreferencesDirector
     private(set) var pushSubscription: PushSubscriptionDirector
 
     /// The store director.
@@ -30,12 +30,12 @@ public class User {
     init(
         userQuery: UserQuery,
         store: InternalStoreDirector,
-        userPreferences: UserPreferencesDirector,
+        preferences: UserPreferencesDirector,
         pushSubscription: PushSubscriptionDirector
     ) {
         self.userQuery = userQuery
         self.internalStoreDirector = store
-        self.userPreferences = userPreferences
+        self.preferences = preferences
         self.pushSubscription = pushSubscription
     }
 

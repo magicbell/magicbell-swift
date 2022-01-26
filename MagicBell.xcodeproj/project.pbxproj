@@ -28,6 +28,15 @@
 		595AC4C827710C7A00A3DCA2 /* NotificationEdgeMotherObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595AC4C627710C7000A3DCA2 /* NotificationEdgeMotherObject.swift */; };
 		595AC4CE27710EF000A3DCA2 /* PageInfoMotherObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595AC4CC27710DCD00A3DCA2 /* PageInfoMotherObject.swift */; };
 		595AC4D627715D9D00A3DCA2 /* InitialNotificationStoreCounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595AC4D327715D8D00A3DCA2 /* InitialNotificationStoreCounts.swift */; };
+		5970B59927A290430061835E /* Ably.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C4E27A20ADD0032C7D6 /* Ably.xcframework */; };
+		5970B59A27A290430061835E /* Ably.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C4E27A20ADD0032C7D6 /* Ably.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5970B59B27A290430061835E /* AblyDeltaCodec.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5227A20AE90032C7D6 /* AblyDeltaCodec.xcframework */; };
+		5970B59C27A290430061835E /* AblyDeltaCodec.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5227A20AE90032C7D6 /* AblyDeltaCodec.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5970B59D27A290430061835E /* Harmony.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5827A20AFE0032C7D6 /* Harmony.xcframework */; };
+		5970B59E27A290430061835E /* Harmony.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5827A20AFE0032C7D6 /* Harmony.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5970B59F27A290430061835E /* msgpack.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5527A20AF40032C7D6 /* msgpack.xcframework */; };
+		5970B5A027A290430061835E /* msgpack.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5527A20AF40032C7D6 /* msgpack.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		59799C4C27A203550032C7D6 /* NotificationFragment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = D2CBA51F275121C2002F1E44 /* NotificationFragment.graphql */; };
 		59799E312746587000BFB375 /* MagicBellClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E302746587000BFB375 /* MagicBellClient.swift */; };
 		59799E33274658B100BFB375 /* SDKProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E32274658B100BFB375 /* SDKProvider.swift */; };
 		59799E38274659D800BFB375 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E37274659D800BFB375 /* Environment.swift */; };
@@ -84,8 +93,6 @@
 		59F4597527597FF7008F3BC8 /* AblyConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597427597FF7008F3BC8 /* AblyConnector.swift */; };
 		59F45979275A434A008F3BC8 /* StoreRealTimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F45978275A434A008F3BC8 /* StoreRealTimeProvider.swift */; };
 		59F4597B275A48AD008F3BC8 /* StoreRealTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597A275A48AD008F3BC8 /* StoreRealTime.swift */; };
-		73221ECB173026F278B43C93 /* Pods_MagicBellTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B26757E25B750696F29E577 /* Pods_MagicBellTests.framework */; };
-		A35AC36EDBB4FDD24D651217 /* Pods_MagicBell.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91586C8D98B8EC30EF57ACC7 /* Pods_MagicBell.framework */; };
 		D27CF1BA27906FDD00897BCB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CF1B927906FDD00897BCB /* User.swift */; };
 		D29D249227747DA000726ABD /* NotificationStorePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29D249127747DA000726ABD /* NotificationStorePublisher.swift */; };
 		D2C5A1B02768C25500C20D74 /* StoreDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */; };
@@ -114,10 +121,24 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		5970B5A127A290430061835E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5970B5A027A290430061835E /* msgpack.xcframework in Embed Frameworks */,
+				5970B59E27A290430061835E /* Harmony.xcframework in Embed Frameworks */,
+				5970B59A27A290430061835E /* Ably.xcframework in Embed Frameworks */,
+				5970B59C27A290430061835E /* AblyDeltaCodec.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		0B26757E25B750696F29E577 /* Pods_MagicBellTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MagicBellTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4E85FF870551B042770D2A72 /* Pods-MagicBell.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell.release.xcconfig"; path = "Target Support Files/Pods-MagicBell/Pods-MagicBell.release.xcconfig"; sourceTree = "<group>"; };
-		57D4F2CE13C3BF7FA764FB73 /* Pods-MagicBellTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBellTests.release.xcconfig"; path = "Target Support Files/Pods-MagicBellTests/Pods-MagicBellTests.release.xcconfig"; sourceTree = "<group>"; };
 		593883AF27603023001D38FC /* SendPushSubscriptionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendPushSubscriptionInteractor.swift; sourceTree = "<group>"; };
 		593883B1276036BC001D38FC /* DeviceTokenQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTokenQuery.swift; sourceTree = "<group>"; };
 		593883B627603B9B001D38FC /* DeletePushSubscriptionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePushSubscriptionInteractor.swift; sourceTree = "<group>"; };
@@ -139,6 +160,15 @@
 		595AC4C627710C7000A3DCA2 /* NotificationEdgeMotherObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationEdgeMotherObject.swift; sourceTree = "<group>"; };
 		595AC4CC27710DCD00A3DCA2 /* PageInfoMotherObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageInfoMotherObject.swift; sourceTree = "<group>"; };
 		595AC4D327715D8D00A3DCA2 /* InitialNotificationStoreCounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialNotificationStoreCounts.swift; sourceTree = "<group>"; };
+		59799C4E27A20ADD0032C7D6 /* Ably.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Ably.xcframework; path = Carthage/Build/Ably.xcframework; sourceTree = "<group>"; };
+		59799C5227A20AE90032C7D6 /* AblyDeltaCodec.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AblyDeltaCodec.xcframework; path = Carthage/Build/AblyDeltaCodec.xcframework; sourceTree = "<group>"; };
+		59799C5527A20AF40032C7D6 /* msgpack.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = msgpack.xcframework; path = Carthage/Build/msgpack.xcframework; sourceTree = "<group>"; };
+		59799C5827A20AFE0032C7D6 /* Harmony.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Harmony.xcframework; path = Carthage/Build/Harmony.xcframework; sourceTree = "<group>"; };
+		59799C5D27A285ED0032C7D6 /* AblyDeltaCodec.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AblyDeltaCodec.xcframework; path = Example/Carthage/Build/AblyDeltaCodec.xcframework; sourceTree = "<group>"; };
+		59799C6127A286510032C7D6 /* AblyDeltaCodec.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AblyDeltaCodec.framework; path = "Example/Carthage/Build/AblyDeltaCodec.xcframework/ios-arm64_armv7/AblyDeltaCodec.framework"; sourceTree = "<group>"; };
+		59799C6527A2866C0032C7D6 /* Ably.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ably.framework; path = "Example/Carthage/Build/Ably.xcframework/ios-arm64_armv7/Ably.framework"; sourceTree = "<group>"; };
+		59799C6827A2867C0032C7D6 /* msgpack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = msgpack.framework; path = "Example/Carthage/Build/msgpack.xcframework/ios-arm64_armv7/msgpack.framework"; sourceTree = "<group>"; };
+		59799C6B27A286890032C7D6 /* Harmony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Harmony.framework; path = "Example/Carthage/Build/Harmony.xcframework/ios-arm64/Harmony.framework"; sourceTree = "<group>"; };
 		59799E302746587000BFB375 /* MagicBellClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBellClient.swift; sourceTree = "<group>"; };
 		59799E32274658B100BFB375 /* SDKProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKProvider.swift; sourceTree = "<group>"; };
 		59799E37274659D800BFB375 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
@@ -196,10 +226,6 @@
 		59F4597427597FF7008F3BC8 /* AblyConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyConnector.swift; sourceTree = "<group>"; };
 		59F45978275A434A008F3BC8 /* StoreRealTimeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRealTimeProvider.swift; sourceTree = "<group>"; };
 		59F4597A275A48AD008F3BC8 /* StoreRealTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRealTime.swift; sourceTree = "<group>"; };
-		642B6CD63E97582F887E9742 /* Pods-MagicBell-MagicBellTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell-MagicBellTests.debug.xcconfig"; path = "Target Support Files/Pods-MagicBell-MagicBellTests/Pods-MagicBell-MagicBellTests.debug.xcconfig"; sourceTree = "<group>"; };
-		6F6B3A596E9B13574FBDBF06 /* Pods-MagicBell-MagicBellTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell-MagicBellTests.release.xcconfig"; path = "Target Support Files/Pods-MagicBell-MagicBellTests/Pods-MagicBell-MagicBellTests.release.xcconfig"; sourceTree = "<group>"; };
-		91586C8D98B8EC30EF57ACC7 /* Pods_MagicBell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MagicBell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A80221B71732E7C663FCB505 /* Pods-MagicBell.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell.debug.xcconfig"; path = "Target Support Files/Pods-MagicBell/Pods-MagicBell.debug.xcconfig"; sourceTree = "<group>"; };
 		D27CF1B927906FDD00897BCB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D28CEE9627956FCB001242C2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D29D249127747DA000726ABD /* NotificationStorePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStorePublisher.swift; sourceTree = "<group>"; };
@@ -217,7 +243,6 @@
 		D2D277282747D40A00B5F69E /* NotificationQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationQuery.swift; sourceTree = "<group>"; };
 		D2D2772A2747D43200B5F69E /* PushSubscriptionQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSubscriptionQuery.swift; sourceTree = "<group>"; };
 		D2E038272767943F0077FFF3 /* NotificationStoreObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStoreObserver.swift; sourceTree = "<group>"; };
-		E61A2A0E5B9E8205ABA317EA /* Pods-MagicBellTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBellTests.debug.xcconfig"; path = "Target Support Files/Pods-MagicBellTests/Pods-MagicBellTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,7 +250,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A35AC36EDBB4FDD24D651217 /* Pods_MagicBell.framework in Frameworks */,
+				5970B59F27A290430061835E /* msgpack.xcframework in Frameworks */,
+				5970B59D27A290430061835E /* Harmony.xcframework in Frameworks */,
+				5970B59927A290430061835E /* Ably.xcframework in Frameworks */,
+				5970B59B27A290430061835E /* AblyDeltaCodec.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,7 +262,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				59EF99BC27446D6900FB2378 /* MagicBell.framework in Frameworks */,
-				73221ECB173026F278B43C93 /* Pods_MagicBellTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +372,22 @@
 				595AC4D327715D8D00A3DCA2 /* InitialNotificationStoreCounts.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		59799C4D27A20ADD0032C7D6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				59799C6B27A286890032C7D6 /* Harmony.framework */,
+				59799C6827A2867C0032C7D6 /* msgpack.framework */,
+				59799C6527A2866C0032C7D6 /* Ably.framework */,
+				59799C6127A286510032C7D6 /* AblyDeltaCodec.framework */,
+				59799C5D27A285ED0032C7D6 /* AblyDeltaCodec.xcframework */,
+				59799C5827A20AFE0032C7D6 /* Harmony.xcframework */,
+				59799C5527A20AF40032C7D6 /* msgpack.xcframework */,
+				59799C5227A20AE90032C7D6 /* AblyDeltaCodec.xcframework */,
+				59799C4E27A20ADD0032C7D6 /* Ably.xcframework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		59799E2F2746583200BFB375 /* Config */ = {
@@ -591,7 +634,7 @@
 				59EF99BF27446D6900FB2378 /* Tests */,
 				59EF99B227446D6900FB2378 /* Products */,
 				B6A4AD0160030AF76A38354D /* Pods */,
-				8C80FDB698D37C4859CB48CA /* Frameworks */,
+				59799C4D27A20ADD0032C7D6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -657,24 +700,9 @@
 			path = StoreRealTime;
 			sourceTree = "<group>";
 		};
-		8C80FDB698D37C4859CB48CA /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				91586C8D98B8EC30EF57ACC7 /* Pods_MagicBell.framework */,
-				0B26757E25B750696F29E577 /* Pods_MagicBellTests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		B6A4AD0160030AF76A38354D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				A80221B71732E7C663FCB505 /* Pods-MagicBell.debug.xcconfig */,
-				4E85FF870551B042770D2A72 /* Pods-MagicBell.release.xcconfig */,
-				E61A2A0E5B9E8205ABA317EA /* Pods-MagicBellTests.debug.xcconfig */,
-				57D4F2CE13C3BF7FA764FB73 /* Pods-MagicBellTests.release.xcconfig */,
-				642B6CD63E97582F887E9742 /* Pods-MagicBell-MagicBellTests.debug.xcconfig */,
-				6F6B3A596E9B13574FBDBF06 /* Pods-MagicBell-MagicBellTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -719,12 +747,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 59EF99C527446D6900FB2378 /* Build configuration list for PBXNativeTarget "MagicBell" */;
 			buildPhases = (
-				C77BFDFCE49E382506525757 /* [CP] Check Pods Manifest.lock */,
 				59EF99AC27446D6900FB2378 /* Headers */,
 				59EF99AD27446D6900FB2378 /* Sources */,
 				59EF99AE27446D6900FB2378 /* Frameworks */,
 				59EF99AF27446D6900FB2378 /* Resources */,
-				59EF9ACE2744856000FB2378 /* Run linter */,
+				5970B5A127A290430061835E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -739,11 +766,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 59EF99C827446D6900FB2378 /* Build configuration list for PBXNativeTarget "MagicBellTests" */;
 			buildPhases = (
-				6EFA636411C6AC5EFB54C544 /* [CP] Check Pods Manifest.lock */,
 				59EF99B727446D6900FB2378 /* Sources */,
 				59EF99B827446D6900FB2378 /* Frameworks */,
 				59EF99B927446D6900FB2378 /* Resources */,
-				72F1485400FC83ECA887C8F1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -806,92 +831,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59799C4C27A203550032C7D6 /* NotificationFragment.graphql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		59EF9ACE2744856000FB2378 /* Run linter */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Run linter";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif [ -x \"${PODS_ROOT}/SwiftLint/swiftlint\" ]; then\n    \"${PODS_ROOT}/SwiftLint/swiftlint\"\nelse\n    >&2 echo \"warning: SwiftLint not installed, please run `pod install --repo-update`.\"\nfi\n";
-		};
-		6EFA636411C6AC5EFB54C544 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MagicBellTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		72F1485400FC83ECA887C8F1 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MagicBellTests/Pods-MagicBellTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MagicBellTests/Pods-MagicBellTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MagicBellTests/Pods-MagicBellTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C77BFDFCE49E382506525757 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MagicBell-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		59EF99AD27446D6900FB2378 /* Sources */ = {
@@ -1133,14 +1077,21 @@
 		};
 		59EF99C627446D6900FB2378 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A80221B71732E7C663FCB505 /* Pods-MagicBell.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Example/Carthage/Build/AblyDeltaCodec.xcframework/ios-arm64_armv7",
+					"$(PROJECT_DIR)/Example/Carthage/Build/Ably.xcframework/ios-arm64_armv7",
+					"$(PROJECT_DIR)/Example/Carthage/Build/msgpack.xcframework/ios-arm64_armv7",
+					"$(PROJECT_DIR)/Example/Carthage/Build/Harmony.xcframework/ios-arm64",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1162,14 +1113,21 @@
 		};
 		59EF99C727446D6900FB2378 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4E85FF870551B042770D2A72 /* Pods-MagicBell.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Example/Carthage/Build/AblyDeltaCodec.xcframework/ios-arm64_armv7",
+					"$(PROJECT_DIR)/Example/Carthage/Build/Ably.xcframework/ios-arm64_armv7",
+					"$(PROJECT_DIR)/Example/Carthage/Build/msgpack.xcframework/ios-arm64_armv7",
+					"$(PROJECT_DIR)/Example/Carthage/Build/Harmony.xcframework/ios-arm64",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1191,7 +1149,6 @@
 		};
 		59EF99C927446D6900FB2378 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E61A2A0E5B9E8205ABA317EA /* Pods-MagicBellTests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1213,7 +1170,6 @@
 		};
 		59EF99CA27446D6900FB2378 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 57D4F2CE13C3BF7FA764FB73 /* Pods-MagicBellTests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

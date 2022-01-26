@@ -12,6 +12,7 @@
 //
 
 import Harmony
+import Foundation
 
 class EncodableToDataMapper<T>: Mapper<T, Data> where T: Encodable {
 

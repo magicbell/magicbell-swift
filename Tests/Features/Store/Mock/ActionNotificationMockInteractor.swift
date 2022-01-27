@@ -12,7 +12,7 @@
 //
 
 @testable import MagicBell
-import Harmony
+@testable import Harmony
 
 class ActionNotificationMockInteractor: ActionNotificationInteractor {
 

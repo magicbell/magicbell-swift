@@ -13,7 +13,7 @@
 
 import Foundation
 @testable import MagicBell
-import Harmony
+@testable import Harmony
 import struct MagicBell.Notification
 
 

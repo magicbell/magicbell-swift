@@ -12,7 +12,7 @@
 //
 
 @testable import MagicBell
-import Harmony
+@testable import Harmony
 
 func anyPageInfo() -> PageInfo {
     return PageInfo(

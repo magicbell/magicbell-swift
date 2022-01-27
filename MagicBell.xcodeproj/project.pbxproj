@@ -91,6 +91,7 @@
 		59F45979275A434A008F3BC8 /* StoreRealTimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F45978275A434A008F3BC8 /* StoreRealTimeProvider.swift */; };
 		59F4597B275A48AD008F3BC8 /* StoreRealTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597A275A48AD008F3BC8 /* StoreRealTime.swift */; };
 		D27CF1BA27906FDD00897BCB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CF1B927906FDD00897BCB /* User.swift */; };
+		D280727B27A2F1C000FD941A /* Nimble.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D280727A27A2F1C000FD941A /* Nimble.xcframework */; };
 		D29D249227747DA000726ABD /* NotificationStorePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29D249127747DA000726ABD /* NotificationStorePublisher.swift */; };
 		D2C5A1B02768C25500C20D74 /* StoreDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */; };
 		D2CBA52227512462002F1E44 /* PageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52127512462002F1E44 /* PageInfo.swift */; };
@@ -219,6 +220,8 @@
 		D27CF1B927906FDD00897BCB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D280727827A2E40C00FD941A /* MagicBell.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = MagicBell.podspec; sourceTree = "<group>"; };
 		D280727927A2E41300FD941A /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		D280727A27A2F1C000FD941A /* Nimble.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Nimble.xcframework; path = Carthage/Build/Nimble.xcframework; sourceTree = "<group>"; };
+		D280727C27A2F21200FD941A /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
 		D29D249127747DA000726ABD /* NotificationStorePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStorePublisher.swift; sourceTree = "<group>"; };
 		D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDirector.swift; sourceTree = "<group>"; };
 		D2CBA52127512462002F1E44 /* PageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageInfo.swift; sourceTree = "<group>"; };
@@ -251,6 +254,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D280727B27A2F1C000FD941A /* Nimble.xcframework in Frameworks */,
 				59EF99BC27446D6900FB2378 /* MagicBell.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -366,6 +370,7 @@
 		59799C4D27A20ADD0032C7D6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D280727A27A2F1C000FD941A /* Nimble.xcframework */,
 				59799C5827A20AFE0032C7D6 /* Harmony.xcframework */,
 				59799C5527A20AF40032C7D6 /* msgpack.xcframework */,
 				59799C5227A20AE90032C7D6 /* AblyDeltaCodec.xcframework */,
@@ -616,6 +621,7 @@
 				5970B60627A2B09F0061835E /* Package.swift */,
 				D280727827A2E40C00FD941A /* MagicBell.podspec */,
 				D280727927A2E41300FD941A /* Cartfile */,
+				D280727C27A2F21200FD941A /* Cartfile.private */,
 				59EF9AC6274471A500FB2378 /* Source */,
 				59EF99BF27446D6900FB2378 /* Tests */,
 				59EF99B227446D6900FB2378 /* Products */,

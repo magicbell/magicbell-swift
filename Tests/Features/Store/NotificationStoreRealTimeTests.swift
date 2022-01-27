@@ -12,7 +12,7 @@
 //
 
 @testable import MagicBell
-@testable import Harmony
+import Harmony
 import struct MagicBell.Notification
 import XCTest
 import Nimble

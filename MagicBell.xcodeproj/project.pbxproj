@@ -28,14 +28,15 @@
 		595AC4C827710C7A00A3DCA2 /* NotificationEdgeMotherObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595AC4C627710C7000A3DCA2 /* NotificationEdgeMotherObject.swift */; };
 		595AC4CE27710EF000A3DCA2 /* PageInfoMotherObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595AC4CC27710DCD00A3DCA2 /* PageInfoMotherObject.swift */; };
 		595AC4D627715D9D00A3DCA2 /* InitialNotificationStoreCounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595AC4D327715D8D00A3DCA2 /* InitialNotificationStoreCounts.swift */; };
-		5970B59927A290430061835E /* Ably.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C4E27A20ADD0032C7D6 /* Ably.xcframework */; };
-		5970B59A27A290430061835E /* Ably.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C4E27A20ADD0032C7D6 /* Ably.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5970B59B27A290430061835E /* AblyDeltaCodec.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5227A20AE90032C7D6 /* AblyDeltaCodec.xcframework */; };
-		5970B59C27A290430061835E /* AblyDeltaCodec.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5227A20AE90032C7D6 /* AblyDeltaCodec.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5970B59D27A290430061835E /* Harmony.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5827A20AFE0032C7D6 /* Harmony.xcframework */; };
-		5970B59E27A290430061835E /* Harmony.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5827A20AFE0032C7D6 /* Harmony.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5970B59F27A290430061835E /* msgpack.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5527A20AF40032C7D6 /* msgpack.xcframework */; };
-		5970B5A027A290430061835E /* msgpack.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5527A20AF40032C7D6 /* msgpack.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5970B5A227A291D20061835E /* Ably.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C4E27A20ADD0032C7D6 /* Ably.xcframework */; };
+		5970B5A327A291D20061835E /* Ably.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C4E27A20ADD0032C7D6 /* Ably.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5970B5A427A291D20061835E /* AblyDeltaCodec.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5227A20AE90032C7D6 /* AblyDeltaCodec.xcframework */; };
+		5970B5A527A291D20061835E /* AblyDeltaCodec.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5227A20AE90032C7D6 /* AblyDeltaCodec.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5970B5A627A291D20061835E /* Harmony.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5827A20AFE0032C7D6 /* Harmony.xcframework */; };
+		5970B5A727A291D20061835E /* Harmony.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5827A20AFE0032C7D6 /* Harmony.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5970B5A827A291D20061835E /* msgpack.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5527A20AF40032C7D6 /* msgpack.xcframework */; };
+		5970B5A927A291D20061835E /* msgpack.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5527A20AF40032C7D6 /* msgpack.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5970B5B027A295CB0061835E /* NotificationFragment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = D2CBA51F275121C2002F1E44 /* NotificationFragment.graphql */; };
 		59799C4C27A203550032C7D6 /* NotificationFragment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = D2CBA51F275121C2002F1E44 /* NotificationFragment.graphql */; };
 		59799E312746587000BFB375 /* MagicBellClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E302746587000BFB375 /* MagicBellClient.swift */; };
 		59799E33274658B100BFB375 /* SDKProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E32274658B100BFB375 /* SDKProvider.swift */; };
@@ -122,16 +123,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		5970B5A127A290430061835E /* Embed Frameworks */ = {
+		5970B5AA27A291D30061835E /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5970B5A027A290430061835E /* msgpack.xcframework in Embed Frameworks */,
-				5970B59E27A290430061835E /* Harmony.xcframework in Embed Frameworks */,
-				5970B59A27A290430061835E /* Ably.xcframework in Embed Frameworks */,
-				5970B59C27A290430061835E /* AblyDeltaCodec.xcframework in Embed Frameworks */,
+				5970B5A927A291D20061835E /* msgpack.xcframework in Embed Frameworks */,
+				5970B5A727A291D20061835E /* Harmony.xcframework in Embed Frameworks */,
+				5970B5A327A291D20061835E /* Ably.xcframework in Embed Frameworks */,
+				5970B5A527A291D20061835E /* AblyDeltaCodec.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -250,10 +251,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5970B59F27A290430061835E /* msgpack.xcframework in Frameworks */,
-				5970B59D27A290430061835E /* Harmony.xcframework in Frameworks */,
-				5970B59927A290430061835E /* Ably.xcframework in Frameworks */,
-				5970B59B27A290430061835E /* AblyDeltaCodec.xcframework in Frameworks */,
+				5970B5A827A291D20061835E /* msgpack.xcframework in Frameworks */,
+				5970B5A627A291D20061835E /* Harmony.xcframework in Frameworks */,
+				5970B5A227A291D20061835E /* Ably.xcframework in Frameworks */,
+				5970B5A427A291D20061835E /* AblyDeltaCodec.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -751,7 +752,7 @@
 				59EF99AD27446D6900FB2378 /* Sources */,
 				59EF99AE27446D6900FB2378 /* Frameworks */,
 				59EF99AF27446D6900FB2378 /* Resources */,
-				5970B5A127A290430061835E /* Embed Frameworks */,
+				5970B5AA27A291D30061835E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -822,6 +823,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5970B5B027A295CB0061835E /* NotificationFragment.graphql in Resources */,
 				59EF9ACB2744792A00FB2378 /* LICENSE in Resources */,
 				59EF9AC52744710300FB2378 /* MagicBell.podspec in Resources */,
 			);

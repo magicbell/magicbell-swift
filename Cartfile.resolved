@@ -1,4 +1,4 @@
-git "/Users/javi/workspace/mj/harmony/harmony" "d18d59b5547dc075de0066eef9f7faebed0ccd7b"
 github "ably/ably-cocoa" "1.2.10"
 github "ably/delta-codec-cocoa" "1.3.2"
+github "mobilejazz/harmony-swift-core" "54817add16f931927472a0449957f337a7233943"
 github "rvi/msgpack-objective-C" "0.4.0"

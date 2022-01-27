@@ -1,2 +1,2 @@
 github "ably/ably-cocoa" >= 1.2
-git "/Users/javi/workspace/mj/harmony/harmony" "main"
+github "mobilejazz/harmony-swift-core" "master"

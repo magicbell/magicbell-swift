@@ -740,8 +740,6 @@
 			dependencies = (
 			);
 			name = MagicBell;
-			packageProductDependencies = (
-			);
 			productName = MagicBell;
 			productReference = 59EF99B127446D6900FB2378 /* MagicBell.framework */;
 			productType = "com.apple.product-type.framework";

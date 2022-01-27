@@ -23,13 +23,39 @@ struct GraphQLFragment: GraphQLRepresentable {
     }
 
     var graphQLValue: String {
-        let bundle = Bundle(for: MagicBellClient.self)
-        guard let url = bundle.url(forResource: filename, withExtension: "graphql") else {
-            fatalError("Missing file \(filename).graphql")
+        switch filename {
+        case "NotificationFragment":
+            return  """
+                    fragment notification on NotificationsConnection {
+                      edges {
+                        cursor
+                        node {
+                          id
+                          title
+                          content
+                          actionUrl
+                          archivedAt
+                          category
+                          topic
+                          customAttributes
+                          readAt
+                          seenAt
+                          sentAt
+                        }
+                      }
+                      pageInfo {
+                        endCursor
+                        hasNextPage
+                        hasPreviousPage
+                        startCursor
+                      }
+                      totalCount
+                      unreadCount
+                      unseenCount
+                    }
+                    """
+        default:
+            fatalError("Missing fragment")
         }
-        guard let string = try? String(contentsOf: url) else {
-            fatalError("Filed to open \(filename).graphql")
-        }
-        return string
     }
 }

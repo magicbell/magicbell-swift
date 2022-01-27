@@ -34,10 +34,8 @@
 		5970B5A527A291D20061835E /* AblyDeltaCodec.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5227A20AE90032C7D6 /* AblyDeltaCodec.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5970B5A827A291D20061835E /* msgpack.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5527A20AF40032C7D6 /* msgpack.xcframework */; };
 		5970B5A927A291D20061835E /* msgpack.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5527A20AF40032C7D6 /* msgpack.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5970B5B027A295CB0061835E /* NotificationFragment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = D2CBA51F275121C2002F1E44 /* NotificationFragment.graphql */; };
 		5972024B27A2C01700A1BDB1 /* Harmony.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5827A20AFE0032C7D6 /* Harmony.xcframework */; };
 		5972024C27A2C01700A1BDB1 /* Harmony.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5827A20AFE0032C7D6 /* Harmony.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		59799C4C27A203550032C7D6 /* NotificationFragment.graphql in Resources */ = {isa = PBXBuildFile; fileRef = D2CBA51F275121C2002F1E44 /* NotificationFragment.graphql */; };
 		59799E312746587000BFB375 /* MagicBellClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E302746587000BFB375 /* MagicBellClient.swift */; };
 		59799E33274658B100BFB375 /* SDKProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E32274658B100BFB375 /* SDKProvider.swift */; };
 		59799E38274659D800BFB375 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E37274659D800BFB375 /* Environment.swift */; };
@@ -95,7 +93,6 @@
 		D27CF1BA27906FDD00897BCB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CF1B927906FDD00897BCB /* User.swift */; };
 		D29D249227747DA000726ABD /* NotificationStorePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29D249127747DA000726ABD /* NotificationStorePublisher.swift */; };
 		D2C5A1B02768C25500C20D74 /* StoreDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */; };
-		D2CBA520275121C2002F1E44 /* NotificationFragment.graphql in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA51F275121C2002F1E44 /* NotificationFragment.graphql */; };
 		D2CBA52227512462002F1E44 /* PageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52127512462002F1E44 /* PageInfo.swift */; };
 		D2CBA52427512499002F1E44 /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52327512499002F1E44 /* Edge.swift */; };
 		D2CBA52727512518002F1E44 /* CursorPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52627512518002F1E44 /* CursorPredicate.swift */; };
@@ -227,7 +224,6 @@
 		D27CF1B927906FDD00897BCB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D29D249127747DA000726ABD /* NotificationStorePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStorePublisher.swift; sourceTree = "<group>"; };
 		D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDirector.swift; sourceTree = "<group>"; };
-		D2CBA51F275121C2002F1E44 /* NotificationFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = NotificationFragment.graphql; sourceTree = "<group>"; };
 		D2CBA52127512462002F1E44 /* PageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageInfo.swift; sourceTree = "<group>"; };
 		D2CBA52327512499002F1E44 /* Edge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Edge.swift; sourceTree = "<group>"; };
 		D2CBA52627512518002F1E44 /* CursorPredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorPredicate.swift; sourceTree = "<group>"; };
@@ -316,7 +312,6 @@
 				59569BAF274F838D00FF1AA6 /* StoreQuery.swift */,
 				59569BB12750EEDF00FF1AA6 /* StoreGraphQLRepresentableExtensions.swift */,
 				59569BA7274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift */,
-				D2CBA51F275121C2002F1E44 /* NotificationFragment.graphql */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -811,7 +806,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5970B5B027A295CB0061835E /* NotificationFragment.graphql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -819,7 +813,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59799C4C27A203550032C7D6 /* NotificationFragment.graphql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -832,7 +825,6 @@
 			files = (
 				59569BA5274F7B8A00FF1AA6 /* GraphQLRequest.swift in Sources */,
 				59827B55275FD7C9009D93D8 /* AblyMessageProcessor.swift in Sources */,
-				D2CBA520275121C2002F1E44 /* NotificationFragment.graphql in Sources */,
 				59B2DDAE276B5C4C0038B0EA /* CodingKey+JSON.swift in Sources */,
 				59C3CDC0274D2CC20043BA77 /* GetConfigInteractor.swift in Sources */,
 				D2D277262747C9CF00B5F69E /* ActionNotificationNetworkDataSource.swift in Sources */,

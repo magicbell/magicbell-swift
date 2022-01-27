@@ -22,8 +22,10 @@ let package = Package(
     targets: [
         .target(
             name: "MagicBell",
-            dependencies: [.product(name: "Harmony", package: "harmony-swift-core"),
-                            .product(name: "Ably", package: "ably-cocoa")],
+            dependencies: [
+                .product(name: "Harmony", package: "harmony-swift-core"),
+                .product(name: "Ably", package: "ably-cocoa")
+            ],
             path: "Source"
         ),
         .testTarget(

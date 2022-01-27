@@ -81,5 +81,5 @@ Podfile.lock
 **/fastlane/test_output
 
 # Carthage
-Carthage/Build/
+Carthage/
 

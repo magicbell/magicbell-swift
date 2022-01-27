@@ -161,11 +161,6 @@
 		59799C5227A20AE90032C7D6 /* AblyDeltaCodec.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AblyDeltaCodec.xcframework; path = Carthage/Build/AblyDeltaCodec.xcframework; sourceTree = "<group>"; };
 		59799C5527A20AF40032C7D6 /* msgpack.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = msgpack.xcframework; path = Carthage/Build/msgpack.xcframework; sourceTree = "<group>"; };
 		59799C5827A20AFE0032C7D6 /* Harmony.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Harmony.xcframework; path = Carthage/Build/Harmony.xcframework; sourceTree = "<group>"; };
-		59799C5D27A285ED0032C7D6 /* AblyDeltaCodec.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AblyDeltaCodec.xcframework; path = Example/Carthage/Build/AblyDeltaCodec.xcframework; sourceTree = "<group>"; };
-		59799C6127A286510032C7D6 /* AblyDeltaCodec.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AblyDeltaCodec.framework; path = "Example/Carthage/Build/AblyDeltaCodec.xcframework/ios-arm64_armv7/AblyDeltaCodec.framework"; sourceTree = "<group>"; };
-		59799C6527A2866C0032C7D6 /* Ably.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ably.framework; path = "Example/Carthage/Build/Ably.xcframework/ios-arm64_armv7/Ably.framework"; sourceTree = "<group>"; };
-		59799C6827A2867C0032C7D6 /* msgpack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = msgpack.framework; path = "Example/Carthage/Build/msgpack.xcframework/ios-arm64_armv7/msgpack.framework"; sourceTree = "<group>"; };
-		59799C6B27A286890032C7D6 /* Harmony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Harmony.framework; path = "Example/Carthage/Build/Harmony.xcframework/ios-arm64/Harmony.framework"; sourceTree = "<group>"; };
 		59799E302746587000BFB375 /* MagicBellClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBellClient.swift; sourceTree = "<group>"; };
 		59799E32274658B100BFB375 /* SDKProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKProvider.swift; sourceTree = "<group>"; };
 		59799E37274659D800BFB375 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
@@ -222,6 +217,8 @@
 		59F45978275A434A008F3BC8 /* StoreRealTimeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRealTimeProvider.swift; sourceTree = "<group>"; };
 		59F4597A275A48AD008F3BC8 /* StoreRealTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRealTime.swift; sourceTree = "<group>"; };
 		D27CF1B927906FDD00897BCB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		D280727827A2E40C00FD941A /* MagicBell.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = MagicBell.podspec; sourceTree = "<group>"; };
+		D280727927A2E41300FD941A /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		D29D249127747DA000726ABD /* NotificationStorePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStorePublisher.swift; sourceTree = "<group>"; };
 		D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDirector.swift; sourceTree = "<group>"; };
 		D2CBA52127512462002F1E44 /* PageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageInfo.swift; sourceTree = "<group>"; };
@@ -369,11 +366,6 @@
 		59799C4D27A20ADD0032C7D6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				59799C6B27A286890032C7D6 /* Harmony.framework */,
-				59799C6827A2867C0032C7D6 /* msgpack.framework */,
-				59799C6527A2866C0032C7D6 /* Ably.framework */,
-				59799C6127A286510032C7D6 /* AblyDeltaCodec.framework */,
-				59799C5D27A285ED0032C7D6 /* AblyDeltaCodec.xcframework */,
 				59799C5827A20AFE0032C7D6 /* Harmony.xcframework */,
 				59799C5527A20AF40032C7D6 /* msgpack.xcframework */,
 				59799C5227A20AE90032C7D6 /* AblyDeltaCodec.xcframework */,
@@ -622,10 +614,11 @@
 			isa = PBXGroup;
 			children = (
 				5970B60627A2B09F0061835E /* Package.swift */,
+				D280727827A2E40C00FD941A /* MagicBell.podspec */,
+				D280727927A2E41300FD941A /* Cartfile */,
 				59EF9AC6274471A500FB2378 /* Source */,
 				59EF99BF27446D6900FB2378 /* Tests */,
 				59EF99B227446D6900FB2378 /* Products */,
-				B6A4AD0160030AF76A38354D /* Pods */,
 				59799C4D27A20ADD0032C7D6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -680,13 +673,6 @@
 				59827B54275FD7C9009D93D8 /* AblyMessageProcessor.swift */,
 			);
 			path = StoreRealTime;
-			sourceTree = "<group>";
-		};
-		B6A4AD0160030AF76A38354D /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		D2153EF2274E78B1009C2DDC /* Interactor */ = {

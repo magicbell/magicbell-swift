@@ -23,7 +23,6 @@ Pod::Spec.new do |s|
   s.swift_versions = ['5.3', '5.4', '5.5']
 
   s.source_files = 'Source/**/*.swift'
-  s.resources = 'Source/**/*.graphql'
 
   s.dependency 'Harmony/Repository', '1.1.5'
   s.dependency 'Ably', '1.2.7'

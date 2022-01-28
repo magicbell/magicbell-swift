@@ -36,6 +36,10 @@
 		5970B5A927A291D20061835E /* msgpack.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5527A20AF40032C7D6 /* msgpack.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5972024B27A2C01700A1BDB1 /* Harmony.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5827A20AFE0032C7D6 /* Harmony.xcframework */; };
 		5972024C27A2C01700A1BDB1 /* Harmony.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5827A20AFE0032C7D6 /* Harmony.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		597202E327A3D55A00A1BDB1 /* ResultUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597202DB27A3D46C00A1BDB1 /* ResultUtils.swift */; };
+		597202E427A3D55D00A1BDB1 /* BoolObjectMother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597202DD27A3D4E400A1BDB1 /* BoolObjectMother.swift */; };
+		597202E527A3D56000A1BDB1 /* StringMotherObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597202DF27A3D51E00A1BDB1 /* StringMotherObject.swift */; };
+		597202E627A3D56300A1BDB1 /* IntMotherObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597202E127A3D55600A1BDB1 /* IntMotherObject.swift */; };
 		59799E312746587000BFB375 /* MagicBellClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E302746587000BFB375 /* MagicBellClient.swift */; };
 		59799E33274658B100BFB375 /* SDKProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E32274658B100BFB375 /* SDKProvider.swift */; };
 		59799E38274659D800BFB375 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E37274659D800BFB375 /* Environment.swift */; };
@@ -158,6 +162,10 @@
 		595AC4CC27710DCD00A3DCA2 /* PageInfoMotherObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageInfoMotherObject.swift; sourceTree = "<group>"; };
 		595AC4D327715D8D00A3DCA2 /* InitialNotificationStoreCounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialNotificationStoreCounts.swift; sourceTree = "<group>"; };
 		5970B60627A2B09F0061835E /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		597202DB27A3D46C00A1BDB1 /* ResultUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultUtils.swift; sourceTree = "<group>"; };
+		597202DD27A3D4E400A1BDB1 /* BoolObjectMother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolObjectMother.swift; sourceTree = "<group>"; };
+		597202DF27A3D51E00A1BDB1 /* StringMotherObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringMotherObject.swift; sourceTree = "<group>"; };
+		597202E127A3D55600A1BDB1 /* IntMotherObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntMotherObject.swift; sourceTree = "<group>"; };
 		59799C4E27A20ADD0032C7D6 /* Ably.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Ably.xcframework; path = Carthage/Build/Ably.xcframework; sourceTree = "<group>"; };
 		59799C5227A20AE90032C7D6 /* AblyDeltaCodec.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AblyDeltaCodec.xcframework; path = Carthage/Build/AblyDeltaCodec.xcframework; sourceTree = "<group>"; };
 		59799C5527A20AF40032C7D6 /* msgpack.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = msgpack.xcframework; path = Carthage/Build/msgpack.xcframework; sourceTree = "<group>"; };
@@ -337,6 +345,7 @@
 		595AC4C927710D9700A3DCA2 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				597202DA27A3D45C00A1BDB1 /* Utils */,
 				595AC4CA27710D9B00A3DCA2 /* Network */,
 			);
 			path = Common;
@@ -363,6 +372,17 @@
 			isa = PBXGroup;
 			children = (
 				595AC4D327715D8D00A3DCA2 /* InitialNotificationStoreCounts.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		597202DA27A3D45C00A1BDB1 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				597202DB27A3D46C00A1BDB1 /* ResultUtils.swift */,
+				597202DD27A3D4E400A1BDB1 /* BoolObjectMother.swift */,
+				597202DF27A3D51E00A1BDB1 /* StringMotherObject.swift */,
+				597202E127A3D55600A1BDB1 /* IntMotherObject.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -895,8 +915,12 @@
 				5997F8EF2770A3E600DED4E4 /* StoreRealTimeMock.swift in Sources */,
 				595AC4D627715D9D00A3DCA2 /* InitialNotificationStoreCounts.swift in Sources */,
 				595AC4C327710C0100A3DCA2 /* StorePageMotherObject.swift in Sources */,
+				597202E527A3D56000A1BDB1 /* StringMotherObject.swift in Sources */,
+				597202E627A3D56300A1BDB1 /* IntMotherObject.swift in Sources */,
 				5997F8E6277099CB00DED4E4 /* FetchStorePageMockInteractor.swift in Sources */,
 				5997F8EB27709E6A00DED4E4 /* DeleteNotificationMockInteractor.swift in Sources */,
+				597202E327A3D55A00A1BDB1 /* ResultUtils.swift in Sources */,
+				597202E427A3D55D00A1BDB1 /* BoolObjectMother.swift in Sources */,
 				5997F8F52770EA9F00DED4E4 /* GetConfigMockInteractor.swift in Sources */,
 				5997F8F72770ED4C00DED4E4 /* DeleteConfigMockInteractor.swift in Sources */,
 				595AC4CE27710EF000A3DCA2 /* PageInfoMotherObject.swift in Sources */,

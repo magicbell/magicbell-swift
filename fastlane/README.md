@@ -23,6 +23,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Running MagicBell Tests in iPhone 13 Simulator
 
+### ios build
+
+```sh
+[bundle exec] fastlane ios build
+```
+
+
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.

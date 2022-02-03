@@ -240,6 +240,7 @@
 		D2CBA52E275128FA002F1E44 /* StorePredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePredicate.swift; sourceTree = "<group>"; };
 		D2CBA53027513747002F1E44 /* StoreContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreContext.swift; sourceTree = "<group>"; };
 		D2CBA53227513D6A002F1E44 /* GraphQLFragment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLFragment.swift; sourceTree = "<group>"; };
+		D2D215D927AC1B0300A104B8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D2D277252747C9CF00B5F69E /* ActionNotificationNetworkDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionNotificationNetworkDataSource.swift; sourceTree = "<group>"; };
 		D2D277282747D40A00B5F69E /* NotificationQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationQuery.swift; sourceTree = "<group>"; };
 		D2D2772A2747D43200B5F69E /* PushSubscriptionQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSubscriptionQuery.swift; sourceTree = "<group>"; };
@@ -638,6 +639,7 @@
 		59EF99A727446D6900FB2378 = {
 			isa = PBXGroup;
 			children = (
+				D2D215D927AC1B0300A104B8 /* README.md */,
 				5970B60627A2B09F0061835E /* Package.swift */,
 				D280727827A2E40C00FD941A /* MagicBell.podspec */,
 				D280727927A2E41300FD941A /* Cartfile */,

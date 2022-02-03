@@ -69,8 +69,9 @@ This repo also contains a full blown example. To run the project:
 
 ## Installation
 
-You can add the MagicBell SDK for iOS to your Xcode project using [CocoaPods](https://cocoapods.org). If you have not
-installed CocoaPods, install it by running:
+### CocoaPods
+
+You can add the MagicBell SDK for iOS to your Xcode project using [CocoaPods](https://cocoapods.org). If you have not installed CocoaPods, install it by running:
 
 ```
 gem install cocoapods
@@ -87,6 +88,27 @@ pod 'MagicBell', '>=0'
 and run `pod install`.
 
 **IMPORTANT**: Make sure you specify `use_frameworks!` in your `Podfile`.
+
+### Swift Package Manager
+
+To add MagicBell using SPM, just add the dependency as follows to your project:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/magicbell-io/magicbell-ios", .upToNextMajor(from: "1.0.0"))
+]
+```
+
+### Carthage
+
+Add to the Carfile the following dependency:
+
+```ruby
+github "magicbell-io/magicbell-ios" "2.0.0"
+```
+
+Then, run `carthage update --use-xcframeworks` to resolve dependencies and finally add the `MagicBell.xcframework` to your project linked frameworks. 
+
 
 ## The MagicBell Client
 

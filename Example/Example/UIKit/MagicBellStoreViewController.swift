@@ -26,7 +26,7 @@ class MagicBellStoreViewController: UIViewController,
     var user: MagicBell.User!
 
     private lazy var store: NotificationStore = {
-        let store = user.store.forAll()
+        let store = user.store.build()
         store.addContentObserver(self)
         store.addCountObserver(self)
         return store

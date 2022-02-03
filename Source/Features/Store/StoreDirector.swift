@@ -16,10 +16,16 @@ import Harmony
 
 /// An store director is the class responsible of creating and managing `NotificationStore` objects.
 public protocol StoreDirector {
-    /// Returns a notification store for the given predicate.
+    /// Builds a notification store with the default filters.
     /// - Parameters:
     ///    - predicate: Notification store's predicate. Define an scope for the notification store. Read, Seen, Archive, Categories, Topics and inApp.
-    /// - Returns: A `NotificationStore` with all the actions. MarkNotifications, MarkAllNotifications, FetchNotifications, ReloadStore.
+    /// - Returns: A `NotificationStore`. MarkNotifications, MarkAllNotifications, FetchNotifications, ReloadStore.
+    func build() -> NotificationStore
+
+    /// Builds a notification store for the given predicate.
+    /// - Parameters:
+    ///    - predicate: Notification store's predicate. Define an scope for the notification store. Read, Seen, Archive, Categories, Topics and inApp.
+    /// - Returns: A `NotificationStore`. MarkNotifications, MarkAllNotifications, FetchNotifications, ReloadStore.
     func build(predicate: StorePredicate) -> NotificationStore
 
     /// Disposes a notification store for the given predicate if exists. To be called when a notification store is no longer needed.
@@ -29,12 +35,6 @@ public protocol StoreDirector {
 }
 
 public extension StoreDirector {
-    /// Return the store for all notificaionts
-    /// - Returns: A notification store
-    func forAll() -> NotificationStore {
-        build(predicate: StorePredicate())
-    }
-
     /// Return the store for unread notificaionts
     /// - Returns: A notification store
     func forUnread() -> NotificationStore {
@@ -119,6 +119,10 @@ class RealTimeByPredicateStoreDirector: InternalStoreDirector {
                     startRealTimeConnection()
                 }
             }
+    }
+
+    func build() -> NotificationStore {
+        build(predicate: StorePredicate())
     }
 
     func build(predicate: StorePredicate) -> NotificationStore {

@@ -29,7 +29,7 @@ let client = MagicBellClient(apiKey: "[MAGICBELL_API_KEY]")
 let user = client.forUser(email: "richard@example.com")
 
 // Create a store of notifications
-let store = user.store.forAll()
+let store = user.store.build()
 
 // Fetch the first page of notifications
 store.fetch { result in
@@ -246,7 +246,6 @@ all notifications using one of these methods of the store instance:
 
 | Method          | Description                        |
 | --------------- | ---------------------------------- |
-| `forAll`        | Fetch all notifications            |
 | `forRead`       | Fetch read notifications only      |
 | `forUnread`     | Fetch unread notifications only    |
 | `forCategories` | Filter notifications by categories |
@@ -255,8 +254,6 @@ all notifications using one of these methods of the store instance:
 For example:
 
 ```swift
-let allNotifications = user.store.forAll()
-
 let readNotifications = user.store.forRead()
 
 let unreadNotifications = user.store.forUnread()
@@ -368,7 +365,7 @@ notifications (read about observers [here](#observing-notification-store-changes
 
 ```swift
 // Obtaining a new notification store (first time)
-let store = user.store.forAll()
+let store = user.store.build()
 
 // First loading
 store.fetch { result in
@@ -466,7 +463,7 @@ protocol NotificationStoreCountObserver: AnyObject {
 To observe changes, implement these protocols (or one of them), and register as an observer to a notification store.
 
 ```swift
-let store = user.store.forAll()
+let store = user.store.build()
 let observer = myObserverClassInstance
 
 store.addContentObserver(observer)

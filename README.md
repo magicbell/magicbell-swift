@@ -29,7 +29,7 @@ let client = MagicBellClient(apiKey: "[MAGICBELL_API_KEY]")
 let user = client.connectUser(email: "richard@example.com")
 
 // Create a store of notifications
-let store = user.store.forAll()
+let store = user.store.build()
 
 // Fetch the first page of notifications
 store.fetch { result in
@@ -241,29 +241,21 @@ You can also inject the MagicBell `User` instance in your own graph and keep tra
 
 ## NotificationStore
 
-The `NotificationStore` class represents a collection of [MagicBell](https://magicbell.com) notifications. You can fetch
-all notifications using one of these methods of the store instance:
-
-| Method          | Description                        |
-| --------------- | ---------------------------------- |
-| `forAll`        | Fetch all notifications            |
-| `forRead`       | Fetch read notifications only      |
-| `forUnread`     | Fetch unread notifications only    |
-| `forCategories` | Filter notifications by categories |
-| `forTopics`     | Filter notifications by topics     |
+The `NotificationStore` class represents a collection of [MagicBell](https://magicbell.com) notifications. You can
+create an instance of this class through the `.build(...)` method on the user store object.
 
 For example:
 
 ```swift
-let allNotifications = user.store.forAll()
+let allNotifications = user.store.build()
 
-let readNotifications = user.store.forRead()
+let readNotifications = user.store.build(.read)
 
-let unreadNotifications = user.store.forUnread()
+let unreadNotifications = user.store.build(.unread)
 
-let billingNotifications = user.store.forCategories(["billing"])
+let billingNotifications = user.store.build(categories: ["billing"])
 
-let firstOrderNotifications = user.store.forTopics(["order:001"])
+let firstOrderNotifications = user.store.build(topics: ["order:001"])
 ```
 
 These are the attributes of a notification store:
@@ -324,12 +316,12 @@ observers of the notification store.
 
 ### Advanced filters
 
-You can also create stores with more advanced filters. To do it, fetch a store using the `.with(...)` method with a
+You can also create stores with more advanced filters. To do it, fetch a store using the `.build(...)` method with a
 `StorePredicate`.
 
 ```swift
 let predicate = StorePredicate()
-let notifications = user.store.with(predicate: predicate)
+let notifications = user.store.build(predicate: predicate)
 ```
 
 These are the available options:
@@ -346,7 +338,7 @@ For example, use this predicate to fetch unread notifications of the `"important
 
 ```swift
 let predicate = StorePredicate(read: .unread, categories: ["important"])
-let store = user.store.with(predicate: predicate)
+let store = user.store.build(predicate: predicate)
 ```
 
 Notification stores are singletons. Creating a store with the same predicate twice will yield the same instance.
@@ -368,7 +360,7 @@ notifications (read about observers [here](#observing-notification-store-changes
 
 ```swift
 // Obtaining a new notification store (first time)
-let store = user.store.forAll()
+let store = user.store.build()
 
 // First loading
 store.fetch { result in
@@ -466,7 +458,7 @@ protocol NotificationStoreCountObserver: AnyObject {
 To observe changes, implement these protocols (or one of them), and register as an observer to a notification store.
 
 ```swift
-let store = user.store.forAll()
+let store = user.store.build()
 let observer = myObserverClassInstance
 
 store.addContentObserver(observer)

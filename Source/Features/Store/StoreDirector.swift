@@ -16,49 +16,47 @@ import Harmony
 
 /// An store director is the class responsible of creating and managing `NotificationStore` objects.
 public protocol StoreDirector {
-    /// Returns a notification store for the given predicate.
+    /// Builds a notification store with the default filters.
     /// - Parameters:
     ///    - predicate: Notification store's predicate. Define an scope for the notification store. Read, Seen, Archive, Categories, Topics and inApp.
-    /// - Returns: A `NotificationStore` with all the actions. MarkNotifications, MarkAllNotifications, FetchNotifications, ReloadStore.
-    func with(predicate: StorePredicate) -> NotificationStore
+    /// - Returns: A `NotificationStore`. MarkNotifications, MarkAllNotifications, FetchNotifications, ReloadStore.
+    func build() -> NotificationStore
+
+    /// Builds a notification store for the given predicate.
+    /// - Parameters:
+    ///    - predicate: Notification store's predicate. Define an scope for the notification store. Read, Seen, Archive, Categories, Topics and inApp.
+    /// - Returns: A `NotificationStore`. MarkNotifications, MarkAllNotifications, FetchNotifications, ReloadStore.
+    func build(predicate: StorePredicate) -> NotificationStore
 
     /// Disposes a notification store for the given predicate if exists. To be called when a notification store is no longer needed.
     /// - Parameters:
     ///    - predicate: Notification store's predicate.
-    func disposeWith(predicate: StorePredicate)
+    func dispose(predicate: StorePredicate)
 }
 
 public extension StoreDirector {
-    /// Return the store for all notificaionts
+    /// Build a store based on the unread state
     /// - Returns: A notification store
-    func forAll() -> NotificationStore {
-        with(predicate: StorePredicate())
+    func build(_ read: StorePredicate.Read) -> NotificationStore {
+        return build(predicate: StorePredicate(read: read))
     }
 
-    /// Return the store for unread notificaionts
+    /// Build a store based on the archived state
     /// - Returns: A notification store
-    func forUnread() -> NotificationStore {
-        with(predicate: StorePredicate(read: .unread))
+    func build(_ archived: StorePredicate.Archived) -> NotificationStore {
+        return build(predicate: StorePredicate(archived: archived))
     }
 
-    /// Return the store for read notificaionts
+    /// Build a store based on the category of notifications
     /// - Returns: A notification store
-    func forRead() -> NotificationStore {
-        with(predicate: StorePredicate(read: .read))
+    func build(categories: [String]) -> NotificationStore {
+        return build(predicate: StorePredicate(categories: categories))
     }
 
-    /// Return the store for notifications with the given categories
-    /// - Parameter categories: The list of categories
+    /// Build a store based on the topic of notifications
     /// - Returns: A notification store
-    func forCategories(_ categories: [String]) -> NotificationStore {
-        with(predicate: StorePredicate(categories: categories))
-    }
-
-    /// Return the store for notifications with the given topics
-    /// - Parameter categories: The list of topics
-    /// - Returns: A notification store
-    func forTopics(_ topics: [String]) -> NotificationStore {
-        with(predicate: StorePredicate(topics: topics))
+    func build(topics: [String]) -> NotificationStore {
+        return build(predicate: StorePredicate(topics: topics))
     }
 }
 
@@ -121,7 +119,11 @@ class RealTimeByPredicateStoreDirector: InternalStoreDirector {
             }
     }
 
-    func with(predicate: StorePredicate) -> NotificationStore {
+    func build() -> NotificationStore {
+        build(predicate: StorePredicate())
+    }
+
+    func build(predicate: StorePredicate) -> NotificationStore {
         if let store = stores.first(where: { $0.predicate.hashValue == predicate.hashValue }) {
             return store
         }
@@ -141,7 +143,7 @@ class RealTimeByPredicateStoreDirector: InternalStoreDirector {
         return store
     }
 
-    func disposeWith(predicate: StorePredicate) {
+    func dispose(predicate: StorePredicate) {
         if let storeIndex = stores.firstIndex(where: { $0.predicate.hashValue == predicate.hashValue }) {
             let store = stores[storeIndex]
             storeRealTime.removeObserver(store)

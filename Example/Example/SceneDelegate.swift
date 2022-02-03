@@ -49,7 +49,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             viewController.user = user
             window?.rootViewController = viewController
         case .swiftUI:
-            let store = user.store.forAll()
+            let store = user.store.build()
             window?.rootViewController = HostingController(rootView: NavigationView {
                 MagicBellView(store: store)
             })

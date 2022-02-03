@@ -24,12 +24,6 @@ public class MagicBellClient {
     /// The MagicBell SDK version
     public static let version = "1.0.0-alpha.3"
 
-    /// MagicBell's default API URL. Defaults to https://api.magicbell.com.
-    public static let defaultBaseUrl: URL = {
-        // swiftlint:disable force_unwrapping
-        return URL(string: "https://api.magicbell.com")!
-    }()
-
     private let sdkProvider: SDKComponent
 
     private var users: [String: User] = [:]
@@ -47,7 +41,8 @@ public class MagicBellClient {
         apiKey: String,
         apiSecret: String? = nil,
         enableHMAC: Bool = false,
-        baseUrl: URL = MagicBellClient.defaultBaseUrl,
+        // swiftlint:disable force_unwrapping
+        baseUrl: URL = URL(string: "https://api.magicbell.com")!,
         logLevel: LogLevel = .none
     ) {
         sdkProvider = DefaultSDKModule(
@@ -66,7 +61,7 @@ public class MagicBellClient {
     ///   - email: The user's email
     /// - Returns:
     ///   - An instance of `User`.
-    public func forUser(email: String) -> User {
+    public func connectUser(email: String) -> User {
         let userQuery = UserQuery(email: email)
         return getUser(userQuery)
     }
@@ -76,7 +71,7 @@ public class MagicBellClient {
     ///   - externalId: The user's external ID
     /// - Returns:
     ///   - An instance of `User`.
-    public func forUser(externalId: String) -> User {
+    public func connectUser(externalId: String) -> User {
         let userQuery = UserQuery(externalId: externalId)
         return getUser(userQuery)
     }
@@ -87,7 +82,7 @@ public class MagicBellClient {
     ///   - externalId: The user's external ID
     /// - Returns:
     ///   - An instance of `User`.
-    public func forUser(email: String, externalId: String) -> User {
+    public func connectUser(email: String, externalId: String) -> User {
         let userQuery = UserQuery(externalId: externalId, email: email)
         return getUser(userQuery)
     }
@@ -95,7 +90,7 @@ public class MagicBellClient {
     /// Remove a MagicBell user. All connections are stopped.
     /// - Parameters:
     ///   - email: The user's email
-    public func removeUserFor(email: String) {
+    public func disconnectUser(email: String) {
         let userQuery = UserQuery(email: email)
         removeUser(userQuery: userQuery)
     }
@@ -103,7 +98,7 @@ public class MagicBellClient {
     /// Remove a MagicBell user. All connections are stopped.
     /// - Parameters:
     ///   - externalId: The user's external ID
-    public func removeUserFor(externalId: String) {
+    public func disconnectUser(externalId: String) {
         let userQuery = UserQuery(externalId: externalId)
         removeUser(userQuery: userQuery)
     }
@@ -112,7 +107,7 @@ public class MagicBellClient {
     /// - Parameters:
     ///   - email: The user's email
     ///   - externalId: The user's external ID
-    public func removeUserFor(email: String, externalId: String) {
+    public func disconnectUser(email: String, externalId: String) {
         let userQuery = UserQuery(externalId: externalId, email: email)
         removeUser(userQuery: userQuery)
     }

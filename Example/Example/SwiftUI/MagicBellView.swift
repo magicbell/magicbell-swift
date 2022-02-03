@@ -162,10 +162,10 @@ struct MagicBellView: View {
 }
 
 struct MagicBellView_Previews: PreviewProvider {
-    static let user = MagicBellClient.shared.forUser(email: "john@doe.com")
+    static let user = MagicBellClient.shared.connectUser(email: "john@doe.com")
     static var previews: some View {
         NavigationView {
-            MagicBellView(store: user.store.forAll())
+            MagicBellView(store: user.store.build())
         }
     }
 }

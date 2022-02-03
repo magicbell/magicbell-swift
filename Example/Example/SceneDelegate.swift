@@ -38,7 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
 
         // Defining the user to test
-        let user = MagicBellClient.shared.forUser(email: "richard@example.com")
+        let user = MagicBellClient.shared.connectUser(email: "richard@example.com")
 
         switch style {
         case .uiKit:
@@ -49,7 +49,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             viewController.user = user
             window?.rootViewController = viewController
         case .swiftUI:
-            let store = user.store.forAll()
+            let store = user.store.build()
             window?.rootViewController = HostingController(rootView: NavigationView {
                 MagicBellView(store: store)
             })

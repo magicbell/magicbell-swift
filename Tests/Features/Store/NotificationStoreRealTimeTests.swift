@@ -18,7 +18,7 @@ import XCTest
 import Nimble
 
 class NotificationStoreRealTimeTests: XCTestCase {
-    let defaultEdgeArraySize = 20
+    let defaultEdgeArraySize = 50
     lazy var anyIndexForDefaultEdgeArraySize = Int.random(in: 0..<defaultEdgeArraySize)
     let userQuery = UserQuery(email: "javier@mobilejazz.com")
 
@@ -48,7 +48,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
             deleteConfigInteractor: deleteConfigInteractor,
             storeRealTime: storeRealTime)
 
-        return storeDirector.with(predicate: predicate)
+        return storeDirector.build(predicate: predicate)
     }
 
     func test_addRealTimeStore() {

@@ -26,7 +26,7 @@ class MagicBellStoreViewController: UIViewController,
     var user: MagicBell.User!
 
     private lazy var store: NotificationStore = {
-        let store = user.store.forAll()
+        let store = user.store.build()
         store.addContentObserver(self)
         store.addCountObserver(self)
         return store
@@ -102,7 +102,7 @@ class MagicBellStoreViewController: UIViewController,
                 guard let email = alert.textFields?.first?.text else {
                     return
                 }
-                self.user = MagicBellClient.shared.forUser(email: email)
+                self.user = MagicBellClient.shared.connectUser(email: email)
                 self.configureStore(predicate: StorePredicate())
             })
             self.present(alert, animated: true, completion: nil)
@@ -139,7 +139,7 @@ class MagicBellStoreViewController: UIViewController,
         store.removeContentObserver(self)
         store.removeCountObserver(self)
 
-        store = user.store.with(predicate: predicate)
+        store = user.store.build(predicate: predicate)
         store.addContentObserver(self)
         store.addCountObserver(self)
 

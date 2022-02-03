@@ -20,7 +20,7 @@ import Foundation
 // swiftlint:disable type_body_length
 // swiftlint:disable file_length
 public class NotificationStore: Collection, StoreRealTimeObserver {
-    private let pageSize = 20
+    private let pageSize = 50
 
     private let fetchStorePageInteractor: FetchStorePageInteractor
     private let actionNotificationInteractor: ActionNotificationInteractor

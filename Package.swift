@@ -16,22 +16,17 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/mobilejazz/harmony-swift-core.git", from: "2.0.0"),
-        .package(url: "https://github.com/ably/ably-cocoa", from: "1.2.0"),
+        .package(url: "https://github.com/mobilejazz/harmony-swift", from: "2.0.0"),
+        .package(url: "https://github.com/ably/ably-cocoa", from: "1.2.0")
     ],
     targets: [
         .target(
             name: "MagicBell",
             dependencies: [
-                .product(name: "Harmony", package: "harmony-swift-core"),
+                .product(name: "Harmony", package: "harmony-swift"),
                 .product(name: "Ably", package: "ably-cocoa")
             ],
             path: "Source"
-        ),
-        .testTarget(
-            name: "MagicBellTests",
-            dependencies: ["MagicBell"],
-            path: "Tests"
-        ),
+        )
     ]
 )

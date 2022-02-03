@@ -18,26 +18,43 @@ default_platform(:ios)
 platform :ios do
   before_all do
     setup_circle_ci
-    # cocoapods // This command will install cocoapods and run pod install
+  end
+
+  desc "Resolves the dependences needed in MagicBell.xcodeproj"
+  lane :init do
+    carthage(
+      command: "update",
+      no_skip_current: false,
+      use_xcframeworks: true,
+      use_binaries: false,
+    )
+  end
+
+  desc "Verifies the build process of MagicBell deployment"
+  lane :build do
+    carthage(
+      command: "build",
+      no_skip_current: false,
+      use_xcframeworks: true,
+      use_binaries: false,
+    )
+  end
+
+  desc "Running MagicBell Tests in iPhone 13 Simulator"
+  lane :tests do
     carthage(
       command: "update",
       no_skip_current: false,
       platform: "iOS",
       use_xcframeworks: true,
       use_binaries: false,
-      )
-  end
+    )
 
-  desc "Running MagicBell Tests in iPhone 13 Simulator"
-  lane :tests do
     run_tests(
       project: "MagicBell.xcodeproj",
       scheme: "MagicBellTests",
       devices: ["iPhone 13"]
-      )
-  end
-
-  lane :build do
+    )
   end
 end
 

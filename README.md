@@ -96,10 +96,10 @@ dependencies: [
 To install MagicBell using [Carthage](https://github.com/Carthage/Carthage), add to the Carfile the following dependency:
 
 ```ruby
-github "magicbell-io/magicbell-ios" "2.0.0"
+github "magicbell-io/magicbell-ios" "1.0.0"
 ```
 
-Then, run `carthage update --use-xcframeworks --platform [iOS|macOS|tvOS] --no-use-binaries` (selecting the desired platform) to resolve dependencies. 
+Then, run `carthage update --use-xcframeworks --platform [iOS|macOS] --no-use-binaries` (selecting the desired platform) to resolve dependencies. 
 
 Finally add the `MagicBell.xcframework` to your project linked frameworks, together with the other dependencies resolved by Carthage. 
 
@@ -276,9 +276,11 @@ For example:
 ```swift
 let allNotifications = user.store.build()
 
-let readNotifications = user.store.build(.read)
+let readNotifications = user.store.build(read: true)
 
-let unreadNotifications = user.store.build(.unread)
+let unreadNotifications = user.store.build(read: false)
+
+let archviedNotifications = user.store.build(archived: true)
 
 let billingNotifications = user.store.build(categories: ["billing"])
 
@@ -602,5 +604,4 @@ user.
 
 ## Contributing
 
-We welcome contributions of any kind. To do so, clone the repo, run `pod install` from the root directory, and open the
-`MagicBell.xcworkspace`.
+We welcome contributions of any kind. To do so, clone the repo, resolve dependencies via Carthage in the root folder by running the command `carthage update --use-xcframeworks --no-use-binaries`, and open `MagicBell.xcodeproj`.

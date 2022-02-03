@@ -66,7 +66,7 @@ public class MagicBellClient {
     ///   - email: The user's email
     /// - Returns:
     ///   - An instance of `User`.
-    public func forUser(email: String) -> User {
+    public func connectUser(email: String) -> User {
         let userQuery = UserQuery(email: email)
         return getUser(userQuery)
     }
@@ -76,7 +76,7 @@ public class MagicBellClient {
     ///   - externalId: The user's external ID
     /// - Returns:
     ///   - An instance of `User`.
-    public func forUser(externalId: String) -> User {
+    public func connectUser(externalId: String) -> User {
         let userQuery = UserQuery(externalId: externalId)
         return getUser(userQuery)
     }
@@ -87,7 +87,7 @@ public class MagicBellClient {
     ///   - externalId: The user's external ID
     /// - Returns:
     ///   - An instance of `User`.
-    public func forUser(email: String, externalId: String) -> User {
+    public func connectUser(email: String, externalId: String) -> User {
         let userQuery = UserQuery(externalId: externalId, email: email)
         return getUser(userQuery)
     }

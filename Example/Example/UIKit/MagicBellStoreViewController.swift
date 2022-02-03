@@ -102,7 +102,7 @@ class MagicBellStoreViewController: UIViewController,
                 guard let email = alert.textFields?.first?.text else {
                     return
                 }
-                self.user = magicBell.forUser(email: email)
+                self.user = magicBell.connectUser(email: email)
                 self.configureStore(predicate: StorePredicate())
             })
             self.present(alert, animated: true, completion: nil)

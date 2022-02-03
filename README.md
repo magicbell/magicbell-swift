@@ -26,7 +26,7 @@ import MagicBell
 let client = MagicBellClient(apiKey: "[MAGICBELL_API_KEY]")
 
 // Set the MagicBell user
-let user = client.forUser(email: "richard@example.com")
+let user = client.connectUser(email: "richard@example.com")
 
 // Create a store of notifications
 let store = user.store.forAll()
@@ -132,27 +132,27 @@ let magicbell = MagicBellClient(apiKey: "[MAGICBELL_API_KEY]")
 ## User
 
 Requests to the MagicBell API require that you **identify the MagicBell user**. This can be done by calling the
-`forUser(...)` method on the `MagicBellClient` instance with the user's email or external ID:
+`connectUser(...)` method on the `MagicBellClient` instance with the user's email or external ID:
 
 ```swift
 // Identify the user by its email
-let user = magicbell.forUser(email: "richard@example.com")
+let user = magicbell.connectUser(email: "richard@example.com")
 
 // Identify the user by its external id
-let user = magicbell.forUser(externalId: "001")
+let user = magicbell.connectUser(externalId: "001")
 
 // Identify the user by both, email and external id
-let user = magicbell.forUser(email: "richard@example.com", externalId: "001")
+let user = magicbell.connectUser(email: "richard@example.com", externalId: "001")
 ```
 
 You can connect as [many users as you need](#multi-user-support).
 
-**IMPORTANT:** `User` instances are singletons. Therefore, calls to the `forUser` method with the same arguments will
+**IMPORTANT:** `User` instances are singletons. Therefore, calls to the `connectUser` method with the same arguments will
 yield the same user:
 
 ```swift
-let userOne = magicbell.forUser(email: "mary@example.com")
-let userTwo = magicbell.forUser(email: "mary@example.com")
+let userOne = magicbell.connectUser(email: "mary@example.com")
+let userTwo = magicbell.connectUser(email: "mary@example.com")
 
 assert(userOne === userTwo, "Both users reference to the same instance")
 ```
@@ -162,12 +162,12 @@ assert(userOne === userTwo, "Both users reference to the same instance")
 If your app suports multiple logins, you may want to display the status of notifications for all logged in users at the
 same time. The MagicBell SDK allows you to that.
 
-You can call the `forUser(:)` method with the email or external ID of your logged in users as many times as you need.
+You can call the `connectUser(:)` method with the email or external ID of your logged in users as many times as you need.
 
 ```swift
-let userOne = magicbell.forUser(email: "richard@example.com")
-let userTwo = magicbell.forUser(email: "mary@example.com")
-let userThree = magicbell.forUser(externalId: "001")
+let userOne = magicbell.connectUser(email: "richard@example.com")
+let userTwo = magicbell.connectUser(email: "mary@example.com")
+let userThree = magicbell.connectUser(externalId: "001")
 ```
 
 ### Logout a User
@@ -216,7 +216,7 @@ struct User {
 extension User {
     /// Returns the logged in MagicBell user
     func magicBell() -> MagicBell.User {
-        return magicbell.forUser(email: email)
+        return magicbell.connectUser(email: email)
     }
 }
 ```
@@ -576,7 +576,7 @@ func application(_ application: UIApplication, didRegisterForRemoteNotifications
 ```
 
 MagicBell will keep that device token stored temporarly in memory and send it as soon as new users are declared via
-`MagicBellClient.forUser`.
+`MagicBellClient.connectUser`.
 
 Whe a user is disconnected (`MagicBellClient.removeUserFor`), the device token is automatically unregistered for that
 user.

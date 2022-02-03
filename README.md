@@ -241,26 +241,21 @@ You can also inject the MagicBell `User` instance in your own graph and keep tra
 
 ## NotificationStore
 
-The `NotificationStore` class represents a collection of [MagicBell](https://magicbell.com) notifications. You can fetch
-all notifications using one of these methods of the store instance:
-
-| Method          | Description                        |
-| --------------- | ---------------------------------- |
-| `forRead`       | Fetch read notifications only      |
-| `forUnread`     | Fetch unread notifications only    |
-| `forCategories` | Filter notifications by categories |
-| `forTopics`     | Filter notifications by topics     |
+The `NotificationStore` class represents a collection of [MagicBell](https://magicbell.com) notifications. You can
+create an instance of this class through the `.build(...)` method on the user store object.
 
 For example:
 
 ```swift
-let readNotifications = user.store.forRead()
+let allNotifications = user.store.build()
 
-let unreadNotifications = user.store.forUnread()
+let readNotifications = user.store.build(.read)
 
-let billingNotifications = user.store.forCategories(["billing"])
+let unreadNotifications = user.store.build(.unread)
 
-let firstOrderNotifications = user.store.forTopics(["order:001"])
+let billingNotifications = user.store.build(categories: ["billing"])
+
+let firstOrderNotifications = user.store.build(topics: ["order:001"])
 ```
 
 These are the attributes of a notification store:

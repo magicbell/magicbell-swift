@@ -35,30 +35,28 @@ public protocol StoreDirector {
 }
 
 public extension StoreDirector {
-    /// Return the store for unread notificaionts
+    /// Build a store based on the unread state
     /// - Returns: A notification store
-    func forUnread() -> NotificationStore {
-        build(predicate: StorePredicate(read: .unread))
+    func build(_ read: StorePredicate.Read) -> NotificationStore {
+        return build(predicate: StorePredicate(read: read))
     }
 
-    /// Return the store for read notificaionts
+    /// Build a store based on the archived state
     /// - Returns: A notification store
-    func forRead() -> NotificationStore {
-        build(predicate: StorePredicate(read: .read))
+    func build(_ archived: StorePredicate.Archived) -> NotificationStore {
+        return build(predicate: StorePredicate(archived: archived))
     }
 
-    /// Return the store for notifications with the given categories
-    /// - Parameter categories: The list of categories
+    /// Build a store based on the category of notifications
     /// - Returns: A notification store
-    func forCategories(_ categories: [String]) -> NotificationStore {
-        build(predicate: StorePredicate(categories: categories))
+    func build(categories: [String]) -> NotificationStore {
+        return build(predicate: StorePredicate(categories: categories))
     }
 
-    /// Return the store for notifications with the given topics
-    /// - Parameter categories: The list of topics
+    /// Build a store based on the topic of notifications
     /// - Returns: A notification store
-    func forTopics(_ topics: [String]) -> NotificationStore {
-        build(predicate: StorePredicate(topics: topics))
+    func build(topics: [String]) -> NotificationStore {
+        return build(predicate: StorePredicate(topics: topics))
     }
 }
 

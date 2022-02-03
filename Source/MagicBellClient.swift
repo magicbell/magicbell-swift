@@ -95,7 +95,7 @@ public class MagicBellClient {
     /// Remove a MagicBell user. All connections are stopped.
     /// - Parameters:
     ///   - email: The user's email
-    public func removeUserFor(email: String) {
+    public func disconnectUser(email: String) {
         let userQuery = UserQuery(email: email)
         removeUser(userQuery: userQuery)
     }
@@ -103,7 +103,7 @@ public class MagicBellClient {
     /// Remove a MagicBell user. All connections are stopped.
     /// - Parameters:
     ///   - externalId: The user's external ID
-    public func removeUserFor(externalId: String) {
+    public func disconnectUser(externalId: String) {
         let userQuery = UserQuery(externalId: externalId)
         removeUser(userQuery: userQuery)
     }
@@ -112,7 +112,7 @@ public class MagicBellClient {
     /// - Parameters:
     ///   - email: The user's email
     ///   - externalId: The user's external ID
-    public func removeUserFor(email: String, externalId: String) {
+    public func disconnectUser(email: String, externalId: String) {
         let userQuery = UserQuery(externalId: externalId, email: email)
         removeUser(userQuery: userQuery)
     }

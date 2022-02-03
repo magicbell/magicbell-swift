@@ -178,17 +178,17 @@ When the user is logged out from your application you want to:
 - Stop the real-time connection with the MagicBell API
 - Unregister the device from push notifications
 
-This can be achieved with the `removeUserFor` method of the `MagicBell` client instance:
+This can be achieved with the `disconnectUser` method of the `MagicBell` client instance:
 
 ```swift
 // Remove by email
-magicbell.removeUserFor(email: "richard@example.com")
+magicbell.disconnectUser(email: "richard@example.com")
 
 // Remove by external id
-magicbell.removeUserFor(externalId: "001")
+magicbell.disconnectUser(externalId: "001")
 
 // Remove by email and external id
-magicbell.removeUserFor(email: "richard@example.com", externalId: "001")
+magicbell.disconnectUser(email: "richard@example.com", externalId: "001")
 ```
 
 ### Integrating into your app
@@ -578,7 +578,7 @@ func application(_ application: UIApplication, didRegisterForRemoteNotifications
 MagicBell will keep that device token stored temporarly in memory and send it as soon as new users are declared via
 `MagicBellClient.connectUser`.
 
-Whe a user is disconnected (`MagicBellClient.removeUserFor`), the device token is automatically unregistered for that
+Whe a user is disconnected (`MagicBellClient.disconnectUser`), the device token is automatically unregistered for that
 user.
 
 ## Contributing

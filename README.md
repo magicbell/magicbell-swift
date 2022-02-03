@@ -26,10 +26,10 @@ import MagicBell
 let client = MagicBellClient(apiKey: "[MAGICBELL_API_KEY]")
 
 // Set the MagicBell user
-let user = client.forUser(email: "richard@example.com")
+let user = client.connectUser(email: "richard@example.com")
 
 // Create a store of notifications
-let store = user.store.forAll()
+let store = user.store.build()
 
 // Fetch the first page of notifications
 store.fetch { result in
@@ -143,27 +143,27 @@ extension MagicBellClient {
 ## User
 
 Requests to the MagicBell API require that you **identify the MagicBell user**. This can be done by calling the
-`forUser(...)` method on the `MagicBellClient` instance with the user's email or external ID:
+`connectUser(...)` method on the `MagicBellClient` instance with the user's email or external ID:
 
 ```swift
 // Identify the user by its email
-let user = magicbell.forUser(email: "richard@example.com")
+let user = magicbell.connectUser(email: "richard@example.com")
 
 // Identify the user by its external id
-let user = magicbell.forUser(externalId: "001")
+let user = magicbell.connectUser(externalId: "001")
 
 // Identify the user by both, email and external id
-let user = magicbell.forUser(email: "richard@example.com", externalId: "001")
+let user = magicbell.connectUser(email: "richard@example.com", externalId: "001")
 ```
 
 You can connect as [many users as you need](#multi-user-support).
 
-**IMPORTANT:** `User` instances are singletons. Therefore, calls to the `forUser` method with the same arguments will
+**IMPORTANT:** `User` instances are singletons. Therefore, calls to the `connectUser` method with the same arguments will
 yield the same user:
 
 ```swift
-let userOne = magicbell.forUser(email: "mary@example.com")
-let userTwo = magicbell.forUser(email: "mary@example.com")
+let userOne = magicbell.connectUser(email: "mary@example.com")
+let userTwo = magicbell.connectUser(email: "mary@example.com")
 
 assert(userOne === userTwo, "Both users reference to the same instance")
 ```
@@ -173,12 +173,12 @@ assert(userOne === userTwo, "Both users reference to the same instance")
 If your app suports multiple logins, you may want to display the status of notifications for all logged in users at the
 same time. The MagicBell SDK allows you to that.
 
-You can call the `forUser(:)` method with the email or external ID of your logged in users as many times as you need.
+You can call the `connectUser(:)` method with the email or external ID of your logged in users as many times as you need.
 
 ```swift
-let userOne = magicbell.forUser(email: "richard@example.com")
-let userTwo = magicbell.forUser(email: "mary@example.com")
-let userThree = magicbell.forUser(externalId: "001")
+let userOne = magicbell.connectUser(email: "richard@example.com")
+let userTwo = magicbell.connectUser(email: "mary@example.com")
+let userThree = magicbell.connectUser(externalId: "001")
 ```
 
 ### Logout a User
@@ -189,17 +189,17 @@ When the user is logged out from your application you want to:
 - Stop the real-time connection with the MagicBell API
 - Unregister the device from push notifications
 
-This can be achieved with the `removeUserFor` method of the `MagicBell` client instance:
+This can be achieved with the `disconnectUser` method of the `MagicBell` client instance:
 
 ```swift
 // Remove by email
-magicbell.removeUserFor(email: "richard@example.com")
+magicbell.disconnectUser(email: "richard@example.com")
 
 // Remove by external id
-magicbell.removeUserFor(externalId: "001")
+magicbell.disconnectUser(externalId: "001")
 
 // Remove by email and external id
-magicbell.removeUserFor(email: "richard@example.com", externalId: "001")
+magicbell.disconnectUser(email: "richard@example.com", externalId: "001")
 ```
 
 ### Integrating into your app
@@ -227,7 +227,7 @@ struct User {
 extension User {
     /// Returns the logged in MagicBell user
     func magicBell() -> MagicBell.User {
-        return magicbell.forUser(email: email)
+        return magicbell.connectUser(email: email)
     }
 }
 ```
@@ -252,29 +252,21 @@ You can also inject the MagicBell `User` instance in your own graph and keep tra
 
 ## NotificationStore
 
-The `NotificationStore` class represents a collection of [MagicBell](https://magicbell.com) notifications. You can fetch
-all notifications using one of these methods of the store instance:
-
-| Method          | Description                        |
-| --------------- | ---------------------------------- |
-| `forAll`        | Fetch all notifications            |
-| `forRead`       | Fetch read notifications only      |
-| `forUnread`     | Fetch unread notifications only    |
-| `forCategories` | Filter notifications by categories |
-| `forTopics`     | Filter notifications by topics     |
+The `NotificationStore` class represents a collection of [MagicBell](https://magicbell.com) notifications. You can
+create an instance of this class through the `.build(...)` method on the user store object.
 
 For example:
 
 ```swift
-let allNotifications = user.store.forAll()
+let allNotifications = user.store.build()
 
-let readNotifications = user.store.forRead()
+let readNotifications = user.store.build(.read)
 
-let unreadNotifications = user.store.forUnread()
+let unreadNotifications = user.store.build(.unread)
 
-let billingNotifications = user.store.forCategories(["billing"])
+let billingNotifications = user.store.build(categories: ["billing"])
 
-let firstOrderNotifications = user.store.forTopics(["order:001"])
+let firstOrderNotifications = user.store.build(topics: ["order:001"])
 ```
 
 These are the attributes of a notification store:
@@ -335,12 +327,12 @@ observers of the notification store.
 
 ### Advanced filters
 
-You can also create stores with more advanced filters. To do it, fetch a store using the `.with(...)` method with a
+You can also create stores with more advanced filters. To do it, fetch a store using the `.build(...)` method with a
 `StorePredicate`.
 
 ```swift
 let predicate = StorePredicate()
-let notifications = user.store.with(predicate: predicate)
+let notifications = user.store.build(predicate: predicate)
 ```
 
 These are the available options:
@@ -356,8 +348,8 @@ These are the available options:
 For example, use this predicate to fetch unread notifications of the `"important"` category:
 
 ```swift
-let predicate = StorePredicate(read: false, categories: ["important"])
-let store = user.store.with(predicate: predicate)
+let predicate = StorePredicate(read: .unread, categories: ["important"])
+let store = user.store.build(predicate: predicate)
 ```
 
 Notification stores are singletons. Creating a store with the same predicate twice will yield the same instance.
@@ -379,7 +371,7 @@ notifications (read about observers [here](#observing-notification-store-changes
 
 ```swift
 // Obtaining a new notification store (first time)
-let store = user.store.forAll()
+let store = user.store.build()
 
 // First loading
 store.fetch { result in
@@ -477,7 +469,7 @@ protocol NotificationStoreCountObserver: AnyObject {
 To observe changes, implement these protocols (or one of them), and register as an observer to a notification store.
 
 ```swift
-let store = user.store.forAll()
+let store = user.store.build()
 let observer = myObserverClassInstance
 
 store.addContentObserver(observer)
@@ -587,9 +579,9 @@ func application(_ application: UIApplication, didRegisterForRemoteNotifications
 ```
 
 MagicBell will keep that device token stored temporarly in memory and send it as soon as new users are declared via
-`MagicBellClient.forUser`.
+`MagicBellClient.connectUser`.
 
-Whe a user is disconnected (`MagicBellClient.removeUserFor`), the device token is automatically unregistered for that
+Whe a user is disconnected (`MagicBellClient.disconnectUser`), the device token is automatically unregistered for that
 user.
 
 ## Contributing

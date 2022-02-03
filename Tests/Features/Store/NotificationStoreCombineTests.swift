@@ -14,7 +14,7 @@ import Combine
 
 class NotificationStoreCombineTests: XCTestCase {
 
-    let defaultEdgeArraySize = 20
+    let defaultEdgeArraySize = 50
     lazy var anyIndexForDefaultEdgeArraySize = Int.random(in: 0..<defaultEdgeArraySize)
 
     let userQuery = UserQuery(email: "javier@mobilejazz.com")

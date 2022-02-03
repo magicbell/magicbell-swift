@@ -25,7 +25,7 @@ public protocol StoreDirector {
     /// Disposes a notification store for the given predicate if exists. To be called when a notification store is no longer needed.
     /// - Parameters:
     ///    - predicate: Notification store's predicate.
-    func disposeWith(predicate: StorePredicate)
+    func dispose(predicate: StorePredicate)
 }
 
 public extension StoreDirector {
@@ -141,7 +141,7 @@ class RealTimeByPredicateStoreDirector: InternalStoreDirector {
         return store
     }
 
-    func disposeWith(predicate: StorePredicate) {
+    func dispose(predicate: StorePredicate) {
         if let storeIndex = stores.firstIndex(where: { $0.predicate.hashValue == predicate.hashValue }) {
             let store = stores[storeIndex]
             storeRealTime.removeObserver(store)

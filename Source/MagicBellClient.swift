@@ -24,12 +24,6 @@ public class MagicBellClient {
     /// The MagicBell SDK version
     public static let version = "1.0.0-alpha.3"
 
-    /// MagicBell's default API URL. Defaults to https://api.magicbell.com.
-    private static let defaultBaseUrl: URL = {
-        // swiftlint:disable force_unwrapping
-        return URL(string: "https://api.magicbell.com")!
-    }()
-
     private let sdkProvider: SDKComponent
 
     private var users: [String: User] = [:]
@@ -47,7 +41,8 @@ public class MagicBellClient {
         apiKey: String,
         apiSecret: String? = nil,
         enableHMAC: Bool = false,
-        baseUrl: URL = MagicBellClient.defaultBaseUrl,
+        // swiftlint:disable force_unwrapping
+        baseUrl: URL = URL(string: "https://api.magicbell.com")!,
         logLevel: LogLevel = .none
     ) {
         sdkProvider = DefaultSDKModule(

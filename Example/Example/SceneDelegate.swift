@@ -38,7 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
 
         // Defining the user to test
-        let user = magicBell.forUser(email: "richard@example.com")
+        let user = magicBell.connectUser(email: "richard@example.com")
 
         switch style {
         case .uiKit:

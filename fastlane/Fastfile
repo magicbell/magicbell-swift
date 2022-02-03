@@ -21,7 +21,7 @@ platform :ios do
   end
 
   desc "Resolves the dependences needed in MagicBell.xcodeproj"
-  lane :init do
+  lane :update do
     carthage(
       command: "update",
       no_skip_current: false,

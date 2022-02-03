@@ -15,13 +15,13 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
-### ios tests
+### ios update
 
 ```sh
-[bundle exec] fastlane ios tests
+[bundle exec] fastlane ios update
 ```
 
-Running MagicBell Tests in iPhone 13 Simulator
+Resolves the dependences needed in MagicBell.xcodeproj
 
 ### ios build
 
@@ -29,7 +29,15 @@ Running MagicBell Tests in iPhone 13 Simulator
 [bundle exec] fastlane ios build
 ```
 
+Verifies the build process of MagicBell deployment
 
+### ios tests
+
+```sh
+[bundle exec] fastlane ios tests
+```
+
+Running MagicBell Tests in iPhone 13 Simulator
 
 ----
 

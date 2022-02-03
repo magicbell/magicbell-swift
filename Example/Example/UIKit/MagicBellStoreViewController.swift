@@ -139,7 +139,7 @@ class MagicBellStoreViewController: UIViewController,
         store.removeContentObserver(self)
         store.removeCountObserver(self)
 
-        store = user.store.with(predicate: predicate)
+        store = user.store.build(predicate: predicate)
         store.addContentObserver(self)
         store.addCountObserver(self)
 

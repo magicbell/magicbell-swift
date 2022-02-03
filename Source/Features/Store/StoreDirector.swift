@@ -20,7 +20,7 @@ public protocol StoreDirector {
     /// - Parameters:
     ///    - predicate: Notification store's predicate. Define an scope for the notification store. Read, Seen, Archive, Categories, Topics and inApp.
     /// - Returns: A `NotificationStore` with all the actions. MarkNotifications, MarkAllNotifications, FetchNotifications, ReloadStore.
-    func with(predicate: StorePredicate) -> NotificationStore
+    func build(predicate: StorePredicate) -> NotificationStore
 
     /// Disposes a notification store for the given predicate if exists. To be called when a notification store is no longer needed.
     /// - Parameters:
@@ -32,33 +32,33 @@ public extension StoreDirector {
     /// Return the store for all notificaionts
     /// - Returns: A notification store
     func forAll() -> NotificationStore {
-        with(predicate: StorePredicate())
+        build(predicate: StorePredicate())
     }
 
     /// Return the store for unread notificaionts
     /// - Returns: A notification store
     func forUnread() -> NotificationStore {
-        with(predicate: StorePredicate(read: .unread))
+        build(predicate: StorePredicate(read: .unread))
     }
 
     /// Return the store for read notificaionts
     /// - Returns: A notification store
     func forRead() -> NotificationStore {
-        with(predicate: StorePredicate(read: .read))
+        build(predicate: StorePredicate(read: .read))
     }
 
     /// Return the store for notifications with the given categories
     /// - Parameter categories: The list of categories
     /// - Returns: A notification store
     func forCategories(_ categories: [String]) -> NotificationStore {
-        with(predicate: StorePredicate(categories: categories))
+        build(predicate: StorePredicate(categories: categories))
     }
 
     /// Return the store for notifications with the given topics
     /// - Parameter categories: The list of topics
     /// - Returns: A notification store
     func forTopics(_ topics: [String]) -> NotificationStore {
-        with(predicate: StorePredicate(topics: topics))
+        build(predicate: StorePredicate(topics: topics))
     }
 }
 
@@ -121,7 +121,7 @@ class RealTimeByPredicateStoreDirector: InternalStoreDirector {
             }
     }
 
-    func with(predicate: StorePredicate) -> NotificationStore {
+    func build(predicate: StorePredicate) -> NotificationStore {
         if let store = stores.first(where: { $0.predicate.hashValue == predicate.hashValue }) {
             return store
         }

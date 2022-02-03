@@ -48,7 +48,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
             deleteConfigInteractor: deleteConfigInteractor,
             storeRealTime: storeRealTime)
 
-        return storeDirector.with(predicate: predicate)
+        return storeDirector.build(predicate: predicate)
     }
 
     func test_addRealTimeStore() {

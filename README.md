@@ -324,12 +324,12 @@ observers of the notification store.
 
 ### Advanced filters
 
-You can also create stores with more advanced filters. To do it, fetch a store using the `.with(...)` method with a
+You can also create stores with more advanced filters. To do it, fetch a store using the `.build(...)` method with a
 `StorePredicate`.
 
 ```swift
 let predicate = StorePredicate()
-let notifications = user.store.with(predicate: predicate)
+let notifications = user.store.build(predicate: predicate)
 ```
 
 These are the available options:
@@ -346,7 +346,7 @@ For example, use this predicate to fetch unread notifications of the `"important
 
 ```swift
 let predicate = StorePredicate(read: .unread, categories: ["important"])
-let store = user.store.with(predicate: predicate)
+let store = user.store.build(predicate: predicate)
 ```
 
 Notification stores are singletons. Creating a store with the same predicate twice will yield the same instance.

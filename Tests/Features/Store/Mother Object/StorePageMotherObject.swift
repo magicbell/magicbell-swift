@@ -12,7 +12,7 @@
 //
 
 @testable import MagicBell
-@testable import Harmony
+import Harmony
 import struct MagicBell.Notification
 
 func givenPageStore(predicate: StorePredicate, size: Int, forceNotificationProperty: ForceProperty = .none) -> StorePage {

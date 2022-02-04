@@ -1,0 +1,2 @@
+github "ably/ably-cocoa" >= 1.2
+github "mobilejazz/harmony-swift" "2.0.0"

@@ -34,7 +34,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "59EF99B027446D6900FB2378"
             BuildableName = "MagicBell.framework"
-            BlueprintName = "MagicBell"
+            BlueprintName = "MagicBell-iOS"
             ReferencedContainer = "container:MagicBell.xcodeproj">
          </BuildableReference>
       </CodeCoverageTargets>

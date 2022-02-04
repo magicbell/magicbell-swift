@@ -12,6 +12,7 @@
 //
 
 import Harmony
+import Foundation
 
 ///
 /// The NotificationStore class represents a collection of MagicBell notifications.

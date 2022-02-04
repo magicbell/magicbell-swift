@@ -11,8 +11,8 @@
 // For more information, read the LICENSE file.
 //
 
-@testable import Harmony
 @testable import MagicBell
+import Harmony
 
 class DeleteConfigMockInteractor: DeleteConfigInteractor {
 

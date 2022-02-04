@@ -28,6 +28,18 @@
 		595AC4C827710C7A00A3DCA2 /* NotificationEdgeMotherObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595AC4C627710C7000A3DCA2 /* NotificationEdgeMotherObject.swift */; };
 		595AC4CE27710EF000A3DCA2 /* PageInfoMotherObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595AC4CC27710DCD00A3DCA2 /* PageInfoMotherObject.swift */; };
 		595AC4D627715D9D00A3DCA2 /* InitialNotificationStoreCounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595AC4D327715D8D00A3DCA2 /* InitialNotificationStoreCounts.swift */; };
+		5970B5A227A291D20061835E /* Ably.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C4E27A20ADD0032C7D6 /* Ably.xcframework */; };
+		5970B5A327A291D20061835E /* Ably.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C4E27A20ADD0032C7D6 /* Ably.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5970B5A427A291D20061835E /* AblyDeltaCodec.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5227A20AE90032C7D6 /* AblyDeltaCodec.xcframework */; };
+		5970B5A527A291D20061835E /* AblyDeltaCodec.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5227A20AE90032C7D6 /* AblyDeltaCodec.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5970B5A827A291D20061835E /* msgpack.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5527A20AF40032C7D6 /* msgpack.xcframework */; };
+		5970B5A927A291D20061835E /* msgpack.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5527A20AF40032C7D6 /* msgpack.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5972024B27A2C01700A1BDB1 /* Harmony.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5827A20AFE0032C7D6 /* Harmony.xcframework */; };
+		5972024C27A2C01700A1BDB1 /* Harmony.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5827A20AFE0032C7D6 /* Harmony.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		597202E327A3D55A00A1BDB1 /* ResultUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597202DB27A3D46C00A1BDB1 /* ResultUtils.swift */; };
+		597202E427A3D55D00A1BDB1 /* BoolObjectMother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597202DD27A3D4E400A1BDB1 /* BoolObjectMother.swift */; };
+		597202E527A3D56000A1BDB1 /* StringMotherObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597202DF27A3D51E00A1BDB1 /* StringMotherObject.swift */; };
+		597202E627A3D56300A1BDB1 /* IntMotherObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597202E127A3D55600A1BDB1 /* IntMotherObject.swift */; };
 		59799E312746587000BFB375 /* MagicBellClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E302746587000BFB375 /* MagicBellClient.swift */; };
 		59799E33274658B100BFB375 /* SDKProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E32274658B100BFB375 /* SDKProvider.swift */; };
 		59799E38274659D800BFB375 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E37274659D800BFB375 /* Environment.swift */; };
@@ -75,8 +87,6 @@
 		59E92013275400F500D8877A /* NotificationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E92012275400F500D8877A /* NotificationStore.swift */; };
 		59EF99BC27446D6900FB2378 /* MagicBell.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59EF99B127446D6900FB2378 /* MagicBell.framework */; };
 		59EF99C127446D6900FB2378 /* MagicBellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59EF99C027446D6900FB2378 /* MagicBellTests.swift */; };
-		59EF9AC52744710300FB2378 /* MagicBell.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 59EF9AC42744710300FB2378 /* MagicBell.podspec */; };
-		59EF9ACB2744792A00FB2378 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 59EF9ACA2744792A00FB2378 /* LICENSE */; };
 		59F4596B2758C39F008F3BC8 /* FetchStorePageInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4596A2758C39F008F3BC8 /* FetchStorePageInteractor.swift */; };
 		59F4596E2758C739008F3BC8 /* ActionNotificationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4596D2758C739008F3BC8 /* ActionNotificationInteractor.swift */; };
 		59F459702758CC25008F3BC8 /* DeleteNotificationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4596F2758CC25008F3BC8 /* DeleteNotificationInteractor.swift */; };
@@ -84,12 +94,10 @@
 		59F4597527597FF7008F3BC8 /* AblyConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597427597FF7008F3BC8 /* AblyConnector.swift */; };
 		59F45979275A434A008F3BC8 /* StoreRealTimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F45978275A434A008F3BC8 /* StoreRealTimeProvider.swift */; };
 		59F4597B275A48AD008F3BC8 /* StoreRealTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597A275A48AD008F3BC8 /* StoreRealTime.swift */; };
-		73221ECB173026F278B43C93 /* Pods_MagicBellTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B26757E25B750696F29E577 /* Pods_MagicBellTests.framework */; };
-		A35AC36EDBB4FDD24D651217 /* Pods_MagicBell.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91586C8D98B8EC30EF57ACC7 /* Pods_MagicBell.framework */; };
 		D27CF1BA27906FDD00897BCB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CF1B927906FDD00897BCB /* User.swift */; };
+		D280727B27A2F1C000FD941A /* Nimble.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D280727A27A2F1C000FD941A /* Nimble.xcframework */; };
 		D29D249227747DA000726ABD /* NotificationStorePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29D249127747DA000726ABD /* NotificationStorePublisher.swift */; };
 		D2C5A1B02768C25500C20D74 /* StoreDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */; };
-		D2CBA520275121C2002F1E44 /* NotificationFragment.graphql in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA51F275121C2002F1E44 /* NotificationFragment.graphql */; };
 		D2CBA52227512462002F1E44 /* PageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52127512462002F1E44 /* PageInfo.swift */; };
 		D2CBA52427512499002F1E44 /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52327512499002F1E44 /* Edge.swift */; };
 		D2CBA52727512518002F1E44 /* CursorPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52627512518002F1E44 /* CursorPredicate.swift */; };
@@ -98,6 +106,84 @@
 		D2CBA52F275128FA002F1E44 /* StorePredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52E275128FA002F1E44 /* StorePredicate.swift */; };
 		D2CBA53127513747002F1E44 /* StoreContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA53027513747002F1E44 /* StoreContext.swift */; };
 		D2CBA53327513D6A002F1E44 /* GraphQLFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA53227513D6A002F1E44 /* GraphQLFragment.swift */; };
+		D2D215DD27AC276700A104B8 /* GraphQLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BA4274F7B8A00FF1AA6 /* GraphQLRequest.swift */; };
+		D2D215DE27AC276700A104B8 /* AblyMessageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59827B54275FD7C9009D93D8 /* AblyMessageProcessor.swift */; };
+		D2D215DF27AC276700A104B8 /* CodingKey+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B2DDAD276B5C4C0038B0EA /* CodingKey+JSON.swift */; };
+		D2D215E027AC276700A104B8 /* GetConfigInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDBF274D2CC20043BA77 /* GetConfigInteractor.swift */; };
+		D2D215E127AC276700A104B8 /* ActionNotificationNetworkDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D277252747C9CF00B5F69E /* ActionNotificationNetworkDataSource.swift */; };
+		D2D215E227AC276700A104B8 /* DeleteConfigInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDC3274D36360043BA77 /* DeleteConfigInteractor.swift */; };
+		D2D215E327AC276700A104B8 /* NotificationNetworkDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E592746609A00BFB375 /* NotificationNetworkDataSource.swift */; };
+		D2D215E427AC276700A104B8 /* PushSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C12ECE2746DC7100311D24 /* PushSubscription.swift */; };
+		D2D215E527AC276700A104B8 /* String+HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E4327465C9200BFB375 /* String+HMAC.swift */; };
+		D2D215E627AC276700A104B8 /* NotificationStoreCombine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CA80BB277A19A50024673C /* NotificationStoreCombine.swift */; };
+		D2D215E727AC276700A104B8 /* PushSubscriptionDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B2DDA62769682C0038B0EA /* PushSubscriptionDirector.swift */; };
+		D2D215E827AC276700A104B8 /* PageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52127512462002F1E44 /* PageInfo.swift */; };
+		D2D215E927AC276700A104B8 /* StorePredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52E275128FA002F1E44 /* StorePredicate.swift */; };
+		D2D215EA27AC276700A104B8 /* UserPreferencesDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B2DDA2276959AC0038B0EA /* UserPreferencesDirector.swift */; };
+		D2D215EB27AC276700A104B8 /* AblyConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597427597FF7008F3BC8 /* AblyConnector.swift */; };
+		D2D215EC27AC276700A104B8 /* DataToDecodableMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E3D27465BB500BFB375 /* DataToDecodableMapper.swift */; };
+		D2D215ED27AC276700A104B8 /* String+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B2DDAB276AB4490038B0EA /* String+Data.swift */; };
+		D2D215EE27AC276700A104B8 /* GraphQLRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA528275125B3002F1E44 /* GraphQLRepresentable.swift */; };
+		D2D215EF27AC276700A104B8 /* UserPreferencesMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883C527620F45001D38FC /* UserPreferencesMapper.swift */; };
+		D2D215F027AC276700A104B8 /* StoreDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */; };
+		D2D215F127AC276700A104B8 /* MappingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C12ED32747131000311D24 /* MappingError.swift */; };
+		D2D215F227AC276700A104B8 /* PushSubscriptionNetworkDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C12ECB2746DBC200311D24 /* PushSubscriptionNetworkDataSource.swift */; };
+		D2D215F327AC276700A104B8 /* GraphQLFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA53227513D6A002F1E44 /* GraphQLFragment.swift */; };
+		D2D215F427AC276700A104B8 /* GraphQLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52C27512642002F1E44 /* GraphQLResponse.swift */; };
+		D2D215F527AC276700A104B8 /* ConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E4527465F8F00BFB375 /* ConfigProvider.swift */; };
+		D2D215F627AC276700A104B8 /* UserPreferencesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E5F274660AD00BFB375 /* UserPreferencesProvider.swift */; };
+		D2D215F727AC276700A104B8 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883BE2761EBA9001D38FC /* LogLevel.swift */; };
+		D2D215F827AC276700A104B8 /* DeviceTokenQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883B1276036BC001D38FC /* DeviceTokenQuery.swift */; };
+		D2D215F927AC276700A104B8 /* UserPreferencesEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E64274660AD00BFB375 /* UserPreferencesEntity.swift */; };
+		D2D215FA27AC276700A104B8 /* ActionNotificationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4596D2758C739008F3BC8 /* ActionNotificationInteractor.swift */; };
+		D2D215FB27AC276700A104B8 /* StoreGraphQLRepresentableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BB12750EEDF00FF1AA6 /* StoreGraphQLRepresentableExtensions.swift */; };
+		D2D215FC27AC276700A104B8 /* CursorPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52627512518002F1E44 /* CursorPredicate.swift */; };
+		D2D215FD27AC276700A104B8 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E522746604F00BFB375 /* Config.swift */; };
+		D2D215FE27AC276700A104B8 /* DeleteNotificationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4596F2758CC25008F3BC8 /* DeleteNotificationInteractor.swift */; };
+		D2D215FF27AC276700A104B8 /* StoreProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BAD274F82F100FF1AA6 /* StoreProvider.swift */; };
+		D2D2160027AC276700A104B8 /* DeletePushSubscriptionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883B627603B9B001D38FC /* DeletePushSubscriptionInteractor.swift */; };
+		D2D2160127AC276700A104B8 /* StoreContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA53027513747002F1E44 /* StoreContext.swift */; };
+		D2D2160227AC276700A104B8 /* StoreQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BAF274F838D00FF1AA6 /* StoreQuery.swift */; };
+		D2D2160327AC276700A104B8 /* FetchStorePageInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4596A2758C39F008F3BC8 /* FetchStorePageInteractor.swift */; };
+		D2D2160427AC276700A104B8 /* UserPreferencesNetworkDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E62274660AD00BFB375 /* UserPreferencesNetworkDataSource.swift */; };
+		D2D2160527AC276700A104B8 /* NotificationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E68274662E900BFB375 /* NotificationProvider.swift */; };
+		D2D2160627AC276700A104B8 /* GetNotificationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F459712758D0DB008F3BC8 /* GetNotificationInteractor.swift */; };
+		D2D2160727AC276700A104B8 /* UpdateUserPreferencesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883C32761F581001D38FC /* UpdateUserPreferencesInteractor.swift */; };
+		D2D2160827AC276700A104B8 /* StoreRealTimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F45978275A434A008F3BC8 /* StoreRealTimeProvider.swift */; };
+		D2D2160927AC276700A104B8 /* UserQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E3A27465A0E00BFB375 /* UserQuery.swift */; };
+		D2D2160A27AC276700A104B8 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E5B2746609A00BFB375 /* Notification.swift */; };
+		D2D2160B27AC276700A104B8 /* NotificationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E92012275400F500D8877A /* NotificationStore.swift */; };
+		D2D2160C27AC276700A104B8 /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52327512499002F1E44 /* Edge.swift */; };
+		D2D2160D27AC276700A104B8 /* PushSubscriptionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C12ED02746E48100311D24 /* PushSubscriptionProvider.swift */; };
+		D2D2160E27AC276700A104B8 /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E3E27465BB500BFB375 /* HttpClient.swift */; };
+		D2D2160F27AC276700A104B8 /* GetStorePagesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BB42750FD8700FF1AA6 /* GetStorePagesInteractor.swift */; };
+		D2D2161027AC276700A104B8 /* PushSubscriptionQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D2772A2747D43200B5F69E /* PushSubscriptionQuery.swift */; };
+		D2D2161127AC276700A104B8 /* MagicBellError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDBB274D039D0043BA77 /* MagicBellError.swift */; };
+		D2D2161227AC276700A104B8 /* MagicBellClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E302746587000BFB375 /* MagicBellClient.swift */; };
+		D2D2161327AC276700A104B8 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E37274659D800BFB375 /* Environment.swift */; };
+		D2D2161427AC276700A104B8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CF1B927906FDD00897BCB /* User.swift */; };
+		D2D2161527AC276700A104B8 /* EncodableToDataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDC1274D2F220043BA77 /* EncodableToDataMapper.swift */; };
+		D2D2161627AC276700A104B8 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883C727621037001D38FC /* UserPreferences.swift */; };
+		D2D2161727AC276700A104B8 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E6A274671A100BFB375 /* NetworkError.swift */; };
+		D2D2161827AC276700A104B8 /* NotificationQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D277282747D40A00B5F69E /* NotificationQuery.swift */; };
+		D2D2161927AC276700A104B8 /* StoresGraphQLDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BA7274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift */; };
+		D2D2161A27AC276700A104B8 /* StorePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569B99274F752100FF1AA6 /* StorePage.swift */; };
+		D2D2161B27AC276700A104B8 /* SDKProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E32274658B100BFB375 /* SDKProvider.swift */; };
+		D2D2161C27AC276700A104B8 /* GetUserPreferencesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883C12761F18D001D38FC /* GetUserPreferencesInteractor.swift */; };
+		D2D2161D27AC276700A104B8 /* NotificationValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953192D27561BA8006673E9 /* NotificationValidator.swift */; };
+		D2D2161E27AC276700A104B8 /* StoreRealTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597A275A48AD008F3BC8 /* StoreRealTime.swift */; };
+		D2D2161F27AC276700A104B8 /* SendPushSubscriptionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883AF27603023001D38FC /* SendPushSubscriptionInteractor.swift */; };
+		D2D2162027AC276700A104B8 /* ConfigNetworkDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E502746604F00BFB375 /* ConfigNetworkDataSource.swift */; };
+		D2D2162127AC276700A104B8 /* NotificationStorePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29D249127747DA000726ABD /* NotificationStorePublisher.swift */; };
+		D2D2162227AC276700A104B8 /* NotificationStoreObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E038272767943F0077FFF3 /* NotificationStoreObserver.swift */; };
+		D2D2162327AC276700A104B8 /* ErrorEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDC5274D4ED40043BA77 /* ErrorEntity.swift */; };
+		D2D216AA27AC2D9700A104B8 /* Harmony.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5827A20AFE0032C7D6 /* Harmony.xcframework */; };
+		D2D216AB27AC2D9700A104B8 /* Harmony.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5827A20AFE0032C7D6 /* Harmony.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D2D216AD27AC2DA600A104B8 /* msgpack.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5527A20AF40032C7D6 /* msgpack.xcframework */; };
+		D2D216AE27AC2DA600A104B8 /* msgpack.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5527A20AF40032C7D6 /* msgpack.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D2D216AF27AC2DAA00A104B8 /* AblyDeltaCodec.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5227A20AE90032C7D6 /* AblyDeltaCodec.xcframework */; };
+		D2D216B027AC2DAA00A104B8 /* AblyDeltaCodec.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C5227A20AE90032C7D6 /* AblyDeltaCodec.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D2D216B127AC2DAE00A104B8 /* Ably.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C4E27A20ADD0032C7D6 /* Ably.xcframework */; };
 		D2D277262747C9CF00B5F69E /* ActionNotificationNetworkDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D277252747C9CF00B5F69E /* ActionNotificationNetworkDataSource.swift */; };
 		D2D277292747D40A00B5F69E /* NotificationQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D277282747D40A00B5F69E /* NotificationQuery.swift */; };
 		D2D2772B2747D43200B5F69E /* PushSubscriptionQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D2772A2747D43200B5F69E /* PushSubscriptionQuery.swift */; };
@@ -114,10 +200,37 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		5970B5AA27A291D30061835E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5972024C27A2C01700A1BDB1 /* Harmony.xcframework in Embed Frameworks */,
+				5970B5A927A291D20061835E /* msgpack.xcframework in Embed Frameworks */,
+				5970B5A327A291D20061835E /* Ably.xcframework in Embed Frameworks */,
+				5970B5A527A291D20061835E /* AblyDeltaCodec.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2D216AC27AC2D9700A104B8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D2D216B027AC2DAA00A104B8 /* AblyDeltaCodec.xcframework in Embed Frameworks */,
+				D2D216AE27AC2DA600A104B8 /* msgpack.xcframework in Embed Frameworks */,
+				D2D216AB27AC2D9700A104B8 /* Harmony.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		0B26757E25B750696F29E577 /* Pods_MagicBellTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MagicBellTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4E85FF870551B042770D2A72 /* Pods-MagicBell.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell.release.xcconfig"; path = "Target Support Files/Pods-MagicBell/Pods-MagicBell.release.xcconfig"; sourceTree = "<group>"; };
-		57D4F2CE13C3BF7FA764FB73 /* Pods-MagicBellTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBellTests.release.xcconfig"; path = "Target Support Files/Pods-MagicBellTests/Pods-MagicBellTests.release.xcconfig"; sourceTree = "<group>"; };
 		593883AF27603023001D38FC /* SendPushSubscriptionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendPushSubscriptionInteractor.swift; sourceTree = "<group>"; };
 		593883B1276036BC001D38FC /* DeviceTokenQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTokenQuery.swift; sourceTree = "<group>"; };
 		593883B627603B9B001D38FC /* DeletePushSubscriptionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePushSubscriptionInteractor.swift; sourceTree = "<group>"; };
@@ -139,6 +252,15 @@
 		595AC4C627710C7000A3DCA2 /* NotificationEdgeMotherObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationEdgeMotherObject.swift; sourceTree = "<group>"; };
 		595AC4CC27710DCD00A3DCA2 /* PageInfoMotherObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageInfoMotherObject.swift; sourceTree = "<group>"; };
 		595AC4D327715D8D00A3DCA2 /* InitialNotificationStoreCounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialNotificationStoreCounts.swift; sourceTree = "<group>"; };
+		5970B60627A2B09F0061835E /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		597202DB27A3D46C00A1BDB1 /* ResultUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultUtils.swift; sourceTree = "<group>"; };
+		597202DD27A3D4E400A1BDB1 /* BoolObjectMother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolObjectMother.swift; sourceTree = "<group>"; };
+		597202DF27A3D51E00A1BDB1 /* StringMotherObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringMotherObject.swift; sourceTree = "<group>"; };
+		597202E127A3D55600A1BDB1 /* IntMotherObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntMotherObject.swift; sourceTree = "<group>"; };
+		59799C4E27A20ADD0032C7D6 /* Ably.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Ably.xcframework; path = Carthage/Build/Ably.xcframework; sourceTree = "<group>"; };
+		59799C5227A20AE90032C7D6 /* AblyDeltaCodec.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AblyDeltaCodec.xcframework; path = Carthage/Build/AblyDeltaCodec.xcframework; sourceTree = "<group>"; };
+		59799C5527A20AF40032C7D6 /* msgpack.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = msgpack.xcframework; path = Carthage/Build/msgpack.xcframework; sourceTree = "<group>"; };
+		59799C5827A20AFE0032C7D6 /* Harmony.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Harmony.xcframework; path = Carthage/Build/Harmony.xcframework; sourceTree = "<group>"; };
 		59799E302746587000BFB375 /* MagicBellClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBellClient.swift; sourceTree = "<group>"; };
 		59799E32274658B100BFB375 /* SDKProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKProvider.swift; sourceTree = "<group>"; };
 		59799E37274659D800BFB375 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
@@ -187,8 +309,6 @@
 		59EF99B127446D6900FB2378 /* MagicBell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MagicBell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59EF99BB27446D6900FB2378 /* MagicBellTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MagicBellTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		59EF99C027446D6900FB2378 /* MagicBellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBellTests.swift; sourceTree = "<group>"; };
-		59EF9AC42744710300FB2378 /* MagicBell.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = MagicBell.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		59EF9ACA2744792A00FB2378 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		59F4596A2758C39F008F3BC8 /* FetchStorePageInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStorePageInteractor.swift; sourceTree = "<group>"; };
 		59F4596D2758C739008F3BC8 /* ActionNotificationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionNotificationInteractor.swift; sourceTree = "<group>"; };
 		59F4596F2758CC25008F3BC8 /* DeleteNotificationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteNotificationInteractor.swift; sourceTree = "<group>"; };
@@ -196,15 +316,13 @@
 		59F4597427597FF7008F3BC8 /* AblyConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyConnector.swift; sourceTree = "<group>"; };
 		59F45978275A434A008F3BC8 /* StoreRealTimeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRealTimeProvider.swift; sourceTree = "<group>"; };
 		59F4597A275A48AD008F3BC8 /* StoreRealTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRealTime.swift; sourceTree = "<group>"; };
-		642B6CD63E97582F887E9742 /* Pods-MagicBell-MagicBellTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell-MagicBellTests.debug.xcconfig"; path = "Target Support Files/Pods-MagicBell-MagicBellTests/Pods-MagicBell-MagicBellTests.debug.xcconfig"; sourceTree = "<group>"; };
-		6F6B3A596E9B13574FBDBF06 /* Pods-MagicBell-MagicBellTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell-MagicBellTests.release.xcconfig"; path = "Target Support Files/Pods-MagicBell-MagicBellTests/Pods-MagicBell-MagicBellTests.release.xcconfig"; sourceTree = "<group>"; };
-		91586C8D98B8EC30EF57ACC7 /* Pods_MagicBell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MagicBell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A80221B71732E7C663FCB505 /* Pods-MagicBell.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBell.debug.xcconfig"; path = "Target Support Files/Pods-MagicBell/Pods-MagicBell.debug.xcconfig"; sourceTree = "<group>"; };
 		D27CF1B927906FDD00897BCB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		D28CEE9627956FCB001242C2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D280727827A2E40C00FD941A /* MagicBell.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = MagicBell.podspec; sourceTree = "<group>"; };
+		D280727927A2E41300FD941A /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		D280727A27A2F1C000FD941A /* Nimble.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Nimble.xcframework; path = Carthage/Build/Nimble.xcframework; sourceTree = "<group>"; };
+		D280727C27A2F21200FD941A /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
 		D29D249127747DA000726ABD /* NotificationStorePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStorePublisher.swift; sourceTree = "<group>"; };
 		D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDirector.swift; sourceTree = "<group>"; };
-		D2CBA51F275121C2002F1E44 /* NotificationFragment.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = NotificationFragment.graphql; sourceTree = "<group>"; };
 		D2CBA52127512462002F1E44 /* PageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageInfo.swift; sourceTree = "<group>"; };
 		D2CBA52327512499002F1E44 /* Edge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Edge.swift; sourceTree = "<group>"; };
 		D2CBA52627512518002F1E44 /* CursorPredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorPredicate.swift; sourceTree = "<group>"; };
@@ -213,11 +331,12 @@
 		D2CBA52E275128FA002F1E44 /* StorePredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePredicate.swift; sourceTree = "<group>"; };
 		D2CBA53027513747002F1E44 /* StoreContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreContext.swift; sourceTree = "<group>"; };
 		D2CBA53227513D6A002F1E44 /* GraphQLFragment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLFragment.swift; sourceTree = "<group>"; };
+		D2D215D927AC1B0300A104B8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D2D2163227AC276700A104B8 /* MagicBell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MagicBell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2D277252747C9CF00B5F69E /* ActionNotificationNetworkDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionNotificationNetworkDataSource.swift; sourceTree = "<group>"; };
 		D2D277282747D40A00B5F69E /* NotificationQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationQuery.swift; sourceTree = "<group>"; };
 		D2D2772A2747D43200B5F69E /* PushSubscriptionQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushSubscriptionQuery.swift; sourceTree = "<group>"; };
 		D2E038272767943F0077FFF3 /* NotificationStoreObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStoreObserver.swift; sourceTree = "<group>"; };
-		E61A2A0E5B9E8205ABA317EA /* Pods-MagicBellTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagicBellTests.debug.xcconfig"; path = "Target Support Files/Pods-MagicBellTests/Pods-MagicBellTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,7 +344,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A35AC36EDBB4FDD24D651217 /* Pods_MagicBell.framework in Frameworks */,
+				5972024B27A2C01700A1BDB1 /* Harmony.xcframework in Frameworks */,
+				5970B5A827A291D20061835E /* msgpack.xcframework in Frameworks */,
+				5970B5A227A291D20061835E /* Ably.xcframework in Frameworks */,
+				5970B5A427A291D20061835E /* AblyDeltaCodec.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,8 +355,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D280727B27A2F1C000FD941A /* Nimble.xcframework in Frameworks */,
 				59EF99BC27446D6900FB2378 /* MagicBell.framework in Frameworks */,
-				73221ECB173026F278B43C93 /* Pods_MagicBellTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2D2162427AC276700A104B8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2D216AD27AC2DA600A104B8 /* msgpack.xcframework in Frameworks */,
+				D2D216AF27AC2DAA00A104B8 /* AblyDeltaCodec.xcframework in Frameworks */,
+				D2D216AA27AC2D9700A104B8 /* Harmony.xcframework in Frameworks */,
+				D2D216B127AC2DAE00A104B8 /* Ably.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,7 +425,6 @@
 				59569BAF274F838D00FF1AA6 /* StoreQuery.swift */,
 				59569BB12750EEDF00FF1AA6 /* StoreGraphQLRepresentableExtensions.swift */,
 				59569BA7274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift */,
-				D2CBA51F275121C2002F1E44 /* NotificationFragment.graphql */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -317,6 +449,7 @@
 		595AC4C927710D9700A3DCA2 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				597202DA27A3D45C00A1BDB1 /* Utils */,
 				595AC4CA27710D9B00A3DCA2 /* Network */,
 			);
 			path = Common;
@@ -345,6 +478,29 @@
 				595AC4D327715D8D00A3DCA2 /* InitialNotificationStoreCounts.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		597202DA27A3D45C00A1BDB1 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				597202DB27A3D46C00A1BDB1 /* ResultUtils.swift */,
+				597202DD27A3D4E400A1BDB1 /* BoolObjectMother.swift */,
+				597202DF27A3D51E00A1BDB1 /* StringMotherObject.swift */,
+				597202E127A3D55600A1BDB1 /* IntMotherObject.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		59799C4D27A20ADD0032C7D6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D280727A27A2F1C000FD941A /* Nimble.xcframework */,
+				59799C5827A20AFE0032C7D6 /* Harmony.xcframework */,
+				59799C5527A20AF40032C7D6 /* msgpack.xcframework */,
+				59799C5227A20AE90032C7D6 /* AblyDeltaCodec.xcframework */,
+				59799C4E27A20ADD0032C7D6 /* Ably.xcframework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		59799E2F2746583200BFB375 /* Config */ = {
@@ -586,12 +742,15 @@
 		59EF99A727446D6900FB2378 = {
 			isa = PBXGroup;
 			children = (
-				59EF9AC9274477CD00FB2378 /* Deployment */,
+				D2D215D927AC1B0300A104B8 /* README.md */,
+				5970B60627A2B09F0061835E /* Package.swift */,
+				D280727827A2E40C00FD941A /* MagicBell.podspec */,
+				D280727927A2E41300FD941A /* Cartfile */,
+				D280727C27A2F21200FD941A /* Cartfile.private */,
 				59EF9AC6274471A500FB2378 /* Source */,
 				59EF99BF27446D6900FB2378 /* Tests */,
 				59EF99B227446D6900FB2378 /* Products */,
-				B6A4AD0160030AF76A38354D /* Pods */,
-				8C80FDB698D37C4859CB48CA /* Frameworks */,
+				59799C4D27A20ADD0032C7D6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -600,6 +759,7 @@
 			children = (
 				59EF99B127446D6900FB2378 /* MagicBell.framework */,
 				59EF99BB27446D6900FB2378 /* MagicBellTests.xctest */,
+				D2D2163227AC276700A104B8 /* MagicBell.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -626,16 +786,6 @@
 			path = Source;
 			sourceTree = "<group>";
 		};
-		59EF9AC9274477CD00FB2378 /* Deployment */ = {
-			isa = PBXGroup;
-			children = (
-				59EF9AC42744710300FB2378 /* MagicBell.podspec */,
-				59EF9ACA2744792A00FB2378 /* LICENSE */,
-				D28CEE9627956FCB001242C2 /* README.md */,
-			);
-			name = Deployment;
-			sourceTree = "<group>";
-		};
 		59F4596C2758C72B008F3BC8 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
@@ -655,28 +805,6 @@
 				59827B54275FD7C9009D93D8 /* AblyMessageProcessor.swift */,
 			);
 			path = StoreRealTime;
-			sourceTree = "<group>";
-		};
-		8C80FDB698D37C4859CB48CA /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				91586C8D98B8EC30EF57ACC7 /* Pods_MagicBell.framework */,
-				0B26757E25B750696F29E577 /* Pods_MagicBellTests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		B6A4AD0160030AF76A38354D /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				A80221B71732E7C663FCB505 /* Pods-MagicBell.debug.xcconfig */,
-				4E85FF870551B042770D2A72 /* Pods-MagicBell.release.xcconfig */,
-				E61A2A0E5B9E8205ABA317EA /* Pods-MagicBellTests.debug.xcconfig */,
-				57D4F2CE13C3BF7FA764FB73 /* Pods-MagicBellTests.release.xcconfig */,
-				642B6CD63E97582F887E9742 /* Pods-MagicBell-MagicBellTests.debug.xcconfig */,
-				6F6B3A596E9B13574FBDBF06 /* Pods-MagicBell-MagicBellTests.release.xcconfig */,
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		D2153EF2274E78B1009C2DDC /* Interactor */ = {
@@ -712,25 +840,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D2D215DB27AC276700A104B8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		59EF99B027446D6900FB2378 /* MagicBell */ = {
+		59EF99B027446D6900FB2378 /* MagicBell-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 59EF99C527446D6900FB2378 /* Build configuration list for PBXNativeTarget "MagicBell" */;
+			buildConfigurationList = 59EF99C527446D6900FB2378 /* Build configuration list for PBXNativeTarget "MagicBell-iOS" */;
 			buildPhases = (
-				C77BFDFCE49E382506525757 /* [CP] Check Pods Manifest.lock */,
 				59EF99AC27446D6900FB2378 /* Headers */,
 				59EF99AD27446D6900FB2378 /* Sources */,
 				59EF99AE27446D6900FB2378 /* Frameworks */,
 				59EF99AF27446D6900FB2378 /* Resources */,
-				59EF9ACE2744856000FB2378 /* Run linter */,
+				5970B5AA27A291D30061835E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = MagicBell;
+			name = "MagicBell-iOS";
 			productName = MagicBell;
 			productReference = 59EF99B127446D6900FB2378 /* MagicBell.framework */;
 			productType = "com.apple.product-type.framework";
@@ -739,11 +873,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 59EF99C827446D6900FB2378 /* Build configuration list for PBXNativeTarget "MagicBellTests" */;
 			buildPhases = (
-				6EFA636411C6AC5EFB54C544 /* [CP] Check Pods Manifest.lock */,
 				59EF99B727446D6900FB2378 /* Sources */,
 				59EF99B827446D6900FB2378 /* Frameworks */,
 				59EF99B927446D6900FB2378 /* Resources */,
-				72F1485400FC83ECA887C8F1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -754,6 +886,25 @@
 			productName = MagicBellTests;
 			productReference = 59EF99BB27446D6900FB2378 /* MagicBellTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D2D215DA27AC276700A104B8 /* MagicBell-macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2D2162F27AC276700A104B8 /* Build configuration list for PBXNativeTarget "MagicBell-macOS" */;
+			buildPhases = (
+				D2D215DB27AC276700A104B8 /* Headers */,
+				D2D215DC27AC276700A104B8 /* Sources */,
+				D2D2162427AC276700A104B8 /* Frameworks */,
+				D2D2162927AC276700A104B8 /* Resources */,
+				D2D216AC27AC2D9700A104B8 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "MagicBell-macOS";
+			productName = MagicBell;
+			productReference = D2D2163227AC276700A104B8 /* MagicBell.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -786,8 +937,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				59EF99B027446D6900FB2378 /* MagicBell */,
+				59EF99B027446D6900FB2378 /* MagicBell-iOS */,
 				59EF99BA27446D6900FB2378 /* MagicBellTests */,
+				D2D215DA27AC276700A104B8 /* MagicBell-macOS */,
 			);
 		};
 /* End PBXProject section */
@@ -797,8 +949,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59EF9ACB2744792A00FB2378 /* LICENSE in Resources */,
-				59EF9AC52744710300FB2378 /* MagicBell.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -809,89 +959,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D2D2162927AC276700A104B8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		59EF9ACE2744856000FB2378 /* Run linter */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Run linter";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif [ -x \"${PODS_ROOT}/SwiftLint/swiftlint\" ]; then\n    \"${PODS_ROOT}/SwiftLint/swiftlint\"\nelse\n    >&2 echo \"warning: SwiftLint not installed, please run `pod install --repo-update`.\"\nfi\n";
-		};
-		6EFA636411C6AC5EFB54C544 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MagicBellTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		72F1485400FC83ECA887C8F1 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MagicBellTests/Pods-MagicBellTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MagicBellTests/Pods-MagicBellTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MagicBellTests/Pods-MagicBellTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C77BFDFCE49E382506525757 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MagicBell-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		59EF99AD27446D6900FB2378 /* Sources */ = {
@@ -900,7 +975,6 @@
 			files = (
 				59569BA5274F7B8A00FF1AA6 /* GraphQLRequest.swift in Sources */,
 				59827B55275FD7C9009D93D8 /* AblyMessageProcessor.swift in Sources */,
-				D2CBA520275121C2002F1E44 /* NotificationFragment.graphql in Sources */,
 				59B2DDAE276B5C4C0038B0EA /* CodingKey+JSON.swift in Sources */,
 				59C3CDC0274D2CC20043BA77 /* GetConfigInteractor.swift in Sources */,
 				D2D277262747C9CF00B5F69E /* ActionNotificationNetworkDataSource.swift in Sources */,
@@ -981,8 +1055,12 @@
 				5997F8EF2770A3E600DED4E4 /* StoreRealTimeMock.swift in Sources */,
 				595AC4D627715D9D00A3DCA2 /* InitialNotificationStoreCounts.swift in Sources */,
 				595AC4C327710C0100A3DCA2 /* StorePageMotherObject.swift in Sources */,
+				597202E527A3D56000A1BDB1 /* StringMotherObject.swift in Sources */,
+				597202E627A3D56300A1BDB1 /* IntMotherObject.swift in Sources */,
 				5997F8E6277099CB00DED4E4 /* FetchStorePageMockInteractor.swift in Sources */,
 				5997F8EB27709E6A00DED4E4 /* DeleteNotificationMockInteractor.swift in Sources */,
+				597202E327A3D55A00A1BDB1 /* ResultUtils.swift in Sources */,
+				597202E427A3D55D00A1BDB1 /* BoolObjectMother.swift in Sources */,
 				5997F8F52770EA9F00DED4E4 /* GetConfigMockInteractor.swift in Sources */,
 				5997F8F72770ED4C00DED4E4 /* DeleteConfigMockInteractor.swift in Sources */,
 				595AC4CE27710EF000A3DCA2 /* PageInfoMotherObject.swift in Sources */,
@@ -998,12 +1076,90 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D2D215DC27AC276700A104B8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2D215DD27AC276700A104B8 /* GraphQLRequest.swift in Sources */,
+				D2D215DE27AC276700A104B8 /* AblyMessageProcessor.swift in Sources */,
+				D2D215DF27AC276700A104B8 /* CodingKey+JSON.swift in Sources */,
+				D2D215E027AC276700A104B8 /* GetConfigInteractor.swift in Sources */,
+				D2D215E127AC276700A104B8 /* ActionNotificationNetworkDataSource.swift in Sources */,
+				D2D215E227AC276700A104B8 /* DeleteConfigInteractor.swift in Sources */,
+				D2D215E327AC276700A104B8 /* NotificationNetworkDataSource.swift in Sources */,
+				D2D215E427AC276700A104B8 /* PushSubscription.swift in Sources */,
+				D2D215E527AC276700A104B8 /* String+HMAC.swift in Sources */,
+				D2D215E627AC276700A104B8 /* NotificationStoreCombine.swift in Sources */,
+				D2D215E727AC276700A104B8 /* PushSubscriptionDirector.swift in Sources */,
+				D2D215E827AC276700A104B8 /* PageInfo.swift in Sources */,
+				D2D215E927AC276700A104B8 /* StorePredicate.swift in Sources */,
+				D2D215EA27AC276700A104B8 /* UserPreferencesDirector.swift in Sources */,
+				D2D215EB27AC276700A104B8 /* AblyConnector.swift in Sources */,
+				D2D215EC27AC276700A104B8 /* DataToDecodableMapper.swift in Sources */,
+				D2D215ED27AC276700A104B8 /* String+Data.swift in Sources */,
+				D2D215EE27AC276700A104B8 /* GraphQLRepresentable.swift in Sources */,
+				D2D215EF27AC276700A104B8 /* UserPreferencesMapper.swift in Sources */,
+				D2D215F027AC276700A104B8 /* StoreDirector.swift in Sources */,
+				D2D215F127AC276700A104B8 /* MappingError.swift in Sources */,
+				D2D215F227AC276700A104B8 /* PushSubscriptionNetworkDataSource.swift in Sources */,
+				D2D215F327AC276700A104B8 /* GraphQLFragment.swift in Sources */,
+				D2D215F427AC276700A104B8 /* GraphQLResponse.swift in Sources */,
+				D2D215F527AC276700A104B8 /* ConfigProvider.swift in Sources */,
+				D2D215F627AC276700A104B8 /* UserPreferencesProvider.swift in Sources */,
+				D2D215F727AC276700A104B8 /* LogLevel.swift in Sources */,
+				D2D215F827AC276700A104B8 /* DeviceTokenQuery.swift in Sources */,
+				D2D215F927AC276700A104B8 /* UserPreferencesEntity.swift in Sources */,
+				D2D215FA27AC276700A104B8 /* ActionNotificationInteractor.swift in Sources */,
+				D2D215FB27AC276700A104B8 /* StoreGraphQLRepresentableExtensions.swift in Sources */,
+				D2D215FC27AC276700A104B8 /* CursorPredicate.swift in Sources */,
+				D2D215FD27AC276700A104B8 /* Config.swift in Sources */,
+				D2D215FE27AC276700A104B8 /* DeleteNotificationInteractor.swift in Sources */,
+				D2D215FF27AC276700A104B8 /* StoreProvider.swift in Sources */,
+				D2D2160027AC276700A104B8 /* DeletePushSubscriptionInteractor.swift in Sources */,
+				D2D2160127AC276700A104B8 /* StoreContext.swift in Sources */,
+				D2D2160227AC276700A104B8 /* StoreQuery.swift in Sources */,
+				D2D2160327AC276700A104B8 /* FetchStorePageInteractor.swift in Sources */,
+				D2D2160427AC276700A104B8 /* UserPreferencesNetworkDataSource.swift in Sources */,
+				D2D2160527AC276700A104B8 /* NotificationProvider.swift in Sources */,
+				D2D2160627AC276700A104B8 /* GetNotificationInteractor.swift in Sources */,
+				D2D2160727AC276700A104B8 /* UpdateUserPreferencesInteractor.swift in Sources */,
+				D2D2160827AC276700A104B8 /* StoreRealTimeProvider.swift in Sources */,
+				D2D2160927AC276700A104B8 /* UserQuery.swift in Sources */,
+				D2D2160A27AC276700A104B8 /* Notification.swift in Sources */,
+				D2D2160B27AC276700A104B8 /* NotificationStore.swift in Sources */,
+				D2D2160C27AC276700A104B8 /* Edge.swift in Sources */,
+				D2D2160D27AC276700A104B8 /* PushSubscriptionProvider.swift in Sources */,
+				D2D2160E27AC276700A104B8 /* HttpClient.swift in Sources */,
+				D2D2160F27AC276700A104B8 /* GetStorePagesInteractor.swift in Sources */,
+				D2D2161027AC276700A104B8 /* PushSubscriptionQuery.swift in Sources */,
+				D2D2161127AC276700A104B8 /* MagicBellError.swift in Sources */,
+				D2D2161227AC276700A104B8 /* MagicBellClient.swift in Sources */,
+				D2D2161327AC276700A104B8 /* Environment.swift in Sources */,
+				D2D2161427AC276700A104B8 /* User.swift in Sources */,
+				D2D2161527AC276700A104B8 /* EncodableToDataMapper.swift in Sources */,
+				D2D2161627AC276700A104B8 /* UserPreferences.swift in Sources */,
+				D2D2161727AC276700A104B8 /* NetworkError.swift in Sources */,
+				D2D2161827AC276700A104B8 /* NotificationQuery.swift in Sources */,
+				D2D2161927AC276700A104B8 /* StoresGraphQLDataSource.swift in Sources */,
+				D2D2161A27AC276700A104B8 /* StorePage.swift in Sources */,
+				D2D2161B27AC276700A104B8 /* SDKProvider.swift in Sources */,
+				D2D2161C27AC276700A104B8 /* GetUserPreferencesInteractor.swift in Sources */,
+				D2D2161D27AC276700A104B8 /* NotificationValidator.swift in Sources */,
+				D2D2161E27AC276700A104B8 /* StoreRealTime.swift in Sources */,
+				D2D2161F27AC276700A104B8 /* SendPushSubscriptionInteractor.swift in Sources */,
+				D2D2162027AC276700A104B8 /* ConfigNetworkDataSource.swift in Sources */,
+				D2D2162127AC276700A104B8 /* NotificationStorePublisher.swift in Sources */,
+				D2D2162227AC276700A104B8 /* NotificationStoreObserver.swift in Sources */,
+				D2D2162327AC276700A104B8 /* ErrorEntity.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
 		59EF99BE27446D6900FB2378 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 59EF99B027446D6900FB2378 /* MagicBell */;
+			target = 59EF99B027446D6900FB2378 /* MagicBell-iOS */;
 			targetProxy = 59EF99BD27446D6900FB2378 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1133,14 +1289,21 @@
 		};
 		59EF99C627446D6900FB2378 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A80221B71732E7C663FCB505 /* Pods-MagicBell.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Example/Carthage/Build/AblyDeltaCodec.xcframework/ios-arm64_armv7",
+					"$(PROJECT_DIR)/Example/Carthage/Build/Ably.xcframework/ios-arm64_armv7",
+					"$(PROJECT_DIR)/Example/Carthage/Build/msgpack.xcframework/ios-arm64_armv7",
+					"$(PROJECT_DIR)/Example/Carthage/Build/Harmony.xcframework/ios-arm64",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1151,7 +1314,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.magicbell.MagicBell;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = MagicBell;
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1162,14 +1325,21 @@
 		};
 		59EF99C727446D6900FB2378 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4E85FF870551B042770D2A72 /* Pods-MagicBell.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Example/Carthage/Build/AblyDeltaCodec.xcframework/ios-arm64_armv7",
+					"$(PROJECT_DIR)/Example/Carthage/Build/Ably.xcframework/ios-arm64_armv7",
+					"$(PROJECT_DIR)/Example/Carthage/Build/msgpack.xcframework/ios-arm64_armv7",
+					"$(PROJECT_DIR)/Example/Carthage/Build/Harmony.xcframework/ios-arm64",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1180,7 +1350,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.magicbell.MagicBell;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = MagicBell;
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1191,7 +1361,6 @@
 		};
 		59EF99C927446D6900FB2378 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E61A2A0E5B9E8205ABA317EA /* Pods-MagicBellTests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1213,7 +1382,6 @@
 		};
 		59EF99CA27446D6900FB2378 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 57D4F2CE13C3BF7FA764FB73 /* Pods-MagicBellTests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1233,6 +1401,80 @@
 			};
 			name = Release;
 		};
+		D2D2163027AC276700A104B8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Example/Carthage/Build/AblyDeltaCodec.xcframework/ios-arm64_armv7",
+					"$(PROJECT_DIR)/Example/Carthage/Build/Ably.xcframework/ios-arm64_armv7",
+					"$(PROJECT_DIR)/Example/Carthage/Build/msgpack.xcframework/ios-arm64_armv7",
+					"$(PROJECT_DIR)/Example/Carthage/Build/Harmony.xcframework/ios-arm64",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.magicbell.MagicBell;
+				PRODUCT_NAME = MagicBell;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D2D2163127AC276700A104B8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Example/Carthage/Build/AblyDeltaCodec.xcframework/ios-arm64_armv7",
+					"$(PROJECT_DIR)/Example/Carthage/Build/Ably.xcframework/ios-arm64_armv7",
+					"$(PROJECT_DIR)/Example/Carthage/Build/msgpack.xcframework/ios-arm64_armv7",
+					"$(PROJECT_DIR)/Example/Carthage/Build/Harmony.xcframework/ios-arm64",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.magicbell.MagicBell;
+				PRODUCT_NAME = MagicBell;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1245,7 +1487,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		59EF99C527446D6900FB2378 /* Build configuration list for PBXNativeTarget "MagicBell" */ = {
+		59EF99C527446D6900FB2378 /* Build configuration list for PBXNativeTarget "MagicBell-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				59EF99C627446D6900FB2378 /* Debug */,
@@ -1259,6 +1501,15 @@
 			buildConfigurations = (
 				59EF99C927446D6900FB2378 /* Debug */,
 				59EF99CA27446D6900FB2378 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2D2162F27AC276700A104B8 /* Build configuration list for PBXNativeTarget "MagicBell-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2D2163027AC276700A104B8 /* Debug */,
+				D2D2163127AC276700A104B8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

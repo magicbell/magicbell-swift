@@ -69,24 +69,40 @@ This repo also contains a full blown example. To run the project:
 
 ## Installation
 
-You can add the MagicBell SDK for iOS to your Xcode project using [CocoaPods](https://cocoapods.org). If you have not
-installed CocoaPods, install it by running:
+### CocoaPods
 
-```
-gem install cocoapods
-pod setup
-pod init
-```
-
-Then, add this entry to your `Podfile`:
+To install MagicBell using [CocoaPods](https://cocoapods.org), add this entry to your `Podfile`:
 
 ```ruby
-pod 'MagicBell', '>=0'
+pod 'MagicBell', '>=1.0.0'
 ```
 
-and run `pod install`.
-
 **IMPORTANT**: Make sure you specify `use_frameworks!` in your `Podfile`.
+
+Then, run `pod install` and open your `$Project.xcworkspace` continue with your development.
+
+### Swift Package Manager
+
+To install MagicBell using [Swift Package Manager](https://www.swift.org/package-manager/), just add the dependency as follows to your project:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/magicbell-io/magicbell-ios", .upToNextMajor(from: "1.0.0"))
+]
+```
+
+### Carthage
+
+To install MagicBell using [Carthage](https://github.com/Carthage/Carthage), add to the Carfile the following dependency:
+
+```ruby
+github "magicbell-io/magicbell-ios" "1.0.0"
+```
+
+Then, run `carthage update --use-xcframeworks --platform [iOS|macOS] --no-use-binaries` (selecting the desired platform) to resolve dependencies. 
+
+Finally add the `MagicBell.xcframework` to your project linked frameworks, together with the other dependencies resolved by Carthage. 
+
 
 ## The MagicBell Client
 
@@ -260,9 +276,11 @@ For example:
 ```swift
 let allNotifications = user.store.build()
 
-let readNotifications = user.store.build(.read)
+let readNotifications = user.store.build(read: true)
 
-let unreadNotifications = user.store.build(.unread)
+let unreadNotifications = user.store.build(read: false)
+
+let archviedNotifications = user.store.build(archived: true)
 
 let billingNotifications = user.store.build(categories: ["billing"])
 
@@ -586,5 +604,4 @@ user.
 
 ## Contributing
 
-We welcome contributions of any kind. To do so, clone the repo, run `pod install` from the root directory, and open the
-`MagicBell.xcworkspace`.
+We welcome contributions of any kind. To do so, clone the repo, resolve dependencies via Carthage in the root folder by running the command `carthage update --use-xcframeworks --no-use-binaries`, and open `MagicBell.xcodeproj`.

@@ -87,7 +87,7 @@ To install MagicBell using [Swift Package Manager](https://www.swift.org/package
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/magicbell-io/magicbell-ios", .upToNextMajor(from: "1.0.0"))
+    .package(url: "https://github.com/magicbell-io/magicbell-swift", .upToNextMajor(from: "1.0.0"))
 ]
 ```
 
@@ -96,7 +96,7 @@ dependencies: [
 To install MagicBell using [Carthage](https://github.com/Carthage/Carthage), add to the Carfile the following dependency:
 
 ```ruby
-github "magicbell-io/magicbell-ios" "1.0.0"
+github "magicbell-io/magicbell-swift" "1.0.0"
 ```
 
 Then, run `carthage update --use-xcframeworks --platform [iOS|macOS] --no-use-binaries` (selecting the desired platform) to resolve dependencies. 

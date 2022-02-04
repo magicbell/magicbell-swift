@@ -22,7 +22,7 @@ let magicBellTag = "MagicBell"
 public class MagicBellClient {
 
     /// The MagicBell SDK version
-    public static let version = "1.0.0-alpha.3"
+    public static let version = "1.0.0"
 
     private let sdkProvider: SDKComponent
 

@@ -12,7 +12,7 @@ It requires:
 
 - iOS 12.0+
 - Swift 5.3+
-- XCode 12+
+- Xcode 12+
 
 ## Quick Start
 
@@ -43,7 +43,7 @@ store.fetch { result in
 }
 ```
 
-This repo also contains a full blown example. To run the project:
+This repo also contains a full-blown example. To run the project:
 
 - Clone the repo
 - Run `pod install` from the `Example` directory
@@ -79,7 +79,7 @@ pod 'MagicBell', '>=1.0.0'
 
 **IMPORTANT**: Make sure you specify `use_frameworks!` in your `Podfile`.
 
-Then, run `pod install` and open your `$Project.xcworkspace` continue with your development.
+Then, run `pod install`.
 
 ### Swift Package Manager
 
@@ -99,10 +99,9 @@ To install MagicBell using [Carthage](https://github.com/Carthage/Carthage), add
 github "magicbell-io/magicbell-swift" "1.0.0"
 ```
 
-Then, run `carthage update --use-xcframeworks --platform [iOS|macOS] --no-use-binaries` (selecting the desired platform) to resolve dependencies. 
+Then, run `carthage update --use-xcframeworks --platform [iOS|macOS] --no-use-binaries` (selecting the desired platform) to resolve dependencies.
 
-Finally add the `MagicBell.xcframework` to your project linked frameworks, together with the other dependencies resolved by Carthage. 
-
+Add the `MagicBell.xcframework` to your project-linked frameworks, together with the other dependencies resolved by Carthage.
 
 ## The MagicBell Client
 
@@ -131,7 +130,7 @@ let magicbell = MagicBellClient(
 | `enableHMAC` | `false`       | Set it to `true` if you want HMAC enabled. Note the `apiSecret` is required if set to `true` |
 | `logLevel`   | `.none`       | Set it to `.debug` to enable logs                                                            |
 
-Though the API key is meant to be published, you should not distribute the API secret. Rather, enable HMAC in your
+Though the API key is meant to be published, you should not distribute the API secret. Rather, enable HMAC for your
 project and generate the user secret on your backend before distributing your app.
 
 ### Integrating into your app
@@ -186,10 +185,11 @@ assert(userOne === userTwo, "Both users reference to the same instance")
 
 ### Multi-User Support
 
-If your app suports multiple logins, you may want to display the status of notifications for all logged in users at the
-same time. The MagicBell SDK allows you to that.
+If your app suports multiple logins, you may want to display the status of notifications for all logged-in users
+simultaneously. The MagicBell SDK allows you to that.
 
-You can call the `connectUser(:)` method with the email or external ID of your logged in users as many times as you need.
+You can call the `connectUser(:)` method with the email or external ID of your logged in users as many times as you
+need.
 
 ```swift
 let userOne = magicbell.connectUser(email: "richard@example.com")
@@ -220,7 +220,7 @@ magicbell.disconnectUser(email: "richard@example.com", externalId: "001")
 
 ### Integrating into your app
 
-The MagicBell `User` instances need to available accross your app. Here you have some options:
+The MagicBell `User` instances need to be available accross your app. Here you have some options:
 
 - extend your own user object
 - define a global attribute
@@ -228,7 +228,7 @@ The MagicBell `User` instances need to available accross your app. Here you have
 
 #### Extend your own user object
 
-This approach is useful if you have a user object accross your app. MagicBell will guarantee the `User` instance for a
+This approach is helpful if you have a user object accross your app. MagicBell will guarantee the `User` instance for a
 given email/externalId is unique, and you only need to provide access to the instance. For example:
 
 ```swift
@@ -259,12 +259,12 @@ let magicbell = MagicBellClient(apiKey: "[MAGICBELL_API_KEY]")
 var magicbellUser: MagicBell.User? = nil
 ```
 
-As soon as you perform a login, assign a value to this variable. Keep in mind, you will have to check the
-`magicbellUser` variable was actually set before accesing it in your code.
+As soon as you perform a login, assign a value to this variable. Keep in mind you will have to check the
+`magicbellUser` variable was actually set before accessing it in your code.
 
 #### Use your own dependency injection graph
 
-You can also inject the MagicBell `User` instance in your own graph and keep track on it using your preferred pattern.
+You can also inject the MagicBell `User` instance into your own graph and keep track of it using your preferred pattern.
 
 ## NotificationStore
 
@@ -339,8 +339,8 @@ store.markAsRead(notification)
     }
 ```
 
-These methods ensure the state of the store is consistent when a notification changes. For example, when a notification
-is read, stores with the predicate `read: .unread`, will remove that notification from themselves notifying all
+These methods ensure the store's state is consistent when a notification changes. For example, when a notification
+is read, stores with the predicate `read: .unread`, will remove that notification from themselves, notifying all
 observers of the notification store.
 
 ### Advanced filters
@@ -355,13 +355,13 @@ let notifications = user.store.build(predicate: predicate)
 
 These are the available options:
 
-| Param        | Options                            | Default        | Description                    |
-| ------------ | ---------------------------------- | -------------- | ------------------------------ |
-| `read`       | `true`, `false`, `nil` | `nil` | Filter by the `read` state (`nil` means unspecified)    |
-| `seen`       | `true`, `false`, `nil` | `nil` | Filter by the `seen` state (`nil` means unspecified)    |
-| `archived`   | `true`, `false`         | `false`  | Filter by the `archived` state |
-| `categories` | `[String]`                         | `[]`           | Filter by catregories          |
-| `topics`     | `[String]`                         | `[]`           | Filter by topics               |
+| Param        | Options                | Default | Description                                          |
+| ------------ | ---------------------- | ------- | ---------------------------------------------------- |
+| `read`       | `true`, `false`, `nil` | `nil`   | Filter by the `read` state (`nil` means unspecified) |
+| `seen`       | `true`, `false`, `nil` | `nil`   | Filter by the `seen` state (`nil` means unspecified) |
+| `archived`   | `true`, `false`        | `false` | Filter by the `archived` state                       |
+| `categories` | `[String]`             | `[]`    | Filter by catregories                                |
+| `topics`     | `[String]`             | `[]`    | Filter by topics                                     |
 
 For example, use this predicate to fetch unread notifications of the `"important"` category:
 
@@ -596,10 +596,10 @@ func application(_ application: UIApplication, didRegisterForRemoteNotifications
 }
 ```
 
-MagicBell will keep that device token stored temporarly in memory and send it as soon as new users are declared via
+MagicBell will keep that device token stored temporarily in memory and send it as soon as new users are declared via
 `MagicBellClient.connectUser`.
 
-Whe a user is disconnected (`MagicBellClient.disconnectUser`), the device token is automatically unregistered for that
+When a user is disconnected (`MagicBellClient.disconnectUser`), the device token is automatically unregistered for that
 user.
 
 ## Contributing

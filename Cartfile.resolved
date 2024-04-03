@@ -1,5 +1,5 @@
 github "Quick/Nimble" "v12.3.0"
-github "ably/ably-cocoa" "1.2.10"
-github "ably/delta-codec-cocoa" "1.3.2"
+github "ably/ably-cocoa" "1.2.27"
+github "ably/delta-codec-cocoa" "1.3.3"
 github "mobilejazz/harmony-swift" "2.0.0"
 github "rvi/msgpack-objective-C" "0.4.0"

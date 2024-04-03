@@ -184,8 +184,8 @@ assert(userOne === userTwo, "Both users reference to the same instance")
 
 ### Multi-User Support
 
-If your app suports multiple logins, you may want to display the status of notifications for all logged-in users
-simultaneously. The MagicBell SDK allows you to that.
+If your app supports multiple logins, you may want to display the status of notifications for all logged-in users
+simultaneously. The MagicBell SDK allows you to do that.
 
 You can call the `connectUser(:)` method with the email or external ID of your logged in users as many times as you
 need.
@@ -562,7 +562,7 @@ user.preferences.fetch { result in
 }
 ```
 
-It is also possible to fetch preference for a category using the `fetchPreferences(for:)` method:
+It is also possible to fetch preferences for a category using the `fetchPreferences(for:)` method:
 
 ```swift
 user.preferences.fetchPreferences(for: "new_comment") { result in

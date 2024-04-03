@@ -94,6 +94,8 @@
 		59F4597527597FF7008F3BC8 /* AblyConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597427597FF7008F3BC8 /* AblyConnector.swift */; };
 		59F45979275A434A008F3BC8 /* StoreRealTimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F45978275A434A008F3BC8 /* StoreRealTimeProvider.swift */; };
 		59F4597B275A48AD008F3BC8 /* StoreRealTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597A275A48AD008F3BC8 /* StoreRealTime.swift */; };
+		94CC7AC32BBDE8E800F4AFE7 /* UserPreferencesEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CC7AC22BBDE8E800F4AFE7 /* UserPreferencesEntityTests.swift */; };
+		94CC7AC52BBDECA500F4AFE7 /* NotificationPreferences.json in Resources */ = {isa = PBXBuildFile; fileRef = 94CC7AC42BBDECA500F4AFE7 /* NotificationPreferences.json */; };
 		D27CF1BA27906FDD00897BCB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CF1B927906FDD00897BCB /* User.swift */; };
 		D280727B27A2F1C000FD941A /* Nimble.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D280727A27A2F1C000FD941A /* Nimble.xcframework */; };
 		D29D249227747DA000726ABD /* NotificationStorePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29D249127747DA000726ABD /* NotificationStorePublisher.swift */; };
@@ -316,6 +318,8 @@
 		59F4597427597FF7008F3BC8 /* AblyConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AblyConnector.swift; sourceTree = "<group>"; };
 		59F45978275A434A008F3BC8 /* StoreRealTimeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRealTimeProvider.swift; sourceTree = "<group>"; };
 		59F4597A275A48AD008F3BC8 /* StoreRealTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRealTime.swift; sourceTree = "<group>"; };
+		94CC7AC22BBDE8E800F4AFE7 /* UserPreferencesEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferencesEntityTests.swift; sourceTree = "<group>"; };
+		94CC7AC42BBDECA500F4AFE7 /* NotificationPreferences.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = NotificationPreferences.json; sourceTree = "<group>"; };
 		D27CF1B927906FDD00897BCB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D280727827A2E40C00FD941A /* MagicBell.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = MagicBell.podspec; sourceTree = "<group>"; };
 		D280727927A2E41300FD941A /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
@@ -711,6 +715,7 @@
 				5997F8F32770EA8800DED4E4 /* Config */,
 				5997F8EC2770A3C800DED4E4 /* StoreRealTime */,
 				59CFBD4C277093E200F1843C /* Store */,
+				94CC7AC02BBDE88B00F4AFE7 /* UserPreferences */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -805,6 +810,23 @@
 				59827B54275FD7C9009D93D8 /* AblyMessageProcessor.swift */,
 			);
 			path = StoreRealTime;
+			sourceTree = "<group>";
+		};
+		94CC7AC02BBDE88B00F4AFE7 /* UserPreferences */ = {
+			isa = PBXGroup;
+			children = (
+				94CC7AC12BBDE8D600F4AFE7 /* Data */,
+			);
+			path = UserPreferences;
+			sourceTree = "<group>";
+		};
+		94CC7AC12BBDE8D600F4AFE7 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				94CC7AC22BBDE8E800F4AFE7 /* UserPreferencesEntityTests.swift */,
+				94CC7AC42BBDECA500F4AFE7 /* NotificationPreferences.json */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		D2153EF2274E78B1009C2DDC /* Interactor */ = {
@@ -956,6 +978,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94CC7AC52BBDECA500F4AFE7 /* NotificationPreferences.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1064,6 +1087,7 @@
 				5997F8F52770EA9F00DED4E4 /* GetConfigMockInteractor.swift in Sources */,
 				5997F8F72770ED4C00DED4E4 /* DeleteConfigMockInteractor.swift in Sources */,
 				595AC4CE27710EF000A3DCA2 /* PageInfoMotherObject.swift in Sources */,
+				94CC7AC32BBDE8E800F4AFE7 /* UserPreferencesEntityTests.swift in Sources */,
 				5988BBDE2771F057009F4205 /* ContentObserverMock.swift in Sources */,
 				5988BBDA2771D0C2009F4205 /* NotificationStoreRealTimeTests.swift in Sources */,
 				5997F8F22770A88600DED4E4 /* NotificationStoreTests.swift in Sources */,

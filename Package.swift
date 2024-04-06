@@ -17,7 +17,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/mobilejazz/harmony-swift", from: "2.0.0"),
-        .package(url: "https://github.com/ably/ably-cocoa", from: "1.2.0")
+        .package(url: "https://github.com/ably/ably-cocoa", from: "1.2.27")
     ],
     targets: [
         .target(

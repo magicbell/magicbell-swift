@@ -535,52 +535,44 @@ class Notifications: View {
 }
 ```
 
-## User Preferences
+## Notification Preferences
 
-You can fetch and set user preferences for MagicBell channels and categories.
+You can fetch and set users notification preferences for MagicBell channels and categories.
 
 ```swift
-class Preferences {
-    var email: Bool
-    var inApp: Bool
-    var mobilePush: Bool
-    var webPush: Bool
+public struct Channel {
+    public let label: String
+    public let slug: String
+    public let enabled: Bool
 }
 
-struct UserPreferences {
-    let preferences: [String: Preferences]
+public struct Category {
+    public let channels: [Channel]
+    public let label: String
+    public let slug: String
+}
+
+public struct NotificationPreferences {
+    public let categories: [Category]
 }
 ```
 
-To fetch user preferences, use the `fetch` method as follows:
+To fetch the users notification preferences, use the `fetch` method as follows:
 
 ```swift
 user.preferences.fetch { result in
     if let preferences = try? result.get() {
-        print("User Preferences: \(preferences)")
+        print("Notification Preferences: \(preferences)")
     }
 }
 ```
 
-It is also possible to fetch preferences for a category using the `fetchPreferences(for:)` method:
+To update the preferences, use `update`.
 
 ```swift
-user.preferences.fetchPreferences(for: "new_comment") { result in
-    if let category = try? result.get() {
-        print("Category: \(category)")
-    }
-}
-```
-
-To update the preferences, use either `update` or `updatePreferences(:for:)`.
-
-```swift
-// Updating all preferences at once.
+// Updating notification preferences.
+// The update can be partial and only will affect the categories included in the object being sent
 user.preferences.update(preferences) { result in }
-
-// Updating the list of preferences for a category
-// Only preference for the included categories will be changed
-user.preferences.updatePreferences(categoryPreferences, for: "new_comment") { result in }
 ```
 
 ## Push Notifications

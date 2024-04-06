@@ -16,7 +16,7 @@
 import XCTest
 import Nimble
 
-let mockResponse = """
+let fixture = """
 {
    "notification_preferences":{
       "categories":[
@@ -41,14 +41,21 @@ let mockResponse = """
 }
 """
 
+/// Helper function to make json data comparable
+/// re-encodes json data with sorted and stable keys order
+func jsonDataWithSortedKeys(_ data: Data) throws -> Data {
+    let parsed = try! JSONSerialization.jsonObject(with: data)
+    return try! JSONSerialization.data(withJSONObject: parsed, options: [.sortedKeys])
+}
+
 final class NotificationPreferencesEntityTests: XCTestCase {
-    let mapper = DataToDecodableMapper<NotificationPreferencesEntity>()
+    let toDecodableMapper = DataToDecodableMapper<NotificationPreferencesEntity>()
+    let toDataMapper = EncodableToDataMapper<NotificationPreferencesEntity>()
     
     func testJsonDecoding() throws {
+        let json = fixture.data(using: .utf8)!
         
-        let json = mockResponse.data(using: .utf8)!
-        
-        let entity = try! mapper.map(json)
+        let entity = try! toDecodableMapper.map(json)
         
         XCTAssertEqual(entity.categories.count, 1)
         
@@ -66,5 +73,20 @@ final class NotificationPreferencesEntityTests: XCTestCase {
         XCTAssertFalse(channel2.enabled)
         XCTAssertEqual(channel2.label, "Mobile push")
         XCTAssertEqual(channel2.slug, "mobile_push")
+    }
+    
+    func testJsonCoding() throws {
+        
+        let channel1 = ChannelEntity(slug: "in_app", label: "In app", enabled: true)
+        let channel2 = ChannelEntity(slug: "mobile_push", label: "Mobile push", enabled: false)
+        let category = CategoryEntity(slug: "user_liked_post", label: "User Liked Post", channels: [channel1, channel2])
+        let entity = NotificationPreferencesEntity(categories: [category])
+        
+        let result = try! toDataMapper.map(entity)
+        
+        let comparableResult = try! jsonDataWithSortedKeys(result)
+        let comparableExpected = try! jsonDataWithSortedKeys(fixture.data(using: .utf8)!)
+        
+        XCTAssertEqual(comparableResult, comparableExpected)
     }
 }

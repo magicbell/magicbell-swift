@@ -14,6 +14,7 @@
 import Harmony
 
 struct GetUserPreferencesInteractor {
+
     private let executor: Executor
     private let getUserPreferencesInteractor: Interactor.GetByQuery<UserPreferences>
 

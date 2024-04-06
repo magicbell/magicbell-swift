@@ -15,31 +15,28 @@ import Harmony
 
 class UserPreferencesEntityToUserPreferencesMapper: Mapper<UserPreferencesEntity, UserPreferences> {
     override func map(_ from: UserPreferencesEntity) throws -> UserPreferences {
-        
-        if let preferencesEntity = from.preferences {
-            let categories = Dictionary(uniqueKeysWithValues: preferencesEntity.map { key, value in
-                (key,
-                 Preferences(email: value.email,
-                             inApp: value.inApp,
-                             mobilePush: value.mobilePush,
-                             webPush: value.webPush))
-            })
-            return UserPreferences(categories)
-        } else {
-            return UserPreferences([:])
+        let categories = from.categories.map { category in
+            let channels = category.channels.map { channel in
+                Channel(label: channel.label, slug: channel.slug, enabled: channel.enabled)
+            }
+            return Category(channels: channels, label: category.label, slug: category.slug)
         }
+        return UserPreferences(categories: categories)
     }
 }
 
 class UserPreferencesToUserPreferencesEntityMapper: Mapper<UserPreferences, UserPreferencesEntity> {
     override func map(_ from: UserPreferences) throws -> UserPreferencesEntity {
-        let userPreferencesEntity = Dictionary(uniqueKeysWithValues: from.preferences.map { key, value in
-            (key,
-             PreferencesEntity(email: value.email,
-                               inApp: value.inApp,
-                               mobilePush: value.mobilePush,
-                               webPush: value.webPush))
-        })
-        return UserPreferencesEntity(preferences: userPreferencesEntity)
+        
+        let categories = from.categories.map { value in
+            let channels = value.channels.map { channel in
+                ChannelEntity(label: channel.label,
+                              slug: channel.slug,
+                              enabled: channel.enabled)}
+            return CategoryEntity(label: value.label,
+                                  slug: value.slug,
+                                  channels: channels)
+        }
+        return UserPreferencesEntity(categories: categories)
     }
 }

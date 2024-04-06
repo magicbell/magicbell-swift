@@ -49,11 +49,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         switch style {
         case .uiKit:
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            guard let viewController = storyboard.instantiateInitialViewController() as? MagicBellStoreViewController else {
+            guard let navController = storyboard.instantiateInitialViewController() as? UINavigationController else {
+                fatalError("Invalid Storyboard")
+            }
+            guard let viewController = navController.topViewController as? MagicBellStoreViewController else {
                 fatalError("Invalid Storyboard")
             }
             viewController.user = user
-            window?.rootViewController = viewController
+            window?.rootViewController = navController
         case .swiftUI:
             let store = user.store.build()
             window?.rootViewController = HostingController(rootView: NavigationView {

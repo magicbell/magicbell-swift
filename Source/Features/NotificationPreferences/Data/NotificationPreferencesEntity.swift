@@ -14,18 +14,18 @@
 import Foundation
 
 struct ChannelEntity: Codable {
-    let label:String
     let slug:String
+    let label:String
     let enabled:Bool
 }
 
 struct CategoryEntity: Codable {
-    let label:String
     let slug:String
+    let label:String
     let channels:[ChannelEntity]
 }
 
-struct UserPreferencesEntity: Codable {
+struct NotificationPreferencesEntity: Codable {
     let categories: [CategoryEntity]
 
     enum ContainerKeys: String, CodingKey {

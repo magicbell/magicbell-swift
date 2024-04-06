@@ -15,19 +15,35 @@ import Foundation
 
 /// The notification channel and its status
 public struct Channel {
-    public let label: String
     public let slug: String
+    public let label: String
     public let enabled: Bool
+    
+    public init(slug: String, label: String, enabled: Bool) {
+        self.slug = slug
+        self.label = label
+        self.enabled = enabled
+    }
 }
 
 /// The category with its notification channels
 public struct Category {
-    public let channels: [Channel]
-    public let label: String
     public let slug: String
+    public let label: String
+    public let channels: [Channel]
+    
+    public init(slug: String, label: String, channels: [Channel]) {
+        self.slug = slug
+        self.label = label
+        self.channels = channels
+    }
 }
 
-/// The notification prefrences object
-public struct UserPreferences {
+/// The notification prefrences object containing all categories
+public struct NotificationPreferences {
     public let categories: [Category]
+    
+    public init(categories: [Category]) {
+        self.categories = categories
+    }
 }

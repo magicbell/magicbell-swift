@@ -13,30 +13,30 @@
 
 import Harmony
 
-class UserPreferencesEntityToUserPreferencesMapper: Mapper<UserPreferencesEntity, UserPreferences> {
-    override func map(_ from: UserPreferencesEntity) throws -> UserPreferences {
+class NotificationPreferencesEntityToNotificationPreferencesMapper: Mapper<NotificationPreferencesEntity, NotificationPreferences> {
+    override func map(_ from: NotificationPreferencesEntity) throws -> NotificationPreferences {
         let categories = from.categories.map { category in
             let channels = category.channels.map { channel in
-                Channel(label: channel.label, slug: channel.slug, enabled: channel.enabled)
+                Channel(slug: channel.slug, label: channel.label, enabled: channel.enabled)
             }
-            return Category(channels: channels, label: category.label, slug: category.slug)
+            return Category(slug: category.slug, label: category.label, channels: channels)
         }
-        return UserPreferences(categories: categories)
+        return NotificationPreferences(categories: categories)
     }
 }
 
-class UserPreferencesToUserPreferencesEntityMapper: Mapper<UserPreferences, UserPreferencesEntity> {
-    override func map(_ from: UserPreferences) throws -> UserPreferencesEntity {
+class NotificationPreferencesToNotificationPreferencesEntityMapper: Mapper<NotificationPreferences, NotificationPreferencesEntity> {
+    override func map(_ from: NotificationPreferences) throws -> NotificationPreferencesEntity {
         
         let categories = from.categories.map { value in
             let channels = value.channels.map { channel in
-                ChannelEntity(label: channel.label,
-                              slug: channel.slug,
+                ChannelEntity(slug: channel.slug,
+                              label: channel.label,
                               enabled: channel.enabled)}
-            return CategoryEntity(label: value.label,
-                                  slug: value.slug,
+            return CategoryEntity(slug: value.slug,
+                                  label: value.label,
                                   channels: channels)
         }
-        return UserPreferencesEntity(categories: categories)
+        return NotificationPreferencesEntity(categories: categories)
     }
 }

@@ -41,8 +41,8 @@ let mockResponse = """
 }
 """
 
-final class UserPreferencesEntityTests: XCTestCase {
-    let mapper = DataToDecodableMapper<UserPreferencesEntity>()
+final class NotificationPreferencesEntityTests: XCTestCase {
+    let mapper = DataToDecodableMapper<NotificationPreferencesEntity>()
     
     func testJsonDecoding() throws {
         

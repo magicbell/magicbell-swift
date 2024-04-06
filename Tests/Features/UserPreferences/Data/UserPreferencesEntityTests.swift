@@ -16,19 +16,55 @@
 import XCTest
 import Nimble
 
+let mockResponse = """
+{
+   "notification_preferences":{
+      "categories":[
+         {
+            "label":"User Liked Post",
+            "slug":"user_liked_post",
+            "channels":[
+               {
+                  "label":"In app",
+                  "slug":"in_app",
+                  "enabled":true
+               },
+               {
+                  "label":"Mobile push",
+                  "slug":"mobile_push",
+                  "enabled":false
+               }
+            ]
+         }
+       ]
+    }
+}
+"""
+
 final class UserPreferencesEntityTests: XCTestCase {
     let mapper = DataToDecodableMapper<UserPreferencesEntity>()
     
     func testJsonDecoding() throws {
-        let bundle = Bundle(for: type(of: self))
         
-        guard let url = bundle.url(forResource: "NotificationPreferences", withExtension: "json") else {
-            XCTFail("Missing file: NotificationPreferences.json")
-            return
-        }
-        
-        let json = try Data(contentsOf: url)
+        let json = mockResponse.data(using: .utf8)!
         
         let entity = try! mapper.map(json)
+        
+        XCTAssertEqual(entity.categories.count, 1)
+        
+        let category = entity.categories.first!
+        XCTAssertEqual(category.label, "User Liked Post")
+        XCTAssertEqual(category.slug, "user_liked_post")
+        XCTAssertEqual(category.channels.count, 2)
+        
+        let channel1 = category.channels[0]
+        XCTAssertTrue(channel1.enabled)
+        XCTAssertEqual(channel1.label, "In app")
+        XCTAssertEqual(channel1.slug, "in_app")
+        
+        let channel2 = category.channels[1]
+        XCTAssertFalse(channel2.enabled)
+        XCTAssertEqual(channel2.label, "Mobile push")
+        XCTAssertEqual(channel2.slug, "mobile_push")
     }
 }

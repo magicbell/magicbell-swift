@@ -17,7 +17,8 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/mobilejazz/harmony-swift", from: "2.0.0"),
-        .package(url: "https://github.com/ably/ably-cocoa", from: "1.2.27")
+        .package(url: "https://github.com/ably/ably-cocoa", from: "1.2.27"),
+        .package(url: "https://github.com/Quick/Nimble.git", from: "12.0.0")
     ],
     targets: [
         .target(
@@ -27,6 +28,9 @@ let package = Package(
                 .product(name: "Ably", package: "ably-cocoa")
             ],
             path: "Source"
-        )
+        ),
+        .testTarget(name: "MagicBellTests",
+                    dependencies: [ "Nimble", "MagicBell" ],
+                    path: "Tests")
     ]
 )

@@ -13,5 +13,12 @@ jobs:
           xcode-version: latest-stable
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: SPM Cache
+        uses: actions/cache@v3
+        with:
+          path: .build
+          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-
       - name: Build and Test
         run: swift test

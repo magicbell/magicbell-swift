@@ -26,5 +26,5 @@ Pod::Spec.new do |s|
   s.source_files = 'Source/**/*.swift'
 
   s.dependency 'Harmony', '2.0.0'
-  s.dependency 'Ably', '1.2.7'
+  s.dependency 'Ably', '1.2.27'
 end

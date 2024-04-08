@@ -13,22 +13,22 @@
 
 import Harmony
 
-struct UpdateUserPreferencesInteractor {
+struct GetNotificationPreferencesInteractor {
 
     private let executor: Executor
-    private let updateUserPreferencesInteractor: Interactor.PutByQuery<UserPreferences>
+    private let getNotificationPreferencesInteractor: Interactor.GetByQuery<NotificationPreferences>
 
     init(
         executor: Executor,
-        updateUserPreferencesInteractor: Interactor.PutByQuery<UserPreferences>
+        getNotificationPreferencesInteractor: Interactor.GetByQuery<NotificationPreferences>
     ) {
         self.executor = executor
-        self.updateUserPreferencesInteractor = updateUserPreferencesInteractor
+        self.getNotificationPreferencesInteractor = getNotificationPreferencesInteractor
     }
 
-    func execute(_ userPreferences: UserPreferences, userQuery: UserQuery) -> Future<UserPreferences> {
+    func execute(userQuery: UserQuery) -> Future<NotificationPreferences> {
         return executor.submit { resolver in
-            resolver.set(updateUserPreferencesInteractor.execute(userPreferences, query: userQuery, in: DirectExecutor()))
+            resolver.set(getNotificationPreferencesInteractor.execute(userQuery, in: DirectExecutor()))
         }
     }
 }

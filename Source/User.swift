@@ -18,8 +18,7 @@ import Foundation
 public class User {
     private let userQuery: UserQuery
     private var internalStoreDirector: InternalStoreDirector
-    /// The user preferences director.
-    public private(set) var preferences: UserPreferencesDirector
+    public private(set) var preferences: NotificationPreferencesDirector
     private(set) var pushSubscription: PushSubscriptionDirector
 
     /// The store director.
@@ -30,7 +29,7 @@ public class User {
     init(
         userQuery: UserQuery,
         store: InternalStoreDirector,
-        preferences: UserPreferencesDirector,
+        preferences: NotificationPreferencesDirector,
         pushSubscription: PushSubscriptionDirector
     ) {
         self.userQuery = userQuery

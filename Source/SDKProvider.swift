@@ -19,7 +19,7 @@ protocol SDKComponent {
     func getStoreComponent() -> StoreComponent
     func getStoreRealTimeComponent() -> StoreRealTimeComponent
     func getPushSubscriptionComponent() -> PushSubscriptionComponent
-    func getUserPreferencesComponent() -> UserPreferencesComponent
+    func getNotificationPreferencesComponent() -> NotificationPreferencesComponent
     func getConfigComponent() -> ConfigComponent
 }
 
@@ -45,7 +45,7 @@ class DefaultSDKModule: SDKComponent {
         httpClient: httpClient,
         executor: executorComponent.mainExecutor
     )
-    private lazy var userPreferencesComponent = DefaultUserPreferencesModule(
+    private lazy var notificationPreferencesComponent = DefaultNotificationPreferencesModule(
         logger: logger,
         httpClient: httpClient,
         executor: executorComponent.mainExecutor
@@ -91,8 +91,8 @@ class DefaultSDKModule: SDKComponent {
         return pushSubscriptionComponent
     }
 
-    func getUserPreferencesComponent() -> UserPreferencesComponent {
-        return userPreferencesComponent
+    func getNotificationPreferencesComponent() -> NotificationPreferencesComponent {
+        return notificationPreferencesComponent
     }
 
     func getConfigComponent() -> ConfigComponent {

@@ -14,25 +14,26 @@
 import Foundation
 import Harmony
 
-class UserPreferencesNetworkDataSource: GetDataSource, PutDataSource {
+class NotificationPreferencesNetworkDataSource: GetDataSource, PutDataSource {
 
-    typealias T = UserPreferencesEntity
+    typealias T = NotificationPreferencesEntity
 
     private let httpClient: HttpClient
-    private let mapper: Mapper<Data, UserPreferencesEntity>
+    private let mapper: Mapper<Data, NotificationPreferencesEntity>
 
-    init(httpClient: HttpClient, mapper: Mapper<Data, UserPreferencesEntity>) {
+    init(httpClient: HttpClient, mapper: Mapper<Data, NotificationPreferencesEntity>) {
         self.httpClient = httpClient
         self.mapper = mapper
     }
 
-    func get(_ query: Query) -> Future<UserPreferencesEntity> {
+    func get(_ query: Query) -> Future<NotificationPreferencesEntity> {
         switch query {
         case let userQuery as UserQuery:
             let urlRequest = self.httpClient.prepareURLRequest(
                 path: "/notification_preferences",
                 externalId: userQuery.externalId,
-                email: userQuery.email
+                email: userQuery.email,
+                additionalHTTPHeaders: ["accept-version": "v2"]
             )
             return self.httpClient
                 .performRequest(urlRequest)
@@ -43,12 +44,12 @@ class UserPreferencesNetworkDataSource: GetDataSource, PutDataSource {
         }
     }
 
-    func getAll(_ query: Query) -> Future<[UserPreferencesEntity]> {
+    func getAll(_ query: Query) -> Future<[NotificationPreferencesEntity]> {
         assertionFailure("Should never happen")
         return Future(CoreError.NotImplemented())
     }
 
-    func put(_ value: UserPreferencesEntity?, in query: Query) -> Future<UserPreferencesEntity> {
+    func put(_ value: NotificationPreferencesEntity?, in query: Query) -> Future<NotificationPreferencesEntity> {
         switch query {
         case let userQuery as UserQuery:
             guard let value = value else {
@@ -58,7 +59,8 @@ class UserPreferencesNetworkDataSource: GetDataSource, PutDataSource {
             var urlRequest = self.httpClient.prepareURLRequest(
                 path: "/notification_preferences",
                 externalId: userQuery.externalId,
-                email: userQuery.email
+                email: userQuery.email,
+                additionalHTTPHeaders: ["accept-version": "v2"]
             )
             urlRequest.httpMethod = "PUT"
 
@@ -76,7 +78,7 @@ class UserPreferencesNetworkDataSource: GetDataSource, PutDataSource {
         }
     }
 
-    func putAll(_ array: [UserPreferencesEntity], in query: Query) -> Future<[UserPreferencesEntity]> {
+    func putAll(_ array: [NotificationPreferencesEntity], in query: Query) -> Future<[NotificationPreferencesEntity]> {
         assertionFailure("Should never happen")
         return Future(CoreError.NotImplemented())
     }

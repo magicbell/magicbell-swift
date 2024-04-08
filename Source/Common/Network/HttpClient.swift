@@ -15,8 +15,13 @@ import Foundation
 import Harmony
 
 protocol HttpClient {
-    func prepareURLRequest(path: String, externalId: String?, email: String?) -> URLRequest
+    func prepareURLRequest(path: String, externalId: String?, email: String?, additionalHTTPHeaders: [String: String]?) -> URLRequest
     func performRequest(_ urlRequest: URLRequest) -> Future<Data>
+}
+extension HttpClient {
+    func prepareURLRequest(path: String, externalId: String?, email: String?) -> URLRequest {
+        prepareURLRequest(path: path, externalId: externalId, email: email, additionalHTTPHeaders: [:])
+    }
 }
 
 class DefaultHttpClient: HttpClient {
@@ -28,8 +33,8 @@ class DefaultHttpClient: HttpClient {
         self.urlSession = urlSession
         self.environment = environment
     }
-
-    func prepareURLRequest(path: String, externalId: String?, email: String?) -> URLRequest {
+    
+    func prepareURLRequest(path: String, externalId: String?, email: String?, additionalHTTPHeaders: [String: String]?) -> URLRequest {
         var urlRequest = URLRequest(url: environment.baseUrl.appendingPathComponent(path))
 
         urlRequest.addValue(environment.apiKey, forHTTPHeaderField: "X-MAGICBELL-API-KEY")
@@ -39,6 +44,12 @@ class DefaultHttpClient: HttpClient {
             addHMACHeader(apiSecret, externalId, email, &urlRequest)
         }
         addIdAndOrEmailHeader(externalId, email, &urlRequest)
+        
+        if let headers = additionalHTTPHeaders {
+            headers.forEach { (key: String, value: String) in
+                urlRequest.addValue(value, forHTTPHeaderField: key)
+            }
+        }
 
         urlRequest.timeoutInterval = 10
 

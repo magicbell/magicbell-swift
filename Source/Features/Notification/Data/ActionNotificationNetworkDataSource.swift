@@ -46,7 +46,8 @@ class ActionNotificationNetworkDataSource: PutDataSource, DeleteDataSource {
             var urlRequest = self.httpClient.prepareURLRequest(
                 path: path,
                 externalId: notificationActionQuery.user.externalId,
-                email: notificationActionQuery.user.email
+                email: notificationActionQuery.user.email,
+                hmac: notificationActionQuery.user.hmac
             )
             
             urlRequest.httpMethod = httpMethod
@@ -71,7 +72,8 @@ class ActionNotificationNetworkDataSource: PutDataSource, DeleteDataSource {
             var urlRequest = self.httpClient.prepareURLRequest(
                 path: "/notifications/\(notificationQuery.notificationId)",
                 externalId: notificationQuery.user.externalId,
-                email: notificationQuery.user.email
+                email: notificationQuery.user.email,
+                hmac: notificationQuery.user.hmac
             )
             urlRequest.httpMethod = "DELETE"
             

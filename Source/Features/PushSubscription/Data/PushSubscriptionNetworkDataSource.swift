@@ -37,7 +37,8 @@ class PushSubscriptionNetworkDataSource: PutDataSource, DeleteDataSource {
             var urlRequest = httpClient.prepareURLRequest(
                 path: "/push_subscriptions",
                 externalId: pushSubscriptionQuery.user.externalId,
-                email: pushSubscriptionQuery.user.email
+                email: pushSubscriptionQuery.user.email,
+                hmac: pushSubscriptionQuery.user.hmac
             )
             urlRequest.httpMethod = "POST"
             do {
@@ -66,7 +67,8 @@ class PushSubscriptionNetworkDataSource: PutDataSource, DeleteDataSource {
             var urlRequest = self.httpClient.prepareURLRequest(
                 path: "/push_subscriptions/\(deletePushSubscriptionQuery.deviceToken)",
                 externalId: deletePushSubscriptionQuery.user.externalId,
-                email: deletePushSubscriptionQuery.user.email
+                email: deletePushSubscriptionQuery.user.email,
+                hmac: deletePushSubscriptionQuery.user.hmac
             )
             urlRequest.httpMethod = "DELETE"
 

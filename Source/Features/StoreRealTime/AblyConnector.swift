@@ -70,10 +70,10 @@ class AblyConnector: StoreRealTime {
         options.authMethod = "POST"
         let headers = self.generateAblyHeaders(
             apiKey: self.environment.apiKey,
-            apiSecret: self.environment.apiSecret,
             isHMACEnabled: self.environment.isHMACEnabled,
             externalId: self.userQuery.externalId,
-            email: self.userQuery.email
+            email: self.userQuery.email,
+            hmac: self.userQuery.hmac
         )
         options.authHeaders = headers
 
@@ -97,22 +97,15 @@ class AblyConnector: StoreRealTime {
 
     private func generateAblyHeaders(
         apiKey: String,
-        apiSecret: String?,
         isHMACEnabled: Bool,
         externalId: String?,
-        email: String?
+        email: String?,
+        hmac: String?
     ) -> [String: String] {
 
         var headers = ["X-MAGICBELL-API-KEY": apiKey]
-        if let apiSecret = apiSecret,
-           isHMACEnabled {
-            if let externalId = externalId {
-                let hmac = externalId.hmac(key: apiSecret)
-                headers["X-MAGICBELL-USER-HMAC"] = hmac
-            } else if let email = email {
-                let hmac = email.hmac(key: apiSecret)
-                headers["X-MAGICBELL-USER-HMAC"] = hmac
-            }
+        if isHMACEnabled, let hmac = hmac {
+            headers["X-MAGICBELL-USER-HMAC"] = hmac
         }
 
         if let externalId = externalId {

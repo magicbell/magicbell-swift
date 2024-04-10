@@ -34,7 +34,8 @@ class StoresGraphQLDataSource: GetDataSource {
             var urlRequest = httpClient.prepareURLRequest(
                 path: "/graphql",
                 externalId: query.userQuery.externalId,
-                email: query.userQuery.email
+                email: query.userQuery.email,
+                hmac: query.userQuery.hmac
             )
             urlRequest.allHTTPHeaderFields = ["content-type": "application/json"]
             urlRequest.httpMethod = "POST"

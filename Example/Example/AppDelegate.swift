@@ -19,6 +19,7 @@ extension MagicBellClient {
     /// Application global instance of MagicBellClient
     static var shared = MagicBellClient(
         apiKey: "34ed17a8482e44c765d9e163015a8d586f0b3383",
+        enableHMAC: true,
         logLevel: .debug
     )
 }

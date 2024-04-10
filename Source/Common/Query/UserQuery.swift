@@ -20,24 +20,38 @@ class UserQuery: KeyQuery {
     let hmac: String?
     let key: String
 
-    init(externalId: String, email: String, hmac: String?) {
-        self.externalId = externalId
-        self.email = email
-        self.key = externalId
-        self.hmac = hmac
+    // Mark: - Initializers
+    
+    // private initializer
+    private init(maybeExternalId: String?, maybeEmail: String?, maybeHmac: String?) {
+        self.externalId = maybeExternalId
+        self.email = maybeEmail
+        self.hmac = maybeHmac
+        self.key = UserQuery.preferedKey(email: self.email, externalId: self.externalId)
+    }
+    
+    convenience init(externalId: String, email: String, hmac: String?) {
+        self.init(maybeExternalId: externalId, maybeEmail: email, maybeHmac: hmac)
     }
 
-    init(externalId: String, hmac: String?) {
-        self.externalId = externalId
-        self.email = nil
-        self.key = externalId
-        self.hmac = hmac
+    convenience init(externalId: String, hmac: String?) {
+        self.init(maybeExternalId: externalId, maybeEmail: nil, maybeHmac: hmac)
     }
 
-    init(email: String, hmac: String?) {
-        self.externalId = nil
-        self.email = email
-        self.key = email
-        self.hmac = hmac
+    convenience init(email: String, hmac: String?) {
+        self.init(maybeExternalId: nil, maybeEmail: email, maybeHmac: hmac)
+    }
+    
+    // Mark: - Helper
+    
+    // externalID is prefered over email for key
+    static func preferedKey(email: String?, externalId: String?) -> String {
+        if let externalId = externalId {
+            return externalId
+        } else if let email = email {
+            return email
+        } else {
+            Swift.fatalError("Either a users email, or an external Id is required")
+        }
     }
 }

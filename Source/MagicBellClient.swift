@@ -91,28 +91,26 @@ public class MagicBellClient {
     /// Remove a MagicBell user. All connections are stopped.
     /// - Parameters:
     ///   - email: The user's email
-    ///   - hmac: (Optional) Server generated hmac, used to authenticate the user. Will only be used when `enableHMAC` is set.
-    public func disconnectUser(email: String, hmac: String? = nil) {
-        let userQuery = UserQuery(email: email, hmac: hmac)
-        removeUser(userQuery: userQuery)
+    public func disconnectUser(email: String) {
+        let userKey = UserQuery.preferedKey(email: email, externalId: nil)
+        removeUser(userKey: userKey)
     }
 
     /// Remove a MagicBell user. All connections are stopped.
     /// - Parameters:
     ///   - externalId: The user's external ID
-    ///   - hmac: (Optional) Server generated hmac, used to authenticate the user. Will only be used when `enableHMAC` is set.
-    public func disconnectUser(externalId: String, hmac: String? = nil) {
-        let userQuery = UserQuery(externalId: externalId, hmac: hmac)
-        removeUser(userQuery: userQuery)
+    public func disconnectUser(externalId: String) {
+        let userKey = UserQuery.preferedKey(email: nil, externalId: externalId)
+        removeUser(userKey: userKey)
     }
 
     /// Remove a MagicBell user. All connections are stopped.
     /// - Parameters:
     ///   - email: The user's email
     ///   - externalId: The user's external ID
-    public func disconnectUser(email: String, externalId: String, hmac: String? = nil) {
-        let userQuery = UserQuery(externalId: externalId, email: email, hmac: hmac)
-        removeUser(userQuery: userQuery)
+    public func disconnectUser(email: String, externalId: String) {
+        let userKey = UserQuery.preferedKey(email: email, externalId: externalId)
+        removeUser(userKey: userKey)
     }
 
     private func getUser(_ userQuery: UserQuery) -> User {
@@ -134,10 +132,10 @@ public class MagicBellClient {
         return newUser
     }
 
-    private func removeUser(userQuery: UserQuery) {
-        if let user = users[userQuery.key] {
+    private func removeUser(userKey: String) {
+        if let user = users[userKey] {
             user.logout(deviceToken: self.deviceToken)
-            users.removeValue(forKey: userQuery.key)
+            users.removeValue(forKey: userKey)
         }
     }
 

@@ -18,22 +18,26 @@ class UserQuery: KeyQuery {
     let externalId: String?
     let email: String?
     let key: String
+    let hmac: String?
 
-    init(externalId: String, email: String) {
+    init(externalId: String, email: String, hmac: String? = nil) {
         self.externalId = externalId
         self.email = email
         self.key = externalId
+        self.hmac = hmac
     }
 
-    init(externalId: String) {
+    init(externalId: String, hmac: String? = nil) {
         self.externalId = externalId
         self.email = nil
         self.key = externalId
+        self.hmac = hmac
     }
 
-    init(email: String) {
+    init(email: String, hmac: String? = nil) {
         self.externalId = nil
         self.email = email
         self.key = email
+        self.hmac = hmac
     }
 }

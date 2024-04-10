@@ -73,6 +73,7 @@ class AblyConnector: StoreRealTime {
             apiSecret: self.environment.apiSecret,
             isHMACEnabled: self.environment.isHMACEnabled,
             externalId: self.userQuery.externalId,
+            hmac: self.userQuery.hmac,
             email: self.userQuery.email
         )
         options.authHeaders = headers
@@ -100,6 +101,7 @@ class AblyConnector: StoreRealTime {
         apiSecret: String?,
         isHMACEnabled: Bool,
         externalId: String?,
+        hmac: String?,
         email: String?
     ) -> [String: String] {
 
@@ -113,6 +115,8 @@ class AblyConnector: StoreRealTime {
                 let hmac = email.hmac(key: apiSecret)
                 headers["X-MAGICBELL-USER-HMAC"] = hmac
             }
+        } else if let hmac = hmac {
+            headers["X-MAGICBELL-USER-HMAC"] = hmac
         }
 
         if let externalId = externalId {

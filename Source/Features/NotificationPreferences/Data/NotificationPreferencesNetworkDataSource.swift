@@ -33,6 +33,7 @@ class NotificationPreferencesNetworkDataSource: GetDataSource, PutDataSource {
                 path: "/notification_preferences",
                 externalId: userQuery.externalId,
                 email: userQuery.email,
+                hmac: userQuery.hmac,
                 additionalHTTPHeaders: ["accept-version": "v2"]
             )
             return self.httpClient
@@ -60,6 +61,7 @@ class NotificationPreferencesNetworkDataSource: GetDataSource, PutDataSource {
                 path: "/notification_preferences",
                 externalId: userQuery.externalId,
                 email: userQuery.email,
+                hmac: userQuery.hmac,
                 additionalHTTPHeaders: ["accept-version": "v2"]
             )
             urlRequest.httpMethod = "PUT"

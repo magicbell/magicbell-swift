@@ -116,7 +116,6 @@ You can provide additional options when initializing a client:
 ```swift
 let magicbell = MagicBellClient(
     apiKey: "[MAGICBELL_API_KEY]"
-    apiSecret: "[MAGICBELL_API_SECRET]",
     enableHMAC: true,
     logLevel: .debug
 )
@@ -169,6 +168,8 @@ let user = magicbell.connectUser(externalId: "001")
 // Identify the user by both, email and external id
 let user = magicbell.connectUser(email: "richard@example.com", externalId: "001")
 ```
+
+Each variant of `connectUser` supports an optional `hmac` parameter that is required if `enableHMAC` is enabled when initiating the `MagicBellClient`.
 
 You can connect as [many users as you need](#multi-user-support).
 

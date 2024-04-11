@@ -22,12 +22,29 @@ public protocol NotificationPreferencesDirector {
     ///     - completion: Closure with a `Result`. Success returns the `NotificationPreferences`.
     func fetch(completion: @escaping(Result<NotificationPreferences, Error>) -> Void)
     
-    /// Updates the users notification preferences. Update can be partial and only will affect the categories included in the object being sent.
+    /// Updates the users notification preferences.
+    ///
+    /// - Important: Labels passed in categories and channels will be ignored, as the PUT endpoint does expect them.
+    ///
+    /// - SeeAlso: `update(categorySlug:channelSlug:enabled:completion:)` for a convenience function to update a single channel without having to construct an entire `NotificationPreferences` object
+    ///
     /// - Parameters:
-    ///     - completion: Closure with a `Result`. Success returns the `NotificationPreferences`.
+    ///     - notificationPreferences: Notificiation preferences to be updated. This can be partial subset of all categories or channels. The update will only affect what is included in the object.
+    ///     - completion: Closure with a `Result`. Success returns `NotificationPreferences`.
     func update(_ notificationPreferences: NotificationPreferences, completion: @escaping(Result<NotificationPreferences, Error>) -> Void)
+    
+    
+    /// Updates a single channel in a category
+    ///
+    /// - Parameters:
+    ///     - categorySlug: A `String` identifying the category which contains the channel to update.
+    ///     - channelSlug: A `String` identifying the channel to be updated.
+    ///     - enabled: A `Bool` indicating wether the channel should be enabled or not.
+    ///     - completion: Closure with a `Result`. Success returns the full `NotificationPreferences` containing all categories and channels.
+    func update(categorySlug: String, channelSlug: String, enabled: Bool, completion: @escaping(Result<NotificationPreferences, Error>) -> Void)
 }
 
+// Combine API
 public extension NotificationPreferencesDirector {
     /// Fetches the users notification preferences.
     /// - Returns: A future with the users notification preferences or an error
@@ -40,13 +57,37 @@ public extension NotificationPreferencesDirector {
         }
     }
     
-    /// Updates the users notification preferences. Update can be partial and only will affect the categories included in the object being sent.
+    /// Updates the users notification preferences.
+    ///
+    /// - Important: Labels passed in categories and channels will be ignored, as the PUT endpoint does expect them.
+    ///
+    /// - SeeAlso: `update(categorySlug:channelSlug:enabled:)` for a convenience function to update a single channel without having to construct an entire `NotificationPreferences` object
+    ///
+    /// - Parameters:
+    ///   - notificationPreferences: Notificiation preferences to be updated. This can be partial subset of all categories or channels. The update will only affect what is included in the object.
     /// - Returns: A future with the users notification preferences or an error
     @available(iOS 13.0, *)
     @discardableResult
     func update(_ notificationPreferences: NotificationPreferences) -> Combine.Future<NotificationPreferences, Error> {
         return Future { promise in
             self.update(notificationPreferences) { result in
+                promise(result)
+            }
+        }
+    }
+    
+    /// Updates a channel in the users notification preferences.
+    ///
+    /// - Parameters:
+    ///     - categorySlug: A `String` identifying the category which contains the channel to update.
+    ///     - channelSlug: A `String` identifying the channel to be updated.
+    ///     - enabled: A `Bool` indicating wether the channel should be enabled or not.
+    /// - Returns: A future with the users full notification preferences, containing all categories and channels or an error
+    @available(iOS 13.0, *)
+    @discardableResult
+    func update(categorySlug: String, channelSlug: String, enabled: Bool) -> Combine.Future<NotificationPreferences, Error> {
+        return Future { promise in
+            self.update(categorySlug: categorySlug, channelSlug: channelSlug, enabled: enabled) { result in
                 promise(result)
             }
         }
@@ -89,5 +130,18 @@ struct DefaultNotificationPreferencesDirector: NotificationPreferencesDirector {
             }.fail { error in
                 completion(.failure(error))
             }
+    }
+    
+    func update(categorySlug: String, channelSlug: String, enabled: Bool, completion: @escaping(Result<NotificationPreferences, Error>) -> Void) {
+        // Hack Alert:
+        // The put API does not require passing a label for categories and channels.
+        // The Harmony framework expects the GET and PUT datasources to have the same type though, so we are forced to have a label for PUT as well
+        // @see: `Get.T == T, Put.T == T` in this code: https://github.com/mobilejazz/harmony-swift/blob/a00a498c7432d25c43f84a0736d3f7d4f40809ae/Sources/Harmony/Data/DataSource/Future/DataSourceAssembler.swift#L22
+        // The label will be ignored when encoding NotificationPreferencesEntity, so we are free to pass an empty string here
+        let dummyLabel = ""
+        
+        let channel = Channel(slug: channelSlug, label: dummyLabel, enabled: enabled)
+        let category = Category(slug: categorySlug, label: dummyLabel, channels: [channel])
+        self.update(NotificationPreferences(categories: [category]), completion: completion)
     }
 }

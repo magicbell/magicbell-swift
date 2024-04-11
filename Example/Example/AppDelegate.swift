@@ -18,7 +18,7 @@ import UserNotifications
 extension MagicBellClient {
     /// Application global instance of MagicBellClient
     static var shared = MagicBellClient(
-        apiKey: "34ed17a8482e44c765d9e163015a8d586f0b3383",
+        apiKey: "d75bb407731e0be07547ad7d2f1c3aae3ebc1ec1",
         logLevel: .debug
     )
 }

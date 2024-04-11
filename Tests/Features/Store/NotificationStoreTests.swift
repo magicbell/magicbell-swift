@@ -21,7 +21,7 @@ class NotificationStoreTests: XCTestCase {
     let defaultEdgeArraySize = 50
     lazy var anyIndexForDefaultEdgeArraySize = Int.random(in: 0..<defaultEdgeArraySize)
 
-    let userQuery = UserQuery(email: "javier@mobilejazz.com")
+    let userQuery = UserQuery(email: "javier@mobilejazz.com", hmac: nil)
 
     var fetchStorePageInteractor: FetchStorePageMockInteractor!
     var actionNotificationInteractor: ActionNotificationMockInteractor!

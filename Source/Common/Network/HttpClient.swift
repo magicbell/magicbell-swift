@@ -39,8 +39,7 @@ class DefaultHttpClient: HttpClient {
 
         urlRequest.addValue(environment.apiKey, forHTTPHeaderField: "X-MAGICBELL-API-KEY")
 
-        if environment.isHMACEnabled,
-           let hmac = hmac {
+        if let hmac = hmac {
             urlRequest.addValue(hmac, forHTTPHeaderField: "X-MAGICBELL-USER-HMAC")
         }
         addIdAndOrEmailHeader(externalId, email, &urlRequest)

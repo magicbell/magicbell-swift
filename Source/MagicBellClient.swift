@@ -33,13 +33,10 @@ public class MagicBellClient {
     /// - Parameters:
     ///   - apiKey: The API Key of your MagicBell project.
     ///   - apiSecret: The API secret of your MagicBell project. Defaults to `nil`.
-    ///   - enableHMAC: Use HMAC authentication. Defaults to `false`. If set to `true`, HMAC will be only enabled if the
-    ///   API secret is set.
     ///   - baseUrl: URL of the API server. Defaults to `MagicBellClient.defaultBaseUrl`.
     ///   - logLevel: The log level, it accepts `.none` or `.debug`. Defaults to `.none`.
     public init(
         apiKey: String,
-        enableHMAC: Bool = false,
         // swiftlint:disable force_unwrapping
         baseUrl: URL = URL(string: "https://api.magicbell.com")!,
         logLevel: LogLevel = .none
@@ -47,8 +44,7 @@ public class MagicBellClient {
         sdkProvider = DefaultSDKModule(
             environment: Environment(
                 apiKey: apiKey,
-                baseUrl: baseUrl,
-                isHMACEnabled: enableHMAC
+                baseUrl: baseUrl
             ),
             logLevel: logLevel
         )

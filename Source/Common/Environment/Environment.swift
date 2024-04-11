@@ -16,5 +16,4 @@ import Foundation
 struct Environment {
     let apiKey: String
     let baseUrl: URL
-    let isHMACEnabled: Bool
 }

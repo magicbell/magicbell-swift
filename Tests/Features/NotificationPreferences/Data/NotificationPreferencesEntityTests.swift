@@ -16,7 +16,7 @@
 import XCTest
 import Nimble
 
-let fixture = """
+let getFixture = """
 {
    "notification_preferences":{
       "categories":[
@@ -41,6 +41,29 @@ let fixture = """
 }
 """
 
+// put payload does not expect labels
+let putFixture = """
+{
+   "notification_preferences":{
+      "categories":[
+         {
+            "slug":"user_liked_post",
+            "channels":[
+               {
+                  "slug":"in_app",
+                  "enabled":true
+               },
+               {
+                  "slug":"mobile_push",
+                  "enabled":false
+               }
+            ]
+         }
+       ]
+    }
+}
+"""
+
 /// Helper function to make json data comparable
 /// re-encodes json data with sorted and stable keys order
 func jsonDataWithSortedKeys(_ data: Data) throws -> Data {
@@ -53,7 +76,7 @@ final class NotificationPreferencesEntityTests: XCTestCase {
     let toDataMapper = EncodableToDataMapper<NotificationPreferencesEntity>()
     
     func testJsonDecoding() throws {
-        let json = fixture.data(using: .utf8)!
+        let json = getFixture.data(using: .utf8)!
         
         let entity = try! toDecodableMapper.map(json)
         
@@ -76,7 +99,6 @@ final class NotificationPreferencesEntityTests: XCTestCase {
     }
     
     func testJsonCoding() throws {
-        
         let channel1 = ChannelEntity(slug: "in_app", label: "In app", enabled: true)
         let channel2 = ChannelEntity(slug: "mobile_push", label: "Mobile push", enabled: false)
         let category = CategoryEntity(slug: "user_liked_post", label: "User Liked Post", channels: [channel1, channel2])
@@ -85,7 +107,7 @@ final class NotificationPreferencesEntityTests: XCTestCase {
         let result = try! toDataMapper.map(entity)
         
         let comparableResult = try! jsonDataWithSortedKeys(result)
-        let comparableExpected = try! jsonDataWithSortedKeys(fixture.data(using: .utf8)!)
+        let comparableExpected = try! jsonDataWithSortedKeys(putFixture.data(using: .utf8)!)
         
         XCTAssertEqual(comparableResult, comparableExpected)
     }

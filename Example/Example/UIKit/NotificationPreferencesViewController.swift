@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import MagicBell
+import ProgressHUD
 
 class NotificationPreferencesViewController: UITableViewController, NotificationChannelsViewControllerDelegate {
     
@@ -72,12 +73,15 @@ class NotificationPreferencesViewController: UITableViewController, Notification
     // MARK: - NotificationChannelsViewControllerDelegate
     
     func updateChannel(_ sender: NotificationChannelsViewController, categorySlug: String, channelSlug: String, enabled: Bool) {
+        ProgressHUD.animate("Updating Preference...", .none, interaction: false)
         user.preferences.update(categorySlug: categorySlug, channelSlug: channelSlug, enabled: enabled) { result in
             switch result {
             case .failure(let error):
                 print("Error fetching notification preferences: \(error)")
+                ProgressHUD.failed()
             case .success(let preferences):
                 self.preferences = preferences
+                ProgressHUD.success()
             }
         }
     }

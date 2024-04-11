@@ -9,11 +9,22 @@ import Foundation
 import UIKit
 import MagicBell
 
-class NotificationPreferencesViewController: UITableViewController {
+class NotificationPreferencesViewController: UITableViewController, NotificationChannelsViewControllerDelegate {
     
     // swiftlint:disable implicitly_unwrapped_optional
     var user: MagicBell.User!
-    var categories: [MagicBell.Category]?
+    var preferences: MagicBell.NotificationPreferences? {
+        didSet {
+            if let channelsVC = channelsVC,
+               let category = channelsVC.category
+            {
+                channelsVC.category = preferences?.categories.filter({ $0.slug == category.slug }).first
+            }
+            self.tableView.reloadData()
+        }
+    }
+    
+    weak var channelsVC: NotificationChannelsViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,8 +34,7 @@ class NotificationPreferencesViewController: UITableViewController {
             case .failure(let error):
                 print("Error fetching notification preferences: \(error)")
             case .success(let preferences):
-                self.categories = preferences.categories
-                self.tableView.reloadData()
+                self.preferences = preferences
             }
         }
     }
@@ -32,8 +42,12 @@ class NotificationPreferencesViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "channels" {
             if let destinationVC = segue.destination as? NotificationChannelsViewController {
+                
+                self.channelsVC = destinationVC
+                destinationVC.delegate = self
+                
                 if let indexPath = self.tableView.indexPath(for: sender as! UITableViewCell) {
-                    destinationVC.category = self.categories![indexPath.row]
+                    destinationVC.category = self.preferences?.categories[indexPath.row]
                 }
             }
         }
@@ -41,8 +55,7 @@ class NotificationPreferencesViewController: UITableViewController {
     
     // MARK: - TableView
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("count \(categories?.count)")
-        return categories?.count ?? 0
+        return self.preferences?.categories.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -50,9 +63,22 @@ class NotificationPreferencesViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) else {
             fatalError("Could not dequeue table view cell with identifier \(reuseIdentifier)")
         }
-        guard let category = categories?[indexPath.row] else { return cell }
+        guard let category = self.preferences?.categories[indexPath.row] else { return cell }
         cell.textLabel?.text = category.label
         cell.detailTextLabel?.text = "\(category.channels.count)"
         return cell
+    }
+    
+    // MARK: - NotificationChannelsViewControllerDelegate
+    
+    func updateChannel(_ sender: NotificationChannelsViewController, categorySlug: String, channelSlug: String, enabled: Bool) {
+        user.preferences.update(categorySlug: categorySlug, channelSlug: channelSlug, enabled: enabled) { result in
+            switch result {
+            case .failure(let error):
+                print("Error fetching notification preferences: \(error)")
+            case .success(let preferences):
+                self.preferences = preferences
+            }
+        }
     }
 }

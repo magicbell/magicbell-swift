@@ -9,9 +9,19 @@ import Foundation
 import UIKit
 import MagicBell
 
+protocol NotificationChannelsViewControllerDelegate : AnyObject {
+    func updateChannel(_ sender: NotificationChannelsViewController, categorySlug: String, channelSlug: String, enabled: Bool)
+}
+
 class NotificationChannelsViewController: UITableViewController {
     // swiftlint:disable implicitly_unwrapped_optional
-    var category: MagicBell.Category!
+    var category: MagicBell.Category! {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
+    
+    weak var delegate: NotificationChannelsViewControllerDelegate?
     
     // MARK: - TableView
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -27,5 +37,12 @@ class NotificationChannelsViewController: UITableViewController {
         cell.textLabel?.text = channel.label
         cell.detailTextLabel?.text = "\(channel.enabled)"
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let channel = self.category.channels[indexPath.row]
+        self.delegate?.updateChannel(self, categorySlug: category.slug, channelSlug: channel.slug, enabled: !channel.enabled)
     }
 }

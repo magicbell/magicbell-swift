@@ -101,12 +101,22 @@ class MagicBellStoreViewController: UITableViewController,
             alert.addTextField { textField in
                 textField.placeholder = "john@doe.com"
             }
+            alert.addTextField { textField in
+                textField.placeholder = "User HMAC (optional)"
+            }
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             alert.addAction(UIAlertAction(title: "Login", style: .default) { _ in
-                guard let email = alert.textFields?.first?.text else {
+                guard let textFields = alert.textFields,
+                      let emailField = textFields.first,
+                      let hmacField = textFields.last,
+                      let email = emailField.text.nilIfEmpty
+                else {
                     return
                 }
-                self.user = MagicBellClient.shared.connectUser(email: email)
+                
+                let hmac = hmacField.text.nilIfEmpty // optional
+                
+                self.user = MagicBellClient.shared.connectUser(email: email, hmac: hmac)
                 self.configureStore(predicate: StorePredicate())
             })
             self.present(alert, animated: true, completion: nil)

@@ -116,8 +116,6 @@ You can provide additional options when initializing a client:
 ```swift
 let magicbell = MagicBellClient(
     apiKey: "[MAGICBELL_API_KEY]"
-    apiSecret: "[MAGICBELL_API_SECRET]",
-    enableHMAC: true,
     logLevel: .debug
 )
 ```
@@ -126,7 +124,6 @@ let magicbell = MagicBellClient(
 | ------------ | ------------- | -------------------------------------------------------------------------------------------- |
 | `apiKey`     | -             | Your MagicBell's API key                                                                     |
 | `apiSecret`  | `nil`         | Your MagicBell's API secret                                                                  |
-| `enableHMAC` | `false`       | Set it to `true` if you want HMAC enabled. Note the `apiSecret` is required if set to `true` |
 | `logLevel`   | `.none`       | Set it to `.debug` to enable logs                                                            |
 
 Though the API key is meant to be published, you should not distribute the API secret. Rather, enable HMAC for your
@@ -169,6 +166,8 @@ let user = magicbell.connectUser(externalId: "001")
 // Identify the user by both, email and external id
 let user = magicbell.connectUser(email: "richard@example.com", externalId: "001")
 ```
+
+Each variant of `connectUser` supports an optional `hmac` parameter that should be send when HMAC Security was enabled for the project.
 
 You can connect as [many users as you need](#multi-user-support).
 

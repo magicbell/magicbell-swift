@@ -46,7 +46,6 @@
 		59799E3B27465A0E00BFB375 /* UserQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E3A27465A0E00BFB375 /* UserQuery.swift */; };
 		59799E3F27465BB500BFB375 /* DataToDecodableMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E3D27465BB500BFB375 /* DataToDecodableMapper.swift */; };
 		59799E4027465BB500BFB375 /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E3E27465BB500BFB375 /* HttpClient.swift */; };
-		59799E4427465C9200BFB375 /* String+HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E4327465C9200BFB375 /* String+HMAC.swift */; };
 		59799E4727465F8F00BFB375 /* ConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E4527465F8F00BFB375 /* ConfigProvider.swift */; };
 		59799E542746604F00BFB375 /* ConfigNetworkDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E502746604F00BFB375 /* ConfigNetworkDataSource.swift */; };
 		59799E552746604F00BFB375 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E522746604F00BFB375 /* Config.swift */; };
@@ -115,7 +114,6 @@
 		D2D215E227AC276700A104B8 /* DeleteConfigInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDC3274D36360043BA77 /* DeleteConfigInteractor.swift */; };
 		D2D215E327AC276700A104B8 /* NotificationNetworkDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E592746609A00BFB375 /* NotificationNetworkDataSource.swift */; };
 		D2D215E427AC276700A104B8 /* PushSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C12ECE2746DC7100311D24 /* PushSubscription.swift */; };
-		D2D215E527AC276700A104B8 /* String+HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E4327465C9200BFB375 /* String+HMAC.swift */; };
 		D2D215E627AC276700A104B8 /* NotificationStoreCombine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CA80BB277A19A50024673C /* NotificationStoreCombine.swift */; };
 		D2D215E727AC276700A104B8 /* PushSubscriptionDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B2DDA62769682C0038B0EA /* PushSubscriptionDirector.swift */; };
 		D2D215E827AC276700A104B8 /* PageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52127512462002F1E44 /* PageInfo.swift */; };
@@ -268,7 +266,6 @@
 		59799E3A27465A0E00BFB375 /* UserQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserQuery.swift; sourceTree = "<group>"; };
 		59799E3D27465BB500BFB375 /* DataToDecodableMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataToDecodableMapper.swift; sourceTree = "<group>"; };
 		59799E3E27465BB500BFB375 /* HttpClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
-		59799E4327465C9200BFB375 /* String+HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+HMAC.swift"; sourceTree = "<group>"; };
 		59799E4527465F8F00BFB375 /* ConfigProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigProvider.swift; sourceTree = "<group>"; };
 		59799E502746604F00BFB375 /* ConfigNetworkDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigNetworkDataSource.swift; sourceTree = "<group>"; };
 		59799E522746604F00BFB375 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -563,7 +560,6 @@
 			children = (
 				59799E3E27465BB500BFB375 /* HttpClient.swift */,
 				59799E3D27465BB500BFB375 /* DataToDecodableMapper.swift */,
-				59799E4327465C9200BFB375 /* String+HMAC.swift */,
 				59C3CDC1274D2F220043BA77 /* EncodableToDataMapper.swift */,
 				D2CBA525275124F3002F1E44 /* GraphQL */,
 			);
@@ -1000,7 +996,6 @@
 				59C3CDC4274D36360043BA77 /* DeleteConfigInteractor.swift in Sources */,
 				59799E5C2746609A00BFB375 /* NotificationNetworkDataSource.swift in Sources */,
 				59C12ECF2746DC7100311D24 /* PushSubscription.swift in Sources */,
-				59799E4427465C9200BFB375 /* String+HMAC.swift in Sources */,
 				59CA80BC277A19A50024673C /* NotificationStoreCombine.swift in Sources */,
 				59B2DDA72769682C0038B0EA /* PushSubscriptionDirector.swift in Sources */,
 				D2CBA52227512462002F1E44 /* PageInfo.swift in Sources */,
@@ -1108,7 +1103,6 @@
 				D2D215E227AC276700A104B8 /* DeleteConfigInteractor.swift in Sources */,
 				D2D215E327AC276700A104B8 /* NotificationNetworkDataSource.swift in Sources */,
 				D2D215E427AC276700A104B8 /* PushSubscription.swift in Sources */,
-				D2D215E527AC276700A104B8 /* String+HMAC.swift in Sources */,
 				D2D215E627AC276700A104B8 /* NotificationStoreCombine.swift in Sources */,
 				D2D215E727AC276700A104B8 /* PushSubscriptionDirector.swift in Sources */,
 				D2D215E827AC276700A104B8 /* PageInfo.swift in Sources */,

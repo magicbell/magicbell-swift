@@ -33,14 +33,10 @@ public class MagicBellClient {
     /// - Parameters:
     ///   - apiKey: The API Key of your MagicBell project.
     ///   - apiSecret: The API secret of your MagicBell project. Defaults to `nil`.
-    ///   - enableHMAC: Use HMAC authentication. Defaults to `false`. If set to `true`, HMAC will be only enabled if the
-    ///   API secret is set.
     ///   - baseUrl: URL of the API server. Defaults to `MagicBellClient.defaultBaseUrl`.
     ///   - logLevel: The log level, it accepts `.none` or `.debug`. Defaults to `.none`.
     public init(
         apiKey: String,
-        apiSecret: String? = nil,
-        enableHMAC: Bool = false,
         // swiftlint:disable force_unwrapping
         baseUrl: URL = URL(string: "https://api.magicbell.com")!,
         logLevel: LogLevel = .none
@@ -48,9 +44,7 @@ public class MagicBellClient {
         sdkProvider = DefaultSDKModule(
             environment: Environment(
                 apiKey: apiKey,
-                apiSecret: apiSecret,
-                baseUrl: baseUrl,
-                isHMACEnabled: enableHMAC
+                baseUrl: baseUrl
             ),
             logLevel: logLevel
         )
@@ -59,20 +53,22 @@ public class MagicBellClient {
     /// Create or retrieve an existing MagicBell user.
     /// - Parameters:
     ///   - email: The user's email
+    ///   - hmac: (Optional) Server generated hmac, used to authenticate the user. Will only be used when `enableHMAC` is set.
     /// - Returns:
     ///   - An instance of `User`.
-    public func connectUser(email: String) -> User {
-        let userQuery = UserQuery(email: email)
+    public func connectUser(email: String, hmac: String? = nil) -> User {
+        let userQuery = UserQuery(email: email, hmac: hmac)
         return getUser(userQuery)
     }
 
     /// Create or retrieve an existing MagicBell user.
     /// - Parameters:
     ///   - externalId: The user's external ID
+    ///   - hmac: (Optional) Server generated hmac, used to authenticate the user. Will only be used when `enableHMAC` is set.
     /// - Returns:
     ///   - An instance of `User`.
-    public func connectUser(externalId: String) -> User {
-        let userQuery = UserQuery(externalId: externalId)
+    public func connectUser(externalId: String, hmac: String? = nil) -> User {
+        let userQuery = UserQuery(externalId: externalId, hmac: hmac)
         return getUser(userQuery)
     }
 
@@ -80,10 +76,11 @@ public class MagicBellClient {
     /// - Parameters:
     ///   - email: The user's email
     ///   - externalId: The user's external ID
+    ///   - hmac: (Optional) Server generated hmac, used to authenticate the user. Will only be used when `enableHMAC` is set.
     /// - Returns:
     ///   - An instance of `User`.
-    public func connectUser(email: String, externalId: String) -> User {
-        let userQuery = UserQuery(externalId: externalId, email: email)
+    public func connectUser(email: String, externalId: String, hmac: String? = nil) -> User {
+        let userQuery = UserQuery(externalId: externalId, email: email, hmac: hmac)
         return getUser(userQuery)
     }
 
@@ -91,16 +88,16 @@ public class MagicBellClient {
     /// - Parameters:
     ///   - email: The user's email
     public func disconnectUser(email: String) {
-        let userQuery = UserQuery(email: email)
-        removeUser(userQuery: userQuery)
+        let userKey = UserQuery.preferedKey(email: email, externalId: nil)
+        removeUser(userKey: userKey)
     }
 
     /// Remove a MagicBell user. All connections are stopped.
     /// - Parameters:
     ///   - externalId: The user's external ID
     public func disconnectUser(externalId: String) {
-        let userQuery = UserQuery(externalId: externalId)
-        removeUser(userQuery: userQuery)
+        let userKey = UserQuery.preferedKey(email: nil, externalId: externalId)
+        removeUser(userKey: userKey)
     }
 
     /// Remove a MagicBell user. All connections are stopped.
@@ -108,8 +105,8 @@ public class MagicBellClient {
     ///   - email: The user's email
     ///   - externalId: The user's external ID
     public func disconnectUser(email: String, externalId: String) {
-        let userQuery = UserQuery(externalId: externalId, email: email)
-        removeUser(userQuery: userQuery)
+        let userKey = UserQuery.preferedKey(email: email, externalId: externalId)
+        removeUser(userKey: userKey)
     }
 
     private func getUser(_ userQuery: UserQuery) -> User {
@@ -131,10 +128,10 @@ public class MagicBellClient {
         return newUser
     }
 
-    private func removeUser(userQuery: UserQuery) {
-        if let user = users[userQuery.key] {
+    private func removeUser(userKey: String) {
+        if let user = users[userKey] {
             user.logout(deviceToken: self.deviceToken)
-            users.removeValue(forKey: userQuery.key)
+            users.removeValue(forKey: userKey)
         }
     }
 

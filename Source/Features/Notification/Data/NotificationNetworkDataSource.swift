@@ -34,7 +34,8 @@ class NotificationNetworkDataSource: GetDataSource {
             let urlRequest = self.httpClient.prepareURLRequest(
                 path: "/notifications/\(notificationQuery.notificationId)",
                 externalId: notificationQuery.user.externalId,
-                email: notificationQuery.user.email
+                email: notificationQuery.user.email,
+                hmac: notificationQuery.user.hmac
             )
             return self.httpClient
                 .performRequest(urlRequest)

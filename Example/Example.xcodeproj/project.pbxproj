@@ -15,6 +15,7 @@
 		59EF9A9B2744700700FB2378 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59EF9A992744700700FB2378 /* Main.storyboard */; };
 		59EF9A9D2744700800FB2378 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59EF9A9C2744700800FB2378 /* Assets.xcassets */; };
 		59EF9AA02744700800FB2378 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59EF9A9E2744700800FB2378 /* LaunchScreen.storyboard */; };
+		94E508EF2BC71087002995F3 /* String+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E508EE2BC71087002995F3 /* String+Empty.swift */; };
 		942497092BC1F76A006A3D3A /* NotificationPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942497082BC1F76A006A3D3A /* NotificationPreferencesViewController.swift */; };
 		94C074CE2BC212C5001615CF /* NotificationChannelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C074CD2BC212C5001615CF /* NotificationChannelsViewController.swift */; };
 		D2DC15F62758C68000282C27 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC15F52758C68000282C27 /* UIColorExtensions.swift */; };
@@ -37,6 +38,7 @@
 		59EF9A9F2744700800FB2378 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		59EF9AA12744700800FB2378 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		911386F4690B2C7C97254425 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
+		94E508EE2BC71087002995F3 /* String+Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Empty.swift"; sourceTree = "<group>"; };
 		942497082BC1F76A006A3D3A /* NotificationPreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreferencesViewController.swift; sourceTree = "<group>"; };
 		94C074CD2BC212C5001615CF /* NotificationChannelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationChannelsViewController.swift; sourceTree = "<group>"; };
 		D2DC15F52758C68000282C27 /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 				D2DC15F52758C68000282C27 /* UIColorExtensions.swift */,
 				D2E4B08A277B5EDF00E9E98F /* Appearance.swift */,
 				D2E4B08C277B619F00E9E98F /* UIHostingViewController.swift */,
+				94E508EE2BC71087002995F3 /* String+Empty.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -273,6 +276,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94E508EF2BC71087002995F3 /* String+Empty.swift in Sources */,
 				59EF9A982744700700FB2378 /* MagicBellStoreViewController.swift in Sources */,
 				D2DC15F82758CC0B00282C27 /* MagicBellStoreCell.swift in Sources */,
 				59EF9A942744700700FB2378 /* AppDelegate.swift in Sources */,

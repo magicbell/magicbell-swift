@@ -17,23 +17,41 @@ import Harmony
 class UserQuery: KeyQuery {
     let externalId: String?
     let email: String?
+    let hmac: String?
     let key: String
 
-    init(externalId: String, email: String) {
-        self.externalId = externalId
-        self.email = email
-        self.key = externalId
+    // Mark: - Initializers
+    
+    // private initializer
+    private init(maybeExternalId: String?, maybeEmail: String?, maybeHmac: String?) {
+        self.externalId = maybeExternalId
+        self.email = maybeEmail
+        self.hmac = maybeHmac
+        self.key = UserQuery.preferedKey(email: self.email, externalId: self.externalId)
+    }
+    
+    convenience init(externalId: String, email: String, hmac: String?) {
+        self.init(maybeExternalId: externalId, maybeEmail: email, maybeHmac: hmac)
     }
 
-    init(externalId: String) {
-        self.externalId = externalId
-        self.email = nil
-        self.key = externalId
+    convenience init(externalId: String, hmac: String?) {
+        self.init(maybeExternalId: externalId, maybeEmail: nil, maybeHmac: hmac)
     }
 
-    init(email: String) {
-        self.externalId = nil
-        self.email = email
-        self.key = email
+    convenience init(email: String, hmac: String?) {
+        self.init(maybeExternalId: nil, maybeEmail: email, maybeHmac: hmac)
+    }
+    
+    // Mark: - Helper
+    
+    // externalID is prefered over email for key
+    static func preferedKey(email: String?, externalId: String?) -> String {
+        if let externalId = externalId {
+            return externalId
+        } else if let email = email {
+            return email
+        } else {
+            Swift.fatalError("Either a users email, or an external Id is required")
+        }
     }
 }

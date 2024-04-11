@@ -15,12 +15,12 @@ import Foundation
 import Harmony
 
 protocol HttpClient {
-    func prepareURLRequest(path: String, externalId: String?, email: String?, additionalHTTPHeaders: [String: String]?) -> URLRequest
+    func prepareURLRequest(path: String, externalId: String?, email: String?, hmac: String?, additionalHTTPHeaders: [String: String]?) -> URLRequest
     func performRequest(_ urlRequest: URLRequest) -> Future<Data>
 }
 extension HttpClient {
-    func prepareURLRequest(path: String, externalId: String?, email: String?) -> URLRequest {
-        prepareURLRequest(path: path, externalId: externalId, email: email, additionalHTTPHeaders: [:])
+    func prepareURLRequest(path: String, externalId: String?, email: String?, hmac: String?) -> URLRequest {
+        prepareURLRequest(path: path, externalId: externalId, email: email, hmac: hmac, additionalHTTPHeaders: [:])
     }
 }
 
@@ -34,14 +34,13 @@ class DefaultHttpClient: HttpClient {
         self.environment = environment
     }
     
-    func prepareURLRequest(path: String, externalId: String?, email: String?, additionalHTTPHeaders: [String: String]?) -> URLRequest {
+    func prepareURLRequest(path: String, externalId: String?, email: String?, hmac: String?, additionalHTTPHeaders: [String: String]?) -> URLRequest {
         var urlRequest = URLRequest(url: environment.baseUrl.appendingPathComponent(path))
 
         urlRequest.addValue(environment.apiKey, forHTTPHeaderField: "X-MAGICBELL-API-KEY")
 
-        if environment.isHMACEnabled,
-           let apiSecret = environment.apiSecret {
-            addHMACHeader(apiSecret, externalId, email, &urlRequest)
+        if let hmac = hmac {
+            urlRequest.addValue(hmac, forHTTPHeaderField: "X-MAGICBELL-USER-HMAC")
         }
         addIdAndOrEmailHeader(externalId, email, &urlRequest)
         
@@ -78,20 +77,6 @@ class DefaultHttpClient: HttpClient {
                     }
                 }
             }.resume()
-        }
-    }
-
-    private func addHMACHeader(_ apiSecret: String,
-                               _ externalId: String?,
-                               _ email: String?,
-                               _ urlRequest: inout URLRequest) {
-
-        if let externalId = externalId {
-            let hmac: String = externalId.hmac(key: apiSecret)
-            urlRequest.addValue(hmac, forHTTPHeaderField: "X-MAGICBELL-USER-HMAC")
-        } else if let email = email {
-            let hmac: String = email.hmac(key: apiSecret)
-            urlRequest.addValue(hmac, forHTTPHeaderField: "X-MAGICBELL-USER-HMAC")
         }
     }
 

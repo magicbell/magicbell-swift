@@ -32,7 +32,8 @@ class ConfigNetworkDataSource: GetDataSource {
             let urlRequest = httpClient.prepareURLRequest(
                 path: "/config",
                 externalId: userQuery.externalId,
-                email: userQuery.email
+                email: userQuery.email,
+                hmac: userQuery.hmac
             )
             return httpClient
                 .performRequest(urlRequest)

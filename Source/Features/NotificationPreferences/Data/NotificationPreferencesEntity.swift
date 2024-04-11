@@ -17,12 +17,26 @@ struct ChannelEntity: Codable {
     let slug:String
     let label:String
     let enabled:Bool
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.slug, forKey: .slug)
+        // try container.encode(self.label, forKey: .label) // explicitly not encoding labels, as they are not expected in PUT calls
+        try container.encode(self.enabled, forKey: .enabled)
+    }
 }
 
 struct CategoryEntity: Codable {
     let slug:String
     let label:String
     let channels:[ChannelEntity]
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.slug, forKey: .slug)
+        // try container.encode(self.label, forKey: .label) // explicitly not encoding labels, as they are not expected in PUT calls
+        try container.encode(self.channels, forKey: .channels)
+    }
 }
 
 struct NotificationPreferencesEntity: Codable {

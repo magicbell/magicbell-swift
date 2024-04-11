@@ -574,6 +574,12 @@ To update the preferences, use `update`.
 user.preferences.update(preferences) { result in }
 ```
 
+To update a single channel you can use the provided convenience function `updateChannel`.
+
+```swift
+user.preferences.update(categorySlug: categorySlug, channelSlug: channelSlug, enabled: enabled) { result in }
+```
+
 ## Push Notifications
 
 You can register the device token with MagicBell for mobile push notifications. To do it, set the device token as soon

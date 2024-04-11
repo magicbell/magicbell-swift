@@ -15,17 +15,12 @@ import UIKit
 import MagicBell
 
 // swiftlint:disable type_body_length
-class MagicBellStoreViewController: UIViewController,
-    UINavigationBarDelegate,
-    UITableViewDelegate,
-    UITableViewDataSource,
-    NotificationStoreContentObserver,
-    NotificationStoreCountObserver {
+class MagicBellStoreViewController: UITableViewController,
+                                    NotificationStoreContentObserver,
+                                    NotificationStoreCountObserver {
 
     private var isLoadingNextPage = false
 
-    @IBOutlet weak var navigationBar: UINavigationBar!
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var magicBellStoreItem: BadgeBarButtonItem!
 
     // swiftlint:disable implicitly_unwrapped_optional
@@ -40,16 +35,11 @@ class MagicBellStoreViewController: UIViewController,
 
     private var observer: AnyObject?
 
-    override var title: String? {
-        didSet { navigationBar.topItem?.title = title }
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.title = "Notifications"
-
-        navigationBar.topItem?.title = self.title
+        self.navigationItem.backButtonTitle = "Notifications"
 
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshAction(sender:)), for: .valueChanged)
@@ -59,6 +49,14 @@ class MagicBellStoreViewController: UIViewController,
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         reloadStore()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "preferences" {
+            if let destinationVC = segue.destination as? NotificationPreferencesViewController {
+                destinationVC.user = user
+            }
+        }
     }
 
     // swiftlint:disable empty_count
@@ -145,6 +143,10 @@ class MagicBellStoreViewController: UIViewController,
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
         })
+        
+        alert.addAction(UIAlertAction(title: "Notification Preferences", style: .default) { action in
+            self.performSegue(withIdentifier: "preferences", sender: action)
+        })
 
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
@@ -188,19 +190,13 @@ class MagicBellStoreViewController: UIViewController,
         present(alert, animated: true, completion: nil)
     }
 
-    // MARK: UINavigationBarDelegate
-
-    func position(for bar: UIBarPositioning) -> UIBarPosition {
-        .topAttached
-    }
-
     // MARK: UITableViewDataSource
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return store.count
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MagicBellStoreCell", for: indexPath) as? MagicBellStoreCell else {
             fatalError("Couldn't dequeue a MagicBellStoreCell")
         }
@@ -231,7 +227,7 @@ class MagicBellStoreViewController: UIViewController,
     // MARK: UITableViewDelegate
 
     // swiftlint:disable cyclomatic_complexity
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
         let notification = store[indexPath.row]
@@ -309,7 +305,7 @@ class MagicBellStoreViewController: UIViewController,
         present(alert, animated: true, completion: nil)
     }
 
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if !isLoadingNextPage &&
             (scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.bounds.size.height - 200) && store.hasNextPage {
             isLoadingNextPage = true

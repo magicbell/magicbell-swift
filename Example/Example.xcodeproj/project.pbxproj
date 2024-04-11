@@ -16,6 +16,8 @@
 		59EF9A9D2744700800FB2378 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59EF9A9C2744700800FB2378 /* Assets.xcassets */; };
 		59EF9AA02744700800FB2378 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59EF9A9E2744700800FB2378 /* LaunchScreen.storyboard */; };
 		94E508EF2BC71087002995F3 /* String+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E508EE2BC71087002995F3 /* String+Empty.swift */; };
+		942497092BC1F76A006A3D3A /* NotificationPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942497082BC1F76A006A3D3A /* NotificationPreferencesViewController.swift */; };
+		94C074CE2BC212C5001615CF /* NotificationChannelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C074CD2BC212C5001615CF /* NotificationChannelsViewController.swift */; };
 		D2DC15F62758C68000282C27 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC15F52758C68000282C27 /* UIColorExtensions.swift */; };
 		D2DC15F82758CC0B00282C27 /* MagicBellStoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DC15F72758CC0B00282C27 /* MagicBellStoreCell.swift */; };
 		D2E4B088277B5EA500E9E98F /* MagicBellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E4B087277B5E8A00E9E98F /* MagicBellView.swift */; };
@@ -37,6 +39,8 @@
 		59EF9AA12744700800FB2378 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		911386F4690B2C7C97254425 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		94E508EE2BC71087002995F3 /* String+Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Empty.swift"; sourceTree = "<group>"; };
+		942497082BC1F76A006A3D3A /* NotificationPreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreferencesViewController.swift; sourceTree = "<group>"; };
+		94C074CD2BC212C5001615CF /* NotificationChannelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationChannelsViewController.swift; sourceTree = "<group>"; };
 		D2DC15F52758C68000282C27 /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
 		D2DC15F72758CC0B00282C27 /* MagicBellStoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBellStoreCell.swift; sourceTree = "<group>"; };
 		D2E4B087277B5E8A00E9E98F /* MagicBellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicBellView.swift; sourceTree = "<group>"; };
@@ -104,6 +108,8 @@
 				599A9206275E702600656E32 /* BadgeBarButtonItem.swift */,
 				59EF9A972744700700FB2378 /* MagicBellStoreViewController.swift */,
 				D2DC15F72758CC0B00282C27 /* MagicBellStoreCell.swift */,
+				942497082BC1F76A006A3D3A /* NotificationPreferencesViewController.swift */,
+				94C074CD2BC212C5001615CF /* NotificationChannelsViewController.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -275,9 +281,11 @@
 				D2DC15F82758CC0B00282C27 /* MagicBellStoreCell.swift in Sources */,
 				59EF9A942744700700FB2378 /* AppDelegate.swift in Sources */,
 				D2E4B08B277B5EDF00E9E98F /* Appearance.swift in Sources */,
+				942497092BC1F76A006A3D3A /* NotificationPreferencesViewController.swift in Sources */,
 				D2E4B088277B5EA500E9E98F /* MagicBellView.swift in Sources */,
 				59EF9A962744700700FB2378 /* SceneDelegate.swift in Sources */,
 				599A9207275E702600656E32 /* BadgeBarButtonItem.swift in Sources */,
+				94C074CE2BC212C5001615CF /* NotificationChannelsViewController.swift in Sources */,
 				D2E4B08D277B619F00E9E98F /* UIHostingViewController.swift in Sources */,
 				D2DC15F62758C68000282C27 /* UIColorExtensions.swift in Sources */,
 			);

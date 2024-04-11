@@ -536,7 +536,7 @@ class Notifications: View {
 
 ## Notification Preferences
 
-You can fetch and set users notification preferences for MagicBell channels and categories.
+You can fetch and set notification preferences for MagicBell channels and categories.
 
 ```swift
 public struct Channel {
@@ -556,7 +556,7 @@ public struct NotificationPreferences {
 }
 ```
 
-To fetch the users notification preferences, use the `fetch` method as follows:
+To fetch notification preferences, use the `fetch` method as follows:
 
 ```swift
 user.preferences.fetch { result in
@@ -577,7 +577,7 @@ user.preferences.update(preferences) { result in }
 To update a single channel you can use the provided convenience function `updateChannel`.
 
 ```swift
-user.preferences.update(categorySlug: categorySlug, channelSlug: channelSlug, enabled: enabled) { result in }
+user.preferences.update(categorySlug: "new_comment", channelSlug: "in_app", enabled: true) { result in }
 ```
 
 ## Push Notifications

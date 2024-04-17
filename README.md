@@ -73,7 +73,7 @@ This repo also contains a full-blown example. To run the project:
 To install MagicBell using [CocoaPods](https://cocoapods.org), add this entry to your `Podfile`:
 
 ```ruby
-pod 'MagicBell', '>=1.0.0'
+pod 'MagicBell', '>=2.0.0'
 ```
 
 **IMPORTANT**: Make sure you specify `use_frameworks!` in your `Podfile`.
@@ -86,7 +86,7 @@ To install MagicBell using [Swift Package Manager](https://www.swift.org/package
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/magicbell-io/magicbell-swift", .upToNextMajor(from: "1.0.0"))
+    .package(url: "https://github.com/magicbell-io/magicbell-swift", .upToNextMajor(from: "2.0.0"))
 ]
 ```
 
@@ -95,7 +95,7 @@ dependencies: [
 To install MagicBell using [Carthage](https://github.com/Carthage/Carthage), add to the Carfile the following dependency:
 
 ```ruby
-github "magicbell-io/magicbell-swift" "1.0.0"
+github "magicbell-io/magicbell-swift" "2.0.0"
 ```
 
 Then, run `carthage update --use-xcframeworks --platform [iOS|macOS] --no-use-binaries` (selecting the desired platform) to resolve dependencies.
@@ -536,7 +536,7 @@ class Notifications: View {
 
 ## Notification Preferences
 
-You can fetch and set users notification preferences for MagicBell channels and categories.
+You can fetch and set notification preferences for MagicBell channels and categories.
 
 ```swift
 public struct Channel {
@@ -556,7 +556,7 @@ public struct NotificationPreferences {
 }
 ```
 
-To fetch the users notification preferences, use the `fetch` method as follows:
+To fetch notification preferences, use the `fetch` method as follows:
 
 ```swift
 user.preferences.fetch { result in
@@ -577,7 +577,7 @@ user.preferences.update(preferences) { result in }
 To update a single channel you can use the provided convenience function `updateChannel`.
 
 ```swift
-user.preferences.update(categorySlug: categorySlug, channelSlug: channelSlug, enabled: enabled) { result in }
+user.preferences.update(categorySlug: "new_comment", channelSlug: "in_app", enabled: true) { result in }
 ```
 
 ## Push Notifications

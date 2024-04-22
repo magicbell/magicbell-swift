@@ -42,6 +42,7 @@ public class User {
     }
 
     func sendDeviceToken(deviceToken: String) {
+        apnsToken.registerAPNSToken(deviceToken)
         pushSubscription.sendPushSubscription(deviceToken)
     }
 

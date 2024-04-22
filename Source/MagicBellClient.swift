@@ -123,6 +123,7 @@ public class MagicBellClient {
         )
         users[userQuery.key] = newUser
         if let deviceToken = self.deviceToken {
+            newUser.apnsToken.registerAPNSToken(deviceToken)
             newUser.pushSubscription.sendPushSubscription(deviceToken)
         }
 
@@ -147,6 +148,7 @@ public class MagicBellClient {
 
         // If users are logged in, send the device token to the MagicBell server
         users.values.forEach { user in
+            user.apnsToken.registerAPNSToken(token)
             user.pushSubscription.sendPushSubscription(token)
         }
     }

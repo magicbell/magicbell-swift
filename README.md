@@ -123,7 +123,6 @@ let magicbell = MagicBellClient(
 | Param        | Default Value | Description                                                                                  |
 | ------------ | ------------- | -------------------------------------------------------------------------------------------- |
 | `apiKey`     | -             | Your MagicBell's API key                                                                     |
-| `apiSecret`  | `nil`         | Your MagicBell's API secret                                                                  |
 | `logLevel`   | `.none`       | Set it to `.debug` to enable logs                                                            |
 
 Though the API key is meant to be published, you should not distribute the API secret. Rather, enable HMAC for your

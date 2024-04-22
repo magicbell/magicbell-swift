@@ -29,6 +29,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
+        // Registering for push notification
+        UNUserNotificationCenter.current().delegate = self
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            DispatchQueue.main.async {
+                if settings.authorizationStatus == .notDetermined {
+                    let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+                    UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { granted, error in
+                        if let error = error {
+                            print("Request Authorization Failed (\(error), \(error.localizedDescription))")
+                        }
+                        if granted {
+                            UIApplication.shared.registerForRemoteNotifications()
+                        }
+                    }
+                } else if settings.authorizationStatus == .denied {
+                    //
+                } else if settings.authorizationStatus == .authorized {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
+            }
+        }
+        
         return true
     }
 
@@ -46,6 +68,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
+    
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Request Authorization Failed (\(error), \(error.localizedDescription))")
+    }
+
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         // Storing device token when refreshed

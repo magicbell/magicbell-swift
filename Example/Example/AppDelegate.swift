@@ -80,3 +80,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MagicBellClient.shared.setDeviceToken(deviceToken: deviceToken)
     }
 }
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+        print("Clicked on Push notification")
+        print(response.notification.request.content.userInfo)
+        
+        let userInfo = response.notification.request.content.userInfo as NSDictionary
+        let title = userInfo.value(forKeyPath: "aps.alert.title") as? String ?? "Sent without title"
+        let body = userInfo.value(forKeyPath: "aps.alert.body") as? String ?? "Sent without body"
+        let alert = UIAlertController(title: "Notification opened",
+                                      message: "\(title)\n\(body)",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        UIApplication
+            .shared
+            .connectedScenes
+            .compactMap { ($0 as? UIWindowScene)?.keyWindow }
+            .last?.rootViewController?.present(alert, animated: true)
+    }
+}

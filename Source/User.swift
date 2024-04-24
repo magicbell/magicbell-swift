@@ -49,7 +49,7 @@ public class User {
     func logout(deviceToken: String?) {
         internalStoreDirector.logout()
         if let deviceToken = deviceToken {
-            // TODO: Delete apnsToken
+            apnsToken.deleteAPNSToken(deviceToken)
             pushSubscription.deletePushSubscription(deviceToken)
         }
     }

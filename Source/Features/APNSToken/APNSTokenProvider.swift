@@ -38,7 +38,8 @@ class DefaultAPNSTokenModule: APNSTokenComponent {
         DefaultAPNSTokenDirector(
             logger: logger,
             userQuery: userQuery,
-            registerAPNSTokensInteractor: getRegisterAPNSTokenInteractor()
+            registerAPNSTokenInteractor: getRegisterAPNSTokenInteractor(),
+            deleteAPNSTokenInteractor: getDeleteAPNSTokenInteractor()
         )
     }
 
@@ -52,8 +53,21 @@ class DefaultAPNSTokenModule: APNSTokenComponent {
         )
     }
 
+    
+    private func getDeleteAPNSTokenInteractor() -> DeleteAPNSTokenInteractor {
+        DeleteAPNSTokenInteractor(
+            executor: executor,
+            deleteAPNSTokenInteractor: deleteAPNSTokenInteractor,
+            logger: logger
+        )
+    }
+    
     private var putAPNSTokenInteractor: Interactor.PutByQuery<APNSToken> {
         apnsTokenRepository.toPutByQueryInteractor(executor)
+    }
+    
+    private var deleteAPNSTokenInteractor: Interactor.DeleteByQuery {
+        apnsTokenRepository.toDeleteByQueryInteractor(executor)
     }
     
     private lazy var apnsTokenRepository: AnyRepository<APNSToken> = {
@@ -61,7 +75,8 @@ class DefaultAPNSTokenModule: APNSTokenComponent {
             httpClient: httpClient,
             mapper: DataToDecodableMapper<APNSToken>()
         )
-        let assembleAPNSTokenNetworkDataSource = DataSourceAssembler(put: apnsTokenNetworkDataSource)
+        let assembleAPNSTokenNetworkDataSource = DataSourceAssembler(put: apnsTokenNetworkDataSource,
+                                                                     delete: apnsTokenNetworkDataSource)
         return AnyRepository(SingleDataSourceRepository(assembleAPNSTokenNetworkDataSource))
     }()
 }

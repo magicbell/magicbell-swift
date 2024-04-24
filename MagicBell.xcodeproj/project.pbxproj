@@ -107,6 +107,10 @@
 		9415C47B2BD932D30099C470 /* APNSTokenNetworkDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9415C46A2BD932D30099C470 /* APNSTokenNetworkDataSource.swift */; };
 		9415C47C2BD932D30099C470 /* RegisterAPNSTokensInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9415C46C2BD932D30099C470 /* RegisterAPNSTokensInteractor.swift */; };
 		9415C47D2BD932D30099C470 /* RegisterAPNSTokensInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9415C46C2BD932D30099C470 /* RegisterAPNSTokensInteractor.swift */; };
+		9415C4812BD933A50099C470 /* DeleteAPNSTokenQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9415C4802BD933A50099C470 /* DeleteAPNSTokenQuery.swift */; };
+		9415C4822BD933A50099C470 /* DeleteAPNSTokenQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9415C4802BD933A50099C470 /* DeleteAPNSTokenQuery.swift */; };
+		9415C4842BD933AA0099C470 /* DeleteAPNSTokenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9415C4832BD933AA0099C470 /* DeleteAPNSTokenInteractor.swift */; };
+		9415C4852BD933AA0099C470 /* DeleteAPNSTokenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9415C4832BD933AA0099C470 /* DeleteAPNSTokenInteractor.swift */; };
 		94CC7AC32BBDE8E800F4AFE7 /* NotificationPreferencesEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CC7AC22BBDE8E800F4AFE7 /* NotificationPreferencesEntityTests.swift */; };
 		D27CF1BA27906FDD00897BCB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CF1B927906FDD00897BCB /* User.swift */; };
 		D280727B27A2F1C000FD941A /* Nimble.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D280727A27A2F1C000FD941A /* Nimble.xcframework */; };
@@ -335,6 +339,8 @@
 		9415C4692BD932D30099C470 /* RegisterAPNSTokenQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterAPNSTokenQuery.swift; sourceTree = "<group>"; };
 		9415C46A2BD932D30099C470 /* APNSTokenNetworkDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APNSTokenNetworkDataSource.swift; sourceTree = "<group>"; };
 		9415C46C2BD932D30099C470 /* RegisterAPNSTokensInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterAPNSTokensInteractor.swift; sourceTree = "<group>"; };
+		9415C4802BD933A50099C470 /* DeleteAPNSTokenQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteAPNSTokenQuery.swift; sourceTree = "<group>"; };
+		9415C4832BD933AA0099C470 /* DeleteAPNSTokenInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteAPNSTokenInteractor.swift; sourceTree = "<group>"; };
 		94CC7AC22BBDE8E800F4AFE7 /* NotificationPreferencesEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreferencesEntityTests.swift; sourceTree = "<group>"; };
 		D27CF1B927906FDD00897BCB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D280727827A2E40C00FD941A /* MagicBell.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = MagicBell.podspec; sourceTree = "<group>"; };
@@ -844,6 +850,7 @@
 		9415C4672BD932D30099C470 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				9415C4802BD933A50099C470 /* DeleteAPNSTokenQuery.swift */,
 				9415C4692BD932D30099C470 /* RegisterAPNSTokenQuery.swift */,
 				9415C46A2BD932D30099C470 /* APNSTokenNetworkDataSource.swift */,
 			);
@@ -853,6 +860,7 @@
 		9415C46B2BD932D30099C470 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
+				9415C4832BD933AA0099C470 /* DeleteAPNSTokenInteractor.swift */,
 				9415C46C2BD932D30099C470 /* RegisterAPNSTokensInteractor.swift */,
 			);
 			path = Interactor;
@@ -1045,6 +1053,7 @@
 				59B2DDAE276B5C4C0038B0EA /* CodingKey+JSON.swift in Sources */,
 				59C3CDC0274D2CC20043BA77 /* GetConfigInteractor.swift in Sources */,
 				D2D277262747C9CF00B5F69E /* ActionNotificationNetworkDataSource.swift in Sources */,
+				9415C4812BD933A50099C470 /* DeleteAPNSTokenQuery.swift in Sources */,
 				59C3CDC4274D36360043BA77 /* DeleteConfigInteractor.swift in Sources */,
 				59799E5C2746609A00BFB375 /* NotificationNetworkDataSource.swift in Sources */,
 				59C12ECF2746DC7100311D24 /* PushSubscription.swift in Sources */,
@@ -1100,6 +1109,7 @@
 				59C3CDBC274D039D0043BA77 /* MagicBellError.swift in Sources */,
 				59799E312746587000BFB375 /* MagicBellClient.swift in Sources */,
 				59799E38274659D800BFB375 /* Environment.swift in Sources */,
+				9415C4842BD933AA0099C470 /* DeleteAPNSTokenInteractor.swift in Sources */,
 				D27CF1BA27906FDD00897BCB /* User.swift in Sources */,
 				59C3CDC2274D2F220043BA77 /* EncodableToDataMapper.swift in Sources */,
 				9415C47C2BD932D30099C470 /* RegisterAPNSTokensInteractor.swift in Sources */,
@@ -1159,6 +1169,7 @@
 				D2D215DF27AC276700A104B8 /* CodingKey+JSON.swift in Sources */,
 				D2D215E027AC276700A104B8 /* GetConfigInteractor.swift in Sources */,
 				D2D215E127AC276700A104B8 /* ActionNotificationNetworkDataSource.swift in Sources */,
+				9415C4822BD933A50099C470 /* DeleteAPNSTokenQuery.swift in Sources */,
 				D2D215E227AC276700A104B8 /* DeleteConfigInteractor.swift in Sources */,
 				D2D215E327AC276700A104B8 /* NotificationNetworkDataSource.swift in Sources */,
 				D2D215E427AC276700A104B8 /* PushSubscription.swift in Sources */,
@@ -1214,6 +1225,7 @@
 				D2D2161127AC276700A104B8 /* MagicBellError.swift in Sources */,
 				D2D2161227AC276700A104B8 /* MagicBellClient.swift in Sources */,
 				D2D2161327AC276700A104B8 /* Environment.swift in Sources */,
+				9415C4852BD933AA0099C470 /* DeleteAPNSTokenInteractor.swift in Sources */,
 				D2D2161427AC276700A104B8 /* User.swift in Sources */,
 				D2D2161527AC276700A104B8 /* EncodableToDataMapper.swift in Sources */,
 				9415C47D2BD932D30099C470 /* RegisterAPNSTokensInteractor.swift in Sources */,

@@ -14,7 +14,7 @@
 import Foundation
 import Harmony
 
-class APNSTokenNetworkDataSource: PutDataSource {
+class APNSTokenNetworkDataSource: PutDataSource, DeleteDataSource {
     typealias T = APNSToken
 
     private let httpClient: HttpClient
@@ -58,6 +58,33 @@ class APNSTokenNetworkDataSource: PutDataSource {
     }
 
     func putAll(_ array: [APNSToken], in query: Harmony.Query) -> Harmony.Future<[APNSToken]> {
+        assertionFailure("Should never happen")
+        return Future(CoreError.NotImplemented())
+    }
+    
+    func delete(_ query: Harmony.Query) -> Harmony.Future<Void> {
+        guard let query = query as? DeleteAPNSTokenQuery else {
+            assertionFailure("Should never happen")
+            return Future(CoreError.Failed("Invalid Query"))
+        }
+        
+        let user = query.user
+        let deviceToken = query.deviceToken
+        
+        var urlRequest = httpClient.prepareURLRequest(
+            path: "/channels/mobile_push/apns/tokens/\(deviceToken)",
+            externalId: user.externalId,
+            email: user.email,
+            hmac: user.hmac
+        )
+        urlRequest.httpMethod = "DELETE"
+
+        return self.httpClient
+            .performRequest(urlRequest)
+            .map { _ in Void() }
+    }
+    
+    func deleteAll(_ query: Harmony.Query) -> Harmony.Future<Void> {
         assertionFailure("Should never happen")
         return Future(CoreError.NotImplemented())
     }

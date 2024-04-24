@@ -19,7 +19,6 @@ public class User {
     private let userQuery: UserQuery
     private var internalStoreDirector: InternalStoreDirector
     public private(set) var preferences: NotificationPreferencesDirector
-    private(set) var pushSubscription: PushSubscriptionDirector
     private(set) var apnsToken: APNSTokenDirector
 
     /// The store director.
@@ -31,26 +30,22 @@ public class User {
         userQuery: UserQuery,
         store: InternalStoreDirector,
         preferences: NotificationPreferencesDirector,
-        pushSubscription: PushSubscriptionDirector,
         apnsToken: APNSTokenDirector
     ) {
         self.userQuery = userQuery
         self.internalStoreDirector = store
         self.preferences = preferences
-        self.pushSubscription = pushSubscription
         self.apnsToken = apnsToken
     }
 
     func sendDeviceToken(deviceToken: String) {
         apnsToken.registerAPNSToken(deviceToken)
-        pushSubscription.sendPushSubscription(deviceToken)
     }
 
     func logout(deviceToken: String?) {
         internalStoreDirector.logout()
         if let deviceToken = deviceToken {
             apnsToken.deleteAPNSToken(deviceToken)
-            pushSubscription.deletePushSubscription(deviceToken)
         }
     }
 }

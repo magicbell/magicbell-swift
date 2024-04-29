@@ -13,25 +13,26 @@
 
 import Harmony
 
-struct DeletePushSubscriptionInteractor {
-
+struct DeleteAPNSTokenInteractor {
     private let executor: Executor
-    private let deletePushSubscriptionInteractor: Interactor.DeleteByQuery
+    private let deleteAPNSTokenInteractor: Interactor.DeleteByQuery
     private let logger: Logger
 
     init(
         executor: Executor,
-        deletePushSubscriptionInteractor: Interactor.DeleteByQuery,
+        deleteAPNSTokenInteractor: Interactor.DeleteByQuery,
         logger: Logger
     ) {
         self.executor = executor
-        self.deletePushSubscriptionInteractor = deletePushSubscriptionInteractor
+        self.deleteAPNSTokenInteractor = deleteAPNSTokenInteractor
         self.logger = logger
     }
 
     func execute(deviceToken: String, userQuery: UserQuery) -> Future<Void> {
-        return executor.submit { resolver in
-            resolver.set(deletePushSubscriptionInteractor.execute(DeletePushSubscriptionQuery(user: userQuery, deviceToken: deviceToken), in: DirectExecutor()))
+        executor.submit { resolver in
+            let apnsTokenSubscriptionQuery = DeleteAPNSTokenQuery(user: userQuery, deviceToken: deviceToken)
+            resolver.set(deleteAPNSTokenInteractor.execute(apnsTokenSubscriptionQuery,
+                                                           in: DirectExecutor()))
         }
     }
 }

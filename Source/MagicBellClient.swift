@@ -118,11 +118,11 @@ public class MagicBellClient {
             userQuery: userQuery,
             store: sdkProvider.getStoreComponent().storeDirector(with: userQuery),
             preferences: sdkProvider.getNotificationPreferencesComponent().notificationPreferencesDirector(with: userQuery),
-            pushSubscription: sdkProvider.getPushSubscriptionComponent().pushSubscriptionDirector(with: userQuery)
+            apnsToken: sdkProvider.getAPNSTokenComponent().apnsTokenDirector(with: userQuery)
         )
         users[userQuery.key] = newUser
         if let deviceToken = self.deviceToken {
-            newUser.pushSubscription.sendPushSubscription(deviceToken)
+            newUser.apnsToken.registerAPNSToken(deviceToken)
         }
 
         return newUser
@@ -146,7 +146,7 @@ public class MagicBellClient {
 
         // If users are logged in, send the device token to the MagicBell server
         users.values.forEach { user in
-            user.pushSubscription.sendPushSubscription(token)
+            user.apnsToken.registerAPNSToken(token)
         }
     }
 }

@@ -13,41 +13,35 @@
 
 import Foundation
 
-struct PushSubscription: Codable {
-    static let platformIOS = "ios"
-    
-    public let id: String?
+struct APNSToken: Codable {
     public let deviceToken: String
-    public let platform: String
+    public let installationId: APNSEnvironment
 
-    init(id: String? = nil, deviceToken: String, platform: String) {
-        self.id = id
+    init(deviceToken: String, installationId: APNSEnvironment) {
         self.deviceToken = deviceToken
-        self.platform = platform
+        self.installationId = installationId
     }
 
     enum ContainerKeys: String, CodingKey {
-        case pushSubscription = "push_subscription"
+        case apns = "apns"
     }
 
     enum CodingKeys: String, CodingKey {
-        case id
         case deviceToken = "device_token"
-        case platform
+        case installationId = "installation_id"
     }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: ContainerKeys.self)
-        let values = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .pushSubscription)
-        id = try values.decodeIfPresent(String.self, forKey: .id)
+        let values = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .apns)
         deviceToken = try values.decode(String.self, forKey: .deviceToken)
-        platform = try values.decode(String.self, forKey: .platform)
+        installationId = APNSEnvironment(rawValue: try values.decode(String.self, forKey: .installationId)) ?? .development
     }
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: ContainerKeys.self)
-        var pushSubscriptionContainer = container.nestedContainer(keyedBy: CodingKeys.self, forKey: .pushSubscription)
-        try pushSubscriptionContainer.encode(deviceToken, forKey: .deviceToken)
-        try pushSubscriptionContainer.encode(platform, forKey: .platform)
+        var apnsContainer = container.nestedContainer(keyedBy: CodingKeys.self, forKey: .apns)
+        try apnsContainer.encode(deviceToken, forKey: .deviceToken)
+        try apnsContainer.encode(installationId, forKey: .installationId)
     }
 }

@@ -13,26 +13,29 @@
 
 import Harmony
 
-struct SendPushSubscriptionInteractor {
+struct RegisterAPNSTokenInteractor {
     private let executor: Executor
-    private let putPushSubscriptionInteractor: Interactor.PutByQuery<PushSubscription>
+    private let registerAPNSTokenInteractor: Interactor.PutByQuery<APNSToken>
     private let logger: Logger
 
     init(
         executor: Executor,
-        putPushSubscriptionInteractor: Interactor.PutByQuery<PushSubscription>,
+        registerAPNSTokenInteractor: Interactor.PutByQuery<APNSToken>,
         logger: Logger
     ) {
         self.executor = executor
-        self.putPushSubscriptionInteractor = putPushSubscriptionInteractor
+        self.registerAPNSTokenInteractor = registerAPNSTokenInteractor
         self.logger = logger
     }
 
-    func execute(deviceToken: String, userQuery: UserQuery) -> Future<PushSubscription> {
+    func execute(deviceToken: String, userQuery: UserQuery) -> Future<APNSToken> {
         executor.submit { resolver in
-            let pushSubscription = PushSubscription(id: nil, deviceToken: deviceToken, platform: PushSubscription.platformIOS)
-            let pushSubscriptionQuery = RegisterPushSubscriptionQuery(user: userQuery)
-            resolver.set(putPushSubscriptionInteractor.execute(pushSubscription, query: pushSubscriptionQuery, in: DirectExecutor()))
+            let apnsTokenSubscription = APNSToken(deviceToken: deviceToken,
+                                                  installationId: APNSEnvironment.currentEnviroment)
+            let apnsTokenSubscriptionQuery = RegisterAPNSTokenQuery(user: userQuery)
+            resolver.set(registerAPNSTokenInteractor.execute(apnsTokenSubscription,
+                                                             query: apnsTokenSubscriptionQuery,
+                                                             in: DirectExecutor()))
         }
     }
 }

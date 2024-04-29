@@ -18,7 +18,7 @@ protocol SDKComponent {
     func getLogger() -> Logger
     func getStoreComponent() -> StoreComponent
     func getStoreRealTimeComponent() -> StoreRealTimeComponent
-    func getPushSubscriptionComponent() -> PushSubscriptionComponent
+    func getAPNSTokenComponent() -> APNSTokenComponent
     func getNotificationPreferencesComponent() -> NotificationPreferencesComponent
     func getConfigComponent() -> ConfigComponent
 }
@@ -54,7 +54,7 @@ class DefaultSDKModule: SDKComponent {
         httpClient: httpClient,
         executor: executorComponent.mainExecutor
     )
-    private lazy var pushSubscriptionComponent = DefaultPushSubscriptionModule(
+    private lazy var apnsTokenComponent = DefaultAPNSTokenModule(
         httpClient: httpClient,
         executor: executorComponent.mainExecutor,
         logger: logger
@@ -86,9 +86,9 @@ class DefaultSDKModule: SDKComponent {
     func getStoreRealTimeComponent() -> StoreRealTimeComponent {
         return storeRealTimeComponent
     }
-
-    func getPushSubscriptionComponent() -> PushSubscriptionComponent {
-        return pushSubscriptionComponent
+    
+    func getAPNSTokenComponent() -> APNSTokenComponent {
+        return apnsTokenComponent
     }
 
     func getNotificationPreferencesComponent() -> NotificationPreferencesComponent {

@@ -44,7 +44,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
 
         // Defining the user to test
-        let user = MagicBellClient.shared.connectUser(email: "hi@ullrich.is")
+        let user = MagicBellClient.shared.connectUser(email: "richard@example.com")
 
         switch style {
         case .uiKit:

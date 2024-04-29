@@ -10,8 +10,13 @@
 //
 // For more information, read the LICENSE file.
 //
+
 import Harmony
 
-class DeviceTokenQuery: KeyQuery {
-    var key: String = "magicbell.devicetoken"
+class RegisterAPNSTokenQuery: Query {
+    let user: UserQuery
+
+    init(user: UserQuery) {
+        self.user = user
+    }
 }

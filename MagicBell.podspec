@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.homepage         = 'https://magicbell.com'
   s.license          = { :type => 'Custom', :file => 'LICENSE' }
   s.author           = { 'MagicBell' => 'hello@magicbell.com' }
-  s.source           = { :git => 'https://github.com/magicbell-io/magicbell-swift.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/magicbell/magicbell-swift.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/magicbell_io'
 
   s.osx.deployment_target = '10.15'

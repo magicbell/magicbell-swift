@@ -14,40 +14,44 @@
 import Foundation
 
 /// The notificaiton store predicate
-public struct StorePredicate: Hashable, Equatable {
+public struct StorePredicate {
     public let read: Bool?
     public let seen: Bool?
     public let archived: Bool
-    public let categories: [String]
-    public let topics: [String]
+    public let category: String?
+    public let topic: String?
 
     /// Predicate default initializer
     /// - Parameters:
     ///   - read: The read status. Defaults to `nil` (not specified).
     ///   - seen: The seen status. Defaults to `nil` (not specified).
     ///   - archived: The archived status. Defaults to `false` (unarchived).
-    ///   - categories: The list of categories. Defaults to empty array.
-    ///   - topics: The list of topics. Defaults to empty array.
+    ///   - category: The category. Defaults to nil.
+    ///   - topic: The topic. Defaults to nil.
     public init(read: Bool? = nil,
                 seen: Bool? = nil,
                 archived: Bool = false,
-                categories: [String] = [],
-                topics: [String] = []) {
+                category: String? = nil,
+                topic: String? = nil) {
         self.read = read
         self.seen = seen
         self.archived = archived
-        self.categories = categories
-        self.topics = topics
+        self.category = category
+        self.topic = topic
     }
+}
 
+extension StorePredicate: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(read.hashValue)
         hasher.combine(seen.hashValue)
         hasher.combine(archived.hashValue)
-        hasher.combine(categories.hashValue)
-        hasher.combine(topics.hashValue)
+        hasher.combine(category.hashValue)
+        hasher.combine(topic.hashValue)
     }
+}
 
+extension StorePredicate: Equatable {
     public static func == (lhs: StorePredicate, rhs: StorePredicate) -> Bool {
         if lhs.read != rhs.read {
             return false
@@ -58,10 +62,10 @@ public struct StorePredicate: Hashable, Equatable {
         if lhs.archived != rhs.archived {
             return false
         }
-        if lhs.categories != rhs.categories {
+        if lhs.category != rhs.category {
             return false
         }
-        if lhs.topics != rhs.topics {
+        if lhs.topic != rhs.topic {
             return false
         }
         return true

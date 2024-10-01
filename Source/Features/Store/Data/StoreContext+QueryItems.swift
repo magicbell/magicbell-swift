@@ -25,10 +25,10 @@ extension StorePredicate {
             }
         }
 
-        for category in categories {
+        if let category = category {
             queryItems.append(URLQueryItem(name: "category", value: category))
         }
-        for topic in topics {
+        if let topic = topic {
             queryItems.append(URLQueryItem(name: "topic", value: topic))
         }
 

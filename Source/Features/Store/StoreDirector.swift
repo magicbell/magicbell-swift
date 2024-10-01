@@ -49,14 +49,14 @@ public extension StoreDirector {
 
     /// Build a store based on the category of notifications
     /// - Returns: A notification store
-    func build(categories: [String]) -> NotificationStore {
-        return build(predicate: StorePredicate(categories: categories))
+    func build(category: String) -> NotificationStore {
+        return build(predicate: StorePredicate(category: category))
     }
 
     /// Build a store based on the topic of notifications
     /// - Returns: A notification store
-    func build(topics: [String]) -> NotificationStore {
-        return build(predicate: StorePredicate(topics: topics))
+    func build(topic: String) -> NotificationStore {
+        return build(predicate: StorePredicate(topic: topic))
     }
 }
 

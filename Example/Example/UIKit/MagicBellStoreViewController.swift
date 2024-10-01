@@ -138,7 +138,7 @@ class MagicBellStoreViewController: UITableViewController,
                 self.configureStore(predicate: StorePredicate(archived: true))
             })
             alert.addAction(UIAlertAction(title: "By Category", style: .default) { _ in
-                self.configureStore(predicate: StorePredicate(categories: ["order_created"]))
+                self.configureStore(predicate: StorePredicate(category: "order_created"))
             })
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)

@@ -80,8 +80,8 @@ extension Notification {
             archived = false
         }
 
-        let category = predicate.categories.first
-        let topic = predicate.topics.first
+        let category = predicate.category
+        let topic = predicate.topic
 
         return create(id: id ?? anyString(),
                       read: read,

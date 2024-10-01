@@ -15,23 +15,20 @@ import Foundation
 import Harmony
 
 struct StoreQuery: Query {
-    let contexts: [StoreContext]
+    let context: StoreContext
     let userQuery: UserQuery
 
-    init(name: String,
-         storePredicate: StorePredicate,
-         cursorPredicate: CursorPredicate,
+    init(storePredicate: StorePredicate,
+         storePagePredicate: StorePagePredicate,
          userQuery: UserQuery) {
         self.init(
-            contexts: [
-                StoreContext(name, storePredicate, cursorPredicate)
-            ],
+            context: StoreContext(storePredicate, storePagePredicate),
             userQuery: userQuery
         )
     }
 
-    init(contexts: [StoreContext], userQuery: UserQuery) {
-        self.contexts = contexts
+    init(context: StoreContext, userQuery: UserQuery) {
+        self.context = context
         self.userQuery = userQuery
     }
 }

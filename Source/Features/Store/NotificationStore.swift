@@ -30,7 +30,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     public let predicate: StorePredicate
 
     private let userQuery: UserQuery
-    private var edges: [Edge<Notification>] = []
+    private(set) var notifications: [Notification] = []
 
     /// Total number of notifications
     public private(set) var totalCount: Int = 0
@@ -43,7 +43,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     public private(set) var hasNextPage = true
 
     private let logger: Logger
-    private var nextPageCursor: String?
+    private var nextPage: Int?
 
     init(predicate: StorePredicate,
          userQuery: UserQuery,
@@ -96,25 +96,20 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
 
     /// Number of notifications loaded in the store
     public var count: Int {
-        return edges.count
+        return notifications.count
     }
 
     public subscript(index: Int) -> Notification {
-        return edges[index].node
-    }
-
-    /// Returns an array containing all notifications
-    public func notifications() -> [Notification] {
-        return edges.map { $0.node }
+        return notifications[index]
     }
 
     // MARK: - Collection
 
-    public var startIndex: Int { return edges.startIndex }
-    public var endIndex: Int { return edges.endIndex }
+    public var startIndex: Int { return notifications.startIndex }
+    public var endIndex: Int { return notifications.endIndex }
 
     public func index(after i: Int) -> Int {
-        return edges.index(after: i)
+        return notifications.index(after: i)
     }
 
     // MARK: - Public Methods
@@ -147,19 +142,16 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     /// - Parameters:
     ///    - completion: Closure with a `Result<[Notification], Error>`
     public func refresh(completion: @escaping (Result<[Notification], Error>) -> Void = { _ in }) {
-        let cursorPredicate = CursorPredicate(size: pageSize)
-        fetchStorePageInteractor.execute(storePredicate: predicate, userQuery: userQuery, cursorPredicate: cursorPredicate)
+        let pagePredicate = StorePagePredicate(size: pageSize)
+        fetchStorePageInteractor.execute(storePredicate: predicate, userQuery: userQuery, pagePredicate: pagePredicate)
             .then { storePage in
                 self.clear(notifyChanges: false)
                 self.configurePagination(storePage)
                 self.configureCount(storePage)
-                let newEdges = storePage.edges
-                self.edges.append(contentsOf: newEdges)
-                let notifications = newEdges.map { notificationEdge in
-                    notificationEdge.node
-                }
+                let newNotifications = storePage.notifications
+                self.notifications.append(contentsOf: newNotifications)
                 self.forEachContentObserver { $0.didReloadStore(self) }
-                completion(.success(notifications))
+                completion(.success(newNotifications))
             }.fail { error in
                 completion(.failure(error))
             }
@@ -174,26 +166,23 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
             completion(.success([]))
             return
         }
-        let cursorPredicate: CursorPredicate = {
-            if let after = nextPageCursor {
-                return CursorPredicate(cursor: .next(after), size: pageSize)
+        let pagePredicate: StorePagePredicate = {
+            if let next = nextPage {
+                return StorePagePredicate(page: next, size: pageSize)
             } else {
-                return CursorPredicate(size: pageSize)
+                return StorePagePredicate(size: pageSize)
             }
         }()
-        fetchStorePageInteractor.execute(storePredicate: predicate, userQuery: userQuery, cursorPredicate: cursorPredicate)
+        fetchStorePageInteractor.execute(storePredicate: predicate, userQuery: userQuery, pagePredicate: pagePredicate)
             .then { storePage in
                 self.configurePagination(storePage)
                 self.configureCount(storePage)
 
-                let oldCount = self.edges.count
-                let newEdges = storePage.edges
-                self.edges.append(contentsOf: newEdges)
-                let notifications = newEdges.map { notificationEdge in
-                    notificationEdge.node
-                }
-                completion(.success(notifications))
-                let indexes = Array(oldCount..<self.edges.count)
+                let oldCount = self.notifications.count
+                let newNotifications = storePage.notifications
+                self.notifications.append(contentsOf: newNotifications)
+                completion(.success(newNotifications))
+                let indexes = Array(oldCount..<self.notifications.count)
                 self.forEachContentObserver { $0.store(self, didInsertNotificationsAt: indexes) }
             }.fail { error in
                 completion(.failure(error))
@@ -209,9 +198,9 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
         deleteNotificationInteractor
             .execute(notificationId: notification.id, userQuery: userQuery)
             .then { _ in
-                if let notificationIndex = self.edges.firstIndex(where: { $0.node.id == notification.id }) {
-                    self.updateCountersWhenDelete(notification: self.edges[notificationIndex].node, predicate: self.predicate)
-                    self.edges.remove(at: notificationIndex)
+                if let notificationIndex = self.notifications.firstIndex(where: { $0.id == notification.id }) {
+                    self.updateCountersWhenDelete(notification: self.notifications[notificationIndex], predicate: self.predicate)
+                    self.notifications.remove(at: notificationIndex)
                     self.forEachContentObserver { $0.store(self, didDeleteNotificationAt: [notificationIndex]) }
                     completion(nil)
                 }
@@ -305,11 +294,11 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
 
     func clear(notifyChanges: Bool) {
         let notificationCount = count
-        edges = []
+        notifications = []
         setTotalCount(0, notifyObservers: notifyChanges)
         setUnreadCount(0, notifyObservers: notifyChanges)
         setUnseenCount(0, notifyObservers: notifyChanges)
-        nextPageCursor = nil
+        nextPage = nil
         setHasNextPage(true)
 
         if notifyChanges {
@@ -326,9 +315,9 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
         actionNotificationInteractor
             .execute(action: action, userQuery: userQuery, notificationId: notification.id)
             .then { _ in
-                if let notificationIndex = self.edges.firstIndex(where: { $0.node.id == notification.id }) {
-                    modificationsBlock(&self.edges[notificationIndex].node)
-                    completion(.success(self.edges[notificationIndex].node))
+                if let notificationIndex = self.notifications.firstIndex(where: { $0.id == notification.id }) {
+                    modificationsBlock(&self.notifications[notificationIndex])
+                    completion(.success(self.notifications[notificationIndex]))
                 } else {
                     completion(.failure(MagicBellError("Notification not found in store")))
                 }
@@ -345,8 +334,8 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
         actionNotificationInteractor
             .execute(action: action, userQuery: userQuery, notificationId: nil)
             .then { _ in
-                for i in self.edges.indices {
-                    modificationsBlock(&self.edges[i].node)
+                for i in self.notifications.indices {
+                    modificationsBlock(&self.notifications[i])
                 }
                 completion(nil)
             }.fail { error in
@@ -355,9 +344,8 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     }
 
     private func configurePagination(_ page: StorePage) {
-        let pageInfo = page.pageInfo
-        nextPageCursor = pageInfo.endCursor
-        setHasNextPage(pageInfo.hasNextPage)
+        nextPage = page.currentPage + 1
+        setHasNextPage(page.currentPage < page.totalPages)
     }
 
     private func configureCount(_ page: StorePage) {
@@ -381,17 +369,17 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     }
 
     func notifyDeleteNotification(id: String) {
-        if let storeIndex = edges.firstIndex(where: { $0.node.id == id }) {
-            updateCountersWhenDelete(notification: edges[storeIndex].node, predicate: self.predicate)
-            edges.remove(at: storeIndex)
+        if let storeIndex = notifications.firstIndex(where: { $0.id == id }) {
+            updateCountersWhenDelete(notification: notifications[storeIndex], predicate: self.predicate)
+            notifications.remove(at: storeIndex)
             forEachContentObserver { $0.store(self, didDeleteNotificationAt: [storeIndex]) }
         }
     }
 
     func notifyNotificationChange(id: String, change: StoreRealTimeNotificationChange) {
-        if let storeIndex = edges.firstIndex(where: { $0.node.id == id }) {
+        if let storeIndex = notifications.firstIndex(where: { $0.id == id }) {
             // If exist
-            var notification = edges[storeIndex].node
+            var notification = notifications[storeIndex]
             switch change {
             case .read:
                 markNotificationAsRead(&notification, with: self.predicate)
@@ -402,10 +390,10 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
             }
 
             if predicate.match(notification) {
-                edges[storeIndex].node = notification
+                notifications[storeIndex] = notification
                 self.forEachContentObserver { $0.store(self, didChangeNotificationAt: [storeIndex]) }
             } else {
-                edges.remove(at: storeIndex)
+                notifications.remove(at: storeIndex)
                 self.forEachContentObserver { $0.store(self, didDeleteNotificationAt: [storeIndex]) }
             }
         } else {

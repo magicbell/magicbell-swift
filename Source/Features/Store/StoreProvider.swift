@@ -40,12 +40,12 @@ class DefaultStoreModule: StoreComponent {
         self.logger = logger
     }
 
-    private lazy var storeNotificationGraphQLRepository: AnyGetRepository<[String: StorePage]> = {
+    private lazy var storeNotificationGraphQLRepository: AnyGetRepository<StorePage> = {
         AnyGetRepository(
             SingleGetDataSourceRepository(
-                StoresGraphQLDataSource(
+                StoreDataSource(
                     httpClient: httpClient,
-                    mapper: DataToDecodableMapper<GraphQLResponse<StorePage>>(iso8601: true)
+                    mapper: DataToDecodableMapper<StorePage>()
                 )
             )
         )

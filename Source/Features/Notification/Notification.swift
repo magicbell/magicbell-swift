@@ -41,23 +41,10 @@ public struct Notification: Codable {
         case customAttributes = "custom_attributes"
         case recipient
         case seenAt = "seen_at"
-        case sentAt = "sentAt"
+        case sentAt = "sent_at"
         case readAt = "read_at"
         case archivedAt = "archived_at"
     }
-
-    enum CodingKeysGraphQL: String, CodingKey {
-        case id, title
-        case actionURL = "actionUrl"
-        case content, category, topic
-        case customAttributes
-        case recipient
-        case seenAt
-        case sentAt
-        case readAt
-        case archivedAt
-    }
-
     public init(from decoder: Decoder) throws {
         if let container = try? decoder.container(keyedBy: ContainerKeys.self),
            let valuesContainer = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: .notification) {
@@ -74,7 +61,7 @@ public struct Notification: Codable {
             readAt = try valuesContainer.decodeIfPresent(Date.self, forKey: .readAt)
             archivedAt = try valuesContainer.decodeIfPresent(Date.self, forKey: .archivedAt)
         } else {
-            let values = try decoder.container(keyedBy: CodingKeysGraphQL.self)
+            let values = try decoder.container(keyedBy: CodingKeys.self)
             id = try values.decode(String.self, forKey: .id)
             title = try values.decode(String.self, forKey: .title)
             actionURL = try values.decodeIfPresent(String.self, forKey: .actionURL)

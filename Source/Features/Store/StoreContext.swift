@@ -14,17 +14,14 @@
 import Foundation
 
 struct StoreContext {
-    let name: String
     let store: StorePredicate
-    let cursor: CursorPredicate
-    
+    let page: StorePagePredicate
+
     init(
-        _ name: String,
         _ store: StorePredicate,
-        _ cursor: CursorPredicate
+        _ page: StorePagePredicate
     ) {
-        self.name = name
         self.store = store
-        self.cursor = cursor
+        self.page = page
     }
 }

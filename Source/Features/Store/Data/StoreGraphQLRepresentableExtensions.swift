@@ -13,53 +13,53 @@
 
 import Foundation
 
-extension StorePredicate: GraphQLRepresentable {
-    var graphQLValue: String {
-        var string: [String] = []
-
-        if read == true {
-            string.append("read: true")
-        } else if read == false {
-            string.append("read: false")
-        }
-
-        if seen == true {
-            string.append("seen: true")
-        } else if seen == false {
-            string.append("seen: false")
-        }
-
-        if archived {
-            string.append("archived: true")
-        } else {
-            string.append("archived: false")
-        }
-
-        if !categories.isEmpty {
-            string.append("categories:[\(categories.map { "\"\($0)\"" }.joined(separator: ", "))]")
-        }
-
-        if !topics.isEmpty {
-            string.append("topics:[\(topics.map { "\"\($0)\"" }.joined(separator: ", "))]")
-        }
-
-        return string.joined(separator: ", ")
-    }
-}
-
-
-extension StoreContext: GraphQLRepresentable {
-    var graphQLValue: String {
-        let storePredicateString = store.graphQLValue
-        let cursorPredicateString = cursor.graphQLValue
-        return " \(name):notifications (\(storePredicateString) \(cursorPredicateString)) { ...notification }"
-    }
-}
-
-extension StoreQuery: GraphQLRepresentable {
-    var graphQLValue: String {
-        return contexts.map { context in
-            context.graphQLValue
-        }.joined(separator: "\n")
-    }
-}
+//extension StorePredicate: GraphQLRepresentable {
+//    var graphQLValue: String {
+//        var string: [String] = []
+//
+//        if read == true {
+//            string.append("read: true")
+//        } else if read == false {
+//            string.append("read: false")
+//        }
+//
+//        if seen == true {
+//            string.append("seen: true")
+//        } else if seen == false {
+//            string.append("seen: false")
+//        }
+//
+//        if archived {
+//            string.append("archived: true")
+//        } else {
+//            string.append("archived: false")
+//        }
+//
+//        if !categories.isEmpty {
+//            string.append("categories:[\(categories.map { "\"\($0)\"" }.joined(separator: ", "))]")
+//        }
+//
+//        if !topics.isEmpty {
+//            string.append("topics:[\(topics.map { "\"\($0)\"" }.joined(separator: ", "))]")
+//        }
+//
+//        return string.joined(separator: ", ")
+//    }
+//}
+//
+//
+//extension StoreContext: GraphQLRepresentable {
+//    var graphQLValue: String {
+//        let storePredicateString = store.graphQLValue
+//        let cursorPredicateString = cursor.graphQLValue
+//        return " \(name):notifications (\(storePredicateString) \(cursorPredicateString)) { ...notification }"
+//    }
+//}
+//
+//extension StoreQuery: GraphQLRepresentable {
+//    var graphQLValue: String {
+//        return contexts.map { context in
+//            context.graphQLValue
+//        }.joined(separator: "\n")
+//    }
+//}

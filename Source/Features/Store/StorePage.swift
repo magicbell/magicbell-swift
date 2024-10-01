@@ -15,16 +15,20 @@ import Foundation
 
 struct StorePage: Codable {
     enum CodingKeys: String, CodingKey {
-        case edges
-        case pageInfo
-        case totalCount
-        case unreadCount
-        case unseenCount
+        case notifications
+        case totalCount = "total"
+        case unreadCount = "unread_count"
+        case unseenCount = "unseen_count"
+        case totalPages = "total_pages"
+        case perPage = "per_page"
+        case currentPage = "current_page"
     }
 
-    let edges: [Edge<Notification>]
-    let pageInfo: PageInfo
+    let notifications: [Notification]
     let totalCount: Int
     let unreadCount: Int
     let unseenCount: Int
+    let totalPages: Int
+    let perPage: Int
+    let currentPage: Int
 }

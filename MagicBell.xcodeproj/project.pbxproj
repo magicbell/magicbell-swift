@@ -15,15 +15,10 @@
 		5953192E27561BA8006673E9 /* NotificationValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5953192D27561BA8006673E9 /* NotificationValidator.swift */; };
 		595319322756249A006673E9 /* NotificationValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595319312756249A006673E9 /* NotificationValidatorTests.swift */; };
 		59569B9A274F752100FF1AA6 /* StorePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569B99274F752100FF1AA6 /* StorePage.swift */; };
-		59569BA5274F7B8A00FF1AA6 /* GraphQLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BA4274F7B8A00FF1AA6 /* GraphQLRequest.swift */; };
-		59569BA8274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BA7274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift */; };
 		59569BAE274F82F100FF1AA6 /* StoreProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BAD274F82F100FF1AA6 /* StoreProvider.swift */; };
 		59569BB0274F838D00FF1AA6 /* StoreQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BAF274F838D00FF1AA6 /* StoreQuery.swift */; };
-		59569BB22750EEDF00FF1AA6 /* StoreGraphQLRepresentableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BB12750EEDF00FF1AA6 /* StoreGraphQLRepresentableExtensions.swift */; };
 		59569BB52750FD8700FF1AA6 /* GetStorePagesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BB42750FD8700FF1AA6 /* GetStorePagesInteractor.swift */; };
 		595AC4C327710C0100A3DCA2 /* StorePageMotherObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595AC4C127710BF500A3DCA2 /* StorePageMotherObject.swift */; };
-		595AC4C827710C7A00A3DCA2 /* NotificationEdgeMotherObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595AC4C627710C7000A3DCA2 /* NotificationEdgeMotherObject.swift */; };
-		595AC4CE27710EF000A3DCA2 /* PageInfoMotherObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595AC4CC27710DCD00A3DCA2 /* PageInfoMotherObject.swift */; };
 		595AC4D627715D9D00A3DCA2 /* InitialNotificationStoreCounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595AC4D327715D8D00A3DCA2 /* InitialNotificationStoreCounts.swift */; };
 		5970B5A227A291D20061835E /* Ably.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C4E27A20ADD0032C7D6 /* Ably.xcframework */; };
 		5970B5A327A291D20061835E /* Ably.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59799C4E27A20ADD0032C7D6 /* Ably.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -104,20 +99,19 @@
 		9415C4822BD933A50099C470 /* DeleteAPNSTokenQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9415C4802BD933A50099C470 /* DeleteAPNSTokenQuery.swift */; };
 		9415C4842BD933AA0099C470 /* DeleteAPNSTokenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9415C4832BD933AA0099C470 /* DeleteAPNSTokenInteractor.swift */; };
 		9415C4852BD933AA0099C470 /* DeleteAPNSTokenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9415C4832BD933AA0099C470 /* DeleteAPNSTokenInteractor.swift */; };
+		94B3733D2CAC2F8F0066BFB1 /* StoreDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3733C2CAC2F8F0066BFB1 /* StoreDataSource.swift */; };
+		94B3733E2CAC2F8F0066BFB1 /* StoreContext+QueryItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3733B2CAC2F8F0066BFB1 /* StoreContext+QueryItems.swift */; };
+		94B3733F2CAC2F8F0066BFB1 /* StoreDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3733C2CAC2F8F0066BFB1 /* StoreDataSource.swift */; };
+		94B373402CAC2F8F0066BFB1 /* StoreContext+QueryItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B3733B2CAC2F8F0066BFB1 /* StoreContext+QueryItems.swift */; };
+		94B373442CAC2FA00066BFB1 /* StorePagePredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B373412CAC2FA00066BFB1 /* StorePagePredicate.swift */; };
+		94B373462CAC2FA00066BFB1 /* StorePagePredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B373412CAC2FA00066BFB1 /* StorePagePredicate.swift */; };
 		94CC7AC32BBDE8E800F4AFE7 /* NotificationPreferencesEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CC7AC22BBDE8E800F4AFE7 /* NotificationPreferencesEntityTests.swift */; };
 		D27CF1BA27906FDD00897BCB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CF1B927906FDD00897BCB /* User.swift */; };
 		D280727B27A2F1C000FD941A /* Nimble.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D280727A27A2F1C000FD941A /* Nimble.xcframework */; };
 		D29D249227747DA000726ABD /* NotificationStorePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29D249127747DA000726ABD /* NotificationStorePublisher.swift */; };
 		D2C5A1B02768C25500C20D74 /* StoreDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */; };
-		D2CBA52227512462002F1E44 /* PageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52127512462002F1E44 /* PageInfo.swift */; };
-		D2CBA52427512499002F1E44 /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52327512499002F1E44 /* Edge.swift */; };
-		D2CBA52727512518002F1E44 /* CursorPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52627512518002F1E44 /* CursorPredicate.swift */; };
-		D2CBA529275125B3002F1E44 /* GraphQLRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA528275125B3002F1E44 /* GraphQLRepresentable.swift */; };
-		D2CBA52D27512642002F1E44 /* GraphQLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52C27512642002F1E44 /* GraphQLResponse.swift */; };
 		D2CBA52F275128FA002F1E44 /* StorePredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52E275128FA002F1E44 /* StorePredicate.swift */; };
 		D2CBA53127513747002F1E44 /* StoreContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA53027513747002F1E44 /* StoreContext.swift */; };
-		D2CBA53327513D6A002F1E44 /* GraphQLFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA53227513D6A002F1E44 /* GraphQLFragment.swift */; };
-		D2D215DD27AC276700A104B8 /* GraphQLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BA4274F7B8A00FF1AA6 /* GraphQLRequest.swift */; };
 		D2D215DE27AC276700A104B8 /* AblyMessageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59827B54275FD7C9009D93D8 /* AblyMessageProcessor.swift */; };
 		D2D215DF27AC276700A104B8 /* CodingKey+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B2DDAD276B5C4C0038B0EA /* CodingKey+JSON.swift */; };
 		D2D215E027AC276700A104B8 /* GetConfigInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDBF274D2CC20043BA77 /* GetConfigInteractor.swift */; };
@@ -125,25 +119,19 @@
 		D2D215E227AC276700A104B8 /* DeleteConfigInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDC3274D36360043BA77 /* DeleteConfigInteractor.swift */; };
 		D2D215E327AC276700A104B8 /* NotificationNetworkDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E592746609A00BFB375 /* NotificationNetworkDataSource.swift */; };
 		D2D215E627AC276700A104B8 /* NotificationStoreCombine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CA80BB277A19A50024673C /* NotificationStoreCombine.swift */; };
-		D2D215E827AC276700A104B8 /* PageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52127512462002F1E44 /* PageInfo.swift */; };
 		D2D215E927AC276700A104B8 /* StorePredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52E275128FA002F1E44 /* StorePredicate.swift */; };
 		D2D215EA27AC276700A104B8 /* NotificationPreferencesDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B2DDA2276959AC0038B0EA /* NotificationPreferencesDirector.swift */; };
 		D2D215EB27AC276700A104B8 /* AblyConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4597427597FF7008F3BC8 /* AblyConnector.swift */; };
 		D2D215EC27AC276700A104B8 /* DataToDecodableMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E3D27465BB500BFB375 /* DataToDecodableMapper.swift */; };
 		D2D215ED27AC276700A104B8 /* String+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B2DDAB276AB4490038B0EA /* String+Data.swift */; };
-		D2D215EE27AC276700A104B8 /* GraphQLRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA528275125B3002F1E44 /* GraphQLRepresentable.swift */; };
 		D2D215EF27AC276700A104B8 /* NotificationPreferencesMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883C527620F45001D38FC /* NotificationPreferencesMapper.swift */; };
 		D2D215F027AC276700A104B8 /* StoreDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */; };
 		D2D215F127AC276700A104B8 /* MappingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C12ED32747131000311D24 /* MappingError.swift */; };
-		D2D215F327AC276700A104B8 /* GraphQLFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA53227513D6A002F1E44 /* GraphQLFragment.swift */; };
-		D2D215F427AC276700A104B8 /* GraphQLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52C27512642002F1E44 /* GraphQLResponse.swift */; };
 		D2D215F527AC276700A104B8 /* ConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E4527465F8F00BFB375 /* ConfigProvider.swift */; };
 		D2D215F627AC276700A104B8 /* NotificationPreferencesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E5F274660AD00BFB375 /* NotificationPreferencesProvider.swift */; };
 		D2D215F727AC276700A104B8 /* LogLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883BE2761EBA9001D38FC /* LogLevel.swift */; };
 		D2D215F927AC276700A104B8 /* NotificationPreferencesEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E64274660AD00BFB375 /* NotificationPreferencesEntity.swift */; };
 		D2D215FA27AC276700A104B8 /* ActionNotificationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4596D2758C739008F3BC8 /* ActionNotificationInteractor.swift */; };
-		D2D215FB27AC276700A104B8 /* StoreGraphQLRepresentableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BB12750EEDF00FF1AA6 /* StoreGraphQLRepresentableExtensions.swift */; };
-		D2D215FC27AC276700A104B8 /* CursorPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52627512518002F1E44 /* CursorPredicate.swift */; };
 		D2D215FD27AC276700A104B8 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E522746604F00BFB375 /* Config.swift */; };
 		D2D215FE27AC276700A104B8 /* DeleteNotificationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F4596F2758CC25008F3BC8 /* DeleteNotificationInteractor.swift */; };
 		D2D215FF27AC276700A104B8 /* StoreProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BAD274F82F100FF1AA6 /* StoreProvider.swift */; };
@@ -158,7 +146,6 @@
 		D2D2160927AC276700A104B8 /* UserQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E3A27465A0E00BFB375 /* UserQuery.swift */; };
 		D2D2160A27AC276700A104B8 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E5B2746609A00BFB375 /* Notification.swift */; };
 		D2D2160B27AC276700A104B8 /* NotificationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E92012275400F500D8877A /* NotificationStore.swift */; };
-		D2D2160C27AC276700A104B8 /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CBA52327512499002F1E44 /* Edge.swift */; };
 		D2D2160E27AC276700A104B8 /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E3E27465BB500BFB375 /* HttpClient.swift */; };
 		D2D2160F27AC276700A104B8 /* GetStorePagesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BB42750FD8700FF1AA6 /* GetStorePagesInteractor.swift */; };
 		D2D2161127AC276700A104B8 /* MagicBellError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C3CDBB274D039D0043BA77 /* MagicBellError.swift */; };
@@ -169,7 +156,6 @@
 		D2D2161627AC276700A104B8 /* NotificationPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883C727621037001D38FC /* NotificationPreferences.swift */; };
 		D2D2161727AC276700A104B8 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E6A274671A100BFB375 /* NetworkError.swift */; };
 		D2D2161827AC276700A104B8 /* NotificationQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D277282747D40A00B5F69E /* NotificationQuery.swift */; };
-		D2D2161927AC276700A104B8 /* StoresGraphQLDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569BA7274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift */; };
 		D2D2161A27AC276700A104B8 /* StorePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59569B99274F752100FF1AA6 /* StorePage.swift */; };
 		D2D2161B27AC276700A104B8 /* SDKProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59799E32274658B100BFB375 /* SDKProvider.swift */; };
 		D2D2161C27AC276700A104B8 /* GetNotificationPreferencesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593883C12761F18D001D38FC /* GetNotificationPreferencesInteractor.swift */; };
@@ -240,15 +226,10 @@
 		5953192D27561BA8006673E9 /* NotificationValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationValidator.swift; sourceTree = "<group>"; };
 		595319312756249A006673E9 /* NotificationValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationValidatorTests.swift; sourceTree = "<group>"; };
 		59569B99274F752100FF1AA6 /* StorePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePage.swift; sourceTree = "<group>"; };
-		59569BA4274F7B8A00FF1AA6 /* GraphQLRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLRequest.swift; sourceTree = "<group>"; };
-		59569BA7274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoresGraphQLDataSource.swift; sourceTree = "<group>"; };
 		59569BAD274F82F100FF1AA6 /* StoreProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreProvider.swift; sourceTree = "<group>"; };
 		59569BAF274F838D00FF1AA6 /* StoreQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreQuery.swift; sourceTree = "<group>"; };
-		59569BB12750EEDF00FF1AA6 /* StoreGraphQLRepresentableExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreGraphQLRepresentableExtensions.swift; sourceTree = "<group>"; };
 		59569BB42750FD8700FF1AA6 /* GetStorePagesInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStorePagesInteractor.swift; sourceTree = "<group>"; };
 		595AC4C127710BF500A3DCA2 /* StorePageMotherObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePageMotherObject.swift; sourceTree = "<group>"; };
-		595AC4C627710C7000A3DCA2 /* NotificationEdgeMotherObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationEdgeMotherObject.swift; sourceTree = "<group>"; };
-		595AC4CC27710DCD00A3DCA2 /* PageInfoMotherObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageInfoMotherObject.swift; sourceTree = "<group>"; };
 		595AC4D327715D8D00A3DCA2 /* InitialNotificationStoreCounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialNotificationStoreCounts.swift; sourceTree = "<group>"; };
 		5970B60627A2B09F0061835E /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		597202DB27A3D46C00A1BDB1 /* ResultUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultUtils.swift; sourceTree = "<group>"; };
@@ -318,6 +299,9 @@
 		9415C46C2BD932D30099C470 /* RegisterAPNSTokensInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterAPNSTokensInteractor.swift; sourceTree = "<group>"; };
 		9415C4802BD933A50099C470 /* DeleteAPNSTokenQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteAPNSTokenQuery.swift; sourceTree = "<group>"; };
 		9415C4832BD933AA0099C470 /* DeleteAPNSTokenInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteAPNSTokenInteractor.swift; sourceTree = "<group>"; };
+		94B3733B2CAC2F8F0066BFB1 /* StoreContext+QueryItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoreContext+QueryItems.swift"; sourceTree = "<group>"; };
+		94B3733C2CAC2F8F0066BFB1 /* StoreDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDataSource.swift; sourceTree = "<group>"; };
+		94B373412CAC2FA00066BFB1 /* StorePagePredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePagePredicate.swift; sourceTree = "<group>"; };
 		94CC7AC22BBDE8E800F4AFE7 /* NotificationPreferencesEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPreferencesEntityTests.swift; sourceTree = "<group>"; };
 		D27CF1B927906FDD00897BCB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D280727827A2E40C00FD941A /* MagicBell.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = MagicBell.podspec; sourceTree = "<group>"; };
@@ -326,14 +310,8 @@
 		D280727C27A2F21200FD941A /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
 		D29D249127747DA000726ABD /* NotificationStorePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStorePublisher.swift; sourceTree = "<group>"; };
 		D2C5A1AF2768C25500C20D74 /* StoreDirector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreDirector.swift; sourceTree = "<group>"; };
-		D2CBA52127512462002F1E44 /* PageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageInfo.swift; sourceTree = "<group>"; };
-		D2CBA52327512499002F1E44 /* Edge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Edge.swift; sourceTree = "<group>"; };
-		D2CBA52627512518002F1E44 /* CursorPredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorPredicate.swift; sourceTree = "<group>"; };
-		D2CBA528275125B3002F1E44 /* GraphQLRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLRepresentable.swift; sourceTree = "<group>"; };
-		D2CBA52C27512642002F1E44 /* GraphQLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLResponse.swift; sourceTree = "<group>"; };
 		D2CBA52E275128FA002F1E44 /* StorePredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePredicate.swift; sourceTree = "<group>"; };
 		D2CBA53027513747002F1E44 /* StoreContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreContext.swift; sourceTree = "<group>"; };
-		D2CBA53227513D6A002F1E44 /* GraphQLFragment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLFragment.swift; sourceTree = "<group>"; };
 		D2D215D927AC1B0300A104B8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D2D2163227AC276700A104B8 /* MagicBell.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MagicBell.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2D277252747C9CF00B5F69E /* ActionNotificationNetworkDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionNotificationNetworkDataSource.swift; sourceTree = "<group>"; };
@@ -399,6 +377,7 @@
 				59569BAD274F82F100FF1AA6 /* StoreProvider.swift */,
 				59569B99274F752100FF1AA6 /* StorePage.swift */,
 				D2CBA52E275128FA002F1E44 /* StorePredicate.swift */,
+				94B373412CAC2FA00066BFB1 /* StorePagePredicate.swift */,
 				5953192D27561BA8006673E9 /* NotificationValidator.swift */,
 				D2CBA53027513747002F1E44 /* StoreContext.swift */,
 				59E92012275400F500D8877A /* NotificationStore.swift */,
@@ -415,9 +394,9 @@
 		59569BAA274F7FBB00FF1AA6 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				94B3733C2CAC2F8F0066BFB1 /* StoreDataSource.swift */,
 				59569BAF274F838D00FF1AA6 /* StoreQuery.swift */,
-				59569BB12750EEDF00FF1AA6 /* StoreGraphQLRepresentableExtensions.swift */,
-				59569BA7274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift */,
+				94B3733B2CAC2F8F0066BFB1 /* StoreContext+QueryItems.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -443,26 +422,8 @@
 			isa = PBXGroup;
 			children = (
 				597202DA27A3D45C00A1BDB1 /* Utils */,
-				595AC4CA27710D9B00A3DCA2 /* Network */,
 			);
 			path = Common;
-			sourceTree = "<group>";
-		};
-		595AC4CA27710D9B00A3DCA2 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				595AC4CB27710DA100A3DCA2 /* GraphQL */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		595AC4CB27710DA100A3DCA2 /* GraphQL */ = {
-			isa = PBXGroup;
-			children = (
-				595AC4C627710C7000A3DCA2 /* NotificationEdgeMotherObject.swift */,
-				595AC4CC27710DCD00A3DCA2 /* PageInfoMotherObject.swift */,
-			);
-			path = GraphQL;
 			sourceTree = "<group>";
 		};
 		595AC4D227715D7D00A3DCA2 /* Utils */ = {
@@ -555,7 +516,6 @@
 				59799E3E27465BB500BFB375 /* HttpClient.swift */,
 				59799E3D27465BB500BFB375 /* DataToDecodableMapper.swift */,
 				59C3CDC1274D2F220043BA77 /* EncodableToDataMapper.swift */,
-				D2CBA525275124F3002F1E44 /* GraphQL */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -835,20 +795,6 @@
 			path = Interactor;
 			sourceTree = "<group>";
 		};
-		D2CBA525275124F3002F1E44 /* GraphQL */ = {
-			isa = PBXGroup;
-			children = (
-				D2CBA528275125B3002F1E44 /* GraphQLRepresentable.swift */,
-				D2CBA52127512462002F1E44 /* PageInfo.swift */,
-				D2CBA52327512499002F1E44 /* Edge.swift */,
-				D2CBA52627512518002F1E44 /* CursorPredicate.swift */,
-				59569BA4274F7B8A00FF1AA6 /* GraphQLRequest.swift */,
-				D2CBA52C27512642002F1E44 /* GraphQLResponse.swift */,
-				D2CBA53227513D6A002F1E44 /* GraphQLFragment.swift */,
-			);
-			path = GraphQL;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -992,7 +938,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59569BA5274F7B8A00FF1AA6 /* GraphQLRequest.swift in Sources */,
 				59827B55275FD7C9009D93D8 /* AblyMessageProcessor.swift in Sources */,
 				59B2DDAE276B5C4C0038B0EA /* CodingKey+JSON.swift in Sources */,
 				59C3CDC0274D2CC20043BA77 /* GetConfigInteractor.swift in Sources */,
@@ -1001,28 +946,22 @@
 				59C3CDC4274D36360043BA77 /* DeleteConfigInteractor.swift in Sources */,
 				59799E5C2746609A00BFB375 /* NotificationNetworkDataSource.swift in Sources */,
 				59CA80BC277A19A50024673C /* NotificationStoreCombine.swift in Sources */,
-				D2CBA52227512462002F1E44 /* PageInfo.swift in Sources */,
 				D2CBA52F275128FA002F1E44 /* StorePredicate.swift in Sources */,
 				59B2DDA3276959AC0038B0EA /* NotificationPreferencesDirector.swift in Sources */,
 				59F4597527597FF7008F3BC8 /* AblyConnector.swift in Sources */,
 				59799E3F27465BB500BFB375 /* DataToDecodableMapper.swift in Sources */,
 				59B2DDAC276AB4490038B0EA /* String+Data.swift in Sources */,
-				D2CBA529275125B3002F1E44 /* GraphQLRepresentable.swift in Sources */,
 				9415C4742BD932D30099C470 /* APNSEnvironment.swift in Sources */,
 				9415C4722BD932D30099C470 /* APNSTokenProvider.swift in Sources */,
 				9415C4782BD932D30099C470 /* RegisterAPNSTokenQuery.swift in Sources */,
 				593883C627620F45001D38FC /* NotificationPreferencesMapper.swift in Sources */,
 				D2C5A1B02768C25500C20D74 /* StoreDirector.swift in Sources */,
 				59C12ED42747131000311D24 /* MappingError.swift in Sources */,
-				D2CBA53327513D6A002F1E44 /* GraphQLFragment.swift in Sources */,
-				D2CBA52D27512642002F1E44 /* GraphQLResponse.swift in Sources */,
 				59799E4727465F8F00BFB375 /* ConfigProvider.swift in Sources */,
 				59799E65274660AD00BFB375 /* NotificationPreferencesProvider.swift in Sources */,
 				593883BF2761EBA9001D38FC /* LogLevel.swift in Sources */,
 				59799E67274660AD00BFB375 /* NotificationPreferencesEntity.swift in Sources */,
 				59F4596E2758C739008F3BC8 /* ActionNotificationInteractor.swift in Sources */,
-				59569BB22750EEDF00FF1AA6 /* StoreGraphQLRepresentableExtensions.swift in Sources */,
-				D2CBA52727512518002F1E44 /* CursorPredicate.swift in Sources */,
 				59799E552746604F00BFB375 /* Config.swift in Sources */,
 				59F459702758CC25008F3BC8 /* DeleteNotificationInteractor.swift in Sources */,
 				59569BAE274F82F100FF1AA6 /* StoreProvider.swift in Sources */,
@@ -1034,13 +973,15 @@
 				59799E69274662E900BFB375 /* NotificationProvider.swift in Sources */,
 				59F459722758D0DB008F3BC8 /* GetNotificationInteractor.swift in Sources */,
 				593883C42761F581001D38FC /* UpdateNotificationPreferencesInteractor.swift in Sources */,
+				94B373462CAC2FA00066BFB1 /* StorePagePredicate.swift in Sources */,
 				59F45979275A434A008F3BC8 /* StoreRealTimeProvider.swift in Sources */,
 				59799E3B27465A0E00BFB375 /* UserQuery.swift in Sources */,
 				59799E5D2746609A00BFB375 /* Notification.swift in Sources */,
 				59E92013275400F500D8877A /* NotificationStore.swift in Sources */,
-				D2CBA52427512499002F1E44 /* Edge.swift in Sources */,
 				9415C47A2BD932D30099C470 /* APNSTokenNetworkDataSource.swift in Sources */,
 				59799E4027465BB500BFB375 /* HttpClient.swift in Sources */,
+				94B3733F2CAC2F8F0066BFB1 /* StoreDataSource.swift in Sources */,
+				94B373402CAC2F8F0066BFB1 /* StoreContext+QueryItems.swift in Sources */,
 				9415C46E2BD932D30099C470 /* APNSToken.swift in Sources */,
 				59569BB52750FD8700FF1AA6 /* GetStorePagesInteractor.swift in Sources */,
 				59C3CDBC274D039D0043BA77 /* MagicBellError.swift in Sources */,
@@ -1053,7 +994,6 @@
 				593883C827621037001D38FC /* NotificationPreferences.swift in Sources */,
 				59799E6B274671A100BFB375 /* NetworkError.swift in Sources */,
 				D2D277292747D40A00B5F69E /* NotificationQuery.swift in Sources */,
-				59569BA8274F7CA300FF1AA6 /* StoresGraphQLDataSource.swift in Sources */,
 				59569B9A274F752100FF1AA6 /* StorePage.swift in Sources */,
 				59799E33274658B100BFB375 /* SDKProvider.swift in Sources */,
 				593883C22761F18D001D38FC /* GetNotificationPreferencesInteractor.swift in Sources */,
@@ -1082,7 +1022,6 @@
 				597202E427A3D55D00A1BDB1 /* BoolObjectMother.swift in Sources */,
 				5997F8F52770EA9F00DED4E4 /* GetConfigMockInteractor.swift in Sources */,
 				5997F8F72770ED4C00DED4E4 /* DeleteConfigMockInteractor.swift in Sources */,
-				595AC4CE27710EF000A3DCA2 /* PageInfoMotherObject.swift in Sources */,
 				94CC7AC32BBDE8E800F4AFE7 /* NotificationPreferencesEntityTests.swift in Sources */,
 				5988BBDE2771F057009F4205 /* ContentObserverMock.swift in Sources */,
 				5988BBDA2771D0C2009F4205 /* NotificationStoreRealTimeTests.swift in Sources */,
@@ -1090,7 +1029,6 @@
 				5997F8E927709A8D00DED4E4 /* ActionNotificationMockInteractor.swift in Sources */,
 				595319322756249A006673E9 /* NotificationValidatorTests.swift in Sources */,
 				59EF99C127446D6900FB2378 /* MagicBellTests.swift in Sources */,
-				595AC4C827710C7A00A3DCA2 /* NotificationEdgeMotherObject.swift in Sources */,
 				59CA80BF277A2E650024673C /* NotificationStoreCombineTests.swift in Sources */,
 				5988BBE02771F061009F4205 /* CountObserverMock.swift in Sources */,
 			);
@@ -1100,7 +1038,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2D215DD27AC276700A104B8 /* GraphQLRequest.swift in Sources */,
 				D2D215DE27AC276700A104B8 /* AblyMessageProcessor.swift in Sources */,
 				D2D215DF27AC276700A104B8 /* CodingKey+JSON.swift in Sources */,
 				D2D215E027AC276700A104B8 /* GetConfigInteractor.swift in Sources */,
@@ -1109,28 +1046,22 @@
 				D2D215E227AC276700A104B8 /* DeleteConfigInteractor.swift in Sources */,
 				D2D215E327AC276700A104B8 /* NotificationNetworkDataSource.swift in Sources */,
 				D2D215E627AC276700A104B8 /* NotificationStoreCombine.swift in Sources */,
-				D2D215E827AC276700A104B8 /* PageInfo.swift in Sources */,
 				D2D215E927AC276700A104B8 /* StorePredicate.swift in Sources */,
 				D2D215EA27AC276700A104B8 /* NotificationPreferencesDirector.swift in Sources */,
 				D2D215EB27AC276700A104B8 /* AblyConnector.swift in Sources */,
 				D2D215EC27AC276700A104B8 /* DataToDecodableMapper.swift in Sources */,
 				D2D215ED27AC276700A104B8 /* String+Data.swift in Sources */,
-				D2D215EE27AC276700A104B8 /* GraphQLRepresentable.swift in Sources */,
 				9415C4752BD932D30099C470 /* APNSEnvironment.swift in Sources */,
 				9415C4732BD932D30099C470 /* APNSTokenProvider.swift in Sources */,
 				9415C4792BD932D30099C470 /* RegisterAPNSTokenQuery.swift in Sources */,
 				D2D215EF27AC276700A104B8 /* NotificationPreferencesMapper.swift in Sources */,
 				D2D215F027AC276700A104B8 /* StoreDirector.swift in Sources */,
 				D2D215F127AC276700A104B8 /* MappingError.swift in Sources */,
-				D2D215F327AC276700A104B8 /* GraphQLFragment.swift in Sources */,
-				D2D215F427AC276700A104B8 /* GraphQLResponse.swift in Sources */,
 				D2D215F527AC276700A104B8 /* ConfigProvider.swift in Sources */,
 				D2D215F627AC276700A104B8 /* NotificationPreferencesProvider.swift in Sources */,
 				D2D215F727AC276700A104B8 /* LogLevel.swift in Sources */,
 				D2D215F927AC276700A104B8 /* NotificationPreferencesEntity.swift in Sources */,
 				D2D215FA27AC276700A104B8 /* ActionNotificationInteractor.swift in Sources */,
-				D2D215FB27AC276700A104B8 /* StoreGraphQLRepresentableExtensions.swift in Sources */,
-				D2D215FC27AC276700A104B8 /* CursorPredicate.swift in Sources */,
 				D2D215FD27AC276700A104B8 /* Config.swift in Sources */,
 				D2D215FE27AC276700A104B8 /* DeleteNotificationInteractor.swift in Sources */,
 				D2D215FF27AC276700A104B8 /* StoreProvider.swift in Sources */,
@@ -1142,13 +1073,15 @@
 				D2D2160527AC276700A104B8 /* NotificationProvider.swift in Sources */,
 				D2D2160627AC276700A104B8 /* GetNotificationInteractor.swift in Sources */,
 				D2D2160727AC276700A104B8 /* UpdateNotificationPreferencesInteractor.swift in Sources */,
+				94B373442CAC2FA00066BFB1 /* StorePagePredicate.swift in Sources */,
 				D2D2160827AC276700A104B8 /* StoreRealTimeProvider.swift in Sources */,
 				D2D2160927AC276700A104B8 /* UserQuery.swift in Sources */,
 				D2D2160A27AC276700A104B8 /* Notification.swift in Sources */,
 				D2D2160B27AC276700A104B8 /* NotificationStore.swift in Sources */,
-				D2D2160C27AC276700A104B8 /* Edge.swift in Sources */,
 				9415C47B2BD932D30099C470 /* APNSTokenNetworkDataSource.swift in Sources */,
 				D2D2160E27AC276700A104B8 /* HttpClient.swift in Sources */,
+				94B3733D2CAC2F8F0066BFB1 /* StoreDataSource.swift in Sources */,
+				94B3733E2CAC2F8F0066BFB1 /* StoreContext+QueryItems.swift in Sources */,
 				9415C46F2BD932D30099C470 /* APNSToken.swift in Sources */,
 				D2D2160F27AC276700A104B8 /* GetStorePagesInteractor.swift in Sources */,
 				D2D2161127AC276700A104B8 /* MagicBellError.swift in Sources */,
@@ -1161,7 +1094,6 @@
 				D2D2161627AC276700A104B8 /* NotificationPreferences.swift in Sources */,
 				D2D2161727AC276700A104B8 /* NetworkError.swift in Sources */,
 				D2D2161827AC276700A104B8 /* NotificationQuery.swift in Sources */,
-				D2D2161927AC276700A104B8 /* StoresGraphQLDataSource.swift in Sources */,
 				D2D2161A27AC276700A104B8 /* StorePage.swift in Sources */,
 				D2D2161B27AC276700A104B8 /* SDKProvider.swift in Sources */,
 				D2D2161C27AC276700A104B8 /* GetNotificationPreferencesInteractor.swift in Sources */,

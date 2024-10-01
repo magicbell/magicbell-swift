@@ -31,6 +31,10 @@ func anyNotification(predicate: StorePredicate, id: String?, forceProperty: Forc
     return Notification.createForPredicate(predicate, id: id, forceProperty: forceProperty)
 }
 
+func anyNotificationArray(predicate: StorePredicate, size: Int, forceProperty: ForceProperty) -> [Notification] {
+    (0..<size).map { anyNotification(predicate: predicate, id: String($0), forceProperty: forceProperty) }
+}
+
 extension Notification {
     static func createForPredicate(_ predicate: StorePredicate,
                                    id: String? = nil,

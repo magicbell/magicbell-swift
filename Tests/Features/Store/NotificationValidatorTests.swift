@@ -153,7 +153,7 @@ class NotificationValidatorTests: XCTestCase {
     }
 
     func test_predicate_category() throws {
-        let predicate = StorePredicate(categories: ["the-category"])
+        let predicate = StorePredicate(category: "the-category")
         for notification in allNotifications(category: "the-category") {
             expect(predicate.match(notification)) == true
         }

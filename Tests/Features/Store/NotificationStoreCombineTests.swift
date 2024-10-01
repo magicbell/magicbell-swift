@@ -20,8 +20,8 @@ import Combine
 
 class NotificationStoreCombineTests: XCTestCase {
 
-    let defaultEdgeArraySize = 50
-    lazy var anyIndexForDefaultEdgeArraySize = Int.random(in: 0..<defaultEdgeArraySize)
+    let defaultNotificationArraySize = 50
+    lazy var anyIndexForDefaultEdgeArraySize = Int.random(in: 0..<defaultNotificationArraySize)
 
     let userQuery = UserQuery(email: "javier@mobilejazz.com", hmac: nil)
 
@@ -53,7 +53,7 @@ class NotificationStoreCombineTests: XCTestCase {
     func test_fetchFuture_withDefaultStore_shouldReturnAllNotification() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize)
         let store = createNotificationStore(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -64,14 +64,14 @@ class NotificationStoreCombineTests: XCTestCase {
         _ = store.fetch().sink { _ in
             expectation.fulfill()
         } receiveValue: { notifications in
-            expect(storePage.edges.map { $0.node.id }).to(equal(notifications.map { $0.id }))
+            expect(storePage.notifications.map { $0.id }).to(equal(notifications.map { $0.id }))
         }
         waitForExpectations(timeout: 1, handler: nil)
 
         // THEN
         expect(self.fetchStorePageInteractor.executeCounter).to(equal(1))
-        expect(store.count).to(equal(defaultEdgeArraySize))
-        expect(storePage.edges.map { $0.node.id }).to(equal(store.notifications().map { $0.id }))
+        expect(store.count).to(equal(defaultNotificationArraySize))
+        expect(storePage.notifications.map { $0.id }).to(equal(store.notifications.map { $0.id }))
     }
 
     func test_fetchFuture_withDefaultStorePredicateAndError_shouldReturnError() {
@@ -107,7 +107,7 @@ class NotificationStoreCombineTests: XCTestCase {
     func test_refreshFuture_withDefaultStore_shouldReturnAllNotification() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize)
         let store = createNotificationStore(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -118,14 +118,14 @@ class NotificationStoreCombineTests: XCTestCase {
         _ = store.fetch().sink { _ in
             expectation.fulfill()
         } receiveValue: { notifications in
-            expect(storePage.edges.map { $0.node.id }).to(equal(notifications.map { $0.id }))
+            expect(storePage.notifications.map { $0.id }).to(equal(notifications.map { $0.id }))
         }
         waitForExpectations(timeout: 1, handler: nil)
 
         // THEN
         expect(self.fetchStorePageInteractor.executeCounter).to(equal(1))
-        expect(store.count).to(equal(defaultEdgeArraySize))
-        expect(storePage.edges.map { $0.node.id }).to(equal(store.notifications().map { $0.id }))
+        expect(store.count).to(equal(defaultNotificationArraySize))
+        expect(storePage.notifications.map { $0.id }).to(equal(store.notifications.map { $0.id }))
     }
 
     func test_refreshFuture_withDefaultStorePredicateAndError_shouldReturnError() {
@@ -161,7 +161,7 @@ class NotificationStoreCombineTests: XCTestCase {
     func test_deleteNotificationFuture_withDefaultStorePredicate_shouldCallDeleteNotificationInteractor() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .read)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .read)
         let store = createNotificationStore(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -186,7 +186,7 @@ class NotificationStoreCombineTests: XCTestCase {
     func test_deleteNotification_withError_shouldReturnError() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .read)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .read)
         let store = createNotificationStore(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage),
@@ -222,7 +222,7 @@ class NotificationStoreCombineTests: XCTestCase {
     func test_markNotificationAsReadFuture_withDefaultStorePredicate_shouldCallActioNotificationInteractor() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize)
         let store = createNotificationStore(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -248,7 +248,7 @@ class NotificationStoreCombineTests: XCTestCase {
     func test_markNotificationAsReadFuture_withError_shouldReturnError() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize)
         let store = createNotificationStore(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage),
@@ -285,7 +285,7 @@ class NotificationStoreCombineTests: XCTestCase {
     func test_markNotificationAsUnreadFuture_withDefaultStorePredicate_shouldCallActioNotificationInteractor() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize)
         let store = createNotificationStore(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -311,7 +311,7 @@ class NotificationStoreCombineTests: XCTestCase {
     func test_markNotificationAsArchiveFuture_withDefaultStorePredicate_shouldCallActioNotificationInteractor() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize)
         let store = createNotificationStore(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -337,7 +337,7 @@ class NotificationStoreCombineTests: XCTestCase {
     func test_markNotificationAsUnarchiveFuture_withDefaultStorePredicate_shouldCallActionNotificationInteractor() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize)
         let store = createNotificationStore(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -363,7 +363,7 @@ class NotificationStoreCombineTests: XCTestCase {
     func test_markNotificationAllReadFuture_withDefaultStorePredicate_shouldCallActioNotificationInteractor() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize)
         let store = createNotificationStore(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -387,7 +387,7 @@ class NotificationStoreCombineTests: XCTestCase {
     func test_markAllNotificationSeenFuture_withDefaultStorePredicate_shouldCallActioNotificationInteractor() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize)
         let store = createNotificationStore(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)

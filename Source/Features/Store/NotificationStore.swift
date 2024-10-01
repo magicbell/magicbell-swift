@@ -40,7 +40,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     public private(set) var unseenCount: Int = 0
 
     /// Whether there are more items or not when paginating forwards
-    public private(set) var hasNextPage = false
+    public private(set) var hasNextPage = true
 
     private let logger: Logger
     private var nextPage: Int = 1

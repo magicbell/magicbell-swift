@@ -22,22 +22,23 @@ class FetchStorePageMockInteractor: FetchStorePageInteractor {
         self.expectedResult = expectedResult
     }
 
-    private (set) var executeParamsSpy: [MethodParams.Execute] = []
+    private(set) var executeParamsSpy: [MethodParams.Execute] = []
     var executeCounter: Int {
         executeParamsSpy.count
     }
     
-    func execute(storePredicate: StorePredicate, userQuery: UserQuery, cursorPredicate: CursorPredicate) -> Future<StorePage> {
-        executeParamsSpy.append(MethodParams.Execute(storePredicate: storePredicate, userQuery: userQuery, cursorPredicate: cursorPredicate))
+    func execute(storePredicate: StorePredicate,
+                 userQuery: UserQuery,
+                 pagePredicate: StorePagePredicate) -> Future<StorePage> {
+        executeParamsSpy.append(MethodParams.Execute(storePredicate: storePredicate, userQuery: userQuery, pagePredicate: pagePredicate))
         return TestUtils.result(expectedResult: expectedResult)
     }
     
     class MethodParams {
-
         struct Execute {
             let storePredicate: StorePredicate
             let userQuery: UserQuery
-            let cursorPredicate: CursorPredicate
+            let pagePredicate: StorePagePredicate
         }
     }
 }

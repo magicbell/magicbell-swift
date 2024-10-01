@@ -40,10 +40,10 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     public private(set) var unseenCount: Int = 0
 
     /// Whether there are more items or not when paginating forwards
-    public private(set) var hasNextPage = true
+    public private(set) var hasNextPage = false
 
     private let logger: Logger
-    private var nextPage: Int?
+    private var nextPage: Int = 1
 
     init(predicate: StorePredicate,
          userQuery: UserQuery,
@@ -166,13 +166,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
             completion(.success([]))
             return
         }
-        let pagePredicate: StorePagePredicate = {
-            if let next = nextPage {
-                return StorePagePredicate(page: next, size: pageSize)
-            } else {
-                return StorePagePredicate(size: pageSize)
-            }
-        }()
+        let pagePredicate: StorePagePredicate = StorePagePredicate(page: nextPage, size: pageSize)
         fetchStorePageInteractor.execute(storePredicate: predicate, userQuery: userQuery, pagePredicate: pagePredicate)
             .then { storePage in
                 self.configurePagination(storePage)
@@ -298,7 +292,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
         setTotalCount(0, notifyObservers: notifyChanges)
         setUnreadCount(0, notifyObservers: notifyChanges)
         setUnseenCount(0, notifyObservers: notifyChanges)
-        nextPage = nil
+        nextPage = 1
         setHasNextPage(true)
 
         if notifyChanges {

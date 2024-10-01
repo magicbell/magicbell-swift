@@ -28,12 +28,14 @@ class StoreDataSource: GetDataSource {
 
     func get(_ query: Query) -> Future<StorePage> {
         switch query {
-        case let userQuery as StoreQuery:
+        case let storeQuery as StoreQuery:
+            let userQuery = storeQuery.userQuery
             let urlRequest = httpClient.prepareURLRequest(
                 path: "/notifications",
-                externalId: userQuery.userQuery.externalId,
-                email: userQuery.userQuery.email,
-                hmac: userQuery.userQuery.hmac
+                externalId: userQuery.externalId,
+                email: userQuery.email,
+                hmac: userQuery.hmac,
+                queryItems: storeQuery.context.asQueryItems
             )
             return httpClient
                 .performRequest(urlRequest)

@@ -226,7 +226,7 @@ class MagicBellStoreViewController: UITableViewController,
 
     // MARK: UITableViewDelegate
 
-    // swiftlint:disable cyclomatic_complexity
+    // swiftlint:disable cyclomatic_complexity function_body_length
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
@@ -304,6 +304,7 @@ class MagicBellStoreViewController: UITableViewController,
 
         present(alert, animated: true, completion: nil)
     }
+    // swiftlint:enable cyclomatic_complexity function_body_length
 
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if !isLoadingNextPage &&

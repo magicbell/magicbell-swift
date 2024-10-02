@@ -15,49 +15,38 @@ import Harmony
 
 struct GetStorePagesInteractor {
     private let executor: Executor
-    private let getStoreNotificationInteractor: Interactor.GetByQuery<[String: StorePage]>
+    private let getStoreNotificationInteractor: Interactor.GetByQuery<StorePage>
     
     init(
         executor: Executor,
-        getStoreNotificationInteractor: Interactor.GetByQuery<[String: StorePage]>
+        getStoreNotificationInteractor: Interactor.GetByQuery<StorePage>
     ) {
         self.executor = executor
         self.getStoreNotificationInteractor = getStoreNotificationInteractor
     }
     
     func execute(storePredicate: StorePredicate,
-                 cursorPredicate: CursorPredicate,
+                 pagePredicate: StorePagePredicate,
                  userQuery: UserQuery,
                  in executor: Executor? = nil) -> Future<StorePage> {
         execute(
-            contexts: [
-                StoreContext("data", storePredicate, cursorPredicate)
-            ],
+            context: StoreContext(storePredicate, pagePredicate),
             userQuery: userQuery,
             in: executor
-        ).map { stores in
-            guard let store = stores["data"] else {
-                throw MagicBellError("Server didn't response correct data")
-            }
-            return store
-        }
+        )
     }
     
-    func execute(
-        contexts: [StoreContext],
-        userQuery: UserQuery,
-        in executor: Executor? = nil
-    ) -> Future<[String: StorePage]> {
+    func execute(context: StoreContext, userQuery: UserQuery, in executor: Executor? = nil) -> Future<StorePage> {
         let exec = (executor ?? self.executor)
         return exec.submit { resolver in
-            let stores = try getStoreNotificationInteractor.execute(
+            let store = try getStoreNotificationInteractor.execute(
                 StoreQuery(
-                    contexts: contexts,
+                    context: context,
                     userQuery: userQuery
                 ),
                 in: DirectExecutor()
             ).result.get()
-            resolver.set(stores)
+            resolver.set(store)
         }
     }
 }

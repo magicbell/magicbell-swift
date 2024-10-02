@@ -18,8 +18,8 @@ import XCTest
 import Nimble
 
 class NotificationStoreRealTimeTests: XCTestCase {
-    let defaultEdgeArraySize = 50
-    lazy var anyIndexForDefaultEdgeArraySize = Int.random(in: 0..<defaultEdgeArraySize)
+    let defaultNotificationArraySize = 50
+    lazy var anyIndexForDefaultEdgeArraySize = Int.random(in: 0..<defaultNotificationArraySize)
     let userQuery = UserQuery(email: "javier@mobilejazz.com", hmac: nil)
 
     var storeRealTime: StoreRealTimeMock!
@@ -54,7 +54,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
     func test_addRealTimeStore() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize)
 
         // WHEN
         _ = createStoreDirector(
@@ -69,7 +69,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
     func test_notifyNewNotification_withDefaultStorePredicate_shouldRefreshStore() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -83,16 +83,16 @@ class NotificationStoreRealTimeTests: XCTestCase {
 
         // THEN
         expect(self.fetchStorePageInteractor.executeCounter).to(equal(2))
-        expect(store.count).to(equal(defaultEdgeArraySize))
-        storePage.edges.enumerated().forEach { idx, edge in
-            expect(store[idx].id).to(equal(edge.node.id))
+        expect(store.count).to(equal(defaultNotificationArraySize))
+        storePage.notifications.enumerated().forEach { idx, edge in
+            expect(store[idx].id).to(equal(edge.id))
         }
     }
 
     func test_notifyReadNotification_withDefaultStorePredicateAndReadAndExists_shouldDoNothing() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .read)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .read)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -108,7 +108,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
 
         // THEN
         expect(self.fetchStorePageInteractor.executeCounter).to(equal(1))
-        expect(store.count).to(equal(defaultEdgeArraySize))
+        expect(store.count).to(equal(defaultNotificationArraySize))
         expect(store.totalCount).to(equal(initialCounter.totalCount))
         expect(store.unreadCount).to(equal(initialCounter.unreadCount))
     }
@@ -116,7 +116,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
     func test_notifyReadNotification_withDefaultStorePredicateAndUnreadAndExists_shouldUpdateNotification() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unread)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .unread)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -133,7 +133,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // THEN
         expect(store[chosenIndex].readAt).toNot(beNil())
         expect(self.fetchStorePageInteractor.executeCounter).to(equal(1))
-        expect(store.count).to(equal(defaultEdgeArraySize))
+        expect(store.count).to(equal(defaultNotificationArraySize))
         expect(store.totalCount).to(equal(initialCounter.totalCount))
         expect(store.unreadCount).to(equal(initialCounter.unreadCount - 1))
     }
@@ -141,7 +141,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
     func test_notifyReadNotification_withDefaultStorePredicateAndUnseenAndExists_shouldUpdateNotification() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unseen)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .unseen)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -159,7 +159,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         expect(store[chosenIndex].readAt).toNot(beNil())
         expect(store[chosenIndex].seenAt).toNot(beNil())
         expect(self.fetchStorePageInteractor.executeCounter).to(equal(1))
-        expect(store.count).to(equal(defaultEdgeArraySize))
+        expect(store.count).to(equal(defaultNotificationArraySize))
         expect(store.totalCount).to(equal(initialCounter.totalCount))
         expect(store.unreadCount).to(equal(initialCounter.unreadCount - 1))
         expect(store.unseenCount).to(equal(initialCounter.unseenCount - 1))
@@ -168,7 +168,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
     func test_notifyReadNotification_withDefaultStorePredicateAndDoesntExists_shouldRefresh() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -182,16 +182,16 @@ class NotificationStoreRealTimeTests: XCTestCase {
 
         // THEN
         expect(self.fetchStorePageInteractor.executeCounter).to(equal(2))
-        expect(store.count).to(equal(defaultEdgeArraySize))
-        storePage.edges.enumerated().forEach { idx, edge in
-            expect(store[idx].id).to(equal(edge.node.id))
+        expect(store.count).to(equal(defaultNotificationArraySize))
+        storePage.notifications.enumerated().forEach { idx, edge in
+            expect(store[idx].id).to(equal(edge.id))
         }
     }
 
     func test_notifyUnreadNotification_withDefaultStorePredicateAndReadAndExists_shouldUpdateNotification() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .read)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .read)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -208,7 +208,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // THEN
         expect(store.unseenCount).to(equal(initialCounter.unseenCount))
         expect(self.fetchStorePageInteractor.executeCounter).to(equal(1))
-        expect(store.count).to(equal(defaultEdgeArraySize))
+        expect(store.count).to(equal(defaultNotificationArraySize))
         expect(store[chosenIndex].readAt).to(beNil())
         expect(store.unreadCount).to(equal(initialCounter.unreadCount + 1))
         expect(store.totalCount).to(equal(initialCounter.totalCount))
@@ -217,7 +217,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
     func test_notifyUnreadNotification_withDefaultStorePredicateAndUnreadAndExists_shouldUpdateNotification() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unread)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .unread)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -234,7 +234,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // THEN
         expect(store.unseenCount).to(equal(initialCounter.unseenCount))
         expect(self.fetchStorePageInteractor.executeCounter).to(equal(1))
-        expect(store.count).to(equal(defaultEdgeArraySize))
+        expect(store.count).to(equal(defaultNotificationArraySize))
         expect(store[chosenIndex].readAt).to(beNil())
         expect(store.unreadCount).to(equal(initialCounter.unreadCount))
         expect(store.totalCount).to(equal(initialCounter.totalCount))
@@ -243,7 +243,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
     func test_notifyUnreadNotification_withDefaultStorePredicateAndNotExists_shouldRefresh() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -257,13 +257,13 @@ class NotificationStoreRealTimeTests: XCTestCase {
 
         // THEN
         expect(self.fetchStorePageInteractor.executeCounter).to(equal(2))
-        expect(store.count).to(equal(defaultEdgeArraySize))
+        expect(store.count).to(equal(defaultNotificationArraySize))
     }
 
     func test_notifyDeleteNotification_withDefaultStorePredicateAndUnreadAndExists_shouldRemoveNotificationAndUnreadCount() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unread)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .unread)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -290,7 +290,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
     func test_notifyDeleteNotification_withDefaultStorePredicateAndUnseenAndExists_shouldUpdateUnseenCount() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unseen)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .unseen)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -312,7 +312,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
     func test_notifyDeleteNotification_withDefaultStorePredicateAndSeenAndExists_shouldSameUnseenCount() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .seen)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .seen)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -334,7 +334,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
     func test_notifyDeleteNotification_withDefaultStorePredicateAndNotExists_shouldDoNothing() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -357,7 +357,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
     func test_notifyReadAllNotification_withDefaultStorePredicate_shouldRefresh() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .read)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .read)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -371,7 +371,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
 
         // THEN
         expect(self.fetchStorePageInteractor.executeCounter).to(equal(2))
-        expect(store.count).to(equal(defaultEdgeArraySize))
+        expect(store.count).to(equal(defaultNotificationArraySize))
         store.forEach { notification in
             expect(notification.readAt).toNot(beNil())
         }
@@ -380,7 +380,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
     func test_notifySeenAllNotification_withDefaultStorePredicate_shouldRefresh() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .read)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .read)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -394,7 +394,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
 
         // THEN
         expect(self.fetchStorePageInteractor.executeCounter).to(equal(2))
-        expect(store.count).to(equal(defaultEdgeArraySize))
+        expect(store.count).to(equal(defaultNotificationArraySize))
         store.forEach { notification in
             expect(notification.seenAt).toNot(beNil())
         }
@@ -406,7 +406,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // GIVEN
         let contentObserver = ContentObserverMock()
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -425,7 +425,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // GIVEN
         let contentObserver = ContentObserverMock()
         let predicate = StorePredicate(read: true)
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .read)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .read)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -449,7 +449,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // GIVEN
         let contentObserver = ContentObserverMock()
         let predicate = StorePredicate(read: true)
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .read)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .read)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -471,7 +471,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // GIVEN
         let contentObserver = ContentObserverMock()
         let predicate = StorePredicate(read: false)
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unread)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .unread)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -497,7 +497,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // GIVEN
         let contentObserver = ContentObserverMock()
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -522,7 +522,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // GIVEN
         let contentObserver = ContentObserverMock()
         let predicate = StorePredicate(read: false)
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unread)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .unread)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -550,7 +550,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // GIVEN
         let contentObserver = ContentObserverMock()
         let predicate = StorePredicate(seen: false)
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unseen)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .unseen)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -578,7 +578,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // GIVEN
         let countObserver = CountObserverMock()
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -601,7 +601,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // GIVEN
         let countObserver = CountObserverMock()
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unread)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .unread)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -628,7 +628,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // GIVEN
         let countObserver = CountObserverMock()
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .read)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .read)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -652,7 +652,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // GIVEN
         let countObserver = CountObserverMock()
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unseen)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .unseen)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -679,7 +679,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // GIVEN
         let countObserver = CountObserverMock()
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .seen)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .seen)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -703,7 +703,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // GIVEN
         let countObserver = CountObserverMock()
         let predicate = StorePredicate(read: false)
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unread)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .unread)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -728,7 +728,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // GIVEN
         let countObserver = CountObserverMock()
         let predicate = StorePredicate(read: false)
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .read)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .read)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -750,7 +750,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // GIVEN
         let countObserver = CountObserverMock()
         let predicate = StorePredicate(read: false)
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unseen)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .unseen)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -778,7 +778,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // GIVEN
         let countObserver = CountObserverMock()
         let predicate = StorePredicate(read: false)
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .seen)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .seen)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -804,7 +804,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // GIVEN
         let countObserver = CountObserverMock()
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .none)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .none)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -830,7 +830,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // GIVEN
         let countObserver = CountObserverMock()
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unread)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .unread)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -857,7 +857,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // GIVEN
         let countObserver = CountObserverMock()
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unread)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .unread)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -879,7 +879,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
         // GIVEN
         let contentObserver = ContentObserverMock()
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unread)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .unread)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -899,7 +899,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
     func test_notifyArchiveNotification_withDefaultStorePredicateAndExists_shouldDoNothing() {
         // GIVEN
         let predicate = StorePredicate()
-        let storePage = givenPageStore(predicate: predicate, size: defaultEdgeArraySize, forceNotificationProperty: .unarchived)
+        let storePage = givenPageStore(predicate: predicate, size: defaultNotificationArraySize, forceNotificationProperty: .unarchived)
         let store = createStoreDirector(
             predicate: predicate,
             fetchStoreExpectedResult: .success(storePage)
@@ -915,7 +915,7 @@ class NotificationStoreRealTimeTests: XCTestCase {
 
         // THEN
         expect(self.fetchStorePageInteractor.executeCounter).to(equal(1))
-        expect(store.count).to(equal(defaultEdgeArraySize - 1))
+        expect(store.count).to(equal(defaultNotificationArraySize - 1))
         expect(store.totalCount).to(equal(initialCounter.totalCount - 1))
     }
 }

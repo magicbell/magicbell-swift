@@ -18,12 +18,6 @@ class DataToDecodableMapper<T>: Mapper<Data, T> where T: Decodable {
 
     private var decoder = JSONDecoder()
 
-    init(iso8601: Bool = false) {
-        if iso8601 {
-            decoder.dateDecodingStrategy = .iso8601
-        }
-    }
-
     override func map(_ from: Data) throws -> T {
         do {
             let value = try decoder.decode(T.self, from: from)

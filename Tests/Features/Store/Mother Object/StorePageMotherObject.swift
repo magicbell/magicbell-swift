@@ -16,24 +16,47 @@ import Harmony
 import struct MagicBell.Notification
 
 func givenPageStore(predicate: StorePredicate, size: Int, forceNotificationProperty: ForceProperty = .none) -> StorePage {
-    return StorePage.create(edges: anyNotificationEdgeArray(predicate: predicate, size: size, forceNotificationProperty: forceNotificationProperty), pageInfo: anyPageInfo())
+    let totalPages = anyInt(minValue: 1, maxValue: 10)
+    return StorePage.create(notifications: anyNotificationArray(predicate: predicate,
+                                                                size: size,
+                                                                forceProperty: forceNotificationProperty),
+                            currentPage: anyInt(minValue: totalPages, maxValue: 10),
+                            totalPages: totalPages)
 }
 
 func anyPageStore() -> StorePage {
-    return StorePage.create(edges: anyNotificationEdgeArray(predicate: StorePredicate(),
-                                                            size: anyInt(minValue: 0, maxValue: 20),
-                                                            forceNotificationProperty: .none), pageInfo: anyPageInfo())
+    let totalPages = anyInt(minValue: 1, maxValue: 10)
+    return StorePage.create(notifications: anyNotificationArray(predicate: StorePredicate(),
+                                                                size: anyInt(minValue: 0, maxValue: 20),
+                                                                forceProperty: .none),
+                            currentPage: anyInt(minValue: totalPages, maxValue: 10),
+                            totalPages: totalPages)
 }
 
 extension StorePage {
+    static func createNoNextPage(notifications: [Notification]) -> StorePage {
+        create(notifications: notifications, currentPage: 1, totalPages: 1)
+    }
+    
+    static func createHasNextPage(notifications: [Notification]) -> StorePage {
+        create(notifications: notifications, currentPage: 1, totalPages: 2)
+    }
+    
+    static func createAnyNextPage(notifications: [Notification]) -> StorePage {
+        create(notifications: notifications, currentPage: 1, totalPages: anyInt(minValue: 1, maxValue: 2))
+    }
+    
     static func create(
-        edges: [Edge<Notification>],
-        pageInfo: PageInfo) -> StorePage {
-            return StorePage(
-                edges: edges,
-                pageInfo: pageInfo,
-                totalCount: edges.count,
-                unreadCount: edges.filter { $0.node.readAt == nil }.count,
-                unseenCount: edges.filter { $0.node.seenAt == nil }.count)
+        notifications: [Notification],
+        currentPage: Int,
+        totalPages: Int) -> StorePage {
+            StorePage(
+                notifications: notifications,
+                totalCount: notifications.count,
+                unreadCount: notifications.filter { $0.readAt == nil }.count,
+                unseenCount: notifications.filter { $0.seenAt == nil }.count,
+                totalPages: totalPages,
+                perPage: notifications.count,
+                currentPage: currentPage)
         }
 }

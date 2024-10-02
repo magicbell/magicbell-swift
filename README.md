@@ -280,9 +280,9 @@ let unreadNotifications = user.store.build(read: false)
 
 let archviedNotifications = user.store.build(archived: true)
 
-let billingNotifications = user.store.build(categories: ["billing"])
+let billingNotifications = user.store.build(category: "billing")
 
-let firstOrderNotifications = user.store.build(topics: ["order:001"])
+let firstOrderNotifications = user.store.build(topic: "order:001")
 ```
 
 These are the attributes of a notification store:
@@ -358,13 +358,13 @@ These are the available options:
 | `read`       | `true`, `false`, `nil` | `nil`   | Filter by the `read` state (`nil` means unspecified) |
 | `seen`       | `true`, `false`, `nil` | `nil`   | Filter by the `seen` state (`nil` means unspecified) |
 | `archived`   | `true`, `false`        | `false` | Filter by the `archived` state                       |
-| `categories` | `[String]`             | `[]`    | Filter by catregories                                |
-| `topics`     | `[String]`             | `[]`    | Filter by topics                                     |
+| `category  ` | `String`               | `nil`   | Filter by category                                  |
+| `topic`      | `String`               | `nil`   | Filter by topic                                      |
 
 For example, use this predicate to fetch unread notifications of the `"important"` category:
 
 ```swift
-let predicate = StorePredicate(read: .unread, categories: ["important"])
+let predicate = StorePredicate(read: .unread, category: "important")
 let store = user.store.build(predicate: predicate)
 ```
 
@@ -438,7 +438,7 @@ for notification in store {
 }
 
 // As an array
-let notifications = store.notifications()
+let notifications = store.notifications
 ```
 
 Enumeration is also available:
@@ -600,4 +600,4 @@ user.
 
 ## Contributing
 
-We welcome contributions of any kind. To do so, clone the repo, resolve dependencies via Carthage in the root folder by running the command `carthage update --use-xcframeworks --no-use-binaries`, and open `MagicBell.xcodeproj`.
+We welcome contributions of any kind. To do so, clone the repo, resolve dependencies via Carthage in the root folder by running the command `carthage bootstrap --use-xcframeworks --no-use-binaries`, and open `MagicBell.xcodeproj`.

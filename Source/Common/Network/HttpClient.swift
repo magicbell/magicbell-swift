@@ -15,12 +15,22 @@ import Foundation
 import Harmony
 
 protocol HttpClient {
-    func prepareURLRequest(path: String, externalId: String?, email: String?, hmac: String?, additionalHTTPHeaders: [String: String]?) -> URLRequest
+    func prepareURLRequest(path: String, externalId: String?, email: String?, hmac: String?, additionalHTTPHeaders: [String: String]?, queryItems: [URLQueryItem]?) -> URLRequest
+
     func performRequest(_ urlRequest: URLRequest) -> Future<Data>
 }
+
 extension HttpClient {
     func prepareURLRequest(path: String, externalId: String?, email: String?, hmac: String?) -> URLRequest {
-        prepareURLRequest(path: path, externalId: externalId, email: email, hmac: hmac, additionalHTTPHeaders: [:])
+        prepareURLRequest(path: path, externalId: externalId, email: email, hmac: hmac, additionalHTTPHeaders: nil, queryItems: nil)
+    }
+
+    func prepareURLRequest(path: String, externalId: String?, email: String?, hmac: String?, additionalHTTPHeaders: [String: String]?) -> URLRequest {
+        prepareURLRequest(path: path, externalId: externalId, email: email, hmac: hmac, additionalHTTPHeaders: additionalHTTPHeaders, queryItems: nil)
+    }
+
+    func prepareURLRequest(path: String, externalId: String?, email: String?, hmac: String?, queryItems: [URLQueryItem]?) -> URLRequest {
+        prepareURLRequest(path: path, externalId: externalId, email: email, hmac: hmac, additionalHTTPHeaders: nil, queryItems: queryItems)
     }
 }
 
@@ -34,8 +44,10 @@ class DefaultHttpClient: HttpClient {
         self.environment = environment
     }
     
-    func prepareURLRequest(path: String, externalId: String?, email: String?, hmac: String?, additionalHTTPHeaders: [String: String]?) -> URLRequest {
-        var urlRequest = URLRequest(url: environment.baseUrl.appendingPathComponent(path))
+    func prepareURLRequest(path: String, externalId: String?, email: String?, hmac: String?, additionalHTTPHeaders: [String: String]? = nil, queryItems: [URLQueryItem]? = nil) -> URLRequest {
+        var urlComponents = URLComponents(url:environment.baseUrl.appendingPathComponent(path), resolvingAgainstBaseURL: false)!
+        urlComponents.queryItems = queryItems
+        var urlRequest = URLRequest(url: urlComponents.url!)
 
         urlRequest.addValue(environment.apiKey, forHTTPHeaderField: "X-MAGICBELL-API-KEY")
 

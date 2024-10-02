@@ -59,20 +59,20 @@ struct NotificationValidator {
     }
 
     func validateCategory(_ notification: Notification) -> Bool {
-        if predicate.categories.isEmpty {
+        if predicate.category == nil {
             return true
         } else if let category = notification.category {
-            return predicate.categories.contains(category)
+            return predicate.category == category
         } else {
             return false
         }
     }
 
     func validateTopic(_ notification: Notification) -> Bool {
-        if predicate.topics.isEmpty {
+        if predicate.topic == nil {
             return true
         } else if let topic = notification.topic {
-            return predicate.topics.contains(topic)
+            return predicate.topic == topic
         } else {
             return false
         }

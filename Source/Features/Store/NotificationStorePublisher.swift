@@ -36,7 +36,7 @@ public class NotificationStorePublisher: ObservableObject, NotificationStoreCoun
         unreadCount = store.unreadCount
         unseenCount = store.unseenCount
         hasNextPage = store.hasNextPage
-        notifications = store.notifications()
+        notifications = store.notifications
 
         store.addCountObserver(self)
         store.addContentObserver(self)
@@ -80,7 +80,7 @@ public class NotificationStorePublisher: ObservableObject, NotificationStoreCoun
         unreadCount = store.unreadCount
         unseenCount = store.unseenCount
         // Reloading array of notifications
-        notifications = store.notifications()
+        notifications = store.notifications
     }
 
     public func store(_ store: NotificationStore, didInsertNotificationsAt indexes: [Int]) {
@@ -90,7 +90,7 @@ public class NotificationStorePublisher: ObservableObject, NotificationStoreCoun
             let notification = store[index]
             notifications.insert(notification, at: index)
         }
-        notifications = store.notifications()
+        notifications = store.notifications
     }
 
     public func store(_ store: NotificationStore, didChangeNotificationAt indexes: [Int]) {

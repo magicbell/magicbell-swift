@@ -19,7 +19,7 @@ class MagicBellStoreViewController: UITableViewController,
                                     NotificationStoreContentObserver,
                                     NotificationStoreCountObserver {
 
-    private var isLoadingNextPage = false
+    private var isLoading = false
 
     @IBOutlet weak var magicBellStoreItem: BadgeBarButtonItem!
 
@@ -62,7 +62,9 @@ class MagicBellStoreViewController: UITableViewController,
     // swiftlint:disable empty_count
     private func reloadStore() {
         if store.count == 0 {
+            isLoading = true
             store.refresh { result in
+                self.isLoading = false
                 switch result {
                 case .success:
                     // Observers will manage changes
@@ -78,7 +80,9 @@ class MagicBellStoreViewController: UITableViewController,
     }
 
     @objc private func refreshAction(sender: UIRefreshControl) {
+        isLoading = true
         store.refresh { result in
+            self.isLoading = false
             sender.endRefreshing()
             switch result {
             case .success:
@@ -138,7 +142,7 @@ class MagicBellStoreViewController: UITableViewController,
                 self.configureStore(predicate: StorePredicate(archived: true))
             })
             alert.addAction(UIAlertAction(title: "By Category", style: .default) { _ in
-                self.configureStore(predicate: StorePredicate(categories: ["order_created"]))
+                self.configureStore(predicate: StorePredicate(category: "order_created"))
             })
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
@@ -226,7 +230,7 @@ class MagicBellStoreViewController: UITableViewController,
 
     // MARK: UITableViewDelegate
 
-    // swiftlint:disable cyclomatic_complexity
+    // swiftlint:disable cyclomatic_complexity function_body_length
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
@@ -304,15 +308,16 @@ class MagicBellStoreViewController: UITableViewController,
 
         present(alert, animated: true, completion: nil)
     }
+    // swiftlint:enable cyclomatic_complexity function_body_length
 
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if !isLoadingNextPage &&
+        if !isLoading &&
             (scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.bounds.size.height - 200) && store.hasNextPage {
-            isLoadingNextPage = true
+            isLoading = true
             print("Load next page")
             store.fetch { result in
                 print("Load completed")
-                self.isLoadingNextPage = false
+                self.isLoading = false
                 switch result {
                 case .success:
                     // Observers will manage changes

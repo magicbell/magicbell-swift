@@ -17,7 +17,7 @@ protocol FetchStorePageInteractor {
     func execute(
         storePredicate: StorePredicate,
         userQuery: UserQuery,
-        cursorPredicate: CursorPredicate
+        pagePredicate: StorePagePredicate
     ) -> Future<StorePage>
 }
 
@@ -33,10 +33,10 @@ struct FetchStorePageDefaultInteractor: FetchStorePageInteractor {
 
     func execute(storePredicate: StorePredicate,
                  userQuery: UserQuery,
-                 cursorPredicate: CursorPredicate) -> Future<StorePage> {
+                 pagePredicate: StorePagePredicate) -> Future<StorePage> {
         return executor.submit { resolver in
             let storePage = try getStorePagesInteractor.execute(storePredicate: storePredicate,
-                                                                cursorPredicate: cursorPredicate,
+                                                                pagePredicate: pagePredicate,
                                                                 userQuery: userQuery,
                                                                 in: DirectExecutor()).result.get()
             resolver.set(storePage)

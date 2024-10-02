@@ -358,7 +358,7 @@ These are the available options:
 | `read`       | `true`, `false`, `nil` | `nil`   | Filter by the `read` state (`nil` means unspecified) |
 | `seen`       | `true`, `false`, `nil` | `nil`   | Filter by the `seen` state (`nil` means unspecified) |
 | `archived`   | `true`, `false`        | `false` | Filter by the `archived` state                       |
-| `category  ` | `String`               | `nil`   | Filter by catregory                                  |
+| `category  ` | `String`               | `nil`   | Filter by category                                  |
 | `topic`      | `String`               | `nil`   | Filter by topic                                      |
 
 For example, use this predicate to fetch unread notifications of the `"important"` category:

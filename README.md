@@ -600,4 +600,4 @@ user.
 
 ## Contributing
 
-We welcome contributions of any kind. To do so, clone the repo, resolve dependencies via Carthage in the root folder by running the command `carthage update --use-xcframeworks --no-use-binaries`, and open `MagicBell.xcodeproj`.
+We welcome contributions of any kind. To do so, clone the repo, resolve dependencies via Carthage in the root folder by running the command `carthage bootstrap --use-xcframeworks --no-use-binaries`, and open `MagicBell.xcodeproj`.

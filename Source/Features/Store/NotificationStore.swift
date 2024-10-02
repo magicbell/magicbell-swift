@@ -355,7 +355,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
     // MARK: - Observer methods
     func notifyNewNotification(id: String) {
         /**
-         If GraphQL allows us to query for notificationId, then we can query for the predicate + notificationID. If we obtain a result, it means that this new notification is part of this store. Then, we set the notification in the first position of the array + set the new cursor as the newest one.
+         If the API allows us to query for notificationId, then we can query for the predicate + notificationID. If we obtain a result, it means that this new notification is part of this store. Then, we set the notification in the first position of the array + set the new cursor as the newest one.
 
          Now, we just refresh all the store.
          */
@@ -392,7 +392,7 @@ public class NotificationStore: Collection, StoreRealTimeObserver {
             }
         } else {
             /**
-             If GraphQL allows us to query for notificationId, then we can query for the predicate + notificationID. If we obtain a result, it means that this new notification is part of this store. If not, we can remove it from the current store.
+             If the API allows us to query for notificationId, then we can query for the predicate + notificationID. If we obtain a result, it means that this new notification is part of this store. If not, we can remove it from the current store.
 
              The next step would be to place it in the correct position. we check the range from the newest to the oldest one. if it's older than the oldest one, we don't add it to the store yet. if it's the newest one, we place in the first position and update the newest cursor.
 

@@ -6,9 +6,13 @@
 # To learn more about a Podspec see https://guides.cocoapods.org/syntax/podspec.html
 #
 
+require 'json'
+
+package = JSON.parse(File.read(File.join(__dir__, 'package.json')))
+
 Pod::Spec.new do |s|
   s.name             = 'MagicBell'
-  s.version          = '2.0.0'
+  s.version          = package['version']
   s.summary          = 'Official MagicBell SDK for Swift'
   s.description      = 'Official MagicBell SDK for Swift. The notification inbox for your product.'
 

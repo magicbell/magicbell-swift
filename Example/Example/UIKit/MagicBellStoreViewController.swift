@@ -19,7 +19,7 @@ class MagicBellStoreViewController: UITableViewController,
                                     NotificationStoreContentObserver,
                                     NotificationStoreCountObserver {
 
-    private var isLoadingNextPage = false
+    private var isLoading = false
 
     @IBOutlet weak var magicBellStoreItem: BadgeBarButtonItem!
 
@@ -62,7 +62,9 @@ class MagicBellStoreViewController: UITableViewController,
     // swiftlint:disable empty_count
     private func reloadStore() {
         if store.count == 0 {
+            isLoading = true
             store.refresh { result in
+                self.isLoading = false
                 switch result {
                 case .success:
                     // Observers will manage changes
@@ -78,7 +80,9 @@ class MagicBellStoreViewController: UITableViewController,
     }
 
     @objc private func refreshAction(sender: UIRefreshControl) {
+        isLoading = true
         store.refresh { result in
+            self.isLoading = false
             sender.endRefreshing()
             switch result {
             case .success:
@@ -307,13 +311,13 @@ class MagicBellStoreViewController: UITableViewController,
     // swiftlint:enable cyclomatic_complexity function_body_length
 
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if !isLoadingNextPage &&
+        if !isLoading &&
             (scrollView.contentOffset.y > scrollView.contentSize.height - scrollView.bounds.size.height - 200) && store.hasNextPage {
-            isLoadingNextPage = true
+            isLoading = true
             print("Load next page")
             store.fetch { result in
                 print("Load completed")
-                self.isLoadingNextPage = false
+                self.isLoading = false
                 switch result {
                 case .success:
                     // Observers will manage changes

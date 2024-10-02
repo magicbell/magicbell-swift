@@ -1,4 +1,4 @@
-import { replaceInFile, ReplaceInFileConfig } from 'replace-in-file';
+import { replaceInFile } from 'replace-in-file';
 
 import pkgJson from '../package.json';
 

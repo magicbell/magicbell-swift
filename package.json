@@ -8,5 +8,8 @@
     "@changesets/cli": "^2.27.8",
     "replace-in-file": "^8.2.0",
     "tsx": "^4.19.1"
+  },
+  "scripts": {
+    "changeset": "./scripts/changeset-wrapper.sh"
   }
 }

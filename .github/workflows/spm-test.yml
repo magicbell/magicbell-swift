@@ -25,4 +25,4 @@ jobs:
       - name: Build
         run: swift build --build-tests
       - name: Test
-        run: swift test --skip-build | xcbeautify --renderer github-actions
+        run: set -o pipefail && swift test --skip-build | xcbeautify --renderer github-actions

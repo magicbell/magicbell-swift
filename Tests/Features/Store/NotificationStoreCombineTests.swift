@@ -69,7 +69,7 @@ class NotificationStoreCombineTests: XCTestCase {
         waitForExpectations(timeout: 1, handler: nil)
 
         // THEN
-        expect(self.fetchStorePageInteractor.executeCounter).to(equal(2))
+        expect(self.fetchStorePageInteractor.executeCounter).to(equal(1))
         expect(store.count).to(equal(defaultNotificationArraySize))
         expect(storePage.notifications.map { $0.id }).to(equal(store.notifications.map { $0.id }))
     }

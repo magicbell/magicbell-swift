@@ -25,7 +25,7 @@ jobs:
         uses: changesets/action@v1
         with:
           publish: yarn changeset publish
-          commit: 'chore: version packages'
-          title: 'chore: version packages'
+          commit: 'chore: version package'
+          title: 'chore: version package'
         env:
           GITHUB_TOKEN: ${{ secrets.BELLA_ACTION_TOKEN }}

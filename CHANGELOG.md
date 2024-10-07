@@ -1,5 +1,18 @@
 # MagicBell iOS SDK
 
+## 3.0.0
+
+### Major Changes
+
+- 571c0d0: Updated topic and category filtering APIs in `StorePredicate`
+
+  Previously one was able to filter for multiple topics and categories, but this functionality is now deprecated in favor of only filtering for a single topic and category.
+  Please reach out to us via the [Community](http://www.magicbell.com/community) if you need the previous functionality.
+
+### Minor Changes
+
+- 571c0d0: Internal: Fetching notifications from `/notifications` endpoint instead of GraphQL
+
 ## 2.0.0
 
 This release is mostly compatible with version 1.0.0 of the SDK. It introduces two breaking changes though. Please consult the Readme for detailed reference.

@@ -73,7 +73,7 @@ This repo also contains a full-blown example. To run the project:
 To install MagicBell using [CocoaPods](https://cocoapods.org), add this entry to your `Podfile`:
 
 ```ruby
-pod 'MagicBell', '>=2.0.0'
+pod 'MagicBell', '>=3.0.0'
 ```
 
 **IMPORTANT**: Make sure you specify `use_frameworks!` in your `Podfile`.
@@ -86,7 +86,7 @@ To install MagicBell using [Swift Package Manager](https://www.swift.org/package
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/magicbell/magicbell-swift", .upToNextMajor(from: "2.0.0"))
+    .package(url: "https://github.com/magicbell/magicbell-swift", .upToNextMajor(from: "3.0.0"))
 ]
 ```
 

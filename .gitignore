@@ -85,3 +85,5 @@ Carthage/
 
 # Node
 node_modules/
+
+.env

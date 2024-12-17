@@ -18,12 +18,12 @@ const replacements = [
       // Swift Package Manager instructions
       /.upToNextMajor\(from: "\d\.\d\.\d"\)/g,
       // Carthage instructions
-      /github "magicbell-io\/magicbell-swift" "\d\.\d\.\d"/g
+      /github "magicbell\/magicbell-swift" "\d\.\d\.\d"/g
     ],
     to: [
       `pod 'MagicBell', '>=${version}'`,
       `.upToNextMajor(from: "${version}")`,
-      `github "magicbell-io/magicbell-swift" "${version}"`
+      `github "magicbell/magicbell-swift" "${version}"`
     ],
   },
   // SDK version in Swift code

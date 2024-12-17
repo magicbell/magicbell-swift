@@ -95,7 +95,7 @@ dependencies: [
 To install MagicBell using [Carthage](https://github.com/Carthage/Carthage), add to the Carfile the following dependency:
 
 ```ruby
-github "magicbell/magicbell-swift" "2.0.0"
+github "magicbell/magicbell-swift" "3.0.0"
 ```
 
 Then, run `carthage update --use-xcframeworks --platform [iOS|macOS] --no-use-binaries` (selecting the desired platform) to resolve dependencies.
